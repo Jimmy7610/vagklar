@@ -1,0 +1,177 @@
+import { buildQuestions, general, no, ok, trf } from './authoring';
+import type { AuthoredQuestion } from './authoring';
+
+const seeds: AuthoredQuestion[] = [
+  {
+    id: 'hal-001',
+    category: 'halka',
+    subcategory: 'vattenplaning',
+    difficulty: 2,
+    ruleTested: 'Åtgärd vid vattenplaning',
+    prompt: 'Bilen tappar plötsligt greppet i en vattensamling. Vad gör du?',
+    answers: [
+      ok('Släpper gasen, håller ratten stilla och undviker att bromsa.'),
+      no('Bromsar kraftigt för att få ner farten.', 'vattenplaning-bromsa'),
+      no('Styr snabbt åt sidan för att komma ur vattnet.', 'vattenplaning-bromsa'),
+      no('Gasar för att "köra igenom" vattnet.', 'vattenplaning-bromsa'),
+    ],
+    short: 'Släpp gasen, håll ratten rakt och vänta tills däcken får kontakt igen.',
+    deep:
+      'Vid vattenplaning ligger en vattenkil mellan däck och vägbana, och styrning och bromsar har ingen verkan. Varje kraftig manöver får effekt först i det ögonblick greppet återvänder — och blir då plötslig och okontrollerad. Att göra ingenting är därför det aktiva valet.',
+    memory: 'Släpp gasen, håll rakt, gör ingenting.',
+    sources: [general('Fordonsdynamik: vattenplaning')],
+    related: ['hal-002'],
+  },
+  {
+    id: 'hal-002',
+    category: 'halka',
+    subcategory: 'vattenplaning',
+    difficulty: 2,
+    ruleTested: 'Risk för vattenplaning',
+    prompt: 'Vad ökar risken för vattenplaning mest?',
+    answers: [
+      ok('Hög hastighet i kombination med slitna däck.'),
+      no('Låg hastighet på blank asfalt.'),
+      no('Hög lastvikt i bilen.'),
+      no('Nya däck med djupt mönster.'),
+    ],
+    short: 'Fart och mönsterdjup avgör. Båda handlar om hur mycket vatten som hinner bort.',
+    deep:
+      'Däckmönstret ska leda undan vatten. Ju grundare mönster och ju högre fart, desto mindre vatten hinner transporteras bort och desto tidigare lyfter däcket. Ett slitet däck kan börja vattenplana i hastigheter där ett nytt fortfarande har fullt grepp. Sänk farten när det står vatten på vägen, särskilt i hjulspår.',
+    sources: [general('Fordonsdynamik: vattenplaning')],
+    related: ['hal-001', 'for-001'],
+  },
+  {
+    id: 'hal-003',
+    category: 'halka',
+    subcategory: 'halka',
+    difficulty: 2,
+    ruleTested: 'Bromssträcka vid halka',
+    prompt: 'Hur mycket längre kan bromssträckan bli på isig väg jämfört med torr asfalt?',
+    answers: [
+      ok('Den kan bli många gånger längre — upp till tio gånger vid riktigt dåligt grepp.'),
+      no('Ungefär tjugo procent längre.'),
+      no('Ungefär femtio procent längre.'),
+      no('Lika lång, om bilen har ABS.'),
+    ],
+    short: 'På is kan bromssträckan bli flerdubbel — ABS ändrar inte friktionen.',
+    deep:
+      'Friktionstalet på torr asfalt ligger runt 0,8 och på blank is kan det vara under 0,1. Eftersom bromssträckan är omvänt proportionell mot friktionen betyder det en dramatisk förlängning. ABS hjälper dig att behålla styrförmågan under inbromsning, men skapar inget grepp som inte finns.',
+    sources: [general('Fordonsdynamik: friktion och bromssträcka')],
+    related: ['has-006'],
+  },
+  {
+    id: 'hal-004',
+    category: 'halka',
+    subcategory: 'halka',
+    difficulty: 3,
+    ruleTested: 'Var halkan uppstår först',
+    prompt: 'Var uppstår halka typiskt först när temperaturen närmar sig noll grader?',
+    answers: [
+      ok('På broar, i skuggiga partier och där vägen går över vatten.'),
+      no('På raksträckor i öppen terräng.'),
+      no('I uppförsbackar.'),
+      no('På vägar med mycket trafik.'),
+    ],
+    short: 'Broar och skuggpartier kyls från flera håll och blir hala först.',
+    deep:
+      'En bro kyls av luften både ovanifrån och underifrån och saknar markvärme, vilket gör att den fryser före anslutande vägsträckor. Samma sak gäller skuggiga partier under träd och nära vatten där luftfuktigheten är hög. Kombinationen "runt noll grader plus fuktigt" är den klassiska risksituationen.',
+    memory: 'Broar fryser först.',
+    sources: [general('Väglag och vinterväghållning')],
+  },
+  {
+    id: 'hal-005',
+    category: 'halka',
+    subcategory: 'vinterkorning',
+    difficulty: 1,
+    ruleTested: 'Vinterdäcksperiod',
+    prompt: 'När krävs vinterdäck på personbil i Sverige?',
+    answers: [
+      ok('Vid vinterväglag under perioden 1 december till 31 mars.'),
+      no('Alltid mellan 1 november och 31 mars, oavsett väglag.', 'vinterdack-datum'),
+      no('Vid vinterväglag hela året.', 'vinterdack-datum'),
+      no('Bara norr om Dalälven.', 'vinterdack-datum'),
+    ],
+    short: 'Kravet gäller vid vinterväglag under perioden 1 december–31 mars.',
+    deep:
+      'Två villkor måste vara uppfyllda samtidigt: rätt datumperiod och faktiskt vinterväglag. Är det barmark den 15 januari finns inget krav; är det snö och is den 20 december finns det. Många väljer att sätta på vinterdäcken tidigare, eftersom väglaget inte rättar sig efter kalendern.',
+    memory: 'Datum och väglag — båda måste stämma.',
+    sources: [trf('4 kap. 18 a §')],
+    related: ['for-001'],
+  },
+  {
+    id: 'hal-006',
+    category: 'halka',
+    subcategory: 'vinterkorning',
+    difficulty: 2,
+    ruleTested: 'Körteknik på halt underlag',
+    prompt: 'Hur bör du köra på halt underlag?',
+    answers: [
+      ok('Mjukt och tidigt — bromsa, styr och gasa med små, långsamma rörelser.'),
+      no('Med snabba korrigeringar för att hinna rätta till sladdar.'),
+      no('Med högre växel och högre varvtal för bättre grepp.'),
+      no('Med handbromsen som stöd vid inbromsning.'),
+    ],
+    short: 'Allt görs mjukare och tidigare. Snabba rörelser bryter greppet.',
+    deep:
+      'Greppet är en begränsad resurs som delas mellan att bromsa, styra och accelerera. Gör du två saker samtidigt — bromsar hårt och styr — tar greppet slut. På halka gäller därför: bromsa färdigt först, styr sedan. Öka avståndet framåt rejält, gärna till det dubbla.',
+    sources: [general('Fordonsdynamik: friktionscirkeln')],
+  },
+  {
+    id: 'hal-007',
+    category: 'halka',
+    subcategory: 'halka',
+    difficulty: 2,
+    ruleTested: 'Underkylt regn',
+    prompt: 'Vad är underkylt regn?',
+    answers: [
+      ok('Regn som fryser till is direkt när det träffar den kalla vägbanan.'),
+      no('Regn som blandas med snö och gör vägen slaskig.'),
+      no('Regn som faller när temperaturen är under minus tio grader.'),
+      no('Kondens som bildas på vindrutan inifrån.'),
+    ],
+    short: 'Underkylt regn ger en tunn, nästan osynlig isbana på mycket kort tid.',
+    deep:
+      'Det är ett av de farligaste väglagen eftersom vägen ser våt ut men beter sig som is, och förändringen kan ske på några minuter. Misstänker du underkylt regn: sänk farten kraftigt, undvik onödiga manövrar och överväg att avbryta resan.',
+    sources: [general('Väglag och vinterväghållning')],
+  },
+  {
+    id: 'hal-008',
+    category: 'halka',
+    subcategory: 'dimma',
+    difficulty: 2,
+    ruleTested: 'Körning i dimma',
+    prompt: 'Vilket ljus ska du använda i tät dimma?',
+    answers: [
+      ok('Halvljus, eventuellt tillsammans med dimljus.'),
+      no('Helljus, för att lysa igenom dimman.'),
+      no('Enbart varselljus.'),
+      no('Enbart parkeringsljus.'),
+    ],
+    short: 'Halvljus i dimma. Helljuset reflekteras tillbaka och gör sikten sämre.',
+    deep:
+      'Dimman består av vattendroppar som sprider ljuset. Helljus skapar därför en vit vägg framför bilen. Halvljus, riktat nedåt, ger bättre resultat, och dimbakljus gör dig synlig bakifrån — men ska släckas när sikten förbättras.',
+    sources: [trf('3 kap. 74 §')],
+    related: ['mor-007'],
+  },
+  {
+    id: 'hal-009',
+    category: 'halka',
+    subcategory: 'vinterkorning',
+    difficulty: 2,
+    ruleTested: 'Sikt och snö på fordonet',
+    prompt: 'Vad gäller för snö och is på bilen innan du kör?',
+    answers: [
+      ok('Rutor, lyktor och skyltar ska vara fria — och snö på taket kan yra ner och skymma sikten.'),
+      no('Det räcker att skrapa en ruta framför förarplatsen.'),
+      no('Snö på taket är oproblematiskt eftersom det blåser bort.'),
+      no('Det räcker att sätta på defrostern och köra iväg.'),
+    ],
+    short: 'Fri sikt åt alla håll, rena lyktor och registreringsskylt — och ta bort snön på taket.',
+    deep:
+      'Snö som ligger kvar på taket kan glida ner över vindrutan vid en inbromsning eller yra iväg mot fordonet bakom. Smutsiga eller snötäckta lyktor kan sänka ljusstyrkan dramatiskt. Att skrapa ordentligt tar några minuter och är en förutsättning för att du ska kunna se och synas.',
+    sources: [trf('3 kap. 84 §')],
+  },
+];
+
+export const halkaQuestions = buildQuestions(seeds);

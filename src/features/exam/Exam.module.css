@@ -1,0 +1,539 @@
+.page {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7);
+  padding-bottom: var(--space-6);
+}
+
+.title {
+  font-size: var(--text-title);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.025em;
+  margin: 0 0 var(--space-2);
+}
+
+.lead {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 58ch;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: var(--space-3);
+}
+
+.spec {
+  padding: var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  text-align: center;
+}
+
+.specValue {
+  font-size: var(--text-stat);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.specLabel {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-2);
+}
+
+.historyList {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.historyRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: inherit;
+  text-decoration: none;
+}
+
+.historyRow:hover {
+  border-color: var(--color-border-strong);
+}
+
+.historyScore {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-card);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.historyPass {
+  background-color: var(--color-success-soft);
+  color: var(--color-success-strong);
+}
+
+.historyFail {
+  background-color: var(--color-danger-soft);
+  color: var(--color-danger-strong);
+}
+
+.historyMeta {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Runner
+   ========================================================================== */
+.runner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--color-bg);
+}
+
+.runnerBar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  height: 56px;
+  padding: 0 var(--space-gutter);
+  padding-top: env(safe-area-inset-top, 0px);
+  background-color: color-mix(in srgb, var(--color-bg) 92%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.timer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 5px var(--space-3);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-sunken);
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.timerWarning {
+  background-color: var(--color-warning-soft);
+  color: var(--color-warning-strong);
+}
+
+.timerCritical {
+  background-color: var(--color-danger-soft);
+  color: var(--color-danger-strong);
+}
+
+.timerBarTrack {
+  width: 84px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--color-border);
+  overflow: hidden;
+}
+
+.timerBarFill {
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--color-primary);
+  transition: width 1s linear;
+}
+
+.runnerBody {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-5) var(--space-gutter) var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .runnerBody {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 268px;
+    gap: var(--space-7);
+    align-items: start;
+    padding-top: var(--space-6);
+  }
+}
+
+.question {
+  min-width: 0;
+}
+
+.examPrompt {
+  font-size: clamp(1.125rem, 1.02rem + 0.6vw, 1.4375rem);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  line-height: 1.34;
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.examMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+
+.markButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.markButton:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.marked {
+  background-color: var(--color-warning-soft);
+  border-color: var(--color-warning);
+  color: var(--color-warning-strong);
+}
+
+.options {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-4);
+  text-align: left;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  font-size: var(--text-body);
+  line-height: 1.4;
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-standard);
+}
+
+.option:hover {
+  border-color: var(--color-border-strong);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.optionSelected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+}
+
+.optionKey {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-surface-sunken);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-secondary);
+}
+
+.optionSelected .optionKey {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.navRow {
+  display: flex;
+  gap: var(--space-3);
+  position: sticky;
+  bottom: 0;
+  padding: var(--space-4) 0 calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(to top, var(--color-bg) 62%, transparent);
+}
+
+.navRow > * {
+  flex: 1 1 0;
+}
+
+/* ---- Navigator ----------------------------------------------------------- */
+.navigator {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+}
+
+.navigatorSticky {
+  position: sticky;
+  top: calc(56px + var(--space-5));
+}
+
+.navigatorHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+
+.navigatorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+  gap: 6px;
+}
+
+.navCell {
+  aspect-ratio: 1;
+  min-height: 34px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  font-size: 0.75rem;
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+  position: relative;
+}
+
+.navCell:hover {
+  border-color: var(--color-border-strong);
+}
+
+.navCell:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.navAnswered {
+  background-color: var(--color-primary-soft);
+  border-color: transparent;
+  color: var(--color-primary-text);
+}
+
+.navCurrent {
+  border-color: var(--color-primary);
+  border-width: 2px;
+  color: var(--color-text);
+}
+
+.navMarked::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-warning);
+}
+
+.legend {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legendSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+}
+
+/* Mobile navigator lives in a sheet instead of the sidebar. */
+.navigatorMobile {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .navigatorMobile {
+    display: none;
+  }
+}
+
+.navigatorDesktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .navigatorDesktop {
+    display: block;
+  }
+}
+
+/* ==========================================================================
+   Result
+   ========================================================================== */
+.verdict {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-5);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+.verdictPass {
+  background-color: var(--color-success-soft);
+}
+
+.verdictFail {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.verdictBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-small);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badgePass {
+  background-color: var(--color-success);
+  color: #fff;
+}
+
+.badgeFail {
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text-secondary);
+}
+
+.scoreLine {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.scoreValue {
+  font-size: var(--text-stat-xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.scoreMax {
+  font-size: var(--text-subsection);
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-medium);
+}
+
+.breakdown {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.breakdownRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-3) var(--space-4);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.breakdownName {
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+}
+
+.breakdownValue {
+  font-size: var(--text-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+.breakdownBar {
+  grid-column: 1 / -1;
+  height: 5px;
+  border-radius: 999px;
+  background-color: var(--color-surface-sunken);
+  overflow: hidden;
+}
+
+.breakdownFill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.resultActions {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 560px) {
+  .resultActions {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+}

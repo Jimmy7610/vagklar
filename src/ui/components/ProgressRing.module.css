@@ -1,0 +1,62 @@
+.wrapper {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.svg {
+  display: block;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.track {
+  stroke: var(--color-mastery-none);
+  opacity: 0.55;
+}
+
+.indicator {
+  transition: stroke-dashoffset var(--dur-slower) var(--ease-out);
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  place-content: center;
+  text-align: center;
+  padding-inline: 6%;
+}
+
+.value {
+  font-size: var(--ring-value-size, var(--text-stat-lg));
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.suffix {
+  font-size: 0.45em;
+  font-weight: var(--weight-medium);
+  margin-left: 0.08em;
+  color: var(--color-text-secondary);
+}
+
+.label {
+  margin-top: var(--space-2);
+  font-size: var(--text-overline);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  line-height: 1.25;
+}
+
+.placeholder {
+  color: var(--color-text-tertiary);
+}

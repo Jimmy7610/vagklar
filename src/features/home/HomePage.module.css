@@ -1,0 +1,305 @@
+.page {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7);
+  padding-bottom: var(--space-6);
+}
+
+/* ---- Greeting ------------------------------------------------------------ */
+.greeting {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-1);
+}
+
+.greetingText {
+  font-size: var(--text-title);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.greetingSub {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ---- Readiness ----------------------------------------------------------- */
+.readiness {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  justify-items: center;
+  padding: var(--space-6) var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+@media (min-width: 720px) {
+  .readiness {
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-items: start;
+    text-align: left;
+    align-items: center;
+    gap: var(--space-7);
+    padding: var(--space-7);
+  }
+}
+
+.readinessBody {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  justify-items: inherit;
+}
+
+.readinessBand {
+  font-size: var(--text-subsection);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  margin: 0;
+}
+
+.readinessMessage {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 42ch;
+}
+
+.readinessMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: inherit;
+}
+
+.readinessNote {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  margin: 0;
+  max-width: 46ch;
+}
+
+/* ---- Resume -------------------------------------------------------------- */
+.resume {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-primary-soft);
+  border-radius: var(--radius-card);
+  flex-wrap: wrap;
+}
+
+.resumeText {
+  flex: 1 1 200px;
+}
+
+.resumeTitle {
+  font-size: var(--text-card);
+  font-weight: var(--weight-semibold);
+  color: var(--color-primary-text);
+}
+
+.resumeMeta {
+  font-size: var(--text-small);
+  color: var(--color-primary-text);
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+/* ---- Next best step ------------------------------------------------------ */
+.nextStep {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(160deg, var(--color-primary-dark) 0%, #14484a 100%);
+  color: #eef5f4;
+}
+
+[data-theme='dark'] .nextStep {
+  background: linear-gradient(160deg, #163034 0%, #14413f 100%);
+  border: 1px solid var(--color-border);
+}
+
+.nextStepLabel {
+  font-size: var(--text-overline);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: #8fd3cb;
+}
+
+.nextStepTitle {
+  font-size: var(--text-section);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0;
+}
+
+.nextStepReason {
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: rgba(238, 245, 244, 0.78);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.nextStepMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.metaChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px var(--space-3);
+  border-radius: var(--radius-pill);
+  background-color: rgba(255, 255, 255, 0.12);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: #eef5f4;
+}
+
+/* ---- Quick actions ------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 168px), 1fr));
+}
+
+.tile {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+  align-content: start;
+  padding: var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  min-height: 128px;
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tile:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-1px);
+  }
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.tileIcon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-text);
+}
+
+.tileTitle {
+  font-size: var(--text-card);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+}
+
+.tileMeta {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+
+.tileBadge {
+  justify-self: start;
+}
+
+/* ---- Insights ------------------------------------------------------------ */
+.insightList {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.insight {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.insightIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+}
+
+.insightPositive {
+  background-color: var(--color-success-soft);
+  color: var(--color-success-strong);
+}
+
+.insightAttention {
+  background-color: var(--color-warning-soft);
+  color: var(--color-warning-strong);
+}
+
+.insightNeutral {
+  background-color: var(--color-info-soft);
+  color: var(--color-info-strong);
+}
+
+.insightTitle {
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+}
+
+.insightBody {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* ---- Stats strip --------------------------------------------------------- */
+.statsStrip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 110px), 1fr));
+  gap: var(--space-3);
+}
+
+.statBox {
+  padding: var(--space-4);
+  background-color: var(--color-surface-sunken);
+  border-radius: var(--radius-md);
+}

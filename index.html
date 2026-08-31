@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <title>Vägklar — Lär dig teorin. Förstå trafiken. Klara provet.</title>
+    <meta
+      name="description"
+      content="Vägklar är en adaptiv teoriutbildning för svenskt B-körkort. Appen lär sig vad du kan, hittar dina svaga områden och bygger nästa träningspass åt dig. Inget konto behövs."
+    />
+    <meta name="author" content="Vägklar" />
+    <link rel="canonical" href="https://example.github.io/vagklar/" />
+
+    <!-- Theme colour is kept in sync with the resolved theme at runtime. -->
+    <meta name="theme-color" content="#f7f8f5" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="./icons/icon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./icons/icon-32.png" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Vägklar" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vägklar" />
+    <meta property="og:locale" content="sv_SE" />
+    <meta property="og:title" content="Vägklar — teorin för B-körkort" />
+    <meta
+      property="og:description"
+      content="Lär dig teorin. Förstå trafiken. Klara provet. Adaptiv träning som hittar dina svaga områden."
+    />
+    <meta property="og:image" content="./icons/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- X / Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vägklar — teorin för B-körkort" />
+    <meta
+      name="twitter:description"
+      content="Adaptiv teoriträning för svenskt B-körkort. Inget konto. Din utveckling sparas på din enhet."
+    />
+    <meta name="twitter:image" content="./icons/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Vägklar",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "sv-SE",
+        "description": "Adaptiv teoriutbildning för svenskt B-körkort med originalfrågor, provsimulering och kunskapskarta.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" }
+      }
+    </script>
+
+    <!--
+      Paint the correct theme on the very first frame.
+      IndexedDB is async, so the tiny localStorage mirror written by
+      app/state/theme.ts is read here before anything renders.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('vagklar.theme') || 'system';
+          var dark =
+            stored === 'dark' ||
+            (stored === 'system' &&
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          var root = document.documentElement;
+          root.setAttribute('data-theme', dark ? 'dark' : 'light');
+          root.style.colorScheme = dark ? 'dark' : 'light';
+
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', dark ? '#0c1518' : '#f7f8f5');
+
+          var motion = localStorage.getItem('vagklar.reduced-motion') || 'system';
+          var reduced =
+            motion === 'reduced' ||
+            (motion === 'system' &&
+              window.matchMedia &&
+              window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+          root.setAttribute('data-reduced-motion', reduced ? 'true' : 'false');
+
+          var scale = parseFloat(localStorage.getItem('vagklar.text-scale') || '1');
+          if (scale === 1.125 || scale === 1.25) {
+            root.style.fontSize = scale * 100 + '%';
+          }
+        } catch (error) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="padding: 2rem; font-family: system-ui, sans-serif; max-width: 40rem">
+        <h1>Vägklar</h1>
+        <p>
+          Vägklar behöver JavaScript för att fungera. All träning och all utveckling sker lokalt i
+          din webbläsare — det finns ingen server att hämta innehållet från.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

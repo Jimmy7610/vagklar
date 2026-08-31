@@ -1,0 +1,217 @@
+/* ==========================================================================
+   Vägklar — design tokens
+   The single source of truth for colour, type, space, shape, motion, depth.
+   Components must never hard-code raw hex values.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand + neutral palette (light) ---------------------------------- */
+  --color-bg: #f7f8f5;
+  --color-bg-tint: #f1f4f0;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f2f4f1;
+  --color-surface-elevated: #ffffff;
+  --color-text: #172126;
+  --color-text-secondary: #667579;
+  --color-text-tertiary: #8b989b;
+  --color-border: #e2e7e5;
+  --color-border-strong: #cfd7d4;
+
+  --color-primary-dark: #0f2e33;
+  --color-primary: #176b68;
+  --color-primary-hover: #125754;
+  --color-primary-active: #0e4643;
+  --color-primary-soft: #d9eeeb;
+  --color-primary-soft-hover: #c9e6e2;
+  --color-on-primary: #ffffff;
+  --color-primary-text: #0f4f4c;
+
+  /* ---- Status ----------------------------------------------------------- */
+  --color-success: #22a06b;
+  --color-success-strong: #14724a;
+  --color-success-soft: #e3f5ec;
+  --color-warning: #f2b84b;
+  --color-warning-strong: #8a5a05;
+  --color-warning-soft: #fdf2dc;
+  --color-danger: #d94a4a;
+  --color-danger-strong: #a32b2b;
+  --color-danger-soft: #fbe7e7;
+  --color-info: #3e7cb1;
+  --color-info-strong: #2a5d8a;
+  --color-info-soft: #e4eef7;
+
+  /* ---- Mastery ramp (used by rings, maps, bars) ------------------------- */
+  --color-mastery-none: #d6ddda;
+  --color-mastery-low: #d94a4a;
+  --color-mastery-mid: #f2b84b;
+  --color-mastery-good: #4bab84;
+  --color-mastery-high: #22a06b;
+
+  /* ---- Focus + selection ------------------------------------------------ */
+  --color-focus: #176b68;
+  --focus-ring: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus);
+  --focus-ring-inset: inset 0 0 0 2px var(--color-focus);
+
+  /* ---- Overlay / scrim -------------------------------------------------- */
+  --color-scrim: rgba(15, 46, 51, 0.42);
+  --color-hairline: rgba(23, 33, 38, 0.06);
+
+  /* ---- Spacing scale ---------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 96px;
+
+  /* Fluid section rhythm for the marketing surface */
+  --space-section: clamp(56px, 8vw, 120px);
+  --space-gutter: clamp(16px, 4vw, 32px);
+
+  /* ---- Radii ------------------------------------------------------------ */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-card: 16px;
+  --radius-card-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-pill: 999px;
+
+  /* ---- Typography ------------------------------------------------------- */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Text', 'Segoe UI', Inter, Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-numeric: var(--font-sans);
+
+  --text-display: clamp(2.5rem, 1.55rem + 4.3vw, 4.25rem);
+  --text-title: clamp(1.875rem, 1.45rem + 1.9vw, 2.75rem);
+  --text-section: clamp(1.5rem, 1.28rem + 1vw, 2.125rem);
+  --text-subsection: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);
+  --text-card: 1.0625rem;
+  --text-body-lg: 1.0625rem;
+  --text-body: 1rem;
+  --text-small: 0.9375rem;
+  --text-caption: 0.8125rem;
+  --text-overline: 0.75rem;
+
+  --text-stat-xl: clamp(3rem, 2rem + 4.5vw, 4.5rem);
+  --text-stat-lg: clamp(2.25rem, 1.7rem + 2.4vw, 3rem);
+  --text-stat: clamp(1.625rem, 1.4rem + 1vw, 2rem);
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.62;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --tracking-tight: -0.022em;
+  --tracking-snug: -0.012em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.06em;
+  --tracking-overline: 0.1em;
+
+  /* ---- Depth (used sparingly) ------------------------------------------ */
+  --shadow-sm: 0 1px 2px rgba(15, 46, 51, 0.06);
+  --shadow-card: 0 1px 2px rgba(15, 46, 51, 0.05), 0 10px 24px -18px rgba(15, 46, 51, 0.35);
+  --shadow-raised: 0 2px 6px rgba(15, 46, 51, 0.06), 0 18px 40px -26px rgba(15, 46, 51, 0.42);
+  --shadow-float: 0 4px 12px rgba(15, 46, 51, 0.07), 0 32px 64px -36px rgba(15, 46, 51, 0.45);
+  --shadow-modal: 0 24px 64px -20px rgba(15, 46, 51, 0.35);
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-instant: 90ms;
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 340ms;
+  --dur-slower: 560ms;
+
+  /* ---- Layout ----------------------------------------------------------- */
+  --container-max: 1200px;
+  --container-wide: 1360px;
+  --container-reading: 68ch;
+  --sidebar-width: 244px;
+  --bottom-nav-height: 60px;
+  --topbar-height: 60px;
+  --tap-target: 44px;
+
+  /* ---- Elevation order -------------------------------------------------- */
+  --z-base: 0;
+  --z-sticky: 20;
+  --z-nav: 40;
+  --z-drawer: 60;
+  --z-modal: 70;
+  --z-toast: 80;
+
+  color-scheme: light;
+}
+
+/* ==========================================================================
+   Dark theme — designed, not inverted.
+   The resolved theme is always written to <html data-theme>, so there is no
+   flash and no ambiguity between "system" and an explicit choice.
+   ========================================================================== */
+[data-theme='dark'] {
+  --color-bg: #0c1518;
+  --color-bg-tint: #0f1c20;
+  --color-surface: #142126;
+  --color-surface-sunken: #101c20;
+  --color-surface-elevated: #192a2e;
+  --color-text: #f4f7f6;
+  --color-text-secondary: #9caaae;
+  --color-text-tertiary: #78888c;
+  --color-border: #263a3e;
+  --color-border-strong: #33484d;
+
+  --color-primary-dark: #0a2226;
+  --color-primary: #53b9ae;
+  --color-primary-hover: #6bc7bd;
+  --color-primary-active: #7fd2c9;
+  --color-primary-soft: rgba(83, 185, 174, 0.16);
+  --color-primary-soft-hover: rgba(83, 185, 174, 0.24);
+  --color-on-primary: #06211f;
+  --color-primary-text: #7fd2c9;
+
+  --color-success: #3fc98a;
+  --color-success-strong: #7fe0b0;
+  --color-success-soft: rgba(63, 201, 138, 0.15);
+  --color-warning: #f5c46a;
+  --color-warning-strong: #f7d294;
+  --color-warning-soft: rgba(245, 196, 106, 0.15);
+  --color-danger: #f0706e;
+  --color-danger-strong: #f79c9a;
+  --color-danger-soft: rgba(240, 112, 110, 0.16);
+  --color-info: #6ba6d9;
+  --color-info-strong: #9cc6e8;
+  --color-info-soft: rgba(107, 166, 217, 0.16);
+
+  --color-mastery-none: #2c4045;
+  --color-mastery-low: #f0706e;
+  --color-mastery-mid: #f5c46a;
+  --color-mastery-good: #55c69b;
+  --color-mastery-high: #3fc98a;
+
+  --color-focus: #7fd2c9;
+  --color-scrim: rgba(3, 10, 12, 0.66);
+  --color-hairline: rgba(244, 247, 246, 0.07);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 24px -18px rgba(0, 0, 0, 0.8);
+  --shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.45), 0 18px 40px -26px rgba(0, 0, 0, 0.9);
+  --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.5), 0 32px 64px -36px rgba(0, 0, 0, 0.95);
+  --shadow-modal: 0 24px 64px -20px rgba(0, 0, 0, 0.8);
+
+  color-scheme: dark;
+}

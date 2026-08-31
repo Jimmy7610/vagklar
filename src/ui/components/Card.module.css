@@ -1,0 +1,97 @@
+.card {
+  position: relative;
+  display: block;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-5);
+  color: inherit;
+  text-decoration: none;
+}
+
+.lg {
+  border-radius: var(--radius-card-lg);
+  padding: var(--space-6);
+}
+
+.sm {
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* A quieter surface for grouped rows and nested content. */
+.sunken {
+  background-color: var(--color-surface-sunken);
+  border-color: transparent;
+}
+
+.elevated {
+  border-color: transparent;
+  box-shadow: var(--shadow-card);
+}
+
+.interactive {
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.interactive:hover {
+  border-color: var(--color-border-strong);
+  background-color: var(--color-surface-elevated);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.interactive:active {
+  transform: translateY(0);
+}
+
+.interactive:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Accent strip used to mark status without relying on colour alone. */
+.accent::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  border-radius: var(--radius-card) 0 0 var(--radius-card);
+  background-color: var(--accent-color, var(--color-primary));
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  font-size: var(--text-card);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  margin: var(--space-1) 0 0;
+}

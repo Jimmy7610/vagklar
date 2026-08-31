@@ -1,0 +1,62 @@
+{
+  "name": "Vägklar — teori för B-körkort",
+  "short_name": "Vägklar",
+  "description": "Adaptiv teoriträning för svenskt B-körkort. Lär dig teorin, förstå trafiken, klara provet.",
+  "lang": "sv-SE",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "id": "vagklar",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0F2E33",
+  "theme_color": "#F7F8F5",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dagens 10",
+      "short_name": "Dagens 10",
+      "description": "Ett personligt blandat träningspass",
+      "url": "./#/trana"
+    },
+    {
+      "name": "Provsimulering",
+      "short_name": "Prov",
+      "description": "70 frågor på 50 minuter",
+      "url": "./#/prov"
+    },
+    {
+      "name": "Mina misstag",
+      "short_name": "Misstag",
+      "description": "Träna på det du missat",
+      "url": "./#/misstag"
+    }
+  ]
+}

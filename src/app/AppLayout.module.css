@@ -1,0 +1,266 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--color-bg);
+}
+
+/* ---- Top bar (mobile) ---------------------------------------------------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  height: var(--topbar-height);
+  padding: 0 var(--space-gutter);
+  padding-top: env(safe-area-inset-top, 0px);
+  background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-base) var(--ease-standard);
+}
+
+.topbarScrolled {
+  border-bottom-color: var(--color-border);
+}
+
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.iconButton {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard);
+}
+
+.iconButton:hover {
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text);
+}
+
+.streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-warning-soft);
+  color: var(--color-warning-strong);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Main --------------------------------------------------------------- */
+.main {
+  flex: 1 1 auto;
+  width: 100%;
+  padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + var(--space-6));
+}
+
+.content {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-5) var(--space-gutter) 0;
+}
+
+/* ---- Bottom navigation (mobile) ------------------------------------------ */
+.bottomNav {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: var(--z-nav);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  border-top: 1px solid var(--color-border);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--bottom-nav-height);
+  padding: var(--space-2) 2px;
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  font-size: 0.6875rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.005em;
+  transition: color var(--dur-fast) var(--ease-standard);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.navItem:hover {
+  color: var(--color-text-secondary);
+}
+
+.navItemActive {
+  color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.navIcon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.navItemActive .navIcon {
+  background-color: var(--color-primary-soft);
+}
+
+.navBadge {
+  position: absolute;
+  top: -1px;
+  right: 1px;
+  min-width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-danger);
+  border: 2px solid var(--color-surface);
+}
+
+/* ---- Desktop sidebar ----------------------------------------------------- */
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    flex: none;
+    width: var(--sidebar-width);
+    height: 100dvh;
+    padding: var(--space-6) var(--space-4);
+    border-right: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+  }
+
+  .sidebarBrand {
+    padding: 0 var(--space-3) var(--space-6);
+  }
+
+  .sidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebarItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 42px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: var(--text-small);
+    font-weight: var(--weight-medium);
+    transition:
+      background-color var(--dur-fast) var(--ease-standard),
+      color var(--dur-fast) var(--ease-standard);
+  }
+
+  .sidebarItem:hover {
+    background-color: var(--color-surface-sunken);
+    color: var(--color-text);
+  }
+
+  .sidebarItemActive,
+  .sidebarItemActive:hover {
+    background-color: var(--color-primary-soft);
+    color: var(--color-primary-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  .sidebarSpacer {
+    flex: 1 1 auto;
+  }
+
+  .sidebarFooter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-3) 0;
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-caption);
+    color: var(--color-text-tertiary);
+  }
+
+  .topbar {
+    display: none;
+  }
+
+  .bottomNav {
+    display: none;
+  }
+
+  .main {
+    padding-bottom: var(--space-10);
+    min-width: 0;
+  }
+
+  .content {
+    padding-top: var(--space-8);
+    max-width: 1080px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .content {
+    max-width: 1160px;
+  }
+}
+
+/* ---- Status strip -------------------------------------------------------- */
+.strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-gutter);
+  font-size: var(--text-caption);
+  background-color: var(--color-warning-soft);
+  color: var(--color-warning-strong);
+}
+
+.stripAction {
+  margin-left: auto;
+  font-weight: var(--weight-semibold);
+  text-decoration: underline;
+  white-space: nowrap;
+}

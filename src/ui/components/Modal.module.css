@@ -1,0 +1,158 @@
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  background-color: var(--color-scrim);
+  animation: scrimIn var(--dur-base) var(--ease-out);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: min(88dvh, 760px);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: var(--shadow-modal);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  animation: sheetIn var(--dur-slow) var(--ease-out);
+}
+
+.wide {
+  max-width: 760px;
+}
+
+.grabber {
+  width: 36px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-border-strong);
+  margin: var(--space-3) auto 0;
+  flex: none;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-5) var(--space-3);
+  flex: none;
+}
+
+.title {
+  font-size: var(--text-subsection);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  margin: 0;
+}
+
+.description {
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  margin: var(--space-2) 0 0;
+}
+
+.close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: -4px -4px 0 0;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  transition: background-color var(--dur-fast) var(--ease-standard);
+}
+
+.close:hover {
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text);
+}
+
+.body {
+  padding: 0 var(--space-5) var(--space-5);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1 1 auto;
+}
+
+.footer {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border-top: 1px solid var(--color-border);
+  flex: none;
+}
+
+.footer > * {
+  flex: 1 1 0;
+}
+
+@media (min-width: 600px) {
+  .scrim {
+    align-items: center;
+    padding: var(--space-5);
+  }
+
+  .dialog {
+    border-radius: var(--radius-xl);
+    max-height: min(82dvh, 760px);
+    animation: dialogIn var(--dur-base) var(--ease-out);
+  }
+
+  .grabber {
+    display: none;
+  }
+
+  .header {
+    padding-top: var(--space-6);
+  }
+
+  .footer > * {
+    flex: 0 0 auto;
+  }
+
+  .footer {
+    justify-content: flex-end;
+  }
+}
+
+@keyframes scrimIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheetIn {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+
+@keyframes dialogIn {
+  from {
+    transform: scale(0.97);
+    opacity: 0;
+  }
+}
+
+/* Invisible dismiss target behind the dialog. */
+.scrimButton {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: default;
+}

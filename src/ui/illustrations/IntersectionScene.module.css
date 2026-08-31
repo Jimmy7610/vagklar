@@ -1,0 +1,67 @@
+.scene {
+  --asphalt: #7c898c;
+  --asphalt-edge: #6a7679;
+  --ground: #dfe6e0;
+  --lane: #f4f6f4;
+  --ego: #176b68;
+  --other: #3e5a63;
+  --highlight: #f2b84b;
+
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--ground);
+}
+
+[data-theme='dark'] .scene {
+  --asphalt: #3b4a4e;
+  --asphalt-edge: #33454a;
+  --ground: #1a2a2e;
+  --lane: #8fa3a6;
+  --ego: #53b9ae;
+  --other: #7d949c;
+}
+
+.vehicle {
+  cursor: default;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    opacity var(--dur-base) var(--ease-standard);
+}
+
+.selectable {
+  cursor: pointer;
+}
+
+.selectable:hover .vehicleBody {
+  stroke: var(--highlight);
+  stroke-width: 2;
+}
+
+.selectable:focus-visible {
+  outline: none;
+}
+
+.selectable:focus-visible .vehicleBody {
+  stroke: var(--color-focus);
+  stroke-width: 2.5;
+}
+
+.vehicleBody {
+  transition: fill var(--dur-base) var(--ease-standard);
+}
+
+.orderBadge {
+  font-size: 7px;
+  font-weight: 700;
+  font-family: system-ui, sans-serif;
+}
+
+.label {
+  font-size: 5.4px;
+  font-weight: 600;
+  font-family: system-ui, sans-serif;
+  fill: var(--lane);
+}

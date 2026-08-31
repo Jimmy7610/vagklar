@@ -1,0 +1,12 @@
+node_modules
+dist
+dev-dist
+coverage
+*.local
+.DS_Store
+.vite
+
+# Emitted by a stray `tsc` run; Vite would resolve these before the .ts sources.
+/vite.config.js
+/vitest.setup.js
+*.tsbuildinfo

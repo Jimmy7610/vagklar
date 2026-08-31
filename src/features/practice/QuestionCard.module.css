@@ -1,0 +1,354 @@
+.wrap {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+/* ---- Header -------------------------------------------------------------- */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.category {
+  font-size: var(--text-overline);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.counter {
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.progressTrack {
+  height: 4px;
+  border-radius: 999px;
+  background-color: var(--color-surface-sunken);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--color-primary);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+
+/* ---- Prompt -------------------------------------------------------------- */
+.prompt {
+  font-size: clamp(1.1875rem, 1.06rem + 0.6vw, 1.5rem);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+  line-height: 1.32;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.figure {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  margin: 0;
+}
+
+.figureCaption {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* ---- Answers ------------------------------------------------------------- */
+.answers {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.answer {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-4);
+  text-align: left;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  font-size: var(--text-body);
+  line-height: 1.4;
+  color: var(--color-text);
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-standard),
+    transform var(--dur-instant) var(--ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .answer:not(:disabled):hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-soft);
+  }
+}
+
+.answer:not(:disabled):active {
+  transform: scale(0.995);
+}
+
+.answer:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.answer:disabled {
+  cursor: default;
+}
+
+.key {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text-secondary);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-bold);
+  transition:
+    background-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard);
+}
+
+.answerText {
+  flex: 1 1 auto;
+  padding-top: 2px;
+}
+
+.mark {
+  flex: none;
+  margin-top: 2px;
+}
+
+/* Selected + correct */
+.correct {
+  border-color: var(--color-success);
+  background-color: var(--color-success-soft);
+}
+
+.correct .key {
+  background-color: var(--color-success);
+  color: #fff;
+}
+
+.correct .mark {
+  color: var(--color-success-strong);
+}
+
+/* Selected + wrong */
+.incorrect {
+  border-color: var(--color-danger);
+  background-color: var(--color-danger-soft);
+}
+
+.incorrect .key {
+  background-color: var(--color-danger);
+  color: #fff;
+}
+
+.incorrect .mark {
+  color: var(--color-danger-strong);
+}
+
+/* The right answer, revealed after a wrong pick */
+.revealed {
+  border-color: var(--color-success);
+  border-style: dashed;
+}
+
+.revealed .mark {
+  color: var(--color-success-strong);
+}
+
+.dimmed {
+  opacity: 0.55;
+}
+
+/* ---- Feedback ------------------------------------------------------------ */
+.feedback {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-radius: var(--radius-card);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  animation: feedbackIn var(--dur-base) var(--ease-out);
+}
+
+@keyframes feedbackIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.verdict {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-card);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-snug);
+}
+
+.verdictCorrect {
+  color: var(--color-success-strong);
+}
+
+.verdictIncorrect {
+  color: var(--color-danger-strong);
+}
+
+.explanation {
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.deep {
+  font-size: var(--text-small);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.memory {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-text);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+}
+
+.feedbackActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* ---- Confidence ---------------------------------------------------------- */
+.confidence {
+  display: grid;
+  /* Keep the implicit column from being widened by a nowrap child. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background-color: var(--color-surface-sunken);
+}
+
+.confidenceLabel {
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.confidenceOptions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.confidenceButton {
+  min-height: 42px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard);
+}
+
+.confidenceButton:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.confidenceActive {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-text);
+  font-weight: var(--weight-semibold);
+}
+
+/* ---- Footer -------------------------------------------------------------- */
+.footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) 0 calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(to top, var(--color-bg) 62%, transparent);
+}
+
+.footer > :last-child {
+  flex: 1 1 auto;
+}
+
+.hint {
+  display: none;
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .hint {
+    display: block;
+  }
+}
+
+@media (min-width: 720px) {
+  .answers {
+    gap: var(--space-3);
+  }
+
+  .answer {
+    min-height: 52px;
+  }
+}

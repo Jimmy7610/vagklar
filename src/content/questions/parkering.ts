@@ -1,0 +1,201 @@
+import { buildQuestions, no, ok, sign, trf, vmf } from './authoring';
+import type { AuthoredQuestion } from './authoring';
+
+const seeds: AuthoredQuestion[] = [
+  {
+    id: 'par-001',
+    category: 'parkering',
+    subcategory: 'parkeringsforbud',
+    difficulty: 1,
+    ruleTested: 'Skillnad stannande och parkering',
+    prompt: 'Vad är skillnaden mellan att stanna och att parkera?',
+    answers: [
+      ok(
+        'Att stanna är ett kort uppehåll för av- och påstigning eller lastning. Allt annat uppehåll räknas som parkering.',
+      ),
+      no('Att stanna är under fem minuter, att parkera är längre.', 'stanna-vs-parkera'),
+      no('Att stanna är med motorn igång, att parkera är med motorn av.', 'stanna-vs-parkera'),
+      no('Att stanna är när du sitter kvar i bilen, att parkera är när du lämnar den.', 'stanna-vs-parkera'),
+    ],
+    short: 'Syftet avgör, inte tiden eller om motorn går.',
+    deep:
+      'Ett uppehåll för att släppa av en passagerare eller lasta av varor är att stanna — även om det tar några minuter. Att vänta på någon, eller stå still av annan anledning än trafiken, är att parkera. Skillnaden är avgörande: parkeringsförbud hindrar inte att du stannar, men stannandeförbud hindrar båda.',
+    memory: 'Parkeringsförbud: du får stanna. Stannandeförbud: du får ingetdera.',
+    sources: [trf('1 kap. 4 §')],
+  },
+  {
+    id: 'par-002',
+    category: 'parkering',
+    subcategory: 'stannande-forbud',
+    difficulty: 2,
+    ruleTested: 'Tiometersregeln',
+    prompt: 'Hur nära ett övergångsställe får du stanna eller parkera?',
+    answers: [
+      ok('Inte inom tio meter före övergångsstället.'),
+      no('Inte inom fem meter före.', 'overgangsstalle-avstand'),
+      no('Inte inom tjugo meter före.', 'overgangsstalle-avstand'),
+      no('Du får stanna precis före om du sitter kvar i bilen.', 'overgangsstalle-avstand'),
+    ],
+    short: 'Tio meter före övergångsstället — annars skyms sikten för både gående och förare.',
+    deep:
+      'Samma tiometersregel gäller före en cykelöverfart, en cykelpassage och en korsande körbana. Poängen är sikt: ett stillastående fordon precis före ett övergångsställe döljer barnet som ska gå ut, och döljer dig för mötande. Efter övergångsstället finns ingen motsvarande generell begränsning.',
+    memory: 'Tio meter före — sikten är hela poängen.',
+    sources: [trf('3 kap. 53 §')],
+    related: ['par-003'],
+  },
+  {
+    id: 'par-003',
+    category: 'parkering',
+    subcategory: 'stannande-forbud',
+    difficulty: 2,
+    ruleTested: 'Stannande i korsning',
+    prompt: 'Vad gäller för att stanna eller parkera i närheten av en korsning?',
+    answers: [
+      ok('Förbjudet inom tio meter från den korsande körbanans närmaste ytterkant.'),
+      no('Förbjudet bara inne i själva korsningen.', 'overgangsstalle-avstand'),
+      no('Förbjudet inom tre meter från korsningen.', 'overgangsstalle-avstand'),
+      no('Tillåtet om det finns markerade parkeringsrutor ända fram.', 'overgangsstalle-avstand'),
+    ],
+    short: 'Tio meter gäller åt båda hållen, räknat från den korsande körbanans kant.',
+    deep:
+      'Det är körbanans kant som är mätpunkten, inte trottoarhörnet eller skylten. Regeln finns för att den som svänger in i korsningen ska kunna se, och för att svängradien ska räcka för längre fordon.',
+    sources: [trf('3 kap. 53 §')],
+    related: ['par-002'],
+  },
+  {
+    id: 'par-004',
+    category: 'parkering',
+    subcategory: 'parkeringsforbud',
+    difficulty: 2,
+    ruleTested: 'Parkering på huvudled',
+    prompt: 'Får du parkera på en huvudled?',
+    answers: [
+      ok('Nej, det är förbjudet att parkera på huvudled. Du får däremot stanna kort.'),
+      no('Ja, om det finns en vägren att stå på.', 'huvudled-parkering'),
+      no('Ja, om hastighetsgränsen är högst 50 km/h.', 'huvudled-parkering'),
+      no('Nej, du får varken stanna eller parkera.', 'stanna-vs-parkera'),
+    ],
+    short: 'Parkering är förbjuden på huvudled. Kort stannande är tillåtet om det sker säkert.',
+    deep:
+      'Huvudleder är byggda för framkomlighet och har ofta högre hastigheter. Ett parkerat fordon där blir ett oväntat hinder. Förbudet gäller själva huvudleden — på en anslutande gata eller en särskilt anordnad parkeringsficka gäller det inte.',
+    sources: [trf('3 kap. 55 §')],
+    related: ['kor-008'],
+  },
+  {
+    id: 'par-005',
+    category: 'parkering',
+    subcategory: 'parkeringsregler',
+    difficulty: 2,
+    ruleTested: 'Parkering i färdriktningen',
+    prompt: 'Hur ska du parkera på en gata med dubbelriktad trafik?',
+    answers: [
+      ok('På högra sidan i färdriktningen.'),
+      no('På den sida där det finns plats, oavsett riktning.'),
+      no('Alltid på vänster sida så att du ser mötande.'),
+      no('Med minst två hjul på trottoaren.'),
+    ],
+    short: 'Parkera i färdriktningen på högra sidan av vägen.',
+    deep:
+      'Undantag finns: på enkelriktade gator får du normalt parkera på båda sidor, och lokala föreskrifter kan tillåta annat. Att parkera mot färdriktningen innebär att du måste köra mot trafiken för att komma till platsen — det är där risken uppstår.',
+    sources: [trf('3 kap. 52 §')],
+  },
+  {
+    id: 'par-006',
+    category: 'parkering',
+    subcategory: 'stannande-forbud',
+    difficulty: 1,
+    ruleTested: 'Förbud att stanna och parkera',
+    prompt: 'Vad betyder en blå rund skylt med röd ram och två röda diagonala streck?',
+    answers: [
+      ok('Förbud att stanna och parkera.'),
+      no('Förbud att parkera, men du får stanna.', 'stanna-vs-parkera'),
+      no('Parkering endast för rörelsehindrade.'),
+      no('Förbud mot infart.'),
+    ],
+    short: 'Två streck = förbud att stanna. Ett streck = förbud att parkera.',
+    deep:
+      'Det är en av de mest praktiska minnesreglerna i skyltdjungeln: ett kryss stoppar allt, ett streck stoppar bara parkeringen. Förbudet gäller från skylten fram till nästa korsning om inget annat anges.',
+    memory: 'Ett streck: stanna får du. Två streck: kör vidare.',
+    sources: [vmf('C34'), vmf('C35')],
+    type: 'road-sign',
+    image: sign('forbud-stanna', 'Vägmärke: blå rund skylt med röd ram och två röda diagonala streck.'),
+    accessibilityText: 'En blå rund skylt med röd ram och två röda streck som bildar ett kryss.',
+  },
+  {
+    id: 'par-007',
+    category: 'parkering',
+    subcategory: 'parkeringsregler',
+    difficulty: 2,
+    ruleTested: 'Parkering och utfarter',
+    prompt: 'Vad gäller för att parkera framför en utfart från en fastighet?',
+    answers: [
+      ok('Du får inte parkera så att du hindrar fordon från att komma ut.'),
+      no('Det är tillåtet om du står kvar i bilen.', 'stanna-vs-parkera'),
+      no('Det är tillåtet i högst trettio minuter.'),
+      no('Det är tillåtet om utfarten inte används just då.'),
+    ],
+    short: 'Du får aldrig parkera så att du blockerar en in- eller utfart.',
+    deep:
+      'Regeln handlar om hinder, inte om avstånd i meter. Även en delvis blockerad utfart kan göra det omöjligt för en bil att komma ut. Samma princip gäller att inte hindra andra fordon eller stå så att du skymmer vägmärken.',
+    sources: [trf('3 kap. 54 §')],
+  },
+  {
+    id: 'par-008',
+    category: 'parkering',
+    subcategory: 'parkeringsforbud',
+    difficulty: 3,
+    ruleTested: 'Parkering på backkrön och i kurva',
+    prompt: 'Varför är det förbjudet att stanna på ett backkrön eller i en kurva med skymd sikt?',
+    answers: [
+      ok('Ett fordon som inte syns förrän på nära håll ger andra för kort tid att reagera.'),
+      no('Det sliter onödigt mycket på vägbanan.'),
+      no('Bilen kan börja rulla på grund av lutningen.'),
+      no('Det är tillåtet så länge du sätter ut varningstriangel.'),
+    ],
+    short: 'Där sikten är skymd hinner ingen upptäcka ett stillastående fordon i tid.',
+    deep:
+      'Kombinationen skymd sikt och hög hastighet ger mycket kort reaktionstid. Måste du ändå stanna på grund av ett fel: sätt på varningsblinkers, placera varningstriangeln i god tid före, och ställ dig bakom vägräcket om du kan.',
+    sources: [trf('3 kap. 53 §')],
+    related: ['ris-003'],
+  },
+  {
+    id: 'par-009',
+    category: 'parkering',
+    subcategory: 'parkeringsregler',
+    difficulty: 2,
+    ruleTested: 'Parkeringsskyltens tilläggstavlor',
+    prompt:
+      'Under en parkeringsskylt sitter en tilläggstavla med texten "8–18". Vad betyder det?',
+    answers: [
+      ok('Parkering är tillåten enligt skylten under de angivna tiderna på vardagar.'),
+      no('Parkering är förbjuden mellan klockan 8 och 18.'),
+      no('Du får parkera högst 8 till 18 minuter.'),
+      no('Avgift tas ut dygnet runt, men bara mellan de angivna klockslagen på helger.'),
+    ],
+    short: 'Svarta siffror utan parentes anger vardagar. Regleringen gäller under de tiderna.',
+    deep:
+      'Systemet är konsekvent: svarta siffror = vardagar, siffror inom parentes = lördagar och dag före helgdag, röda siffror = sön- och helgdagar. Anges ingen tid gäller regleringen dygnet runt, alla dagar.',
+    memory: 'Svart vardag, parentes lördag, rött helgdag.',
+    sources: [vmf('T6')],
+  },
+  {
+    id: 'par-010',
+    category: 'parkering',
+    subcategory: 'stannande-forbud',
+    difficulty: 3,
+    ruleTested: 'Stannande i cykelfält',
+    prompt: 'Får du stanna i ett cykelfält för att släppa av en passagerare?',
+    answers: [
+      ok('Nej, du får inte stanna i ett cykelfält.'),
+      no('Ja, om det bara tar några sekunder.', 'stanna-vs-parkera'),
+      no('Ja, om ingen cyklist syns till.', 'stanna-vs-parkera'),
+      no('Ja, om du sätter på varningsblinkers.', 'stanna-vs-parkera'),
+    ],
+    short: 'Cykelfält, cykelbana och busshållplats är ytor du varken får stanna eller parkera på.',
+    deep:
+      'Ett fordon i cykelfältet tvingar ut cyklisten i biltrafiken, vilket är exakt den situation fältet ska förhindra. Vid en busshållplats gäller ett zonförbud om 20 meter före och 5 meter efter märket, med undantag för på- och avstigning om det inte hindrar bussen.',
+    sources: [trf('3 kap. 53 §')],
+  },
+];
+
+export const parkeringQuestions = buildQuestions(seeds);
