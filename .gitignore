@@ -10,3 +10,14 @@ coverage
 /vite.config.js
 /vitest.setup.js
 *.tsbuildinfo
+
+# Local theory/reference source documents.
+# Licensed third-party material — used with permission as curriculum source,
+# but never committed, never bundled and never published. See
+# docs/SOURCES-AND-RIGHTS.md.
+references/*.pdf
+references/*.epub
+references/**/extracted/
+
+# Scratch output from source-extraction tooling.
+/tmp-extract/

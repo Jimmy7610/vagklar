@@ -143,6 +143,12 @@ export const READINESS = {
   misconceptionPenaltyEach: 0.02,
   misconceptionPenaltyMax: 0.06,
   misconceptionRepeatThreshold: 3,
+  /**
+   * Answers required before any estimate is shown at all. A number derived
+   * from one or two answers is noise, and showing it would be worse than
+   * showing nothing — so the dashboard counts down to this instead.
+   */
+  firstEstimateAnswers: 5,
   /** Below this many answers the estimate is provisional and capped. */
   provisionalAnswerThreshold: 20,
   provisionalCap: 60,

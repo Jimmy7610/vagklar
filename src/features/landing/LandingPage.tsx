@@ -8,8 +8,9 @@ import { Button, ButtonLink } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import type { IconName } from '@/ui/icons/Icon';
 import { masteryColor } from '@/ui/components/ProgressRing';
-import { IntersectionScene } from '@/ui/illustrations/IntersectionScene';
-import { APP_VERSION, DISCLAIMER, EXAM } from '@/domain/constants';
+import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
+import { APP_VERSION, EXAM } from '@/domain/constants';
+import { RIGHTS } from '@/content/sources';
 import { bankStats } from '@/domain/content/bank';
 import { CATEGORIES } from '@/content/taxonomy';
 import { SCENARIOS } from '@/content/scenarios';
@@ -467,7 +468,7 @@ export function LandingPage() {
 
               <Reveal delay={80}>
                 <div className={styles.scenarioFrame}>
-                  {scenario && <IntersectionScene scenario={scenario} revealed />}
+                  {scenario && <ScenarioStage scenario={scenario} revealed />}
                   <p className={styles.scenarioCaption}>
                     Oskyltad korsning — högerregeln avgör ordningen.
                   </p>
@@ -586,8 +587,11 @@ export function LandingPage() {
                 <Link className={styles.footerLink} to="/om">
                   Om Vägklar
                 </Link>
+                <Link className={styles.footerLink} to="/kallor">
+                  Källor & rättigheter
+                </Link>
                 <Link className={styles.footerLink} to="/om#integritet">
-                  Integritet och data
+                  Integritet
                 </Link>
                 <Link className={styles.footerLink} to="/installningar">
                   Inställningar
@@ -597,8 +601,12 @@ export function LandingPage() {
           </div>
 
           <div className={styles.footerBottom}>
-            <p className={styles.disclaimer}>{DISCLAIMER}</p>
-            <span>Version {APP_VERSION}</span>
+            <div className={styles.footerLegal}>
+              <p className={styles.footerCopyright}>{RIGHTS.copyright}</p>
+              <p className={styles.disclaimer}>{RIGHTS.disclaimer}</p>
+              <p className={styles.footerFinePrint}>{RIGHTS.thirdPartyShort}</p>
+            </div>
+            <span className={styles.footerVersion}>Version {APP_VERSION}</span>
           </div>
         </div>
       </footer>

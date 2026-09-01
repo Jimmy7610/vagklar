@@ -12,8 +12,11 @@
   --color-surface-sunken: #f2f4f1;
   --color-surface-elevated: #ffffff;
   --color-text: #172126;
-  --color-text-secondary: #667579;
-  --color-text-tertiary: #8b989b;
+  --color-text-secondary: #657478;
+  --color-text-tertiary: #687476;
+  /* Large muted display type (hero third line). Deliberately darker than
+     --color-text-secondary so hierarchy never costs legibility. */
+  --color-text-display-muted: #4a5b60;
   --color-border: #e2e7e5;
   --color-border-strong: #cfd7d4;
 
@@ -171,7 +174,8 @@
   --color-surface-elevated: #192a2e;
   --color-text: #f4f7f6;
   --color-text-secondary: #9caaae;
-  --color-text-tertiary: #78888c;
+  --color-text-tertiary: #8b9b9f;
+  --color-text-display-muted: #b9c7ca;
   --color-border: #263a3e;
   --color-border-strong: #33484d;
 

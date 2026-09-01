@@ -3,7 +3,8 @@ import page from '@/features/shared/Page.module.css';
 import { Icon } from '@/ui/icons/Icon';
 import type { IconName } from '@/ui/icons/Icon';
 import { SectionHeading } from '@/ui/components/Primitives';
-import { APP_VERSION, DISCLAIMER } from '@/domain/constants';
+import { APP_VERSION } from '@/domain/constants';
+import { RIGHTS } from '@/content/sources';
 import { useLearner } from '@/app/state/useLearner';
 
 interface Entry {
@@ -36,7 +37,13 @@ export default function MorePage() {
       title: 'Inställningar',
       meta: 'Utseende, tillgänglighet, data',
     },
-    { to: '/om', icon: 'info', title: 'Om Vägklar', meta: 'Integritet, innehåll och version' },
+    { to: '/om', icon: 'info', title: 'Om Vägklar', meta: 'Så fungerar det, integritet och version' },
+    {
+      to: '/kallor',
+      icon: 'book',
+      title: 'Källor & rättigheter',
+      meta: 'Vilka källor Vägklar bygger på',
+    },
   ];
 
   return (
@@ -112,7 +119,9 @@ export default function MorePage() {
       </section>
 
       <p className={page.mutedNote}>
-        {DISCLAIMER}
+        {RIGHTS.copyright}
+        <br />
+        {RIGHTS.disclaimer}
         <br />
         Version {APP_VERSION}
       </p>

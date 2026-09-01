@@ -1,42 +1,158 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import page from '@/features/shared/Page.module.css';
+import styles from './ScenarioRunner.module.css';
 import { Button, ButtonLink } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { Callout, Pill, SectionHeading } from '@/ui/components/Primitives';
-import { IntersectionScene } from '@/ui/illustrations/IntersectionScene';
-import { getScenario } from '@/content/scenarios';
+import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
+import { getScenario, SCENARIOS } from '@/content/scenarios';
 import { getCategoryName } from '@/content/taxonomy';
+import {
+  buildReplaySequence,
+  evaluateHotspot,
+  evaluateOrder,
+  orderableVehicles,
+  replayProgressAt,
+  resolveScenario,
+} from '@/domain/scenarios/scenario';
+import { prefersReducedMotion } from '@/app/state/theme';
+import { useLearner } from '@/app/state/useLearner';
 
 /**
  * Scenario runner.
  *
- * Two interaction models over one data shape:
- *   - order-of-passage: tap vehicles in order
- *   - risk-spotting:    choose the hazard
+ * Two genuinely different jobs sit side by side on desktop: the situation on
+ * the left, everything you do about it on the right. On narrow screens they
+ * stack in reading order — title, prompt, scene, interaction, feedback.
  *
- * Both are operable from the keyboard, and both offer a list-based alternative
- * so the exercise never depends on pointing at a picture.
+ * Every interaction has both a visual and a list-based route, so the exercise
+ * never requires pointing at a picture.
  */
+
+const STEP_MS = 1150;
+const PAUSE_MS = 420;
+
 export default function ScenarioRunnerPage() {
   const { scenarioId } = useParams();
-  const scenario = scenarioId ? getScenario(scenarioId) : undefined;
+  const base = scenarioId ? getScenario(scenarioId) : undefined;
+  const { preferences } = useLearner();
 
+  const [variantId, setVariantId] = useState<string | null>(null);
   const [order, setOrder] = useState<string[]>([]);
   const [selectedHotspot, setSelectedHotspot] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
+  const [showOverlays, setShowOverlays] = useState(false);
 
-  const orderMap = useMemo(
-    () => Object.fromEntries(order.map((id, index) => [id, index + 1])),
-    [order],
+  /* ---- Replay state ------------------------------------------------- */
+  const [replayIndex, setReplayIndex] = useState<number | null>(null);
+  const [replayProgress, setReplayProgress] = useState(0);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const scenario = useMemo(
+    () => (base ? resolveScenario(base, variantId) : undefined),
+    [base, variantId],
   );
 
-  if (!scenario) return <Navigate to="/scenarier" replace />;
+  const sequence = useMemo(() => (scenario ? buildReplaySequence(scenario) : []), [scenario]);
+
+  const reduceMotion = preferences.motion === 'reduced' || (preferences.motion === 'system' && prefersReducedMotion());
+
+  const clearTimers = useCallback(() => {
+    for (const t of timers.current) clearTimeout(t);
+    timers.current = [];
+  }, []);
+
+  useEffect(() => clearTimers, [clearTimers]);
+
+  const reset = useCallback(() => {
+    clearTimers();
+    setOrder([]);
+    setSelectedHotspot(null);
+    setChecked(false);
+    setShowOverlays(false);
+    setReplayIndex(null);
+    setReplayProgress(0);
+  }, [clearTimers]);
+
+  /*
+   * Switching variant restarts the exercise, because it is a different
+   * question. Done here in the event handler rather than in an effect watching
+   * `variantId` — the reset is a consequence of the click, not of the render.
+   */
+  const selectVariant = useCallback(
+    (id: string | null) => {
+      reset();
+      setVariantId(id);
+    },
+    [reset],
+  );
+
+  const evaluation = useMemo(
+    () => (scenario ? evaluateOrder(scenario, order) : null),
+    [scenario, order],
+  );
+
+  const hotspotResult = useMemo(
+    () => (scenario ? evaluateHotspot(scenario, selectedHotspot) : null),
+    [scenario, selectedHotspot],
+  );
+
+  const startReplay = useCallback(() => {
+    if (sequence.length === 0) return;
+    clearTimers();
+    setChecked(true);
+    setReplayIndex(0);
+    // With reduced motion the cars never travel — not even as an instant jump.
+    // The sequence badges and the step caption carry the whole story instead.
+    setReplayProgress(0);
+
+    sequence.forEach((_, index) => {
+      const at = index * (STEP_MS + PAUSE_MS);
+      timers.current.push(
+        setTimeout(() => {
+          setReplayIndex(index);
+          if (!reduceMotion) {
+            setReplayProgress(0);
+            // Next frame, so the CSS transition has a start value to move from.
+            timers.current.push(setTimeout(() => setReplayProgress(1), 40));
+          }
+        }, at),
+      );
+    });
+
+    timers.current.push(
+      setTimeout(
+        () => setReplayIndex(sequence.length - 1),
+        sequence.length * (STEP_MS + PAUSE_MS),
+      ),
+    );
+  }, [sequence, clearTimers, reduceMotion]);
+
+  const stopReplay = useCallback(() => {
+    clearTimers();
+    setReplayIndex(null);
+    setReplayProgress(0);
+  }, [clearTimers]);
+
+  if (!scenario || !base) return <Navigate to="/scenarier" replace />;
 
   const isOrdering = scenario.kind === 'order-of-passage';
-  const correct = isOrdering
-    ? JSON.stringify(order) === JSON.stringify(scenario.correctOrder ?? [])
-    : (scenario.hotspots?.find((h) => h.id === selectedHotspot)?.isRisk ?? false);
+  const orderable = orderableVehicles(scenario);
+  const orderMap = Object.fromEntries(order.map((id, index) => [id, index + 1]));
+
+  const canCheck = isOrdering ? order.length === orderable.length : selectedHotspot !== null;
+  const correct = isOrdering ? (evaluation?.correct ?? false) : (hotspotResult?.correct ?? false);
+
+  const replayActive = replayIndex !== null;
+  const activeReplay = replayActive ? sequence[replayIndex] : undefined;
+
+  // Reduced motion: no positions are handed to the stage at all, so every car
+  // stays exactly where it started and only the sequence badges change.
+  const stageProgress =
+    replayActive && !reduceMotion
+      ? replayProgressAt(sequence, replayIndex, replayProgress)
+      : undefined;
 
   const toggleVehicle = (vehicleId: string) => {
     if (checked) return;
@@ -47,15 +163,12 @@ export default function ScenarioRunnerPage() {
     );
   };
 
-  const reset = () => {
-    setOrder([]);
-    setSelectedHotspot(null);
-    setChecked(false);
+  const undo = () => {
+    if (checked) return;
+    setOrder((current) => current.slice(0, -1));
   };
 
-  const canCheck = isOrdering
-    ? order.length === scenario.vehicles.length
-    : selectedHotspot !== null;
+  const nextScenario = SCENARIOS[(SCENARIOS.findIndex((s) => s.id === base.id) + 1) % SCENARIOS.length];
 
   return (
     <div className={page.page}>
@@ -65,185 +178,347 @@ export default function ScenarioRunnerPage() {
           Scenariolabbet
         </Link>
         <h1 className={page.title}>{scenario.title}</h1>
-        <p className={page.lead}>{scenario.prompt}</p>
+        <p className={page.lead}>
+          {getCategoryName(scenario.categoryId)} · {scenario.ruleTested}
+        </p>
       </header>
 
-      <div className={page.panel}>
-        <IntersectionScene
-          scenario={scenario}
-          order={orderMap}
-          onSelect={isOrdering ? toggleVehicle : undefined}
-          revealed={checked && isOrdering}
-        />
-      </div>
-
-      {/* Non-visual alternative — always present, not a fallback. */}
-      <section aria-labelledby="choices-heading">
-        <SectionHeading
-          title={isOrdering ? 'Välj ordning' : 'Vad är risken?'}
-          id="choices-heading"
-          level={3}
-        />
-
-        {isOrdering ? (
-          <div className={page.rows}>
-            {scenario.vehicles.map((vehicle) => {
-              const position = orderMap[vehicle.id];
-              return (
-                <button
-                  key={vehicle.id}
-                  type="button"
-                  className={page.row}
-                  onClick={() => toggleVehicle(vehicle.id)}
-                  disabled={checked}
-                  aria-pressed={position !== undefined}
-                >
-                  <span
-                    className={page.rowIcon}
-                    style={
-                      position
-                        ? {
-                            backgroundColor: 'var(--color-primary)',
-                            color: 'var(--color-on-primary)',
-                            fontWeight: 700,
-                          }
-                        : undefined
-                    }
-                  >
-                    {position ?? <Icon name="plus" size={16} />}
-                  </span>
-                  <span>
-                    <span className={page.rowTitle}>{vehicle.label}</span>
-                    <span className={page.rowMeta}>
-                      {vehicle.intent === 'straight'
-                        ? 'Ska rakt fram'
-                        : vehicle.intent === 'left'
-                          ? 'Ska svänga vänster'
-                          : 'Ska svänga höger'}
-                      {vehicle.isEgo ? ' · det här är du' : ''}
-                    </span>
-                  </span>
-                  <span />
-                </button>
-              );
-            })}
+      <div className={styles.workspace}>
+        {/* ---- Stage ---------------------------------------------------- */}
+        <section className={styles.stagePanel} aria-label="Trafiksituation">
+          <div className={styles.stageBox}>
+            <ScenarioStage
+              scenario={scenario}
+              order={orderMap}
+              onSelectVehicle={isOrdering && !checked ? toggleVehicle : undefined}
+              onSelectHotspot={!isOrdering && !checked ? setSelectedHotspot : undefined}
+              selectedHotspot={selectedHotspot}
+              revealed={checked && isOrdering}
+              showOverlays={showOverlays}
+              {...(stageProgress ? { replayProgress: stageProgress } : {})}
+              replayStep={replayIndex}
+              replayDurationMs={reduceMotion ? 0 : STEP_MS}
+            />
           </div>
-        ) : (
-          <div className={page.rows}>
-            {(scenario.hotspots ?? []).map((hotspot) => (
-              <button
-                key={hotspot.id}
-                type="button"
-                className={page.row}
-                onClick={() => !checked && setSelectedHotspot(hotspot.id)}
-                disabled={checked}
-                aria-pressed={selectedHotspot === hotspot.id}
-                style={
-                  selectedHotspot === hotspot.id
-                    ? { borderColor: 'var(--color-primary)' }
-                    : undefined
-                }
-              >
-                <span
-                  className={page.rowIcon}
-                  style={
-                    checked && selectedHotspot === hotspot.id
-                      ? {
-                          backgroundColor: hotspot.isRisk
-                            ? 'var(--color-success-soft)'
-                            : 'var(--color-danger-soft)',
-                          color: hotspot.isRisk
-                            ? 'var(--color-success-strong)'
-                            : 'var(--color-danger-strong)',
-                        }
-                      : undefined
-                  }
-                >
-                  <Icon name="eye" size={17} />
-                </span>
-                <span>
-                  <span className={page.rowTitle}>{hotspot.label}</span>
-                  {checked && <span className={page.rowMeta}>{hotspot.explanation}</span>}
-                </span>
-                <span />
-              </button>
-            ))}
-          </div>
-        )}
-      </section>
 
-      {!checked ? (
-        <div className={page.actions}>
-          <Button size="lg" onClick={() => setChecked(true)} disabled={!canCheck}>
-            Kontrollera
-          </Button>
-          {(order.length > 0 || selectedHotspot) && (
-            <Button size="lg" variant="secondary" onClick={reset}>
-              Börja om
-            </Button>
+          {replayActive && activeReplay ? (
+            <p className={styles.replayCaption} aria-live="polite">
+              <span className={styles.replayStepBadge}>{activeReplay.index + 1}</span>
+              <span>{activeReplay.caption}</span>
+            </p>
+          ) : (
+            <div className={styles.stageFooter}>
+              <span className={styles.stageHint}>
+                {isOrdering
+                  ? checked
+                    ? 'Grön siffra visar rätt ordning.'
+                    : 'Tryck på ett fordon i bilden eller välj i listan.'
+                  : 'Tryck på ett område i bilden eller välj i listan.'}
+              </span>
+            </div>
           )}
-        </div>
-      ) : (
-        <>
-          <Callout tone={correct ? 'success' : 'warning'}>
-            <strong>{correct ? 'Rätt.' : 'Inte riktigt.'}</strong> {scenario.explanation}
-          </Callout>
+        </section>
 
-          {scenario.stepExplanations && scenario.correctOrder && (
-            <section aria-labelledby="steps-heading">
-              <SectionHeading title="Steg för steg" id="steps-heading" level={3} />
-              <div className={page.rows}>
-                {scenario.correctOrder.map((vehicleId, index) => {
-                  const vehicle = scenario.vehicles.find((v) => v.id === vehicleId);
-                  return (
-                    <div className={page.row} key={vehicleId}>
-                      <span
-                        className={page.rowIcon}
-                        style={{
-                          backgroundColor: 'var(--color-success-soft)',
-                          color: 'var(--color-success-strong)',
-                          fontWeight: 700,
-                        }}
+        {/* ---- Interaction --------------------------------------------- */}
+        <div className={styles.panel}>
+          <p className={styles.prompt}>{scenario.prompt}</p>
+
+          {isOrdering && (
+            <>
+              <div>
+                <div className={styles.sectionLabel} id="order-label">
+                  Din ordning
+                </div>
+                <div className={styles.orderPreview} aria-labelledby="order-label" aria-live="polite">
+                  {order.length === 0 ? (
+                    <span className={styles.orderEmpty}>Ingen vald än</span>
+                  ) : (
+                    order.map((id, index) => {
+                      const vehicle = scenario.vehicles.find((v) => v.id === id);
+                      return (
+                        <span key={id} style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                          {index > 0 && (
+                            <span className={styles.orderArrow} aria-hidden="true">
+                              →
+                            </span>
+                          )}
+                          <span className={styles.orderChip}>
+                            {index + 1}. {vehicle?.label ?? id}
+                          </span>
+                        </span>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <div className={styles.sectionLabel} id="choices-label">
+                  Välj ordning
+                </div>
+                <div className={styles.choices} role="group" aria-labelledby="choices-label">
+                  {orderable.map((vehicle) => {
+                    const position = orderMap[vehicle.id];
+                    const selected = position !== undefined;
+                    return (
+                      <button
+                        key={vehicle.id}
+                        type="button"
+                        className={[styles.choice, selected ? styles.choiceSelected : '']
+                          .filter(Boolean)
+                          .join(' ')}
+                        onClick={() => toggleVehicle(vehicle.id)}
+                        disabled={checked}
+                        aria-pressed={selected}
                       >
-                        {index + 1}
+                        {/* Leading badge is the vehicle's identity, matching the
+                            scene. The chosen position gets its own pill on the
+                            right, so nothing is shown twice. */}
+                        <span className={styles.choiceBadge}>{vehicle.label}</span>
+                        <span>
+                          <span className={styles.choiceLabel}>
+                            {vehicle.isEgo ? 'Din bil' : `Fordon ${vehicle.label}`}
+                            {vehicle.isEgo && (
+                              <span className={styles.egoChip} aria-hidden="true">
+                                DIN BIL
+                              </span>
+                            )}
+                          </span>
+                          <span className={styles.choiceMeta}>{vehicle.description}</span>
+                        </span>
+                        {selected ? (
+                          <span className={styles.positionPill} aria-hidden="true">
+                            {position}
+                          </span>
+                        ) : (
+                          <span aria-hidden="true">
+                            <Icon name="plus" size={17} />
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
+
+          {!isOrdering && (
+            <div>
+              <div className={styles.sectionLabel} id="risk-label">
+                Vad är risken?
+              </div>
+              <div className={styles.choices} role="group" aria-labelledby="risk-label">
+                {(scenario.hotspots ?? []).map((hotspot) => {
+                  const selected = selectedHotspot === hotspot.id;
+                  return (
+                    <button
+                      key={hotspot.id}
+                      type="button"
+                      className={[styles.choice, selected ? styles.choiceSelected : '']
+                        .filter(Boolean)
+                        .join(' ')}
+                      onClick={() => setSelectedHotspot(hotspot.id)}
+                      disabled={checked}
+                      aria-pressed={selected}
+                    >
+                      <span className={styles.choiceBadge}>
+                        <Icon name="eye" size={16} />
                       </span>
                       <span>
-                        <span className={page.rowTitle}>{vehicle?.label ?? vehicleId}</span>
-                        <span className={page.rowMeta}>
-                          {scenario.stepExplanations?.[index] ?? ''}
-                        </span>
+                        <span className={styles.choiceLabel}>{hotspot.label}</span>
+                        {checked && <span className={styles.choiceMeta}>{hotspot.explanation}</span>}
                       </span>
-                      <span />
-                    </div>
+                      <span aria-hidden="true">
+                        <Icon name={selected ? 'check' : 'plus'} size={17} />
+                      </span>
+                    </button>
                   );
                 })}
               </div>
-            </section>
+            </div>
           )}
 
-          <div className={page.actions}>
-            <Button size="lg" variant="secondary" onClick={reset} icon="refresh">
-              Prova igen
-            </Button>
-            <ButtonLink
-              to={`/utveckling/omrade/${scenario.subcategory}`}
-              size="lg"
-              variant="secondary"
-            >
-              Träna {scenario.ruleTested.toLowerCase()}
-            </ButtonLink>
-            <ButtonLink to="/scenarier" size="lg">
-              Nästa scenario
-            </ButtonLink>
-          </div>
-        </>
+          {/* ---- Actions ------------------------------------------------ */}
+          {!checked ? (
+            <div className={styles.actions}>
+              <Button onClick={() => setChecked(true)} disabled={!canCheck}>
+                Kontrollera
+              </Button>
+              {isOrdering && (
+                <Button variant="secondary" onClick={undo} disabled={order.length === 0}>
+                  Ångra senaste
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                onClick={reset}
+                disabled={order.length === 0 && selectedHotspot === null}
+              >
+                Börja om
+              </Button>
+            </div>
+          ) : (
+            <div className={styles.actions}>
+              {isOrdering &&
+                (replayActive ? (
+                  <Button variant="secondary" icon="close" onClick={stopReplay}>
+                    Stoppa
+                  </Button>
+                ) : (
+                  <Button variant="secondary" icon="play" onClick={startReplay}>
+                    Spela upp
+                  </Button>
+                ))}
+              <Button
+                variant={showOverlays ? 'soft' : 'secondary'}
+                icon="eye"
+                onClick={() => setShowOverlays((v) => !v)}
+                aria-pressed={showOverlays}
+              >
+                {showOverlays ? 'Dölj reglerna' : 'Visa reglerna'}
+              </Button>
+              <Button variant="ghost" icon="refresh" onClick={reset}>
+                Försök igen
+              </Button>
+            </div>
+          )}
+
+          {/* ---- Feedback ----------------------------------------------- */}
+          {checked && (
+            <div className={styles.feedback} role="status">
+              <div
+                className={[styles.verdict, correct ? styles.verdictCorrect : styles.verdictWrong].join(
+                  ' ',
+                )}
+              >
+                <Icon name={correct ? 'check-circle' : 'x-circle'} size={22} />
+                {correct ? 'Rätt' : 'Inte riktigt'}
+              </div>
+
+              {isOrdering && !correct && evaluation?.mistakeSummary && (
+                <p className={styles.mistake}>{evaluation.mistakeSummary}</p>
+              )}
+
+              {!isOrdering && hotspotResult?.explanation && (
+                <p className={styles.mistake}>{hotspotResult.explanation}</p>
+              )}
+
+              <p className={styles.mistake} style={{ color: 'var(--color-text-secondary)' }}>
+                {scenario.explanation}
+              </p>
+
+              {isOrdering && evaluation && evaluation.steps.length > 0 && (
+                <div>
+                  <div className={styles.sectionLabel} style={{ marginBottom: 'var(--space-2)' }}>
+                    Rätt ordning
+                  </div>
+                  <ol className={styles.steps}>
+                    {evaluation.steps.map((step) => (
+                      <li
+                        key={step.vehicleId}
+                        className={[
+                          styles.step,
+                          replayActive && activeReplay?.vehicleId === step.vehicleId
+                            ? styles.stepActive
+                            : '',
+                        ]
+                          .filter(Boolean)
+                          .join(' ')}
+                      >
+                        <span className={styles.stepNumber}>{step.position}</span>
+                        <span>
+                          <span className={styles.stepVehicle}>
+                            {step.label}
+                            {step.isEgo ? ' — din bil' : ''}
+                          </span>
+                          <span className={styles.stepText}>{step.explanation}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ---- Variants ------------------------------------------------ */}
+          {(base.variants?.length ?? 0) > 0 && (
+            <div>
+              <div className={styles.sectionLabel} style={{ marginBottom: 'var(--space-2)' }}>
+                Vad förändras om…
+              </div>
+              <div className={styles.variants}>
+                <button
+                  type="button"
+                  className={[styles.variantChip, variantId === null ? styles.variantActive : '']
+                    .filter(Boolean)
+                    .join(' ')}
+                  onClick={() => selectVariant(null)}
+                  aria-pressed={variantId === null}
+                >
+                  <span className={styles.variantIcon}>
+                    <Icon name="home" size={15} />
+                  </span>
+                  <span>
+                    <span className={styles.variantLabel}>Grundsituationen</span>
+                    <span className={styles.variantQuestion}>Korsningen utan extra skyltning</span>
+                  </span>
+                </button>
+
+                {(base.variants ?? []).map((variant) => (
+                  <button
+                    key={variant.id}
+                    type="button"
+                    className={[styles.variantChip, variantId === variant.id ? styles.variantActive : '']
+                      .filter(Boolean)
+                      .join(' ')}
+                    onClick={() => selectVariant(variant.id)}
+                    aria-pressed={variantId === variant.id}
+                  >
+                    <span className={styles.variantIcon}>
+                      <Icon name="sparkle" size={15} />
+                    </span>
+                    <span>
+                      <span className={styles.variantLabel}>{variant.label}</span>
+                      <span className={styles.variantQuestion}>{variant.question}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Textual replay sequence — the replay is never purely visual. */}
+      {isOrdering && sequence.length > 0 && (
+        <ol className={styles.srOnlyList} aria-label="Händelseförlopp i ordning">
+          {sequence.map((step) => (
+            <li key={step.vehicleId}>
+              {step.index + 1}. {step.label}: {step.caption}
+            </li>
+          ))}
+        </ol>
       )}
 
-      <div>
-        <Pill tone="outline">
-          {getCategoryName(scenario.categoryId)} · {scenario.ruleTested}
-        </Pill>
+      <SectionHeading title="Fortsätt" level={3} />
+      <div className={page.actions}>
+        <ButtonLink to={`/utveckling/omrade/${scenario.subcategory}`} variant="secondary">
+          Träna {scenario.ruleTested.toLowerCase()}
+        </ButtonLink>
+        {nextScenario && nextScenario.id !== base.id && (
+          <ButtonLink to={`/scenarier/${nextScenario.id}`} iconAfter="arrow-right">
+            Nästa scenario
+          </ButtonLink>
+        )}
       </div>
+
+      <Callout tone="neutral" icon="info">
+        <Pill tone="outline">{getCategoryName(scenario.categoryId)}</Pill>{' '}
+        Situationen är Vägklars egen illustration. Reglerna följer{' '}
+        {scenario.sourceReferences.map((s) => s.name).join(', ')}.
+      </Callout>
     </div>
   );
 }

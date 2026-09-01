@@ -32,6 +32,32 @@ Det är ett medvetet, ärligt val. Frågorna är skrivna mot Trafikförordningen
 trafikkunskap, men de har inte kontrollerats mot källtexterna av en sakkunnig. Innan Vägklar
 används skarpt bör innehållet gå igenom granskningsflödet nedan.
 
+**Ingenting märks som `verified` bara för att en modell har skrivit det, och inte heller
+för att det finns en sidhänvisning bredvid.** En sidhänvisning säger var något kan läsas
+vidare — inte att någon har läst det.
+
+## Källhänvisningar och rättigheter
+
+En källhänvisning kan peka in i källregistret
+([`src/content/sources.ts`](../src/content/sources.ts)) med `sourceId` och `sourcePages`.
+Registret är den enda platsen där en källa beskrivs, och ett test avvisar ett `sourceId`
+som inte finns där eller ett sidnummer utanför källans sidantal.
+
+Regler för allt författande:
+
+- Skriv med egna ord. Återge aldrig text, bild eller fråga ur en källa.
+- Kopiera aldrig Trafikverkets provfrågor, och påstå aldrig att en fråga är en sådan.
+- Tillskriv aldrig Vägklar material som tillhör någon annan.
+- Källdokument stannar i `references/` — de checkas inte in och publiceras inte.
+
+Se [SOURCES-AND-RIGHTS.md](SOURCES-AND-RIGHTS.md).
+
+## Var det saknas frågor
+
+[`docs/CONTENT-COVERAGE.md`](CONTENT-COVERAGE.md) listar luckorna i prioritetsordning,
+med kapitel och sidhänvisning. Prioritet 1 är kärnbegrepp helt utan frågor — börja där.
+Rapporten genereras med `npm run report:coverage` och ska inte redigeras för hand.
+
 ## Att lägga till en fråga
 
 Frågor skrivs med hjälparna i

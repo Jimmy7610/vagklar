@@ -46,6 +46,7 @@ export const LESSONS: Lesson[] = [
         text: 'Alla detaljregler kan sammanfattas i en fråga: vad skulle en försiktig förare göra här?',
       },
     ],
+    curriculumChapterIds: ['inledning', 'korfalt'],
     checkQuestionIds: ['tra-001', 'tra-005', 'kor-014'],
   },
   {
@@ -92,6 +93,7 @@ export const LESSONS: Lesson[] = [
       },
       { kind: 'memory', text: 'Ingen skylt? Titta höger.' },
     ],
+    curriculumChapterIds: ['vajningsregler', 'cirkulationsplats'],
     checkQuestionIds: ['kor-001', 'kor-009', 'kor-014'],
   },
   {
@@ -135,6 +137,7 @@ export const LESSONS: Lesson[] = [
       },
       { kind: 'memory', text: 'Kommer du inte från en väg — då väjer du för alla.' },
     ],
+    curriculumChapterIds: ['vajningsregler', 'passager'],
     checkQuestionIds: ['kor-002', 'kor-003'],
   },
   {
@@ -171,6 +174,7 @@ export const LESSONS: Lesson[] = [
       },
       { kind: 'memory', text: 'Skylten är taket, väglaget är verkligheten.' },
     ],
+    curriculumChapterIds: ['inledning', 'speciella-gator', 'landsvag'],
     checkQuestionIds: ['has-001', 'has-002', 'has-003', 'has-006'],
   },
   {
@@ -206,6 +210,7 @@ export const LESSONS: Lesson[] = [
       },
       { kind: 'memory', text: 'Reaktion växer rakt. Bromsning växer i kvadrat.' },
     ],
+    curriculumChapterIds: ['bromsar', 'dack', 'strackor'],
     checkQuestionIds: ['man-001', 'man-002', 'has-005', 'man-003'],
   },
   {
@@ -251,6 +256,7 @@ export const LESSONS: Lesson[] = [
         text: 'Ett rött streck på skylten: du får stanna. Två streck som bildar ett kryss: du får ingetdera.',
       },
     ],
+    curriculumChapterIds: ['stanna-parkera'],
     checkQuestionIds: ['par-001', 'par-002', 'par-004', 'par-006'],
   },
   {
@@ -296,6 +302,7 @@ export const LESSONS: Lesson[] = [
       },
       { kind: 'memory', text: 'Ser du 50 meter kan du inte stanna på 90.' },
     ],
+    curriculumChapterIds: ['belysning', 'synen'],
     checkQuestionIds: ['mor-001', 'mor-003', 'mor-004', 'mor-005'],
   },
   {
@@ -336,6 +343,7 @@ export const LESSONS: Lesson[] = [
       },
       { kind: 'memory', text: 'Broar fryser först. Släpp gasen, håll rakt, gör ingenting.' },
     ],
+    curriculumChapterIds: ['vinter', 'dack'],
     checkQuestionIds: ['hal-001', 'hal-004', 'hal-005', 'for-001'],
   },
   {
@@ -373,6 +381,7 @@ export const LESSONS: Lesson[] = [
       },
       { kind: 'memory', text: 'Kort fartskillnad, lång omkörning.' },
     ],
+    curriculumChapterIds: ['omkorningar', 'motorvag'],
     checkQuestionIds: ['omk-001', 'omk-002', 'omk-003', 'omk-008'],
   },
   {
@@ -412,6 +421,7 @@ export const LESSONS: Lesson[] = [
       },
       { kind: 'memory', text: 'Ser du en boll — bromsa för barnet.' },
     ],
+    curriculumChapterIds: ['trafikolyckor', 'trotthet', 'alkohol', 'nedsatt-formaga', 'barn'],
     checkQuestionIds: ['ris-001', 'ris-002', 'ris-004', 'ris-007'],
   },
 ];

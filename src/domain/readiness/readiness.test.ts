@@ -265,3 +265,38 @@ describe('isoDate', () => {
     expect(isoDate(new Date(2025, 0, 5, 13, 30).getTime())).toBe('2025-01-05');
   });
 });
+
+describe('first estimate threshold', () => {
+  it('says nothing at all until there is enough to say', () => {
+    for (let answered = 0; answered < READINESS.firstEstimateAnswers; answered += 1) {
+      const result = computeReadiness({
+        ...emptyInput,
+        mastery: fullMastery(0.9),
+        answers: makeAnswers(answered, 1),
+      });
+      expect(result.score, `${answered} answers`).toBeNull();
+      expect(result.band).toBe('none');
+      expect(result.answersUntilEstimate).toBe(READINESS.firstEstimateAnswers - answered);
+    }
+  });
+
+  it('produces an estimate as soon as the threshold is reached', () => {
+    const result = computeReadiness({
+      ...emptyInput,
+      mastery: fullMastery(0.9),
+      answers: makeAnswers(READINESS.firstEstimateAnswers, 1),
+    });
+    expect(result.score).not.toBeNull();
+    expect(result.answersUntilEstimate).toBe(0);
+  });
+
+  it('counts down honestly rather than showing a fabricated number', () => {
+    const result = computeReadiness({
+      ...emptyInput,
+      mastery: fullMastery(1),
+      answers: makeAnswers(2, 1),
+    });
+    expect(result.score).toBeNull();
+    expect(result.answersUntilEstimate).toBe(3);
+  });
+});

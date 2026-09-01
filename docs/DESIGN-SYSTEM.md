@@ -14,6 +14,11 @@ Ljus botten `#F7F8F5`, ytor vita, text `#172126`, primär teal `#176B68`. Mörkt
 inte inverterat: botten `#0C1518`, ytor `#142126`, primär `#53B9AE` — en ljusare teal, eftersom
 den mörka fungerar dåligt mot mörk bakgrund.
 
+Sekundär- och tertiärtext är satta på uppmätt kontrast, inte på ögonmått:
+`--color-text-secondary` `#657478` (4,56:1 mot botten) och `--color-text-tertiary` `#687476`
+(4,53:1). I mörkt läge lyftes tertiärtexten till `#8b9b9f` (5,71:1 mot yta). Samtliga
+klarar WCAG AA för brödtext.
+
 Det upplösta temat skrivs alltid till `<html data-theme>`. Ett litet skript i `index.html` läser
 `localStorage`-spegeln före första målningen, så fel palett hinner aldrig blinka till.
 
@@ -107,3 +112,17 @@ Ensparts­rutnät sätter därför `grid-template-columns: minmax(0, 1fr)`. Det 
 
 Säkerhetszoner (`env(safe-area-inset-*)`) respekteras i bottennavigationen, i fokuslägenas fotrader
 och i modalerna.
+
+### Kvadratiskt innehåll behöver takhöjd
+
+En kvadratisk yta som bara begränsas av bredd blir högre än fönstret så snart kolumnen
+är bred. Scenariolabbets scen begränsas därför av *både* bredd och fönsterhöjd:
+
+```css
+.stageBox { max-width: min(100%, 560px); aspect-ratio: 1 / 1; }
+@media (min-width: 1024px) { .stageBox { max-width: min(100%, 54vh, 620px); } }
+@media (max-height: 520px)  { .stageBox { max-width: min(100%, 68vh); } }
+```
+
+Regeln är generell: när en yta har fast proportion ska den mätas mot vyporten, inte
+bara mot sin spalt. Se [SCENARIO-LAB.md](SCENARIO-LAB.md) och [QA.md](QA.md).

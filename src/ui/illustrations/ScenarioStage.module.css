@@ -1,0 +1,189 @@
+.stage {
+  --asphalt: #7c898c;
+  --asphalt-dark: #6d797c;
+  --ground: #dfe6e0;
+  --ground-alt: #d4ddd6;
+  --lane: #f6f8f6;
+  --kerb: #c3cdc5;
+  --ego: #176b68;
+  --ego-ink: #ffffff;
+  --other: #3e5a63;
+  --other-ink: #ffffff;
+  --parked: #8794a0;
+  --bike: #b4633a;
+  --pedestrian: #9a5aa8;
+  --badge-ink: #0f2e33;
+  --overlay: #f2b84b;
+  --overlay-strong: #d98c1f;
+  --conflict: #d94a4a;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-md);
+  background-color: var(--ground);
+}
+
+[data-theme='dark'] .stage {
+  --asphalt: #3d4c50;
+  --asphalt-dark: #35444a;
+  --ground: #1b2b2f;
+  --ground-alt: #17262a;
+  --lane: #9fb2b5;
+  --kerb: #2a3b40;
+  --ego: #53b9ae;
+  --ego-ink: #06211f;
+  --other: #7d949c;
+  --other-ink: #0f2126;
+  --parked: #5b6c72;
+  --overlay: #f5c46a;
+  --overlay-strong: #f5c46a;
+  --conflict: #f0706e;
+}
+
+/* ---- Vehicles ----------------------------------------------------------- */
+.vehicle {
+  transition: opacity var(--dur-base) var(--ease-standard);
+}
+
+.selectable {
+  cursor: pointer;
+}
+
+.selectable:focus {
+  outline: none;
+}
+
+.hit {
+  fill: transparent;
+}
+
+.selectable:hover .body {
+  stroke: var(--overlay-strong);
+  stroke-width: 1.6;
+}
+
+.selectable:focus-visible .focusRing {
+  opacity: 1;
+}
+
+.focusRing {
+  fill: none;
+  stroke: var(--color-focus);
+  stroke-width: 2;
+  opacity: 0;
+}
+
+.body {
+  stroke: transparent;
+  stroke-width: 0;
+  transition: stroke var(--dur-fast) var(--ease-standard);
+}
+
+.chosen .body {
+  stroke: var(--overlay-strong);
+  stroke-width: 1.8;
+}
+
+.dimmed {
+  opacity: 0.34;
+}
+
+/* The vehicle the current replay step is about. With motion switched off this
+   emphasis — not movement — is what tells the sequence apart. */
+.replayActive .body {
+  stroke: var(--color-primary);
+  stroke-width: 2.4;
+}
+
+/* ---- Labels ------------------------------------------------------------- */
+.badge {
+  font-family: system-ui, sans-serif;
+  font-size: 6.2px;
+  font-weight: 700;
+  fill: var(--badge-ink);
+  paint-order: stroke;
+  stroke: var(--lane);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+
+.egoTag {
+  font-family: system-ui, sans-serif;
+  font-size: 3.5px;
+  font-weight: 700;
+  letter-spacing: 0.12px;
+  fill: var(--badge-ink);
+  paint-order: stroke;
+  stroke: var(--lane);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+
+.orderBadgeText {
+  font-family: system-ui, sans-serif;
+  font-size: 5.4px;
+  font-weight: 700;
+  fill: #0f2e33;
+}
+
+/* ---- Overlays ----------------------------------------------------------- */
+.overlayLine {
+  stroke: var(--overlay-strong);
+  stroke-width: 1.1;
+  stroke-dasharray: 3 2.2;
+  fill: none;
+}
+
+.pathLine {
+  stroke: var(--overlay-strong);
+  stroke-width: 1.4;
+  stroke-dasharray: 4 2.5;
+  fill: none;
+  opacity: 0.9;
+}
+
+.conflictMark {
+  stroke: var(--conflict);
+  stroke-width: 1.4;
+  fill: none;
+}
+
+.noteText {
+  font-family: system-ui, sans-serif;
+  font-size: 3.6px;
+  font-weight: 600;
+  fill: var(--badge-ink);
+  paint-order: stroke;
+  stroke: var(--lane);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+
+/* ---- Replay ------------------------------------------------------------- */
+.moving {
+  transition: transform var(--replay-duration, 1200ms) cubic-bezier(0.37, 0, 0.36, 1);
+}
+
+/* With reduced motion the cars do not travel; the sequence badges carry the
+   information instead. */
+@media (prefers-reduced-motion: reduce) {
+  .moving {
+    transition: none;
+  }
+}
+
+[data-reduced-motion='true'] .moving {
+  transition: none;
+}
+
+.sequenceBadge {
+  animation: sequencePulse var(--dur-slow) var(--ease-out);
+}
+
+@keyframes sequencePulse {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}

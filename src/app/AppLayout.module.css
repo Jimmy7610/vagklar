@@ -237,13 +237,16 @@
 
   .content {
     padding-top: var(--space-8);
-    max-width: 1080px;
+    /* Fluid rather than fixed: a little more room on large screens without
+       letting reading columns grow past a comfortable measure. Text blocks
+       keep their own max-width. */
+    max-width: clamp(1040px, 82vw, 1180px);
   }
 }
 
 @media (min-width: 1440px) {
   .content {
-    max-width: 1160px;
+    max-width: clamp(1160px, 78vw, 1320px);
   }
 }
 

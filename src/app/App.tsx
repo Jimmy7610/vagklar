@@ -37,6 +37,7 @@ const ScenarioRunnerPage = lazy(() => import('@/features/scenarios/ScenarioRunne
 const MorePage = lazy(() => import('@/features/more/MorePage'));
 const SettingsPage = lazy(() => import('@/features/settings/SettingsPage'));
 const AboutPage = lazy(() => import('@/features/more/AboutPage'));
+const SourcesPage = lazy(() => import('@/features/more/SourcesPage'));
 const OnboardingPage = lazy(() => import('@/features/onboarding/OnboardingPage'));
 
 /** Scroll to the top on navigation, but never mid-question. */
@@ -109,6 +110,7 @@ function AppRoutes() {
         <Route path="/mer" element={<MorePage />} />
         <Route path="/installningar" element={<SettingsPage />} />
         <Route path="/om" element={<AboutPage />} />
+        <Route path="/kallor" element={<SourcesPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/hem" replace />} />

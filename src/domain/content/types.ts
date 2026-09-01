@@ -51,6 +51,15 @@ export interface SourceReference {
   verifiedAt: string | null;
   /** Which version/edition of the rule the statement was checked against. */
   ruleVersion?: string;
+  /**
+   * Id into the source registry (src/content/sources.ts). Preferred over
+   * repeating publisher, edition and rights-holder strings here — the registry
+   * owns those, so attribution stays consistent and editions are updated in
+   * one place.
+   */
+  sourceId?: string;
+  /** Pages in the referenced source that support the statement. */
+  sourcePages?: number[];
 }
 
 export interface QuestionAnswer {
@@ -177,25 +186,117 @@ export interface Lesson {
   blocks: LessonBlock[];
   /** Ids of questions used as the end-of-lesson check. */
   checkQuestionIds: string[];
+  /**
+   * Curriculum chapters (src/content/curriculum/curriculum.ts) this lesson
+   * teaches. The theory school and the coverage report therefore answer the
+   * same question — "which part of the syllabus is this?" — from one map
+   * rather than two hand-kept lists.
+   */
+  curriculumChapterIds: string[];
   order: number;
 }
 
-/* ---- Scenario Lab ------------------------------------------------------- */
+
+/* ==========================================================================
+   Scenario Lab
+   --------------------------------------------------------------------------
+   A scenario is data, not code. Everything the stage draws — roads, markings,
+   signs, vehicles, overlays — and everything the learner interacts with is
+   described here, in a single 100×100 coordinate space with y pointing down
+   and heading 0 pointing north. New situations are authored by adding data;
+   no new drawing code is required.
+   ========================================================================== */
+
+export type ScenarioLayout =
+  | 'crossroads'
+  | 't-junction'
+  | 'roundabout'
+  | 'street-scene'
+  | 'motorway-merge';
+
+export type ScenarioVehicleRole =
+  | 'car'
+  | 'truck'
+  | 'bus'
+  | 'bicycle'
+  | 'pedestrian'
+  | 'tram'
+  | 'emergency';
+
+export type ScenarioIntent = 'straight' | 'left' | 'right' | 'stop';
+
+export interface ScenarioPoint {
+  x: number;
+  y: number;
+}
 
 export interface ScenarioVehicle {
   id: string;
+  /** Short badge shown in the scene and the answer list: "A", "B", "C". */
   label: string;
-  /** Grid position in the 100×100 scenario coordinate space. */
+  /** Full description, used by assistive technology and the answer list. */
+  description: string;
+  role: ScenarioVehicleRole;
+  /** Position in the 100×100 space. */
   x: number;
   y: number;
-  /** Direction of travel in degrees; 0 = north/up. */
+  /** Direction of travel in degrees; 0 = north. */
   heading: number;
-  /** Where the vehicle intends to go. */
-  intent: 'straight' | 'left' | 'right';
-  kind: 'car' | 'truck' | 'bicycle' | 'pedestrian' | 'tram' | 'emergency';
-  /** True for the vehicle the learner is driving. */
+  intent: ScenarioIntent;
+  /** True for the vehicle the learner is driving. Marked with a label, not just colour. */
   isEgo?: boolean;
+  /**
+   * Waypoints the vehicle follows during replay, starting from its position.
+   * Omitted for vehicles that stay put.
+   */
+  path?: ScenarioPoint[];
 }
+
+/** A road sign placed in the scene, drawn from the shared sign set. */
+export interface ScenarioSign {
+  id: string;
+  /** Key into ui/illustrations/RoadSign. */
+  sign: string;
+  x: number;
+  y: number;
+  /** Named so it can be read aloud and listed in the description. */
+  label: string;
+}
+
+/** Road markings drawn on top of the base layout. */
+export type ScenarioMarkingKind =
+  | 'stop-line'
+  | 'yield-line'
+  | 'crossing'
+  | 'cycle-crossing'
+  | 'arrow';
+
+export interface ScenarioMarking {
+  id: string;
+  kind: ScenarioMarkingKind;
+  x: number;
+  y: number;
+  /** Degrees; 0 means the marking runs east–west. */
+  rotation?: number;
+  /** Length along the road, in scene units. */
+  length?: number;
+}
+
+/**
+ * Pedagogical overlays, shown only when the learner asks for "Visa reglerna".
+ * They explain *why* the order is what it is.
+ */
+export type ScenarioOverlay =
+  /** `from` must give way to `to`. Drawn as an arrow between them. */
+  | { kind: 'yield'; id: string; from: string; to: string; label: string }
+  /** The point where two paths would meet. */
+  | { kind: 'conflict'; id: string; x: number; y: number; label: string }
+  /** Highlights a vehicle's intended path. */
+  | { kind: 'path'; id: string; vehicleId: string; label: string }
+  /** A free-standing annotation. */
+  | { kind: 'note'; id: string; x: number; y: number; text: string };
+
+export type ScenarioKind = 'order-of-passage' | 'risk-spotting' | 'placement';
 
 export interface ScenarioHotspot {
   id: string;
@@ -207,24 +308,56 @@ export interface ScenarioHotspot {
   explanation: string;
 }
 
+/**
+ * A variant changes one condition of the base scenario — "what if this became
+ * a main road?" — by patching it rather than duplicating it.
+ */
+export interface ScenarioVariant {
+  id: string;
+  /** Chip label: "Om vägen blir huvudled". */
+  label: string;
+  /** The full question posed to the learner. */
+  question: string;
+  /** What changes, merged over the base scenario. */
+  patch: Partial<
+    Pick<
+      Scenario,
+      | 'prompt'
+      | 'correctOrder'
+      | 'explanation'
+      | 'stepExplanations'
+      | 'overlays'
+      | 'signs'
+      | 'markings'
+      | 'accessibilityText'
+      | 'ruleTested'
+    >
+  >;
+}
+
 export interface Scenario {
   id: string;
   title: string;
   categoryId: CategoryId;
   subcategory: string;
   difficulty: Difficulty;
-  kind: 'order-of-passage' | 'risk-spotting' | 'placement';
+  kind: ScenarioKind;
   prompt: string;
-  /** Layout key rendered by the scenario stage. */
-  layout: 'crossroads' | 't-junction' | 'roundabout' | 'street-scene';
+  layout: ScenarioLayout;
   vehicles: ScenarioVehicle[];
+  signs?: ScenarioSign[];
+  markings?: ScenarioMarking[];
+  overlays?: ScenarioOverlay[];
   hotspots?: ScenarioHotspot[];
   /** For order-of-passage: the correct sequence of vehicle ids. */
   correctOrder?: string[];
   ruleTested: string;
   explanation: string;
+  /** One sentence per position in `correctOrder`, explaining that step. */
   stepExplanations?: string[];
+  /** Complete description of the situation, so the task is solvable unseen. */
   accessibilityText: string;
+  variants?: ScenarioVariant[];
   sourceReferences: SourceReference[];
   status: QuestionStatus;
 }

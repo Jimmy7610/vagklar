@@ -60,12 +60,11 @@ jobs:
         env:
           VAGKLAR_BASE: /${{ github.event.repository.name }}/
 
-      - name: Kontrollera att bygget är statiskt körbart
-        run: |
-          test -f dist/index.html
-          test -f dist/manifest.webmanifest
-          test -f dist/sw.js
-          test -d dist/assets
+      # 'npm run build' already runs this, but asserting it here too means the
+      # published artifact is checked immediately before upload — no licensed
+      # source document can reach GitHub Pages.
+      - name: Kontrollera bygget (inga källdokument, appskal på plats)
+        run: npm run verify:build
 
       - uses: actions/configure-pages@v5
 

@@ -199,3 +199,21 @@ under provet vore i praktiken samma sak som att ge återkoppling.
 
 Klockan lever på det sparade försöket (`deadlineAt`). Att ladda om, stänga fliken eller gå offline
 kan inte köpa mer tid — ett försök vars deadline passerat rättas vid inläsning.
+
+---
+
+## 7. Vad motorn *inte* vet
+
+Motorn mäter hur du svarar på det Vägklar faktiskt frågar om. Den vet ingenting om
+delar av kursplanen där det inte finns några frågor — där kan behärskningen varken
+vara hög eller låg, den är omätt.
+
+Därför hör [CONTENT-COVERAGE.md](CONTENT-COVERAGE.md) ihop med den här filen.
+Täckningsrapporten är motorns synfält: 90 av 173 kursplanebegrepp har tillräckligt
+med material, 19 har inga frågor alls. Provberedskapen räknas på det som gått att
+mäta och normaliserar om vikterna för resten — den låtsas inte att omätta delar är
+godkända, men den kan heller inte varna för en lucka den inte känner till.
+
+Det är också skälet till att beredskapen håller tyst helt under de första
+`READINESS.firstEstimateAnswers` svaren och i stället räknar ned: en siffra byggd på
+tre svar är inte försiktig, den är påhittad.

@@ -57,7 +57,7 @@ export interface ReadinessPenalty {
 }
 
 export interface ReadinessResult {
-  /** 0–100, or null when the learner has not answered anything yet. */
+  /** 0–100, or null while there is too little data to say anything. */
   score: number | null;
   /** True while the estimate rests on too little data to be trusted. */
   provisional: boolean;
@@ -65,6 +65,12 @@ export interface ReadinessResult {
   penalties: ReadinessPenalty[];
   answeredTotal: number;
   band: ReadinessBand;
+  /**
+   * How many more answers are needed before the first estimate appears.
+   * Zero once an estimate exists — the dashboard counts this down instead of
+   * showing an empty gauge with no explanation.
+   */
+  answersUntilEstimate: number;
 }
 
 export type ReadinessBand = 'none' | 'early' | 'building' | 'progressing' | 'close' | 'ready';
@@ -312,7 +318,9 @@ export function computeReadiness(input: ReadinessInput): ReadinessResult {
 
   const penalties = [weakCategoryPenalty(input.mastery), misconceptionPenalty(input.answers)];
 
-  if (answeredTotal === 0) {
+  // Below the first-estimate threshold we deliberately report nothing rather
+  // than a number derived from one or two answers.
+  if (answeredTotal < READINESS.firstEstimateAnswers) {
     return {
       score: null,
       provisional: true,
@@ -320,6 +328,7 @@ export function computeReadiness(input: ReadinessInput): ReadinessResult {
       penalties,
       answeredTotal,
       band: 'none',
+      answersUntilEstimate: READINESS.firstEstimateAnswers - answeredTotal,
     };
   }
 
@@ -334,7 +343,15 @@ export function computeReadiness(input: ReadinessInput): ReadinessResult {
   const provisional = answeredTotal < READINESS.provisionalAnswerThreshold;
   if (provisional) score = Math.min(score, READINESS.provisionalCap);
 
-  return { score, provisional, components, penalties, answeredTotal, band: readinessBand(score) };
+  return {
+    score,
+    provisional,
+    components,
+    penalties,
+    answeredTotal,
+    band: readinessBand(score),
+    answersUntilEstimate: 0,
+  };
 }
 
 /** Convenience wrapper over the whole learner record. */

@@ -95,11 +95,56 @@ interface SourceReference {
   url?: string;
   verifiedAt: string | null;  // null = ännu inte verifierad av sakkunnig
   ruleVersion?: string;
+  sourceId?: string;     // post i SOURCES
+  sourcePages?: number[];// sidor i den källan
 }
 ```
 
 `verifiedAt: null` är avsiktligt ärligt. Se
 [QUESTION-AUTHORING.md](QUESTION-AUTHORING.md) för granskningsflödet.
+
+`sourceId` pekar in i källregistret i [`src/content/sources.ts`](../src/content/sources.ts),
+som är den enda platsen där en källa beskrivs — titel, utgivare, rättighetshavare,
+upplaga och vilken rätt vi har att använda den. Källsidan i appen, kursplanen och
+rättighetstexterna läser alla samma register, så attributionen inte kan glida isär.
+Se [SOURCES-AND-RIGHTS.md](SOURCES-AND-RIGHTS.md).
+
+## Kursplan
+
+[`src/content/curriculum/curriculum.ts`](../src/content/curriculum/curriculum.ts) är
+Vägklars karta över vad ett B-körkort kräver: 6 huvudområden, 39 kapitel och 173
+begrepp, var och en med sidhänvisning till källan och en koppling till Vägklars egen
+taxonomi.
+
+```ts
+interface CurriculumConcept {
+  id: string;
+  chapterId: string;
+  majorArea: MajorAreaId;
+  topic: string;
+  sourcePages: number[];
+  importance: 'core' | 'supporting' | 'peripheral';
+  subcategory: string | null;  // null = ingen plats i taxonomin ännu
+}
+```
+
+`subcategory: null` är den viktigaste signalen i hela filen: det är en del av
+kursplanen som Vägklar ännu inte har någonstans att placera. Den räknas som en
+lucka i stället för att tyst försvinna.
+
+Filen innehåller **struktur, inte text** — rubriker, sidintervall och begreppsnamn.
+Ingen brödtext ur källan återges.
+
+## Täckning
+
+[`src/domain/curriculum/coverage.ts`](../src/domain/curriculum/coverage.ts) jämför
+kursplanen med frågebanken, lektionerna och scenarierna. Funktionen är ren, så
+täckningen kan aldrig glida ifrån verkligheten: den *räknas fram*, den underhålls
+inte för hand. `npm run report:coverage` skriver om
+[CONTENT-COVERAGE.md](CONTENT-COVERAGE.md) ur samma funktion.
+
+Ett begrepp räknas som täckt först vid tre frågor, starkt vid sex. Luckor
+prioriteras 1–3 efter hur central kunskapen är.
 
 ## Lektioner
 
@@ -113,8 +158,15 @@ Ett scenario är data, inte kod: en layout, en lista positionerade trafikanter i
 och antingen en korrekt ordning eller en uppsättning riskpunkter. Nya situationer författas som
 data — ingen ny ritkod behövs.
 
+Modellen bär numera också vägmärken (`signs`), vägmarkeringar (`markings`),
+regelöverlägg (`overlays`) och varianter (`variants`). En variant är en `patch` som
+ändrar situationen — "vad händer om din väg blir huvudled?" — och därmed det rätta
+svaret. Fordon har `label`, `description`, `role` och en `path` som uppspelningen följer.
+
 Varje scenario bär `accessibilityText` som beskriver situationen fullständigt, och varje
 interaktion har ett listbaserat alternativ. Övningen kräver alltså aldrig att man pekar på en bild.
+
+Se [SCENARIO-LAB.md](SCENARIO-LAB.md) för hela modellen och författningsreglerna.
 
 ## Integritetstester
 
@@ -130,3 +182,11 @@ interaktion har ett listbaserat alternativ. Övningen kräver alltså aldrig att
 - kort förklaring och minst en källa på varje fråga
 - **ingen fråga får ha status `verified` utan verifieringsdatum**
 - alla 16 områden täckta, och alla tre svårighetsgrader representerade
+
+[`src/domain/curriculum/coverage.test.ts`](../src/domain/curriculum/coverage.test.ts)
+gör samma sak för kursplanen: att varje begrepp hör till ett verkligt kapitel, att
+varje kapitel hör till ett verkligt huvudområde, att kapitlens sidintervall varken
+överlappar eller pekar utanför källans 367 sidor, att varje lektion pekar på kapitel
+som finns, att en fråga bara får ange ett `sourceId` som existerar i registret — och
+att rättighetstexterna faktiskt namnger tredjepartsinnehavaren och friskriver sig
+från koppling till Trafikverket.

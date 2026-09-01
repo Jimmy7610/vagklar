@@ -4,7 +4,7 @@ import styles from './HomePage.module.css';
 import { Button, ButtonLink } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { ProgressRing } from '@/ui/components/ProgressRing';
-import { EmptyState, Pill, SectionHeading, Stat } from '@/ui/components/Primitives';
+import { EmptyState, Meter, Pill, SectionHeading, Stat } from '@/ui/components/Primitives';
 import {
   useActiveExam,
   useActiveSession,
@@ -153,6 +153,24 @@ export function HomePage() {
             {bandCopy.label}
           </h2>
           <p className={styles.readinessMessage}>{bandCopy.message}</p>
+          {readiness.score === null && (
+            <div className={styles.readinessCountdown}>
+              <Meter
+                value={readiness.answeredTotal}
+                max={readiness.answeredTotal + readiness.answersUntilEstimate}
+                height={6}
+                ariaLabel={`${readiness.answeredTotal} av ${
+                  readiness.answeredTotal + readiness.answersUntilEstimate
+                } svar mot första uppskattningen`}
+              />
+              <p className={styles.readinessCountdownText}>
+                {readiness.answersUntilEstimate === 1
+                  ? 'Ett svar till, så gör vi din första uppskattning.'
+                  : `${readiness.answersUntilEstimate} svar till, så gör vi din första uppskattning.`}
+              </p>
+            </div>
+          )}
+
           <div className={styles.readinessMeta}>
             {readiness.provisional && readiness.score !== null && (
               <Pill tone="warning" icon="info">

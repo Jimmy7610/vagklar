@@ -12,11 +12,12 @@ riskerar att ändra hur inlärningen fungerar.
 ## Lager
 
 ```
-content/    Data. Frågor, taxonomi, lektioner, scenarier, missuppfattningar.
-               Inga beroenden uppåt.
+content/    Data. Frågor, taxonomi, lektioner, scenarier, missuppfattningar,
+               kursplan och källregister. Inga beroenden uppåt.
    ↓
 domain/     Ren logik. Rena funktioner, ingen React, ingen lagring, ingen tid utifrån
-               (allt "nu" skickas in som argument).
+               (allt "nu" skickas in som argument). Här ligger också kursplanens
+               täckningsberäkning och Scenariolabbets bedömning och uppspelning.
    ↓
 storage/    Uthållighet. IndexedDB, schema, migrationer, defensiv inläsning, export/import.
                Känner till domäntyperna men inte React.
@@ -100,3 +101,15 @@ precachas av service workern.
 - Skadade poster i lagringen hoppas över vid inläsning, resten av utvecklingen behålls
 - Misslyckade skrivningar bryter aldrig sessionen; minnet är sanningen medan appen körs
 - Saknad eller blockerad service worker gör appen sämre, aldrig trasig
+
+## Källmaterial lämnar aldrig maskinen
+
+Kursplanen är härledd ur ett licensierat källdokument som ligger lokalt i
+`references/`. Det dokumentet är inte en del av systemet: det är ignorerat av git,
+det importeras inte av någon modul, och `scripts/verify-build.mjs` avbryter bygget
+om något liknande hamnar i `dist/`, i en bundle eller i service workerns
+förhandscache. Samma kontroll körs i CI direkt före publicering.
+
+Arkitektoniskt betyder det att kunskapen ur källan bara finns i **härledd** form —
+kapitelrubriker, sidintervall, begreppsnamn — i `content/curriculum/`, aldrig som
+återgiven text. Se [SOURCES-AND-RIGHTS.md](SOURCES-AND-RIGHTS.md).

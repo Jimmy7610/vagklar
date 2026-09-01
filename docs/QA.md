@@ -10,7 +10,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 
 ## Automatiserade tester
 
-`npm test` — **190 tester i 13 filer, alla gröna.**
+`npm test` — **257 tester i 15 filer, alla gröna.**
 
 | Område                     | Fil                                   | Täcker                                                                 |
 | -------------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
@@ -27,6 +27,8 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 | Lagring                    | `storage/repository.test.ts`          | omladdning, skadade poster, radering, import, minnesläge                |
 | Frågekortet                | `features/practice/QuestionCard.test.tsx` | val, återkoppling, tangentbord, säkerhet, sparning               |
 | Provläget                  | `features/exam/ExamRunnerPage.test.tsx`   | ingen återkoppling, markering, navigering, inlämning              |
+| Scenariolabbet             | `domain/scenarios/scenario.test.ts`   | ordningar, första avvikelsen, varianter, uppspelning, körfält           |
+| Kursplan och täckning      | `domain/curriculum/coverage.test.ts`  | kapitel, begrepp, sidintervall, luckor, källregister, rättighetstext    |
 
 Några tester finns specifikt för att låsa fast beteenden som är lätta att råka förstöra:
 
@@ -34,6 +36,10 @@ Några tester finns specifikt för att låsa fast beteenden som är lätta att r
 - provsvar får **inte** röra behärskningen förrän provet lämnats in
 - en skrivning som var i luften när eleven raderade allt får **inte** återuppliva datan
 - ett rätt svar man gissat sig till får **inte** väga lika mycket som ett man var säker på
+- ett scenariofordon får **inte** avsluta sin färdväg i mötande körfält
+- en fråga får **inte** hänvisa till ett `sourceId` som inte finns i källregistret
+- rättighetstexten får **inte** tillskriva Vägklar tredjepartsmaterial, och måste
+  friskriva sig från koppling till Trafikverket
 
 ---
 
@@ -100,6 +106,60 @@ igenom hela kodbasen, inte bara den skärm där symptomet syntes.
 Även kontrollerat: ljust och mörkt tema, bottennavigation på telefon, sidopanel från 1024px,
 provets frågeöversikt (ark på mobil, sidopanel på desktop), modaler, kunskapskartan.
 
+### Omkörd efter Scenariolabbet (2026-09-01)
+
+Hela svepet kördes om efter uppgraderingen av Scenariolabbet, med samma mätmetod och
+med tillägg av rutten `/kallor` och de nya bredderna 820 × 1180 och 1366 × 768:
+
+| Bredd | Överflödning | Scenariodetalj |
+| ----- | ------------ | -------------- |
+| 320 × 568   | 0 px | Kontroller 645 px ned |
+| 375 × 812   | 0 px | Kontroller 700 px ned |
+| 430 × 932   | 0 px | Kontroller 729 px ned |
+| 667 × 375   | 0 px | Kontroller 593 px ned |
+| 844 × 390   | 0 px | Kontroller 580 px ned |
+| 768 × 1024  | 0 px | Kontroller 873 px ned (inom vyn) |
+| 820 × 1180  | 0 px | Kontroller 874 px ned (inom vyn) |
+| 1024 × 768  | 0 px | **Kontroller 247 px ned** |
+| 1280 × 720  | 0 px | **Kontroller 248 px ned** |
+| 1366 × 768  | 0 px | **Kontroller 248 px ned** |
+| 1440 × 900  | 0 px | **Kontroller 248 px ned** |
+| 1920 × 1080 | 0 px | **Kontroller 221 px ned** |
+
+Noll horisontell överflödning på samtliga bredder och rutter.
+
+### Bugg hittad och åtgärdad — Scenariolabbets skala
+
+Scenen är kvadratisk och saknade takhöjd. På en bred skärm växte den till kolumnens
+bredd och blev därmed högre än fönstret: grafiken såg absurt stor ut och
+svarskontrollerna hamnade flera skärmar ned.
+
+Åtgärd: scenen begränsas av både kolumnbredd och fönsterhöjd
+(`max-width: min(100%, 54vh, 620px)` från 1024px, `68vh` i låga fönster).
+Mätt efteråt ligger den första svarskontrollen 221–248 px från toppen på alla
+skrivbordsbredder, och hela scenariodetaljen ryms på 1,0–1,6 skärmar.
+
+### Buggar hittade och åtgärdade — Scenariolabbets detaljer
+
+- **Dubblerad identitet.** Fordonet visade både en A-bricka och en positionsbricka på
+  samma plats. Brickan är nu identitet, positionen en separat pill på fordonets bakkant.
+- **Hopklistrad text.** `label` och `meta` låg som inline-element i samma rad och
+  rann ihop. Båda är nu `display: block`.
+- **Dubblerad knapp.** "Visa reglerna" fanns både i scenens fot och i åtgärdsraden.
+  Scenens kopia togs bort.
+- **Upprepad uppläsning.** "DIN BIL"-chippet lästes upp två gånger i knappens
+  tillgängliga namn. Chippet är nu `aria-hidden`.
+- **Fel körfält.** Den vänstersvängande bilen i `sc-hogerregeln-1` slutade sin färdväg
+  i mötande körfält (x = 44 i stället för x = 56). Rättad, och skyddad av ett nytt test
+  som kontrollerar körfältsdisciplin för varje färdväg — testet verifierades genom att
+  återinföra felet, varpå det föll.
+
+### Reducerad rörelse
+
+Tidigare hoppade fordonen direkt till slutpositionen vid reducerad rörelse. Det är
+fortfarande rörelse. Nu skickas ingen position alls till scenen: bilarna står stilla
+och sekvensen drivs av nummerbrickor, framhävning av aktivt fordon och stegtexten.
+
 ---
 
 ## Uthållighet — verifierat i webbläsaren
@@ -155,6 +215,22 @@ En tidigare, trasig `typecheck`-skriptrad hade emitterat en kompilerad `vite.con
 Åtgärd: filerna borttagna, skriptet lagat, båda tillagda i `.gitignore`. Efter det visade sig
 `globPatterns`/`globIgnores` inte konsulteras alls i det här plugin-läget; publika resurser läggs i
 precachen med `includeAssets`, vilket nu är gjort explicit.
+
+### Omprövat 2026-09-01
+
+Service workern gick **inte** att registrera om i den inbäddade QA-webbläsaren:
+`register()` faller med "An unknown error occurred when fetching the script",
+trots att `sw.js`, `workbox-*.js` och `manifest.webmanifest` alla serveras med
+status 200 och rätt MIME-typ.
+
+Felet är bevisat vara miljöns, inte appens: en minimal en-radig service worker
+som serverades från samma server föll med exakt samma fel. Webbläsaren i QA-miljön
+tillåter alltså inte SW-skriptbämtning över huvud taget.
+
+Bygget är däremot kontrollerat direkt: `dist/sw.js` innehåller 44 precache-poster,
+appskalet ingår, och inga källdokument finns bland dem. **Men PWA-beteendet är
+inte ombekräftat i webbläsare i den här omgången** — det bör göras i en vanlig
+webbläsare mot den publicerade sajten.
 
 ### Inte verifierat
 

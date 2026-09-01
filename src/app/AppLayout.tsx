@@ -22,7 +22,7 @@ const PRIMARY_NAV: NavItem[] = [
   { to: '/trana', label: 'Träna', icon: 'practice', match: ['/trana'] },
   { to: '/prov', label: 'Prov', icon: 'exam', match: ['/prov'] },
   { to: '/utveckling', label: 'Utveckling', icon: 'progress', match: ['/utveckling'] },
-  { to: '/mer', label: 'Mer', icon: 'more', match: ['/mer', '/installningar', '/om'] },
+  { to: '/mer', label: 'Mer', icon: 'more', match: ['/mer', '/installningar', '/om', '/kallor'] },
 ];
 
 const SIDEBAR_NAV: NavItem[] = [

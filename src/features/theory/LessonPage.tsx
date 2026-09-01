@@ -5,11 +5,13 @@ import styles from './LessonPage.module.css';
 import { Button, ButtonLink } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { Callout, SectionHeading } from '@/ui/components/Primitives';
-import { IntersectionScene } from '@/ui/illustrations/IntersectionScene';
+import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
 import { LESSONS, getLesson } from '@/content/lessons';
 import { SCENARIOS } from '@/content/scenarios';
 import { getQuestions } from '@/domain/content/bank';
 import { getCategoryName } from '@/content/taxonomy';
+import { CHAPTER_BY_ID } from '@/content/curriculum/curriculum';
+import { getSource, PRIMARY_SOURCE_ID } from '@/content/sources';
 import { useLearner, useLearnerActions } from '@/app/state/useLearner';
 import type { LessonBlock } from '@/domain/content/types';
 
@@ -61,7 +63,7 @@ function Block({ block }: { block: LessonBlock }) {
       if (!scenario) return null;
       return (
         <figure className={styles.illustrationBox}>
-          <IntersectionScene scenario={scenario} revealed />
+          <ScenarioStage scenario={scenario} revealed />
           {block.caption && <figcaption className={styles.caption}>{block.caption}</figcaption>}
         </figure>
       );
@@ -144,6 +146,11 @@ export default function LessonPage() {
     }
   };
 
+  const chapters = lesson.curriculumChapterIds
+    .map((id) => CHAPTER_BY_ID.get(id))
+    .filter((chapter) => chapter !== undefined);
+  const source = getSource(PRIMARY_SOURCE_ID);
+
   const navigable = lesson.blocks
     .map((block, blockIndex) => ({ block, blockIndex }))
     .filter(({ block }) => block.kind === 'rule' || block.kind === 'list' || block.kind === 'example');
@@ -195,6 +202,32 @@ export default function LessonPage() {
         </article>
 
         <aside className={styles.aside}>
+          {chapters.length > 0 && (
+            <section className={styles.curriculum} aria-labelledby="lesson-curriculum">
+              <div className={styles.asideTitle} id="lesson-curriculum">
+                I kursplanen
+              </div>
+              <ul className={styles.curriculumList}>
+                {chapters.map((chapter) => (
+                  <li key={chapter.id} className={styles.curriculumItem}>
+                    <span className={styles.curriculumTitle}>{chapter.title}</span>
+                    <span className={styles.curriculumPages}>
+                      s. {chapter.startPage}–{chapter.endPage}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {source && (
+                <p className={styles.curriculumSource}>
+                  Sidhänvisningarna avser {source.title} ({source.edition}), {source.publisher} — ©{' '}
+                  {source.rightsHolder}. Texten här är skriven av Vägklar.{' '}
+                  <Link to="/kallor" className={styles.curriculumLink}>
+                    Källor och rättigheter
+                  </Link>
+                </p>
+              )}
+            </section>
+          )}
           <div className={styles.asideTitle}>I den här lektionen</div>
           <nav className={styles.asideList} aria-label="Lektionens delar">
             {navigable.map(({ block, blockIndex }) => {
