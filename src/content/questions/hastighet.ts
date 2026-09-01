@@ -93,7 +93,8 @@ const seeds: AuthoredQuestion[] = [
       no('Cirka 12 meter.', 'reaktion-vs-broms'),
       no('Cirka 35 meter.', 'reaktion-vs-broms'),
     ],
-    short: '70 km/h är ungefär 19,4 meter per sekund.',
+    short:
+      'Dela hastigheten med 3,6: 70 / 3,6 ≈ 19 meter per sekund. Snabbvariant: stryk sista siffran och ta gånger 3.',
     deep:
       'Räkna om med 70 ÷ 3,6 = 19,4 m/s. Delningen med 3,6 kommer av att en kilometer är 1 000 meter och en timme är 3 600 sekunder. En genväg för överslag: ta bort sista siffran och multiplicera med tre — 70 blir 7 × 3 = 21, vilket är nära men något högt. Poängen: under en sekunds ouppmärksamhet passerar du en halv fotbollsplan.',
     memory: 'Dela hastigheten med 3,6 så får du meter per sekund.',
@@ -114,7 +115,8 @@ const seeds: AuthoredQuestion[] = [
       no('Den blir ungefär tre gånger så lång.', 'reaktion-vs-broms'),
       no('Den påverkas inte om bromsarna är i gott skick.', 'reaktion-vs-broms'),
     ],
-    short: 'Bromssträckan växer med hastigheten i kvadrat: dubbel fart ger fyrdubbel bromssträcka.',
+    short:
+      'Bromssträckan växer med hastigheten i kvadrat: 4 × 4 × 0,4 = 6,4 m vid 40 km/h, men 8 × 8 × 0,4 = 25,6 m vid 80 km/h — fyra gånger så långt.',
     deep:
       'Rörelseenergin är proportionell mot hastigheten i kvadrat, och all den energin måste bromsas bort. Reaktionssträckan däremot växer linjärt — dubbel fart ger dubbel reaktionssträcka. Det är därför en liten fartökning ger en oproportionerligt stor ökning av stoppsträckan.',
     memory: 'Reaktion växer rakt, bromsning växer i kvadrat.',

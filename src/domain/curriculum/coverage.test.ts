@@ -122,11 +122,28 @@ describe('coverage report', () => {
   });
 
   it('ranks core gaps with no questions as priority 1', () => {
+    // Whatever priority-1 gaps exist must be core concepts with no questions.
     for (const gap of gapsByPriority(report, 1)) {
       expect(gap.importance).toBe('core');
       expect(gap.questionCount).toBe(0);
     }
-    expect(gapsByPriority(report, 1).length).toBeGreaterThan(0);
+  });
+
+  it('produces a priority-1 gap when a core concept has no questions', () => {
+    // Asserted against synthetic input rather than the real bank: the bank is
+    // supposed to reach zero priority-1 gaps, so testing the ranking logic
+    // against it would break precisely when the content improves.
+    const bare = computeCoverage({
+      questions: [],
+      lessonSubcategories: [],
+      scenarioSubcategories: [],
+    });
+    const priorityOne = gapsByPriority(bare, 1);
+    expect(priorityOne.length).toBeGreaterThan(0);
+    for (const gap of priorityOne) {
+      expect(gap.importance).toBe('core');
+      expect(gap.questionCount).toBe(0);
+    }
   });
 
   it('sorts gaps most severe first', () => {

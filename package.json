@@ -12,9 +12,10 @@
     "typecheck": "tsc -b --force",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run report:content && npm run build",
     "verify:build": "node scripts/verify-build.mjs",
-    "report:coverage": "vite-node scripts/coverage-report.ts"
+    "report:coverage": "vite-node scripts/coverage-report.ts",
+    "report:content": "vite-node scripts/content-report.ts"
   },
   "dependencies": {
     "react": "^19.2.0",

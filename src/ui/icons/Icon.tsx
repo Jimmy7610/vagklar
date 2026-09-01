@@ -22,6 +22,7 @@ export type IconName =
   | 'sign'
   | 'speed'
   | 'intersection'
+  | 'train'
   | 'parking'
   | 'motorway'
   | 'overtake'
@@ -140,6 +141,13 @@ const paths: Record<IconName, ReactElement> = {
   intersection: (
     <>
       <path d="M4 9.5h6V4M14 4v5.5h6M20 14.5h-6V21M10 21v-6.5H4" />
+    </>
+  ),
+  train: (
+    <>
+      {/* Level-crossing St Andrew's cross over a rail line. */}
+      <path d="M4.5 4.5 19.5 19.5M19.5 4.5 4.5 19.5" />
+      <path d="M2.5 12h19" />
     </>
   ),
   parking: (

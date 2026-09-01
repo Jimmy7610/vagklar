@@ -75,6 +75,14 @@ export default defineConfig({
             if (id.includes('react-router')) return 'router';
             return 'vendor';
           }
+          // Lessons and scenarios are only needed by lazily loaded routes, so
+          // let them ride along with those route chunks. Forcing them into
+          // 'content' put them in the eagerly preloaded startup payload.
+          if (id.includes('/src/content/lessons')) return undefined;
+          if (id.includes('/src/content/scenarios')) return undefined;
+          // The rest — questions, taxonomy, sources, misconceptions — is
+          // reached synchronously from the learner store, so it is startup
+          // critical whatever we do with it.
           if (id.includes('/src/content/')) return 'content';
           return undefined;
         },

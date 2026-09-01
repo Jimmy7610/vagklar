@@ -10,7 +10,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 
 ## Automatiserade tester
 
-`npm test` — **257 tester i 15 filer, alla gröna.**
+`npm test` — **288 tester i 16 filer, alla gröna.**
 
 | Område                     | Fil                                   | Täcker                                                                 |
 | -------------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
@@ -29,6 +29,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 | Provläget                  | `features/exam/ExamRunnerPage.test.tsx`   | ingen återkoppling, markering, navigering, inlämning              |
 | Scenariolabbet             | `domain/scenarios/scenario.test.ts`   | ordningar, första avvikelsen, varianter, uppspelning, körfält           |
 | Kursplan och täckning      | `domain/curriculum/coverage.test.ts`  | kapitel, begrepp, sidintervall, luckor, källregister, rättighetstext    |
+| Innehållsvalidering        | `domain/content/validation.test.ts`   | 12 planterade fel, dubbletter, källsidor, attribution                   |
 
 Några tester finns specifikt för att låsa fast beteenden som är lätta att råka förstöra:
 
@@ -159,6 +160,68 @@ skrivbordsbredder, och hela scenariodetaljen ryms på 1,0–1,6 skärmar.
 Tidigare hoppade fordonen direkt till slutpositionen vid reducerad rörelse. Det är
 fortfarande rörelse. Nu skickas ingen position alls till scenen: bilarna står stilla
 och sekvensen drivs av nummerbrickor, framhävning av aktivt fordon och stegtexten.
+
+---
+
+## Innehållsexpansion (2026-09-01)
+
+### Automatiserad innehållsvalidering
+
+Banken kontrolleras nu maskinellt av
+[`validation.ts`](../src/domain/content/validation.ts), som körs både i testsviten
+och via `npm run report:content`. Varje kontroll har ett test som **planterar felet**
+och kontrollerar att validatorn fångar det — validatorn kan alltså inte passera för
+att banken råkar vara ren.
+
+Resultat: **259 frågor, 0 fel, 0 varningar, 0 dubblettkandidater.**
+
+### Buggar hittade av de nya kontrollerna
+
+Verktygen hittade fel i material som skrivits i samma pass:
+
+- **Fyra dubbletter.** Dubblettdetektorn hittade fyra nya frågor som upprepade
+  befintliga med bara ett ändrat tal (`ber-005`/`has-006`, `ber-007`/`has-005`,
+  `ber-006`/`hal-003`, `pas-001`/`tra-003`). Tre togs bort och deras bättre
+  förklaringar fördes in i originalen; den fjärde skrevs om till att pröva en annan
+  kunskapspunkt.
+- **Bruten korsreferens.** Efter borttagningen pekade `ber-008` på en fråga som inte
+  längre fanns. `dangling-related` fångade det direkt.
+- **Saknad variantbeskrivning.** Två nya scenariovarianter saknade egen
+  `accessibilityText`, vilket hade gett en skärmläsaranvändare en beskrivning som
+  motsäger uppgiften.
+- **Fel körfält i ett scenario.** Se avsnittet om körfältsdisciplin ovan.
+- **Hårdkodad varianttext.** Grundvariantens chip sa "Korsningen utan extra
+  skyltning" även i en cirkulationsplats som faktiskt har skyltar. Texten är nu
+  neutral.
+
+### Testet som blev fel när innehållet blev bättre
+
+Ett befintligt test hävdade att banken *har* minst en prioritet 1-lucka. När luckorna
+fylldes föll testet — inte för att koden gick sönder, utan för att påståendet inte
+längre var sant. Testet skrevs om till att pröva rangordningslogiken mot syntetisk
+indata, så att det inte går sönder nästa gång innehållet förbättras.
+
+### Startpaketets storlek
+
+Frågebanken växte från 147 till 259 frågor. `manualChunks` tvingade in lektioner och
+scenarier i det startkritiska `content`-paketet trots att deras vyer laddas lazy;
+efter att de undantagits sjönk startpaketet med cirka 6 kB gzip. Frågebanken själv
+når fortfarande startpaketet, eftersom `learnerStore` importerar den synkront — det
+är en medveten arkitektur som inte ändrades i den här omgången.
+
+Uppmätt startpaket (gzip): content 90 kB, vendor 62 kB, index 50 kB, router 14 kB.
+
+### Responsiv QA, ny omgång
+
+Samma mätmetod som tidigare, med de nya rutterna. **Noll horisontell överflödning och
+`h1` på varje rutt** vid 375×812, 390×844, 430×932, 768×1024, 1024×768, 1366×768,
+1440×900 och 1920×1080.
+
+Rutter: landningssida, hem, träna, prov, utveckling, misstag, teori, de tre nya
+lektionerna, scenariolistan, de fem nya scenarierna, mer, om och källor.
+
+Dessutom kört: Dagens 10 igenom åtta frågor på 390×844 utan överflödning, samt
+ordnings- och riskövningarna i de nya scenarierna med korrekt utfall.
 
 ---
 

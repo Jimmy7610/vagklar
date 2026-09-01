@@ -33,6 +33,11 @@ export default tseslint.config(
     },
   },
   {
+    // Report scripts are command-line tools: printing the result is the point.
+    files: ['scripts/**/*.{ts,mjs,js}'],
+    rules: { 'no-console': 'off' },
+  },
+  {
     files: ['**/*.test.{ts,tsx}', 'vitest.setup.ts'],
     rules: { 'react-refresh/only-export-components': 'off' },
   },

@@ -515,6 +515,510 @@ export const SCENARIOS: Scenario[] = [
     sourceReferences: [{ name: 'Riskutbildning: stadsmiljö', verifiedAt: null }],
     status: 'reviewed',
   },
+  /* ------------------------------------------------------------------ */
+  /* Järnvägskorsning                                                     */
+  /* ------------------------------------------------------------------ */
+  {
+    id: 'sc-plankorsning-1',
+    title: 'Var ligger risken vid plankorsningen?',
+    categoryId: 'jarnvag',
+    subcategory: 'plankorsning-korning',
+    difficulty: 2,
+    kind: 'risk-spotting',
+    prompt:
+      'Du närmar dig en plankorsning utan bommar. Tryck på den plats där risken är störst.',
+    layout: 'railway-crossing',
+    vehicles: [
+      {
+        id: 'a',
+        label: 'A',
+        description: 'Din bil. Kör norrut mot plankorsningen.',
+        role: 'car',
+        x: 56,
+        y: 82,
+        heading: 0,
+        intent: 'straight',
+        isEgo: true,
+      },
+    ],
+    markings: [{ id: 'm-stop', kind: 'stop-line', x: 56, y: 64, length: 12 }],
+    hotspots: [
+      {
+        id: 'skymd-sikt',
+        label: 'Vegetationen som skymmer spåret åt vänster',
+        x: 22,
+        y: 38,
+        radius: 12,
+        isRisk: true,
+        explanation:
+          'Det är sikten längs spåret som avgör allt annat här. Kan du inte överblicka spåret måste du stanna, titta åt båda håll och först därefter köra över. Fart kan inte ersätta information du inte har.',
+      },
+      {
+        id: 'sparet',
+        label: 'Själva spåret',
+        x: 56,
+        y: 50,
+        radius: 9,
+        isRisk: false,
+        explanation:
+          'Spåret i sig är inte risken — det är förutsägbart och står stilla. Risken ligger i det du inte kan se innan du kör ut på det.',
+      },
+      {
+        id: 'vagen-efter',
+        label: 'Vägen efter korsningen',
+        x: 56,
+        y: 18,
+        radius: 9,
+        isRisk: false,
+        explanation:
+          'Vägen efter korsningen är värd en tanke — du ska inte stanna direkt efter spåret — men den största risken finns före korsningen.',
+      },
+    ],
+    ruleTested: 'Sikt vid plankorsning',
+    explanation:
+      'Ordningen är alltid densamma: bilda dig först en uppfattning om sikten, anpassa sedan hastigheten till den. God sikt kan betyda att du knappt behöver sakta ner. Dålig sikt betyder stanna, titta åt båda håll och sedan köra över.',
+    accessibilityText:
+      'En plankorsning sedd uppifrån. En väg går i nord–sydlig riktning och korsas av ett järnvägsspår som löper i öst–västlig riktning. Din bil A kör norrut och närmar sig spåret söderifrån. Till vänster om vägen, väster om korsningen, skymmer vegetation sikten längs spåret. Korsningen saknar bommar och ljussignal.',
+    sourceReferences: [
+      {
+        name: 'Teoribok 2026-1 (Körkortonline.se)',
+        reference: 'Hur man korsar en järnväg säkert',
+        verifiedAt: null,
+        sourceId: 'teoribok-2026-1',
+        sourcePages: [109],
+      },
+    ],
+    status: 'reviewed',
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Cirkulationsplats                                                    */
+  /* ------------------------------------------------------------------ */
+  {
+    id: 'sc-cirkulation-2',
+    title: 'Vem kör först in i cirkulationen?',
+    categoryId: 'korsningar',
+    subcategory: 'cirkulationsplats',
+    difficulty: 2,
+    kind: 'order-of-passage',
+    prompt:
+      'Du ska in i cirkulationsplatsen. Tryck på fordonen i den ordning de kan köra — först den som kör först.',
+    layout: 'roundabout',
+    vehicles: [
+      {
+        id: 'a',
+        label: 'A',
+        description: 'Din bil. Väntar vid infarten söderifrån och ska in i cirkulationen.',
+        role: 'car',
+        x: 56,
+        y: 80,
+        heading: 0,
+        intent: 'straight',
+        isEgo: true,
+        path: [
+          { x: 56, y: 80 },
+          { x: 56, y: 68 },
+          { x: 62, y: 52 },
+          { x: 50, y: 34 },
+          { x: 44, y: 8 },
+        ],
+      },
+      {
+        id: 'b',
+        label: 'B',
+        description: 'Bil som redan kör i cirkulationen och närmar sig din infart.',
+        role: 'car',
+        x: 72,
+        y: 44,
+        heading: 250,
+        intent: 'left',
+        path: [
+          { x: 72, y: 44 },
+          { x: 62, y: 34 },
+          { x: 44, y: 34 },
+          { x: 44, y: 8 },
+        ],
+      },
+      {
+        id: 'c',
+        label: 'C',
+        description: 'Cyklist som redan kör i cirkulationen, strax bakom bil B.',
+        role: 'bicycle',
+        x: 78,
+        y: 58,
+        heading: 300,
+        intent: 'left',
+        path: [
+          { x: 78, y: 58 },
+          { x: 66, y: 58 },
+          { x: 56, y: 46 },
+          { x: 56, y: 8 },
+        ],
+      },
+    ],
+    signs: [
+      { id: 's-cirk', sign: 'cirkulationsplats', x: 74, y: 82, label: 'Cirkulationsplats' },
+      { id: 's-vajning', sign: 'vajningsplikt', x: 40, y: 78, label: 'Väjningsplikt' },
+    ],
+    markings: [{ id: 'm-yield', kind: 'yield-line', x: 56, y: 70, length: 12 }],
+    overlays: [
+      { kind: 'yield', id: 'o-ab', from: 'a', to: 'b', label: 'A väjer för B' },
+      { kind: 'yield', id: 'o-ac', from: 'a', to: 'c', label: 'A väjer även för cyklisten' },
+      {
+        kind: 'note',
+        id: 'o-note',
+        x: 30,
+        y: 88,
+        text: 'Väjningsplikten gäller varje fordon i cirkulationen — även cyklar.',
+      },
+    ],
+    correctOrder: ['b', 'c', 'a'],
+    ruleTested: 'Väjningsplikt vid infart i cirkulationsplats',
+    explanation:
+      'Du som kör in i en cirkulationsplats har väjningsplikt mot varje fordon som redan befinner sig i cirkulationen. B kör först eftersom bilen redan är inne. Sedan cyklisten C, som också redan cirkulerar — väjningsplikten gäller alla fordon, inte bara motorfordon. Du (A) kör sist.',
+    stepExplanations: [
+      'B kör först. Bilen befinner sig redan i cirkulationen, och du som ska in har väjningsplikt mot den.',
+      'C kör som nummer två. Cyklisten är också redan i cirkulationen, och väjningsplikten gäller varje fordon — inte bara motorfordon.',
+      'Du (A) kör sist, när både B och C har passerat din infart.',
+    ],
+    variants: [
+      {
+        id: 'tom-cirkulation',
+        label: 'Om cirkulationen är tom',
+        question: 'Vad gäller om inget fordon befinner sig i cirkulationen när du kommer fram?',
+        patch: {
+          prompt:
+            'Cirkulationen är tom när du kommer fram. Tryck på fordonen i den ordning de kan köra.',
+          correctOrder: ['a', 'b', 'c'],
+          explanation:
+            'Väjningsplikten gäller mot fordon som befinner sig i cirkulationen. Är den tom när du kommer fram får du köra in direkt — men du måste fortfarande blinka höger när du lämnar cirkulationsplatsen.',
+          stepExplanations: [
+            'Du (A) kör först. Det finns inget fordon i cirkulationen att väja för.',
+            'B kör efter dig och kommer in i cirkulationen bakom.',
+            'C kör sist.',
+          ],
+          overlays: [
+            {
+              kind: 'note',
+              id: 'o-note-tom',
+              x: 30,
+              y: 88,
+              text: 'Tom cirkulation: du får köra in — men blinka höger när du ska ut.',
+            },
+          ],
+          accessibilityText:
+            'Samma cirkulationsplats sedd uppifrån, men nu utan trafik i själva cirkulationen. Din bil A står vid den södra infarten bakom väjningslinjen. Bil B och cyklisten C har ännu inte hunnit fram till cirkulationsplatsen och befinner sig utanför den.',
+        },
+      },
+    ],
+    accessibilityText:
+      'En cirkulationsplats sedd uppifrån med fyra infarter. Din bil A står vid den södra infarten bakom en väjningslinje och ska in i cirkulationen. Bil B kör redan i cirkulationen och närmar sig din infart från öster. Cyklisten C kör också redan i cirkulationen, strax bakom bil B. Vid infarten sitter märket för cirkulationsplats och ett märke för väjningsplikt.',
+    sourceReferences: [
+      {
+        name: 'Trafikförordningen (1998:1276)',
+        reference: '3 kap. 22 §',
+        verifiedAt: null,
+      },
+      {
+        name: 'Teoribok 2026-1 (Körkortonline.se)',
+        reference: 'Cirkulationsplats',
+        verifiedAt: null,
+        sourceId: 'teoribok-2026-1',
+        sourcePages: [58],
+      },
+    ],
+    status: 'reviewed',
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Cykelöverfart                                                        */
+  /* ------------------------------------------------------------------ */
+  {
+    id: 'sc-cykeloverfart-1',
+    title: 'Cykelöverfart vid högersväng',
+    categoryId: 'trafikregler',
+    subcategory: 'cykelpassage-overfart',
+    difficulty: 3,
+    kind: 'order-of-passage',
+    prompt:
+      'Du ska svänga höger och korsar då en cykelöverfart. Tryck på trafikanterna i den ordning de kan passera.',
+    layout: 'crossroads',
+    vehicles: [
+      {
+        id: 'a',
+        label: 'A',
+        description: 'Din bil. Kommer söderifrån och ska svänga höger, österut.',
+        role: 'car',
+        x: 56,
+        y: 84,
+        heading: 0,
+        intent: 'right',
+        isEgo: true,
+        path: [
+          { x: 56, y: 84 },
+          { x: 56, y: 62 },
+          { x: 92, y: 56 },
+        ],
+      },
+      {
+        id: 'b',
+        label: 'B',
+        description: 'Cyklist som närmar sig cykelöverfarten från norr och ska korsa din väg.',
+        role: 'bicycle',
+        x: 74,
+        y: 26,
+        heading: 180,
+        intent: 'straight',
+        path: [
+          { x: 74, y: 26 },
+          { x: 74, y: 78 },
+        ],
+      },
+    ],
+    signs: [{ id: 's-overfart', sign: 'vajningsplikt', x: 66, y: 70, label: 'Väjningsplikt' }],
+    markings: [
+      { id: 'm-cykel', kind: 'cycle-crossing', x: 74, y: 56, rotation: 90, length: 20 },
+      { id: 'm-vaj', kind: 'yield-line', x: 74, y: 66, rotation: 90, length: 12 },
+    ],
+    overlays: [
+      { kind: 'yield', id: 'o-ab', from: 'a', to: 'b', label: 'A har väjningsplikt mot cyklisten' },
+      { kind: 'conflict', id: 'o-conf', x: 74, y: 56, label: 'Här korsas era vägar' },
+      {
+        kind: 'note',
+        id: 'o-note',
+        x: 22,
+        y: 88,
+        text: 'Cykelöverfart: vägmärke och väjningslinje — full väjningsplikt.',
+      },
+    ],
+    correctOrder: ['b', 'a'],
+    ruleTested: 'Väjningsplikt vid cykelöverfart',
+    explanation:
+      'Vid en cykelöverfart har du väjningsplikt mot cyklande som är ute på eller just ska färdas ut på överfarten. Cyklisten B kör därför först. Överfarten känns igen på att det finns både vägmärke, vägmarkering och en väjningslinje för biltrafiken — till skillnad från en cykelpassage, som bara har vägmarkering.',
+    stepExplanations: [
+      'B kör först. Vid en cykelöverfart har du väjningsplikt mot cyklande som är ute på eller just ska färdas ut på överfarten.',
+      'Du (A) kör sedan, när cyklisten har passerat. Väjningsplikten kräver att du tydligt visar din avsikt genom att i god tid sänka farten eller stanna.',
+    ],
+    variants: [
+      {
+        id: 'cykelpassage',
+        label: 'Om det vore en cykelpassage',
+        question:
+          'Vad gäller om skylten och väjningslinjen saknas, så att det bara är en cykelpassage?',
+        patch: {
+          prompt:
+            'Det är en obevakad cykelpassage, inte en cykelöverfart. Tryck på trafikanterna i den ordning de kan passera.',
+          ruleTested: 'Obevakad cykelpassage i samband med sväng',
+          signs: [],
+          markings: [
+            { id: 'm-cykel', kind: 'cycle-crossing', x: 74, y: 56, rotation: 90, length: 20 },
+          ],
+          correctOrder: ['b', 'a'],
+          explanation:
+            'Även vid en cykelpassage kör cyklisten först i praktiken — men av en annan anledning. Eftersom du svänger ska du köra med låg hastighet och lämna cyklande som är ute på eller just ska färdas ut på passagen tillfälle att passera. Det är en starkare skyldighet än när du kör rakt fram, men det är formellt inte väjningsplikt: cyklisten har i sin tur väjningsplikt mot dig.',
+          stepExplanations: [
+            'B passerar först. Du svänger, och då gäller låg hastighet och att lämna cyklande tillfälle att passera.',
+            'Du (A) kör sedan. Skillnaden mot cykelöverfarten är att skyldigheten här är ömsesidig — cyklisten ska också väja och får bara korsa om det kan ske utan fara.',
+          ],
+          overlays: [
+            {
+              kind: 'note',
+              id: 'o-note-passage',
+              x: 22,
+              y: 88,
+              text: 'Cykelpassage: bara vägmarkering. Vid sväng gäller låg fart och lämna tillfälle.',
+            },
+            { kind: 'conflict', id: 'o-conf', x: 74, y: 56, label: 'Här korsas era vägar' },
+          ],
+          accessibilityText:
+            'Samma fyrvägskorsning sedd uppifrån, men nu utan vägmärke och utan väjningslinje. Din bil A kommer söderifrån och ska svänga höger, österut. Tvärs över den östra utfarten löper en cykelpassage, markerad enbart med rutor i vägbanan. Cyklisten B kommer norrifrån och är på väg ut på passagen.',
+        },
+      },
+    ],
+    accessibilityText:
+      'En fyrvägskorsning sedd uppifrån. Din bil A kommer söderifrån och ska svänga höger, österut. Tvärs över den östra utfarten löper en cykelöverfart, markerad med rutor i vägbanan, ett vägmärke och en väjningslinje för biltrafiken. Cyklisten B kommer norrifrån längs en cykelbana på korsningens östra sida och är på väg ut på cykelöverfarten.',
+    sourceReferences: [
+      { name: 'Trafikförordningen (1998:1276)', reference: '3 kap. 61 b §', verifiedAt: null },
+      {
+        name: 'Teoribok 2026-1 (Körkortonline.se)',
+        reference: 'Cykelöverfart',
+        verifiedAt: null,
+        sourceId: 'teoribok-2026-1',
+        sourcePages: [52],
+      },
+    ],
+    status: 'reviewed',
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Motorvägspåfart                                                      */
+  /* ------------------------------------------------------------------ */
+  {
+    id: 'sc-pafart-1',
+    title: 'Var ligger risken vid påfarten?',
+    categoryId: 'motorvag',
+    subcategory: 'pafart-avfart',
+    difficulty: 2,
+    kind: 'risk-spotting',
+    prompt:
+      'Du kör på accelerationsfältet och ska ut på motorvägen. Tryck på den plats där risken är störst.',
+    layout: 'motorway-merge',
+    vehicles: [
+      {
+        id: 'a',
+        label: 'A',
+        description: 'Din bil. Kör i accelerationsfältet och ska ut på motorvägen.',
+        role: 'car',
+        x: 26,
+        y: 58,
+        heading: 90,
+        intent: 'straight',
+        isEgo: true,
+        path: [
+          { x: 26, y: 58 },
+          { x: 58, y: 58 },
+          { x: 84, y: 42 },
+        ],
+      },
+      {
+        id: 'b',
+        label: 'B',
+        description: 'Lastbil som kör i motorvägens högra körfält, strax bakom dig.',
+        role: 'truck',
+        x: 12,
+        y: 42,
+        heading: 90,
+        intent: 'straight',
+        path: [
+          { x: 12, y: 42 },
+          { x: 76, y: 42 },
+        ],
+      },
+    ],
+    hotspots: [
+      {
+        id: 'doda-vinkeln',
+        label: 'Området bakom och till vänster om dig',
+        x: 16,
+        y: 47,
+        radius: 11,
+        isRisk: true,
+        explanation:
+          'Lastbilen ligger i din döda vinkel. Speglarna räcker inte — du måste vrida på huvudet innan du går ut i körfältet. En påfart är dessutom den plats där hastighetsskillnaden mellan dig och trafiken är som störst.',
+      },
+      {
+        id: 'slutet',
+        label: 'Där accelerationsfältet tar slut',
+        x: 66,
+        y: 58,
+        radius: 10,
+        isRisk: false,
+        explanation:
+          'Att fältet tar slut är förutsägbart och syns i god tid. Det är värt att planera för, men det är inte den dolda risken här.',
+      },
+      {
+        id: 'framfor',
+        label: 'Vägen framför dig',
+        x: 84,
+        y: 42,
+        radius: 9,
+        isRisk: false,
+        explanation:
+          'Framför dig är fritt just nu. Faran kommer bakifrån, från det körfält du ska in i.',
+      },
+    ],
+    ruleTested: 'Påfart och döda vinkeln',
+    explanation:
+      'Anpassa farten till trafiken på motorvägen redan i accelerationsfältet, och kontrollera döda vinkeln innan du går ut. Du har inte företräde till motorvägens körfält — men trafiken där bör i sin tur underlätta din infogning genom att byta körfält eller anpassa farten.',
+    accessibilityText:
+      'En motorvägspåfart sedd uppifrån. Motorvägen löper i öst–västlig riktning. Din bil A kör i accelerationsfältet längs motorvägens södra sida och ska väva in i det högra körfältet. En lastbil B kör i motorvägens högra körfält, snett bakom dig till vänster, i ungefär samma höjd som din bakre del.',
+    sourceReferences: [
+      { name: 'Trafikförordningen (1998:1276)', reference: '3 kap. 44 §', verifiedAt: null },
+      {
+        name: 'Teoribok 2026-1 (Körkortonline.se)',
+        reference: 'Motorväg',
+        verifiedAt: null,
+        sourceId: 'teoribok-2026-1',
+        sourcePages: [90],
+      },
+    ],
+    status: 'reviewed',
+  },
+
+  /* ------------------------------------------------------------------ */
+  /* Halka                                                                */
+  /* ------------------------------------------------------------------ */
+  {
+    id: 'sc-halka-1',
+    title: 'Var är vägen halast?',
+    categoryId: 'halka',
+    subcategory: 'halka',
+    difficulty: 3,
+    kind: 'risk-spotting',
+    prompt:
+      'Det är någon minusgrad och vägen ser torr ut. Tryck på den plats där halkan är mest sannolik.',
+    layout: 'street-scene',
+    vehicles: [
+      {
+        id: 'a',
+        label: 'A',
+        description: 'Din bil. Kör österut på vägen.',
+        role: 'car',
+        x: 22,
+        y: 56,
+        heading: 90,
+        intent: 'straight',
+        isEgo: true,
+      },
+    ],
+    hotspots: [
+      {
+        id: 'bron',
+        label: 'Bron längre fram',
+        x: 70,
+        y: 50,
+        radius: 12,
+        isRisk: true,
+        explanation:
+          'Broar kyls av både uppifrån och underifrån och blir därför isiga före resten av vägen. Samma sak gäller skuggiga partier och platser nära vatten. Vägen kan vara bar hela sträckan fram och sedan plötsligt vara isbelagd just där.',
+      },
+      {
+        id: 'raksträcka',
+        label: 'Den soliga raksträckan',
+        x: 40,
+        y: 50,
+        radius: 10,
+        isRisk: false,
+        explanation:
+          'En solbelyst raksträcka torkar upp snabbast och är den minst troliga platsen för underkylt väglag.',
+      },
+      {
+        id: 'vagkanten',
+        label: 'Vägkanten till höger',
+        x: 40,
+        y: 68,
+        radius: 9,
+        isRisk: false,
+        explanation:
+          'Vägkanten kan vara lös och grusig, vilket är värt att veta — men det är inte halka, och det är inte den största risken vid några minusgrader.',
+      },
+    ],
+    ruleTested: 'Förrädiskt väglag',
+    explanation:
+      'Väglaget kan växla på några meter. Broar, skuggpartier och platser nära vatten fryser först och håller sig hala längst. Sänk farten före den typen av avsnitt i stället för på dem, och undvik att bromsa eller styra kraftigt när du är på dem.',
+    accessibilityText:
+      'En väg sedd uppifrån vid några minusgrader. Din bil A kör österut. Vägen går först över en öppen, solbelyst raksträcka och passerar sedan över en bro längre fram i öster. Vägbanan ser torr ut hela vägen.',
+    sourceReferences: [
+      {
+        name: 'Teoribok 2026-1 (Körkortonline.se)',
+        reference: 'Förrädiskt väglag',
+        verifiedAt: null,
+        sourceId: 'teoribok-2026-1',
+        sourcePages: [124],
+      },
+    ],
+    status: 'reviewed',
+  },
 ];
 
 export const SCENARIO_BY_ID: ReadonlyMap<string, Scenario> = new Map(

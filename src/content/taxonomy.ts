@@ -24,6 +24,11 @@ const seed: CategorySeed[] = [
       { id: 'vagens-anvandning', name: 'Vägens användning', weight: 1 },
       { id: 'korfalt-och-sving', name: 'Körfält och sväng', weight: 1 },
       { id: 'oskyddade-trafikanter', name: 'Gående och cyklister', weight: 1.1 },
+      // Cykelpassage och cykelöverfart har olika skyldigheter och förväxlas
+      // ständigt. De förtjänar ett eget delområde så motorn kan se skillnaden.
+      { id: 'cykelpassage-overfart', name: 'Cykelpassage och cykelöverfart', weight: 1.2 },
+      { id: 'korfaltsbyte', name: 'Körfältsbyte', weight: 1 },
+      { id: 'rattspraxis', name: 'Rättsfall och praxis', weight: 0.6 },
     ],
   },
   {
@@ -65,9 +70,24 @@ const seed: CategorySeed[] = [
       { id: 'stopplikt', name: 'Stopplikt', weight: 1 },
       { id: 'utfartsregeln', name: 'Utfartsregeln', weight: 1.2 },
       { id: 'cirkulationsplats', name: 'Cirkulationsplats', weight: 1 },
+      { id: 'cirkulation-korfalt', name: 'Körfält och tecken i cirkulation', weight: 1 },
       { id: 'huvudled', name: 'Huvudled', weight: 1 },
       { id: 'trafiksignal-korsning', name: 'Trafiksignal i korsning', weight: 1 },
       { id: 'polisens-tecken', name: 'Polisens tecken', weight: 0.8 },
+    ],
+  },
+  {
+    // Plankorsningar är den enda platsen i trafiken där en felbedömning kan
+    // möta 400 ton på räls. Området är eget, inte en not under korsningar.
+    id: 'jarnvag',
+    name: 'Järnvägskorsningar',
+    summary: 'Plankorsningar förlåter ingenting.',
+    icon: 'train',
+    examWeight: 4,
+    subcategories: [
+      { id: 'plankorsning-marken', name: 'Märken och signaler', weight: 1.1 },
+      { id: 'plankorsning-korning', name: 'Att korsa en plankorsning', weight: 1.3 },
+      { id: 'plankorsning-omkorning', name: 'Omkörning vid plankorsning', weight: 0.9 },
     ],
   },
   {
@@ -177,6 +197,7 @@ const seed: CategorySeed[] = [
     subcategories: [
       { id: 'sparsam-korning', name: 'Sparsam körning', weight: 1.2 },
       { id: 'miljopaverkan', name: 'Miljöpåverkan', weight: 1 },
+      { id: 'drivmedel', name: 'Drivmedel och utsläppsklasser', weight: 1 },
     ],
   },
   {
@@ -189,6 +210,10 @@ const seed: CategorySeed[] = [
       { id: 'dack-och-bromsar', name: 'Däck och bromsar', weight: 1.2 },
       { id: 'belysning-fordon', name: 'Belysning', weight: 1 },
       { id: 'kontroll-besiktning', name: 'Kontroll och besiktning', weight: 1 },
+      { id: 'krocksakerhet', name: 'Krocksäkerhet', weight: 1.1 },
+      { id: 'fordonsslag', name: 'Fordonsslag och hastigheter', weight: 1 },
+      { id: 'forsakring', name: 'Försäkring', weight: 0.9 },
+      { id: 'registrering', name: 'Registrering och avställning', weight: 0.9 },
     ],
   },
   {
@@ -212,6 +237,7 @@ const seed: CategorySeed[] = [
       { id: 'reaktion-och-sinnen', name: 'Reaktion och sinnen', weight: 1.2 },
       { id: 'attityd-och-grupptryck', name: 'Attityd och grupptryck', weight: 1 },
       { id: 'korstrategi', name: 'Körstrategi', weight: 1 },
+      { id: 'nedsatt-formaga', name: 'Nedsatt förmåga och samspel', weight: 1.1 },
     ],
   },
 ];

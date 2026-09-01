@@ -462,7 +462,7 @@ export default function ScenarioRunnerPage() {
                   </span>
                   <span>
                     <span className={styles.variantLabel}>Grundsituationen</span>
-                    <span className={styles.variantQuestion}>Korsningen utan extra skyltning</span>
+                    <span className={styles.variantQuestion}>Situationen som den beskrivs ovan</span>
                   </span>
                 </button>
 

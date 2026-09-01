@@ -168,6 +168,19 @@ interaktion har ett listbaserat alternativ. Övningen kräver alltså aldrig att
 
 Se [SCENARIO-LAB.md](SCENARIO-LAB.md) för hela modellen och författningsreglerna.
 
+## Validering
+
+[`src/domain/content/validation.ts`](../src/domain/content/validation.ts) är en ren
+funktion som kontrollerar hela banken och skiljer på **fel** (får inte finnas) och
+**varningar** (en människa bör titta). Den körs både i testsviten och av
+`npm run report:content`, som skriver [CONTENT-VALIDATION.md](CONTENT-VALIDATION.md)
+och avslutar med felkod om något är trasigt.
+
+Samma modul innehåller en enkel dubblettdetektor: normaliserad jämförelse plus
+Jaccard-likhet på ord. Exakt lika frågetext, och identiska svarsuppsättningar inom
+samma delområde, behandlas som fel. Liknande formuleringar rapporteras bara — en
+variant som med avsikt ändrar ett villkor ligger nära utan att vara fel.
+
 ## Integritetstester
 
 [`src/domain/content/bank.test.ts`](../src/domain/content/bank.test.ts) håller innehållet ärligt:

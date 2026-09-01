@@ -1,8 +1,15 @@
 import type { Question } from '@/domain/content/types';
+import { berakningarQuestions } from './berakningar';
+import { samspelQuestions } from './samspel';
+import { korfaltQuestions } from './korfalt';
+import { fordonsadminQuestions } from './fordonsadmin';
+import { drivmedelQuestions } from './drivmedel';
 import { alkoholQuestions } from './alkohol';
+import { cirkulationQuestions } from './cirkulation';
 import { fordonetQuestions } from './fordonet';
 import { halkaQuestions } from './halka';
 import { hastighetQuestions } from './hastighet';
+import { jarnvagQuestions } from './jarnvag';
 import { korsningarQuestions } from './korsningar';
 import { lastQuestions } from './last';
 import { manniskanQuestions } from './manniskan';
@@ -11,6 +18,7 @@ import { morkerQuestions } from './morker';
 import { motorvagQuestions } from './motorvag';
 import { omkorningQuestions } from './omkorning';
 import { parkeringQuestions } from './parkering';
+import { passagerQuestions } from './passager';
 import { riskerQuestions } from './risker';
 import { trafikreglerQuestions } from './trafikregler';
 import { trotthetQuestions } from './trotthet';
@@ -29,6 +37,9 @@ export const ALL_QUESTIONS: Question[] = [
   ...vagmarkenQuestions,
   ...hastighetQuestions,
   ...korsningarQuestions,
+  ...cirkulationQuestions,
+  ...jarnvagQuestions,
+  ...passagerQuestions,
   ...parkeringQuestions,
   ...motorvagQuestions,
   ...omkorningQuestions,
@@ -41,4 +52,9 @@ export const ALL_QUESTIONS: Question[] = [
   ...fordonetQuestions,
   ...lastQuestions,
   ...manniskanQuestions,
+  ...samspelQuestions,
+  ...korfaltQuestions,
+  ...fordonsadminQuestions,
+  ...drivmedelQuestions,
+  ...berakningarQuestions,
 ];

@@ -29,7 +29,7 @@ Ett scenario är **data, inte kod**. Allt scenen ritar beskrivs i
 
 | Typ | Vad den beskriver |
 | --- | --- |
-| `ScenarioLayout` | Vägnätet: fyrvägskorsning, T-korsning, utfart, cirkulation, gata |
+| `ScenarioLayout` | Vägnätet: fyrvägskorsning, T-korsning, cirkulation, gata, motorvägspåfart, plankorsning |
 | `ScenarioVehicle` | Fordon med `label`, `description`, `role`, startpunkt, riktning och `path` |
 | `ScenarioSign` | Vägmärke placerat i scenen |
 | `ScenarioMarking` | Stopplinje, väjningslinje, övergångsställe, cykelöverfart, pil |
@@ -140,3 +140,40 @@ från appens egen inställning, där användarens val vinner.
    ligger inom scenen och att varje färdväg slutar i rätt körfält.
    Entydigheten i punkt 5 är en författningsregel, inte något testet mäter —
    den måste kontrolleras för hand.
+
+## Scenariokatalogen
+
+| Id | Situation | Typ | Varianter |
+| --- | --- | --- | ---: |
+| `sc-hogerregeln-1` | Korsning utan vägmärken | Ordning | 2 |
+| `sc-stopplikt-1` | Stopplikt mot huvudled | Ordning | – |
+| `sc-utfart-1` | Utfart från parkering | Ordning | – |
+| `sc-vanstersvang-1` | Vänstersväng mot mötande | Ordning | – |
+| `sc-cirkulation-1` | Cirkulationsplats | Ordning | – |
+| `sc-cirkulation-2` | Väjningsplikt vid infart, med cyklist | Ordning | 1 |
+| `sc-cykeloverfart-1` | Cykelöverfart vid högersväng | Ordning | 1 |
+| `sc-plankorsning-1` | Plankorsning med skymd sikt | Risk | – |
+| `sc-pafart-1` | Motorvägspåfart och döda vinkeln | Risk | – |
+| `sc-halka-1` | Var vägen är halast | Risk | – |
+| `sc-risk-stadsgata` | Parkerade bilar på bostadsgata | Risk | – |
+
+### Layouten `railway-crossing`
+
+Plankorsningen är en **layout i det delade renderingssystemet**, inte en egen
+ritfunktion: den lades till i `ScenarioLayout` och i samma `switch` som övriga
+vägnät, och ritar en nord–sydlig väg som korsas av ett spår med rälsprofiler och
+slipers. Alla scenarier använder därmed fortfarande samma stage, samma överlägg,
+samma uppspelning och samma variantsystem.
+
+### Två varianter som lär ut skillnaden
+
+`sc-cykeloverfart-1` finns i två lägen som ser nästan likadana ut i vägbanan men ger
+olika skyldigheter:
+
+| Läge | Vad som syns | Din skyldighet |
+| --- | --- | --- |
+| Cykelöverfart | Vägmärke, markering och väjningslinje | Full väjningsplikt |
+| Cykelpassage | Bara vägmarkering | Låg hastighet och lämna tillfälle att passera (vid sväng) |
+
+Ordningen blir densamma i båda fallen — men av olika skäl, och stegförklaringarna
+säger vilket. Det är precis den nyans som är svår att lära sig ur en textregel.

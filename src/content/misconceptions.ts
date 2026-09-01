@@ -9,6 +9,996 @@ import type { Misconception } from '@/domain/content/types';
  */
 export const MISCONCEPTIONS: Misconception[] = [
   {
+    id: 'visa-avsikt',
+    label: 'Väjningsplikten utförs otydligt',
+    description:
+      'Man bromsar sent eller ger tecken på annat sätt i stället för att tydligt sänka farten i god tid.',
+    correction:
+      'Visa avsikten genom att i god tid sänka hastigheten eller stanna, så att den gående vågar gå.',
+    subcategory: 'oskyddade-trafikanter',
+  },
+  {
+    id: 'reaktionsstracka-berakning',
+    label: 'Reaktionssträckan räknas fel',
+    description:
+      'Formeln blandas ihop med bromssträckans, eller multiplikationen med 3 glöms.',
+    correction:
+      'Stryk sista siffran i hastigheten, multiplicera med reaktionstiden och sedan med 3.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
+    id: 'reaktionstid-effekt',
+    label: 'Reaktionstidens effekt missförstås',
+    description:
+      'Man tror att reaktionssträckan växer kvadratiskt med reaktionstiden.',
+    correction:
+      'Reaktionssträckan växer rakt av: dubbel reaktionstid ger dubbelt så lång sträcka.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
+    id: 'bromsstracka-berakning',
+    label: 'Bromssträckan räknas fel',
+    description:
+      'Kvadreringen eller faktorn 0,4 hoppas över.',
+    correction:
+      'Stryk sista siffran, multiplicera den med sig själv och sedan med 0,4.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
+    id: 'stoppstracka-berakning',
+    label: 'Bara en av delsträckorna räknas',
+    description:
+      'Man svarar med enbart bromssträckan eller enbart reaktionssträckan.',
+    correction:
+      'Stoppsträckan är alltid reaktionssträcka plus bromssträcka.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
+    id: 'kvadratisk-okning',
+    label: 'Hastighetens effekt antas vara linjär',
+    description:
+      'Dubbel hastighet antas ge dubbelt så lång bromssträcka.',
+    correction:
+      'Bromssträckan växer med kvadraten: dubbel fart ger fyra gånger sträckan.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
+    id: 'halka-bromsstracka',
+    label: 'Halkans effekt på bromssträckan underskattas',
+    description:
+      'Man tror att is förlänger bromssträckan måttligt, eller att ABS löser det.',
+    correction:
+      'På is kan bromssträckan bli omkring tio gånger längre. ABS bevarar styrförmågan, inte sträckan.',
+    subcategory: 'halka',
+  },
+  {
+    id: 'km-till-meter',
+    label: 'Omvandling km/h till m/s',
+    description:
+      'Hastigheten delas med fel tal eller uppskattas fritt.',
+    correction:
+      'Dela hastigheten i km/h med 3,6 för att få meter per sekund.',
+    subcategory: 'anpassad-hastighet',
+  },
+  {
+    id: 'sekundregel-avstand',
+    label: 'Sekundregeln räknas inte om till meter',
+    description:
+      'Avståndet i sekunder översätts fel till meter.',
+    correction:
+      'Räkna först om farten till meter per sekund, och multiplicera sedan med antalet sekunder.',
+    subcategory: 'avstand',
+  },
+  {
+    id: 'reaktionstid-bilen',
+    label: 'Reaktionstiden antas bero på bilen',
+    description:
+      'Slitna däck eller dåliga bromsar tros förlänga reaktionstiden.',
+    correction:
+      'Reaktionstiden är din. Bilens skick påverkar bromssträckan.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
+    id: 'bromsstracka-faktorer',
+    label: 'Faktorerna för brom- och reaktionssträcka blandas',
+    description:
+      'Reaktionstiden räknas in bland det som påverkar bromssträckan.',
+    correction:
+      'Bromssträckan påverkas av hastighet, väglag, lutning, last och bromsarnas skick.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
+    id: 'skylt-som-facit',
+    label: 'Hastighetsskylten tas som facit',
+    description:
+      'Man antar att skyltad hastighet alltid är en tillåten och lämplig hastighet.',
+    correction:
+      'Skylten är ett tak. Hastigheten ska dessutom anpassas till sikt, väglag och trafik.',
+    subcategory: 'rattspraxis',
+  },
+  {
+    id: 'deformation-hard-battre',
+    label: 'Hård front antas vara säkrare',
+    description:
+      'Man tror att en styv front skyddar bättre än en som trycks ihop.',
+    correction:
+      'Deformationszonen förlänger krocken i tid och sänker därmed krafterna på kroppen.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'sidokrock',
+    label: 'Sidokollisionens risk underskattas',
+    description:
+      'Sidan antas skydda ungefär lika bra som fronten.',
+    correction:
+      'I sidled finns nästan ingen deformationszon — ytan som tar upp kraften är bara några decimeter.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'baltesansvar',
+    label: 'Ansvaret för barns bältesanvändning',
+    description:
+      'Ansvaret antas ligga på barnet eller på vårdnadshavaren i stället för på föraren.',
+    correction:
+      'Föraren ansvarar för att passagerare under 15 år använder bälte.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'baltesplacering',
+    label: 'Bältet placeras fel över axeln',
+    description:
+      'Bältets övre del läggs ut på axeln eller under armen.',
+    correction:
+      'Övre delen ska ligga så nära halsen som möjligt, och tjocka jackor ska av.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'airbag-barnstol',
+    label: 'Krockkudde lämnas på vid bakåtvänd barnstol',
+    description:
+      'Man tror att krockkudden kan vara aktiv, eventuellt beroende på barnets ålder.',
+    correction:
+      'Krockkudden måste alltid kopplas ur när en bakåtvänd stol står på platsen.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'airbag-ersatter-balte',
+    label: 'Krockkudden antas ersätta bältet',
+    description:
+      'Kudden tros ge fullgott skydd även utan bälte.',
+    correction:
+      'Krockkudden är ett komplement. Utan bälte kan den i stället orsaka svåra skador.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'nackskydd',
+    label: 'Nackskyddet ses som bekvämlighet',
+    description:
+      'Skyddet ställs lågt eller lämnas oinställt.',
+    correction:
+      'Ställ det så högt att huvudet inte åker över kanten. Det skyddar mot whiplash.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'barnskydd-grans',
+    label: 'Gränsen för barnskydd antas vara ålder',
+    description:
+      'Man utgår från ålder eller vikt i stället för längd.',
+    correction:
+      'Barn kortare än 135 cm ska ha särskilt barnskydd.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'trafikantbegrepp',
+    label: 'Trafikant antas betyda bilförare',
+    description:
+      'Begreppet begränsas till motorfordon eller till den som har körkort.',
+    correction:
+      'Alla som befinner sig på en väg är trafikanter, även gående och ryttare.',
+    subcategory: 'fordonsslag',
+  },
+  {
+    id: 'lattlastbil-fart',
+    label: 'Lätt lastbil antas ha eget hastighetstak',
+    description:
+      'Man tror att lätta lastbilar har en egen maxhastighet.',
+    correction:
+      'För lätt lastbil gäller vägens hastighetsbestämmelser, precis som för personbil.',
+    subcategory: 'fordonsslag',
+  },
+  {
+    id: 'slap-hastighet',
+    label: 'Hastighetstaket med släp glöms',
+    description:
+      'Man kör efter vägens skylt trots släp bakom bilen.',
+    correction:
+      'Med bromsad släpvagn är taket 80 km/h, oavsett vad skylten visar.',
+    subcategory: 'fordonsslag',
+  },
+  {
+    id: 'bogsering-fart',
+    label: 'Hastigheten vid bogsering överskattas',
+    description:
+      'Man tror att bogsering får ske i normal trafikrytm.',
+    correction:
+      'Vid bogsering av en annan bil är gränsen 30 km/h.',
+    subcategory: 'fordonsslag',
+  },
+  {
+    id: 'mopedklasser',
+    label: 'Mopedklasserna blandas ihop',
+    description:
+      'Skillnaden antas handla om drivmedel eller körkortskrav.',
+    correction:
+      'Klass I är EU-moped upp till 45 km/h och räknas som motorfordon. Klass II är långsammare.',
+    subcategory: 'fordonsslag',
+  },
+  {
+    id: 'andra-fordons-fart',
+    label: 'Andras hastighetstak används fel',
+    description:
+      'Kunskapen om andra fordons maxfart tolkas som en egen rättighet.',
+    correction:
+      'Den hjälper dig planera omkörningen. Din egen hastighetsgräns gäller ändå.',
+    subcategory: 'fordonsslag',
+  },
+  {
+    id: 'trafikforsakring-omfattning',
+    label: 'Trafikförsäkringen antas täcka egen bil',
+    description:
+      'Man tror att den obligatoriska försäkringen ersätter skador på det egna fordonet.',
+    correction:
+      'Trafikförsäkringen täcker personskador och skador på andras egendom — aldrig din egen bil.',
+    subcategory: 'forsakring',
+  },
+  {
+    id: 'forsakringsplikt',
+    label: 'Kravet på trafikförsäkring begränsas',
+    description:
+      'Försäkringsplikten antas gälla bara vissa fordonstyper eller åldrar.',
+    correction:
+      'Alla motordrivna fordon i trafik måste vara trafikförsäkrade.',
+    subcategory: 'forsakring',
+  },
+  {
+    id: 'halv-vs-hel',
+    label: 'Halv- och helförsäkring blandas ihop',
+    description:
+      'Skador på egen bil vid olycka antas ingå i halvförsäkringen.',
+    correction:
+      'Halvförsäkring täcker bland annat stöld, brand, glas och rättsskydd. Egen bil vid olycka kräver helförsäkring.',
+    subcategory: 'forsakring',
+  },
+  {
+    id: 'regressratt',
+    label: 'Försäkringen antas skydda vid rattfylleri',
+    description:
+      'Man tror att bolaget bär kostnaden även efter grov vårdslöshet eller rattfylleri.',
+    correction:
+      'Bolaget kan använda sin regressrätt och kräva tillbaka pengarna av dig.',
+    subcategory: 'forsakring',
+  },
+  {
+    id: 'regbevis-delar',
+    label: 'Registreringsbevisets delar förväxlas',
+    description:
+      'Del 1 och Del 2 antas ha samma användning.',
+    correction:
+      'Del 1 rör fordonet och används för på- och avställning. Del 2 är ägarbeviset och används vid ägarbyte.',
+    subcategory: 'registrering',
+  },
+  {
+    id: 'avstallning-automatisk',
+    label: 'Avställning antas ske automatiskt',
+    description:
+      'Körförbud, obetald skatt eller långt stillestånd tros ställa av fordonet.',
+    correction:
+      'Ett fordon ställs aldrig av automatiskt — du måste själv anmäla det.',
+    subcategory: 'registrering',
+  },
+  {
+    id: 'avstallt-korning',
+    label: 'Avställt fordon antas få köras fritt',
+    description:
+      'Man tror att korta sträckor eller betald försäkring gör körningen tillåten.',
+    correction:
+      'Ett avställt fordon får endast köras till och från besiktning, och får inte bogseras.',
+    subcategory: 'registrering',
+  },
+  {
+    id: 'agarbyte-forsakring',
+    label: 'Försäkringens startdatum vid ägarbyte',
+    description:
+      'Man tror att säljarens försäkring gäller en tid efter ägarbytet.',
+    correction:
+      'Din trafikförsäkring måste gälla från och med ägarbytets datum.',
+    subcategory: 'registrering',
+  },
+  {
+    id: 'vit-kapp-signal',
+    label: 'Den vita käppens lägen tolkas fel',
+    description:
+      'Käppens riktning läses inte som en signal.',
+    correction:
+      'Rakt ner mot marken betyder att personen väntar. Snett framåt betyder att personen tänker gå.',
+    subcategory: 'nedsatt-formaga',
+  },
+  {
+    id: 'synskadad-ljud',
+    label: 'Ljud används fel mot synskadade',
+    description:
+      'Man tutar, varvar motorn eller kör vidare så snart personen lämnat körfältet.',
+    correction:
+      'Var tyst och försiktig, och vänta tills personen är helt över vägen.',
+    subcategory: 'nedsatt-formaga',
+  },
+  {
+    id: 'ledarhund-formaga',
+    label: 'Ledarhunden antas bedöma trafiken',
+    description:
+      'Hunden tros kunna avgöra när det är säkert att gå.',
+    correction:
+      'Ledarhunden undviker hinder men kan inte bedöma trafikläget. Den ska aldrig störas.',
+    subcategory: 'nedsatt-formaga',
+  },
+  {
+    id: 'aldre-risk',
+    label: 'Alla äldre förare antas vara en riskgrupp',
+    description:
+      'Gruppen 65–74 år klumpas ihop med förare över 75 år.',
+    correction:
+      'Gruppen 65–74 år kör i regel säkrare än nyblivna 18-åringar. Först över 75 år stiger risken tydligt.',
+    subcategory: 'nedsatt-formaga',
+  },
+  {
+    id: 'dold-funktionsnedsattning',
+    label: 'Funktionsnedsättningar antas synas',
+    description:
+      'Man utgår från att den som tvekar saknar körvana eller är ouppmärksam.',
+    correction:
+      'Hörselskada och epilepsi syns inte. Var tålmodig med den som tar extra tid.',
+    subcategory: 'nedsatt-formaga',
+  },
+  {
+    id: 'tillaggstavla-syn',
+    label: 'Gul tilläggstavla vid övergångsställe misstolkas',
+    description:
+      'Tavlan tolkas som olycksstatistik eller som att passagen är bevakad.',
+    correction:
+      'Den gula tavlan T9 anger att personer med nedsatt syn är vanligt förekommande.',
+    subcategory: 'nedsatt-formaga',
+  },
+  {
+    id: 'barn-ogonkontakt',
+    label: 'Ögonkontakt med barn tas som överenskommelse',
+    description:
+      'Man tror att ett barn som ser bilen kommer att stanna kvar.',
+    correction:
+      'Barn är impulsiva. Ögonkontakt är ingen garanti — sänk farten och håll marginal.',
+    subcategory: 'barn-och-oskyddade',
+  },
+  {
+    id: 'foretrade-tas',
+    label: 'Företräde uppfattas som något man tar',
+    description:
+      'Man kör vidare på sin rätt trots att en olycka är på väg att ske.',
+    correction:
+      'Aktsamhetsplikten gäller även när du har rätt. Företräde ges, det tas aldrig.',
+    subcategory: 'rattspraxis',
+  },
+  {
+    id: 'rattsfall-roll',
+    label: 'Rättsfallens roll missförstås',
+    description:
+      'Domar antas ersätta lagen eller befria från ansvar i liknande fall.',
+    correction:
+      'Rättsfall visar hur reglerna tillämpas när flera regler möts i verkligheten.',
+    subcategory: 'rattspraxis',
+  },
+  {
+    id: 'korfalt-omarkerat',
+    label: 'Körfält antas kräva vägmarkering',
+    description:
+      'En omarkerad väg antas sakna körfält.',
+    correction:
+      'Ett utrymme brett nog för en fil fyrhjuliga fordon är ett körfält, även utan linjer.',
+    subcategory: 'korfalt-och-sving',
+  },
+  {
+    id: 'placering-langst-hoger',
+    label: 'Placering förväxlas med högerregeln om körbanan',
+    description:
+      'Man pressar sig ut mot vägkanten i stället för att ligga mitt i körfältet.',
+    correction:
+      'Grundregeln är mitten av körfältet. Kravet att hålla höger gäller vilket körfält du väljer.',
+    subcategory: 'placering',
+  },
+  {
+    id: 'placering-skog',
+    label: 'Placering anpassas inte efter sidosikt',
+    description:
+      'Samma placering används oavsett var risken finns.',
+    correction:
+      'Vid god sikt framåt men skymd sikt åt sidorna kan vänsterplacering ge mer marginal — om mötande saknas.',
+    subcategory: 'placering',
+  },
+  {
+    id: 'sving-placering',
+    label: 'Placering vid sväng slarvas bort',
+    description:
+      'Man svänger från mitten av körfältet i stället för från rätt kant.',
+    correction:
+      'Högersväng nära körbanans högerkant, vänstersväng nära vänsterkanten av ditt körfält.',
+    subcategory: 'korfalt-och-sving',
+  },
+  {
+    id: 'enkelriktad-sving',
+    label: 'Enkelriktad gata behandlas som vanlig väg',
+    description:
+      'Man placerar sig efter körfältets kant i stället för körbanans.',
+    correction:
+      'På enkelriktat finns ingen mötande trafik — använd körbanans vänsterkant vid vänstersväng.',
+    subcategory: 'korfalt-och-sving',
+  },
+  {
+    id: 'korfaltsval-hoger',
+    label: 'Fri körfältsplacering antas gälla alltid',
+    description:
+      'Man ligger kvar i mitt- eller vänsterfält utan att villkoren är uppfyllda.',
+    correction:
+      'Fri placering kräver minst två markerade körfält och högst 70 km/h, eller olika färdmål enligt vägvisare.',
+    subcategory: 'placering',
+  },
+  {
+    id: 'korfaltsbyte-ordning',
+    label: 'Kontrollerna före körfältsbyte görs ofullständigt',
+    description:
+      'Döda vinkeln hoppas över eller kontrollerna görs i fel ordning.',
+    correction:
+      'Trafiken framför först, sedan inre spegel, sidospegel och döda vinkeln — och döda vinkeln igen före bytet.',
+    subcategory: 'korfaltsbyte',
+  },
+  {
+    id: 'heldragen-linje',
+    label: 'Heldragen linje antas vara en rekommendation',
+    description:
+      'Man korsar linjen när det känns säkert.',
+    correction:
+      'Är linjen heldragen på din sida får du inte köra över den.',
+    subcategory: 'korfaltsbyte',
+  },
+  {
+    id: 'slalomkorning',
+    label: 'Vävning mellan körfält antas vara tillåten',
+    description:
+      'Enskilda byten anses göra slalomkörning laglig.',
+    correction:
+      'Att köra slalom mellan fordonen för att ta sig fram är inte tillåtet.',
+    subcategory: 'korfaltsbyte',
+  },
+  {
+    id: 'korfaltsbyte-fart',
+    label: 'Farten sänks vid körfältsbyte',
+    description:
+      'Man bromsar in i bytet och blir långsammare än trafiken man ska in i.',
+    correction:
+      'En liten fartökning minskar hastighetsskillnaden. Är luckan för liten: avvakta.',
+    subcategory: 'korfaltsbyte',
+  },
+  {
+    id: 'kollektivkorfalt',
+    label: 'Kollektivkörfältets regler misstolkas',
+    description:
+      'Man tror att bussfilen får användas i kö, eller inte ens får korsas.',
+    correction:
+      'Du får korsa kollektivkörfältet men inte köra i det, om inte en tilläggstavla säger annat.',
+    subcategory: 'korfaltsbyte',
+  },
+  {
+    id: 'reversibelt-korfalt',
+    label: 'Reversibelt körfält missförstås',
+    description:
+      'Körfältet antas vara reserverat för nödsituationer eller kollektivtrafik.',
+    correction:
+      'Ett reversibelt körfält kan byta körriktning efter behov. De är mycket ovanliga.',
+    subcategory: 'korfaltsbyte',
+  },
+  {
+    id: 'blinka-trots-pilar',
+    label: 'Körfältspilar antas ersätta blinkers',
+    description:
+      'Man låter vägmarkeringen visa avsikten i stället för att ge tecken.',
+    correction:
+      'Mötande och korsande ser inte pilarna i vägbanan. Ge alltid tecken vid sväng.',
+    subcategory: 'korfaltsbyte',
+  },
+  {
+    id: 'vaxel-sparsam',
+    label: 'Låg växel antas vara bränslesnål',
+    description:
+      'Man ligger kvar på låga växlar för att motorn ska arbeta lättare.',
+    correction:
+      'Kör på så hög växel som bilen klarar utan att hacka, och växla upp tidigt efter start.',
+    subcategory: 'sparsam-korning',
+  },
+  {
+    id: 'acceleration-sparsam',
+    label: 'Långsam acceleration antas spara bränsle',
+    description:
+      'Accelerationsfasen dras ut i tron att det är snålare.',
+    correction:
+      'Kom upp i fart ganska raskt men håll varvtalet under cirka 2 500 varv/min.',
+    subcategory: 'sparsam-korning',
+  },
+  {
+    id: 'sparsam-fore-sakerhet',
+    label: 'Sparsam körning sätts före säkerheten',
+    description:
+      'Man motorbromsar eller mjukbromsar när en kraftig inbromsning behövs.',
+    correction:
+      'Trafiksäkerheten går alltid först. Sparsam körning gäller när det är lämpligt.',
+    subcategory: 'sparsam-korning',
+  },
+  {
+    id: 'takbox',
+    label: 'Takboxens kostnad missförstås',
+    description:
+      'Man tror att en tom takbox inte påverkar förbrukningen.',
+    correction:
+      'Takbox och takräcke ökar luftmotståndet och kan kosta mer än en deciliter per mil.',
+    subcategory: 'sparsam-korning',
+  },
+  {
+    id: 'dacktryck-forbrukning',
+    label: 'Lågt däcktryck antas vara ofarligt',
+    description:
+      'Mjuka däck tros rulla lättare eller bara påverka komforten.',
+    correction:
+      'Lågt tryck ger trögare rullning, högre förbrukning och snabbare slitage.',
+    subcategory: 'sparsam-korning',
+  },
+  {
+    id: 'motorvarmare-tid',
+    label: 'Motorvärmaren används fel länge',
+    description:
+      'Den slås på alldeles för kort eller för lång tid.',
+    correction:
+      'Cirka 30 min vid +10 °C, en timme vid 0 °C och omkring 1,5 timme vid −20 °C.',
+    subcategory: 'sparsam-korning',
+  },
+  {
+    id: 'ac-forbrukning',
+    label: 'AC:ns energiåtgång underskattas',
+    description:
+      'Luftkonditioneringen antas vara nästan gratis.',
+    correction:
+      'Avstängd AC kan sänka bränsleförbrukningen med 5–10 procent.',
+    subcategory: 'sparsam-korning',
+  },
+  {
+    id: 'katalysator-funktion',
+    label: 'Katalysatorn antas ta bort koldioxid',
+    description:
+      'Man tror att katalysatorn löser klimatproblemet.',
+    correction:
+      'Katalysatorn omvandlar skadliga ämnen till bland annat koldioxid och vatten — den tar inte bort CO2.',
+    subcategory: 'miljopaverkan',
+  },
+  {
+    id: 'avgaser-effekter',
+    label: 'Avgasernas olika effekter blandas ihop',
+    description:
+      'Kolmonoxid, kolväten och kväveoxider tillskrivs varandras verkningar.',
+    correction:
+      'CO slår mot syreupptagningen, HC är cancerframkallande och NOx försurar och göder.',
+    subcategory: 'miljopaverkan',
+  },
+  {
+    id: 'vaxthusgas',
+    label: 'Fel ämne pekas ut som växthusgas',
+    description:
+      'Kolmonoxid eller kväveoxider antas driva växthuseffekten.',
+    correction:
+      'Koldioxid är den dominerande växthusgasen från trafiken.',
+    subcategory: 'miljopaverkan',
+  },
+  {
+    id: 'biltvatt',
+    label: 'Skälet till att tvätta bilen rätt missförstås',
+    description:
+      'Man tror att det handlar om vattenmängd eller lackens skick.',
+    correction:
+      'Biltvättar har golvbrunnar som fångar upp olja, tungmetaller och kemikalier.',
+    subcategory: 'miljopaverkan',
+  },
+  {
+    id: 'diesel-vs-bensin',
+    label: 'Diesel och bensin jämförs fel',
+    description:
+      'Diesel antas vara antingen renare eller förnybar.',
+    correction:
+      'Diesel förbrukar mindre men har mer hälsofarliga avgaser. Båda är fossila.',
+    subcategory: 'drivmedel',
+  },
+  {
+    id: 'hybrid-definition',
+    label: 'Hybridbilen definieras fel',
+    description:
+      'Hybrid antas betyda ren elbil eller låg förbrukning.',
+    correction:
+      'En hybrid har två motorer, vanligast el tillsammans med bensin.',
+    subcategory: 'drivmedel',
+  },
+  {
+    id: 'elbil-miljo',
+    label: 'Elbilen antas sakna miljöpåverkan',
+    description:
+      'Man drar slutsatsen att elbilen är helt utan avtryck.',
+    correction:
+      'Ingen avgas vid körning, men batteritillverkningen kräver gruvdrift med egna utsläpp.',
+    subcategory: 'drivmedel',
+  },
+  {
+    id: 'miljozoner',
+    label: 'Miljözonernas klasser blandas ihop',
+    description:
+      'Klass 1 antas beröra personbilar.',
+    correction:
+      'Klass 1 gäller tunga fordon. Klass 2 ställer euro-krav på personbilar, klass 3 släpper i princip bara in elfordon.',
+    subcategory: 'drivmedel',
+  },
+  {
+    id: 'jvg-avstandsmarken',
+    label: 'Avståndsmärken läses baklänges',
+    description:
+      'Tre streck tolkas som att korsningen är nära, i stället för längst bort.',
+    correction:
+      'Märkena räknar ner: tre streck först, ett streck sist. Ett streck betyder att korsningen är nära.',
+    subcategory: 'plankorsning-marken',
+  },
+  {
+    id: 'jvg-bom-vs-lampa',
+    label: 'Bommen tolkas som klartecken',
+    description:
+      'En bom som går upp uppfattas som besked om att det är fritt att köra.',
+    correction:
+      'Det är ljussignalen som gäller. Blinkar det rött står du kvar, även om bommen är uppe.',
+    subcategory: 'plankorsning-marken',
+  },
+  {
+    id: 'jvg-bomtyper',
+    label: 'Halvbommens öppning ses som en väg förbi',
+    description:
+      'Utrymmet bredvid en halvbom uppfattas som en tillåten passage.',
+    correction:
+      'Öppningen finns för att den som fastnat ska komma av spåret — inte för att köra in.',
+    subcategory: 'plankorsning-marken',
+  },
+  {
+    id: 'jvg-passiv-korsning',
+    label: 'Korsning utan bommar antas vara oanvänd',
+    description:
+      'Avsaknad av bommar och signal tolkas som att spåret inte trafikeras.',
+    correction:
+      'Utan teknik finns ingen varning alls. Hela bedömningen ligger då på dig.',
+    subcategory: 'plankorsning-marken',
+  },
+  {
+    id: 'jvg-forvarning',
+    label: 'Plankorsningen upptäcks först vid rälsen',
+    description:
+      'Bedömningen görs när spåret syns, i stället för vid varningsmärket.',
+    correction:
+      'Varningsmärket och avståndsmärkena finns för att du ska hinna bestämma dig i tid.',
+    subcategory: 'plankorsning-marken',
+  },
+  {
+    id: 'jvg-fart-over-sikt',
+    label: 'Fart antas kompensera för dålig sikt',
+    description:
+      'Man kör fort över spåret för att vara utsatt så kort tid som möjligt.',
+    correction:
+      'Sikten bestämmer farten. Ser du inte tillräckligt ska du stanna, inte skynda.',
+    subcategory: 'plankorsning-korning',
+  },
+  {
+    id: 'jvg-vaxling',
+    label: 'Växling mitt på spåret',
+    description:
+      'Man växlar under passagen och riskerar motorstopp där det är som farligast.',
+    correction:
+      'Välj växel före spåret och behåll den tills hela bilen är över.',
+    subcategory: 'plankorsning-korning',
+  },
+  {
+    id: 'jvg-ko-over-spar',
+    label: 'Man kör fram i kö över spåret',
+    description:
+      'Släckt signal tolkas som att det är fritt att rulla fram, även när kön står still.',
+    correction:
+      'Kör bara in i korsningen om du säkert kommer hela vägen ut.',
+    subcategory: 'plankorsning-korning',
+  },
+  {
+    id: 'jvg-stanna-i-bilen',
+    label: 'Man stannar kvar i bilen vid motorstopp',
+    description:
+      'Försöken att starta om fortsätter tills det är för sent.',
+    correction:
+      'Får du inte bort bilen: lämna den och ring 112. Bilen går att ersätta.',
+    subcategory: 'plankorsning-korning',
+  },
+  {
+    id: 'jvg-bom-hinder',
+    label: 'Bommen ses som ett hinder man inte får skada',
+    description:
+      'Rädslan för att skada bommen gör att man blir kvar på spåret.',
+    correction:
+      'Bommarna är gjorda för att ge vika. Kör igenom hellre än att stå kvar.',
+    subcategory: 'plankorsning-korning',
+  },
+  {
+    id: 'jvg-tagets-fart',
+    label: 'Tågets hastighet underskattas',
+    description:
+      'Ett tåg rakt framifrån ändrar knappt storlek och verkar därför långsammare.',
+    correction:
+      'Ser du ett tåg över huvud taget — vänta. Tåget kan inte väja och bromsar i hundratals meter.',
+    subcategory: 'plankorsning-korning',
+  },
+  {
+    id: 'jvg-stanna-efter',
+    label: 'Man stannar direkt efter spåret',
+    description:
+      'Bilen stannas strax efter korsningen utan hänsyn till fordonet bakom.',
+    correction:
+      'Fortsätt framåt så att den bakom inte blir stående i korsningen.',
+    subcategory: 'plankorsning-korning',
+  },
+  {
+    id: 'jvg-slap-samma',
+    label: 'Släp antas inte ändra bedömningen',
+    description:
+      'Samma marginaler används med släp som utan.',
+    correction:
+      'Ett långt ekipage är kvar på spåret betydligt längre och behöver större luckor.',
+    subcategory: 'plankorsning-korning',
+  },
+  {
+    id: 'jvg-omkorning',
+    label: 'Omkörningsförbudet vid plankorsning glöms',
+    description:
+      'Man kör om vid en plankorsning så snart sikten är fri.',
+    correction:
+      'Utan bommar och utan fullständig trafiksignal får bara tvåhjuliga fordon köras om.',
+    subcategory: 'plankorsning-omkorning',
+  },
+  {
+    id: 'jvg-signaltyp',
+    label: 'Blinkande rött räknas som trafiksignal',
+    description:
+      'En anordning som bara blinkar rött antas upphäva omkörningsförbudet.',
+    correction:
+      'Det krävs en signal med rött, gult och grönt ljus — eller bommar.',
+    subcategory: 'plankorsning-omkorning',
+  },
+  {
+    id: 'overgang-just-ska-ga',
+    label: 'Väjningsplikten antas börja först på övergångsstället',
+    description:
+      'Man väntar tills den gående satt foten på markeringen.',
+    correction:
+      'Väjningsplikten gäller även mot den som just ska gå ut.',
+    subcategory: 'oskyddade-trafikanter',
+  },
+  {
+    id: 'signal-slar-ut-gaende',
+    label: 'Grönt antas betyda tom korsning',
+    description:
+      'Grönt ljus tolkas som rätt att köra genom någon som redan gått eller cyklat ut.',
+    correction:
+      'Den som gett sig ut på rätt sätt har rätt att göra klart.',
+    subcategory: 'oskyddade-trafikanter',
+  },
+  {
+    id: 'slackt-signal',
+    label: 'Släckt signal antas göra passagen bevakad',
+    description:
+      'En trasig eller släckt signal tolkas som att inga skyldigheter gäller.',
+    correction:
+      'Bevakat kräver fungerande signal eller polis. Annars är passagen obevakad — du väjer.',
+    subcategory: 'oskyddade-trafikanter',
+  },
+  {
+    id: 'cyklist-som-gaende',
+    label: 'Cyklande räknas som gående',
+    description:
+      'Den som cyklar över ett övergångsställe antas ha samma skydd som en gående.',
+    correction:
+      'Den som leder cykeln går. Den som trampar är cyklist, med andra regler.',
+    subcategory: 'oskyddade-trafikanter',
+  },
+  {
+    id: 'vinka-fram',
+    label: 'Man vinkar fram gående',
+    description:
+      'Vinken uppfattas som ett besked om att hela vägen är fri.',
+    correction:
+      'Sök ögonkontakt i stället. Du kan inte svara för föraren i det andra körfältet.',
+    subcategory: 'oskyddade-trafikanter',
+  },
+  {
+    id: 'gangbana-utfart',
+    label: 'Utfart antas ge företräde mot gående',
+    description:
+      'Man tror att den som kör ut från en fastighet går före de gående på trottoaren.',
+    correction:
+      'Du har väjningsplikt mot gående på gångbanan du korsar.',
+    subcategory: 'oskyddade-trafikanter',
+  },
+  {
+    id: 'gangbana-korsar-alltid',
+    label: 'Trottoaren antas korsa vägen',
+    description:
+      'Att en gångbana fortsätter på andra sidan tolkas som att den löper över körbanan.',
+    correction:
+      'Utan övergångsställe får gående korsa endast utan fara eller hinder för trafiken.',
+    subcategory: 'oskyddade-trafikanter',
+  },
+  {
+    id: 'passage-vs-overfart',
+    label: 'Cykelpassage förväxlas med cykelöverfart',
+    description:
+      'De två platserna antas ge samma skyldigheter.',
+    correction:
+      'Passage: anpassa hastigheten. Överfart: väjningsplikt. Skylt och väjningslinje avgör.',
+    subcategory: 'cykelpassage-overfart',
+  },
+  {
+    id: 'sving-over-cykelpassage',
+    label: 'Sväng antas inte ändra skyldigheten',
+    description:
+      'Samma svaga anpassningsplikt antas gälla när man svänger över en cykelpassage.',
+    correction:
+      'Svänger du, eller kör ut ur en cirkulationsplats, gäller låg hastighet och att lämna tillfälle att passera.',
+    subcategory: 'cykelpassage-overfart',
+  },
+  {
+    id: 'cyklist-har-foretrade',
+    label: 'Cyklisten antas ha företräde vid cykelpassage',
+    description:
+      'Cyklisten tros ha samma skydd som en gående på övergångsställe.',
+    correction:
+      'Vid en obevakad cykelpassage har cyklisten väjningsplikt mot dig — men du ska ändå anpassa farten.',
+    subcategory: 'cykelpassage-overfart',
+  },
+  {
+    id: 'moped-vid-overfart',
+    label: 'Moped klass II utesluts vid cykelöverfart',
+    description:
+      'Väjningsplikten antas gälla bara cyklande.',
+    correction:
+      'Cyklande, förare av moped klass II och elsparkcyklar omfattas alla.',
+    subcategory: 'cykelpassage-overfart',
+  },
+  {
+    id: 'overfart-hastighet',
+    label: 'Utformningskravet vid cykelöverfart glöms',
+    description:
+      'Man känner inte till farten som trafikmiljön ska vara byggd för.',
+    correction:
+      'En cykelöverfart ska vara utformad så att det inte är lämpligt att köra fortare än 30 km/h.',
+    subcategory: 'cykelpassage-overfart',
+  },
+  {
+    id: 'cykelbana-korsning',
+    label: 'Cykelbanan antas alltid vara bruten',
+    description:
+      'Man utgår från att cykelbanan tar slut före varje korsning.',
+    correction:
+      'En obruten cykelbana får bara korsas, och då gäller väjningsplikt mot cyklisterna.',
+    subcategory: 'cykelpassage-overfart',
+  },
+  {
+    id: 'cirk-vem-vajer',
+    label: 'Väjningsplikten i cirkulationsplats begränsas',
+    description:
+      'Man tror att väjningsplikten bara gäller mot motorfordon, eller inte alls på huvudled.',
+    correction:
+      'Du väjer mot varje fordon i cirkulationen — även cyklar och mopeder.',
+    subcategory: 'cirkulationsplats',
+  },
+  {
+    id: 'cirk-riktning',
+    label: 'Osäkerhet om körriktningen i cirkulationsplats',
+    description:
+      'Man är osäker på om man kör med- eller moturs.',
+    correction:
+      'Du svänger in åt höger och kör moturs.',
+    subcategory: 'cirkulationsplats',
+  },
+  {
+    id: 'cirk-utan-skylt',
+    label: 'Rund korsning antas vara cirkulationsplats',
+    description:
+      'Formen tas för reglering, utan att märket kontrolleras.',
+    correction:
+      'Utan märket för cirkulationsplats är det en vanlig korsning — högerregeln gäller.',
+    subcategory: 'cirkulationsplats',
+  },
+  {
+    id: 'cirk-utfart-cykel',
+    label: 'Utfart ur cirkulation antas ge företräde',
+    description:
+      'Man tror att den som kommer ur cirkulationen går före cyklande.',
+    correction:
+      'Utfarten jämställs med sväng: låg hastighet och lämna cyklande tillfälle att passera.',
+    subcategory: 'cirkulationsplats',
+  },
+  {
+    id: 'cirk-fordelar',
+    label: 'Cirkulationsplatsens säkerhetsvinst missförstås',
+    description:
+      'Vinsten antas vara att kollisioner blir omöjliga.',
+    correction:
+      'Vinsten är låga hastigheter och mindre farliga krockvinklar — inte att olyckor upphör.',
+    subcategory: 'cirkulationsplats',
+  },
+  {
+    id: 'cirk-blinka-ut',
+    label: 'Utfartstecknet glöms när man kör rakt fram',
+    description:
+      'Man blinkar inte ut när man kör rakt igenom cirkulationsplatsen.',
+    correction:
+      'Varje utfart är en högersväng ur cirkulationen. Blinka höger.',
+    subcategory: 'cirkulation-korfalt',
+  },
+  {
+    id: 'cirk-blinka-in',
+    label: 'Man blinkar vid infarten',
+    description:
+      'Tecken ges vid infart, vilket läses som att man ska ta första avfarten.',
+    correction:
+      'Blinka inte in när du ska rakt fram. Blinka höger när du ska ut.',
+    subcategory: 'cirkulation-korfalt',
+  },
+  {
+    id: 'cirk-vanster-regel',
+    label: 'Vänsterblinkning antas vara reglerad',
+    description:
+      'Man tror att vänsterblinkning vid infart är ett krav, eller att den ersätter utfartstecknet.',
+    correction:
+      'Vänsterblinkning är oreglerad och ibland olämplig. Högerblinkning vid utfart är alltid ett krav.',
+    subcategory: 'cirkulation-korfalt',
+  },
+  {
+    id: 'cirk-korfaltsval',
+    label: 'Höger körfält antas alltid gälla',
+    description:
+      'Man väljer höger körfält även när man ska långt runt.',
+    correction:
+      'Välj det körfält som passar din fortsatta färd, enligt märken och markeringar.',
+    subcategory: 'cirkulation-korfalt',
+  },
+  {
+    id: 'cirk-korfaltsbyte',
+    label: 'Företrädet i cirkulationen övertolkas',
+    description:
+      'Att vara inne i cirkulationen antas ge företräde även vid körfältsbyte.',
+    correction:
+      'Företrädet gäller mot dem som ska in. Ett körfältsbyte inuti är ett vanligt körfältsbyte.',
+    subcategory: 'cirkulation-korfalt',
+  },
+  {
+    id: 'cirk-underlatta',
+    label: 'Andras körfältsbyten försvåras',
+    description:
+      'Man håller farten och låter den som behöver ut lösa det själv.',
+    correction:
+      'Att underlätta andras körfältsbyten hör till hur man kör i cirkulationsplatser.',
+    subcategory: 'cirkulation-korfalt',
+  },
+  {
     id: 'utfart-vs-hoger',
     label: 'Utfartsregeln vs högerregeln',
     description:

@@ -136,6 +136,7 @@ export type CategoryId =
   | 'vagmarken'
   | 'hastighet'
   | 'korsningar'
+  | 'jarnvag'
   | 'parkering'
   | 'motorvag'
   | 'omkorning'
@@ -212,7 +213,8 @@ export type ScenarioLayout =
   | 't-junction'
   | 'roundabout'
   | 'street-scene'
-  | 'motorway-merge';
+  | 'motorway-merge'
+  | 'railway-crossing';
 
 export type ScenarioVehicleRole =
   | 'car'

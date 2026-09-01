@@ -424,6 +424,165 @@ export const LESSONS: Lesson[] = [
     curriculumChapterIds: ['trafikolyckor', 'trotthet', 'alkohol', 'nedsatt-formaga', 'barn'],
     checkQuestionIds: ['ris-001', 'ris-002', 'ris-004', 'ris-007'],
   },
+  {
+    id: 'les-plankorsning',
+    categoryId: 'jarnvag',
+    subcategoryIds: ['plankorsning-korning', 'plankorsning-marken', 'plankorsning-omkorning'],
+    title: 'Järnvägskorsningar',
+    summary: 'Den enda plats där motparten inte kan väja.',
+    estimatedMinutes: 5,
+    order: 11,
+    blocks: [
+      {
+        kind: 'paragraph',
+        text: 'En plankorsning skiljer sig från all annan trafik på en punkt: motparten kan varken väja eller stanna för dig. Ett tåg i 160 km/h rör sig drygt 44 meter i sekunden och behöver flera hundra meter för att bromsa. Hela ansvaret för att mötet inte sker ligger därför på dig.',
+      },
+      {
+        kind: 'rule',
+        title: 'Sikten bestämmer farten',
+        text: 'Bilda dig först en uppfattning om sikten längs spåret, och anpassa sedan hastigheten till den. God sikt: du kan rulla över i stort sett oförändrad fart. Halvbra sikt: sakta ner och växla ner. Dålig sikt: stanna, titta åt båda håll och kör sedan över.',
+      },
+      {
+        kind: 'list',
+        title: 'Läs avståndsmärkena som en nedräkning',
+        items: [
+          'Tre markeringar: du är längst bort från korsningen.',
+          'Två markeringar: två tredjedelar av avståndet återstår.',
+          'En markering: sista tredjedelen — korsningen är nära.',
+        ],
+      },
+      {
+        kind: 'warning',
+        text: 'Det är ljussignalen som gäller, inte bommen. Bommarna hinner ofta upp innan lamporna slutar blinka, men du får inte köra förrän det röda ljuset har slocknat — ett andra tåg kan vara på väg.',
+      },
+      {
+        kind: 'rule',
+        title: 'Kör bara in om du kommer ut',
+        text: 'Du får aldrig köra in i en plankorsning om du riskerar att bli stående på spåret. Står kön still framför dig ska du vänta, även om signalen är släckt just nu.',
+      },
+      {
+        kind: 'example',
+        title: 'Om bilen ändå får stopp på spåret',
+        text: 'Försök flytta bilen. En manuellt växlad bil kan ofta knuffas fram några meter med startmotorn: släpp kopplingen och håll nyckeln vriden. En automat puttas i friläge. Bommarna är gjorda av ett svagt material och går att köra igenom. Går bilen inte att flytta: lämna den och ring 112.',
+      },
+      {
+        kind: 'rule',
+        title: 'Omkörning',
+        text: 'I samband med en plankorsning är omkörning förbjuden — utom när det finns bommar eller en fullständig trafiksignal med rött, gult och grönt ljus. En anordning som bara blinkar rött räcker inte. Förbudet gäller aldrig tvåhjuliga fordon.',
+      },
+      {
+        kind: 'memory',
+        text: 'Sikten bestämmer farten. Lampan bestämmer när. Kön bestämmer om.',
+      },
+    ],
+    curriculumChapterIds: ['jarnvagskorsningar'],
+    checkQuestionIds: ['jvg-001', 'jvg-005', 'jvg-007', 'jvg-013'],
+  },
+  {
+    id: 'les-passager',
+    categoryId: 'trafikregler',
+    subcategoryIds: ['oskyddade-trafikanter', 'cykelpassage-overfart'],
+    title: 'Passager',
+    summary: 'Övergångsställe, cykelpassage och cykelöverfart — tre olika skyldigheter.',
+    estimatedMinutes: 6,
+    order: 12,
+    blocks: [
+      {
+        kind: 'paragraph',
+        text: 'Tre platser ser nästan likadana ut i vägbanan men ger dig helt olika skyldigheter. Att hålla isär dem är en av de mest praktiskt användbara sakerna i hela teorin.',
+      },
+      {
+        kind: 'rule',
+        title: 'Obevakat övergångsställe',
+        text: 'Du har väjningsplikt mot gående som är på eller just ska gå ut på övergångsstället. Väjningsplikten ska dessutom synas: sänk farten eller stanna i god tid så att den gående vågar gå.',
+      },
+      {
+        kind: 'rule',
+        title: 'Obevakad cykelpassage',
+        text: 'Här har du ingen väjningsplikt. Du ska anpassa hastigheten så att ingen fara uppstår för cyklister på passagen. Cyklisten har i sin tur väjningsplikt mot dig och får bara korsa om det kan ske utan fara.',
+      },
+      {
+        kind: 'rule',
+        title: 'Cykelöverfart',
+        text: 'Här har du full väjningsplikt mot cyklande och förare av moped klass II som är ute på eller just ska färdas ut på överfarten — samma styrka som mot gående på ett obevakat övergångsställe.',
+      },
+      {
+        kind: 'list',
+        title: 'Så ser du skillnaden',
+        items: [
+          'Cykelöverfart: vägmärke, vägmarkering och en väjningslinje för biltrafiken.',
+          'Cykelpassage: bara vägmarkering, inget vägmärke och ingen väjningslinje.',
+          'Miljön vid en cykelöverfart ska vara byggd så att det inte är lämpligt att köra fortare än 30 km/h.',
+        ],
+      },
+      {
+        kind: 'warning',
+        text: 'Svänger du — eller kör ut ur en cirkulationsplats — över en cykelpassage skärps kravet: du ska köra med låg hastighet och lämna cyklande tillfälle att passera. Det är i den situationen de flesta olyckorna mellan bil och cyklist sker.',
+      },
+      {
+        kind: 'example',
+        title: 'Bevakat betyder att signalen fungerar',
+        text: 'Ett övergångsställe med trafiksignaler som är släckta räknas som obevakat, och då gäller väjningsplikten mot gående. Bevakat kräver en fungerande signal eller en polis på platsen. Har någon gått ut på grönt och inte hinner över måste du låta personen gå färdigt.',
+      },
+      {
+        kind: 'memory',
+        text: 'Skylt och väjningslinje = du väjer. Bara rutor = du anpassar farten.',
+      },
+    ],
+    curriculumChapterIds: ['passager'],
+    checkQuestionIds: ['pas-008', 'pas-011', 'pas-014', 'pas-009'],
+  },
+  {
+    id: 'les-cirkulation',
+    categoryId: 'korsningar',
+    subcategoryIds: ['cirkulationsplats', 'cirkulation-korfalt'],
+    title: 'Cirkulationsplats',
+    summary: 'Väj för alla som redan snurrar — och blinka alltid ut.',
+    estimatedMinutes: 4,
+    order: 13,
+    blocks: [
+      {
+        kind: 'paragraph',
+        text: 'Cirkulationsplatsen är en av de säkraste korsningstyper som finns, just för att den tvingar ner farten och tar bort de raka nittiogradiga krockvinklarna. Två regler bär upp nästan allt du behöver kunna.',
+      },
+      {
+        kind: 'rule',
+        title: 'Väjningsplikt vid infart',
+        text: 'Du har väjningsplikt mot varje fordon som redan befinner sig i cirkulationen. Ordet är "varje fordon" — cyklar och mopeder räknas också. Kör in åt höger och färdas moturs.',
+      },
+      {
+        kind: 'rule',
+        title: 'Blinka alltid ut',
+        text: 'Varje utfart ur cirkulationen är en högersväng, hur rakt fram det än känns. Ge tecken åt höger när du passerar refugen till avfarten före din egen.',
+      },
+      {
+        kind: 'list',
+        title: 'Körfältsval',
+        items: [
+          'Välj det körfält som passar din fortsatta färd, enligt märken och markeringar.',
+          'Försök ligga i det högra körfältet innan du kör ut — inget krav, men säkrare.',
+          'Byt körfält inne i cirkulationen bara om det kan ske utan hinder eller fara, och blinka.',
+          'Underlätta för andra som behöver byta körfält genom att anpassa farten.',
+        ],
+      },
+      {
+        kind: 'warning',
+        text: 'En huvudled tar slut vid cirkulationsplatsen. Att du kört på huvudled fram till infarten ger dig alltså inget företräde där.',
+      },
+      {
+        kind: 'example',
+        title: 'Vänsterblinkning är oreglerat',
+        text: 'Många trafikskolor rekommenderar vänsterblinkning vid infart när du ska långt runt, för att avskräcka väntande förare från att chansa. Det finns dock ingen tydlig regel om det, och det är olämpligt om du ligger i höger körfält — då läses det som ett körfältsbyte. Högerblinkning vid utfart är däremot alltid ett krav.',
+      },
+      {
+        kind: 'warning',
+        text: 'Är cirkulationsplatsen tom när du kommer fram får du köra in direkt. Men en rund korsning utan märket för cirkulationsplats är ingen cirkulationsplats — där gäller högerregeln.',
+      },
+      { kind: 'memory', text: 'Alla som redan snurrar går före. Ut ur cirkulationen: höger blinkers.' },
+    ],
+    curriculumChapterIds: ['cirkulationsplats'],
+    checkQuestionIds: ['cir-001', 'cir-003', 'cir-008', 'cir-012'],
+  },
 ];
 
 export const LESSON_BY_ID: ReadonlyMap<string, Lesson> = new Map(LESSONS.map((l) => [l.id, l]));

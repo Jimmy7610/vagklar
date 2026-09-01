@@ -63,16 +63,16 @@ export const MAJOR_AREAS: MajorArea[] = [
 /** Chapters with page ranges taken directly from the source's contents. */
 export const CURRICULUM_CHAPTERS: CurriculumChapter[] = [
   // ---- Trafikregler --------------------------------------------------
-  { id: 'inledning', majorArea: 'trafikregler', title: 'Inledning', startPage: 6, endPage: 13, subcategories: ['grundregler', 'vagens-anvandning', 'hastighetsgranser', 'anpassad-hastighet', 'polisens-tecken'] },
-  { id: 'korfalt', majorArea: 'trafikregler', title: 'Körfält', startPage: 14, endPage: 21, subcategories: ['korfalt-och-sving', 'placering'] },
+  { id: 'inledning', majorArea: 'trafikregler', title: 'Inledning', startPage: 6, endPage: 13, subcategories: ['grundregler', 'vagens-anvandning', 'hastighetsgranser', 'anpassad-hastighet', 'polisens-tecken', 'skymd-sikt', 'korstrategi'] },
+  { id: 'korfalt', majorArea: 'trafikregler', title: 'Körfält', startPage: 14, endPage: 21, subcategories: ['korfalt-och-sving', 'placering', 'korfaltsbyte'] },
   { id: 'vajningsregler', majorArea: 'trafikregler', title: 'Väjningsregler', startPage: 22, endPage: 45, subcategories: ['hogerregeln', 'vajningsplikt', 'stopplikt', 'huvudled', 'utfartsregeln', 'trafiksignal-korsning', 'trafiksignaler'] },
-  { id: 'passager', majorArea: 'trafikregler', title: 'Passager', startPage: 46, endPage: 57, subcategories: ['oskyddade-trafikanter'] },
-  { id: 'cirkulationsplats', majorArea: 'trafikregler', title: 'Cirkulationsplats', startPage: 58, endPage: 67, subcategories: ['cirkulationsplats'] },
+  { id: 'passager', majorArea: 'trafikregler', title: 'Passager', startPage: 46, endPage: 57, subcategories: ['oskyddade-trafikanter', 'cykelpassage-overfart'] },
+  { id: 'cirkulationsplats', majorArea: 'trafikregler', title: 'Cirkulationsplats', startPage: 58, endPage: 67, subcategories: ['cirkulationsplats', 'cirkulation-korfalt'] },
   { id: 'stanna-parkera', majorArea: 'trafikregler', title: 'Stanna & parkera', startPage: 68, endPage: 77, subcategories: ['stannande-forbud', 'parkeringsforbud', 'parkeringsregler'] },
   { id: 'landsvag', majorArea: 'trafikregler', title: 'Landsväg', startPage: 78, endPage: 89, subcategories: ['landsvag', 'avstand'] },
   { id: 'motorvag', majorArea: 'trafikregler', title: 'Motorväg & motortrafikled', startPage: 90, endPage: 97, subcategories: ['motorvag-regler', 'pafart-avfart', 'motortrafikled'] },
   { id: 'omkorningar', majorArea: 'trafikregler', title: 'Omkörningar', startPage: 98, endPage: 107, subcategories: ['omkorningsregler', 'omkorningsforbud', 'mote'] },
-  { id: 'jarnvagskorsningar', majorArea: 'trafikregler', title: 'Järnvägskorsningar', startPage: 108, endPage: 115, subcategories: [] },
+  { id: 'jarnvagskorsningar', majorArea: 'trafikregler', title: 'Järnvägskorsningar', startPage: 108, endPage: 115, subcategories: ['plankorsning-marken', 'plankorsning-korning', 'plankorsning-omkorning'] },
   { id: 'speciella-gator', majorArea: 'trafikregler', title: 'Speciella gator', startPage: 116, endPage: 123, subcategories: ['anvisningsmarken', 'hastighetsgranser'] },
   { id: 'vinter', majorArea: 'trafikregler', title: 'Vinter', startPage: 124, endPage: 131, subcategories: ['vinterkorning', 'halka'] },
 
@@ -81,37 +81,37 @@ export const CURRICULUM_CHAPTERS: CurriculumChapter[] = [
   { id: 'alkohol', majorArea: 'manniskan', title: 'Alkohol', startPage: 140, endPage: 147, subcategories: ['alkohol-gransvarden', 'alkohol-effekter', 'droger-lakemedel'] },
   { id: 'trotthet', majorArea: 'manniskan', title: 'Trötthet', startPage: 148, endPage: 153, subcategories: ['trotthet'] },
   { id: 'synen', majorArea: 'manniskan', title: 'Synen', startPage: 154, endPage: 161, subcategories: ['reaktion-och-sinnen'] },
-  { id: 'nedsatt-formaga', majorArea: 'manniskan', title: 'Nedsatt förmåga', startPage: 162, endPage: 167, subcategories: [] },
+  { id: 'nedsatt-formaga', majorArea: 'manniskan', title: 'Nedsatt förmåga', startPage: 162, endPage: 167, subcategories: ['nedsatt-formaga'] },
   { id: 'barn', majorArea: 'manniskan', title: 'Barn', startPage: 168, endPage: 173, subcategories: ['barn-och-oskyddade'] },
   { id: 'trafikolyckor', majorArea: 'manniskan', title: 'Trafikolyckor', startPage: 174, endPage: 187, subcategories: ['riskbedomning', 'djur-pa-vagen'] },
 
   // ---- Fordon --------------------------------------------------------
-  { id: 'indelning-fordon', majorArea: 'fordon', title: 'Indelning av fordon', startPage: 188, endPage: 195, subcategories: [] },
+  { id: 'indelning-fordon', majorArea: 'fordon', title: 'Indelning av fordon', startPage: 188, endPage: 195, subcategories: ['fordonsslag', 'slapvagn'] },
   { id: 'strackor', majorArea: 'fordon', title: 'Sträckor', startPage: 196, endPage: 203, subcategories: ['reaktion-och-sinnen'] },
   { id: 'dack', majorArea: 'fordon', title: 'Däck', startPage: 204, endPage: 213, subcategories: ['dack-och-bromsar', 'vinterkorning'] },
   { id: 'styrning', majorArea: 'fordon', title: 'Styrning', startPage: 214, endPage: 223, subcategories: ['vattenplaning', 'halka'] },
   { id: 'bromsar', majorArea: 'fordon', title: 'Bromsar', startPage: 224, endPage: 231, subcategories: ['dack-och-bromsar'] },
-  { id: 'krocksakerhet', majorArea: 'fordon', title: 'Krocksäkerhet', startPage: 232, endPage: 237, subcategories: [] },
+  { id: 'krocksakerhet', majorArea: 'fordon', title: 'Krocksäkerhet', startPage: 232, endPage: 237, subcategories: ['krocksakerhet'] },
   { id: 'bilbarnstolar', majorArea: 'fordon', title: 'Bilbarnstolar', startPage: 238, endPage: 243, subcategories: ['lastning'] },
   { id: 'langd-bredd', majorArea: 'fordon', title: 'Längd & bredd', startPage: 244, endPage: 251, subcategories: ['lastning'] },
   { id: 'last', majorArea: 'fordon', title: 'Last', startPage: 252, endPage: 261, subcategories: ['lastning', 'slapvagn'] },
-  { id: 'belysning', majorArea: 'fordon', title: 'Belysning', startPage: 262, endPage: 271, subcategories: ['belysning-fordon', 'ljusanvandning'] },
+  { id: 'belysning', majorArea: 'fordon', title: 'Belysning', startPage: 262, endPage: 271, subcategories: ['belysning-fordon', 'ljusanvandning', 'morkerkorning', 'mote-i-morker', 'dimma'] },
   { id: 'sakerhetskontroller', majorArea: 'fordon', title: 'Säkerhetskontroller', startPage: 272, endPage: 277, subcategories: ['kontroll-besiktning'] },
   { id: 'besiktning', majorArea: 'fordon', title: 'Besiktning', startPage: 278, endPage: 283, subcategories: ['kontroll-besiktning'] },
   { id: 'service', majorArea: 'fordon', title: 'Service', startPage: 284, endPage: 289, subcategories: ['kontroll-besiktning'] },
-  { id: 'registreringsbevis', majorArea: 'fordon', title: 'Registreringsbevis', startPage: 290, endPage: 297, subcategories: [] },
-  { id: 'forsakring', majorArea: 'fordon', title: 'Försäkring', startPage: 298, endPage: 303, subcategories: [] },
+  { id: 'registreringsbevis', majorArea: 'fordon', title: 'Registreringsbevis', startPage: 290, endPage: 297, subcategories: ['registrering'] },
+  { id: 'forsakring', majorArea: 'fordon', title: 'Försäkring', startPage: 298, endPage: 303, subcategories: ['forsakring'] },
 
   // ---- Miljö ---------------------------------------------------------
   { id: 'miljo', majorArea: 'miljo', title: 'Miljö', startPage: 304, endPage: 311, subcategories: ['miljopaverkan'] },
   { id: 'sparsam-korning', majorArea: 'miljo', title: 'Sparsam körning', startPage: 312, endPage: 317, subcategories: ['sparsam-korning'] },
-  { id: 'drivmedel', majorArea: 'miljo', title: 'Drivmedel', startPage: 318, endPage: 323, subcategories: ['miljopaverkan'] },
+  { id: 'drivmedel', majorArea: 'miljo', title: 'Drivmedel', startPage: 318, endPage: 323, subcategories: ['miljopaverkan', 'drivmedel'] },
 
   // ---- Vägmärken -----------------------------------------------------
   { id: 'vagmarken', majorArea: 'vagmarken', title: 'Vägmärken', startPage: 324, endPage: 361, subcategories: ['varningsmarken', 'forbudsmarken', 'pabudsmarken', 'anvisningsmarken', 'vagmarkeringar'] },
 
   // ---- Rättsfall -----------------------------------------------------
-  { id: 'rattsfall', majorArea: 'rattsfall', title: 'Rättsfall', startPage: 362, endPage: 367, subcategories: [] },
+  { id: 'rattsfall', majorArea: 'rattsfall', title: 'Rättsfall', startPage: 362, endPage: 367, subcategories: ['rattspraxis'] },
 ];
 
 function c(
@@ -134,6 +134,15 @@ function c(
  * invented.
  */
 export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
+  // --- Concepts added so that subcategories the question bank already uses
+  // --- are anchored in the syllabus rather than floating unmapped.
+  c('anpassa-hastigheten', 'inledning', 'trafikregler', 'Anpassa hastigheten efter förhållandena', [8, 9], 'core', 'anpassad-hastighet'),
+  c('skymd-sikt-bedomning', 'inledning', 'trafikregler', 'Skymd sikt och förutsägbara hinder', [9], 'core', 'skymd-sikt'),
+  c('korning-i-morker', 'belysning', 'fordon', 'Körning i mörker', [262, 263], 'core', 'morkerkorning'),
+  c('synlighet-morker', 'belysning', 'fordon', 'Synlighet i mörker för gående', [267, 268], 'core', 'morkerkorning'),
+  c('avblandning-mote', 'belysning', 'fordon', 'Avbländning vid möte och omkörning', [266, 267], 'core', 'mote-i-morker'),
+  c('korning-i-dimma', 'belysning', 'fordon', 'Dimma och kraftigt nedsatt sikt', [263, 264], 'core', 'dimma'),
+
   /* ---- Inledning (6–13) ---- */
   c('trafikens-grundregler', 'inledning', 'trafikregler', 'Trafikens grundregler', [6], 'core', 'grundregler'),
   c('vag-korbana-korfalt', 'inledning', 'trafikregler', 'Väg, körbana, körfält och vägren', [6], 'core', 'vagens-anvandning'),
@@ -149,8 +158,8 @@ export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
   c('placering-vid-svang', 'korfalt', 'trafikregler', 'Placering i samband med sväng', [15], 'core', 'korfalt-och-sving'),
   c('svang-enkelriktad', 'korfalt', 'trafikregler', 'Sväng på enkelriktad väg', [15], 'supporting', 'korfalt-och-sving'),
   c('val-av-korfalt', 'korfalt', 'trafikregler', 'Vilket körfält du ska välja', [16], 'core', 'placering'),
-  c('korfaltsbyte', 'korfalt', 'trafikregler', 'Körfältsbyte steg för steg', [17], 'core', 'korfalt-och-sving'),
-  c('korfaltsbyte-forbud', 'korfalt', 'trafikregler', 'Förbjudet att byta körfält', [17], 'supporting', 'korfalt-och-sving'),
+  c('korfaltsbyte', 'korfalt', 'trafikregler', 'Körfältsbyte steg för steg', [17], 'core', 'korfaltsbyte'),
+  c('korfaltsbyte-forbud', 'korfalt', 'trafikregler', 'Förbjudet att byta körfält', [17], 'supporting', 'korfaltsbyte'),
 
   /* ---- Väjningsregler (22–45) ---- */
   c('inga-rattigheter', 'vajningsregler', 'trafikregler', 'Inga rättigheter, bara skyldigheter', [22], 'core', 'vajningsplikt'),
@@ -172,15 +181,15 @@ export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
   c('bevakat-overgangsstalle', 'passager', 'trafikregler', 'Bevakat övergångsställe', [46], 'core', 'oskyddade-trafikanter'),
   c('obevakat-overgangsstalle', 'passager', 'trafikregler', 'Obevakat övergångsställe', [46], 'core', 'oskyddade-trafikanter'),
   c('gangbana', 'passager', 'trafikregler', 'Gångbana', [48, 49], 'supporting', 'oskyddade-trafikanter'),
-  c('cykelpassage', 'passager', 'trafikregler', 'Cykelpassage', [50, 51], 'core', 'oskyddade-trafikanter'),
-  c('cykeloverfart', 'passager', 'trafikregler', 'Cykelöverfart', [52, 53, 54], 'core', 'oskyddade-trafikanter'),
+  c('cykelpassage', 'passager', 'trafikregler', 'Cykelpassage', [50, 51], 'core', 'cykelpassage-overfart'),
+  c('cykeloverfart', 'passager', 'trafikregler', 'Cykelöverfart', [52, 53, 54], 'core', 'cykelpassage-overfart'),
 
   /* ---- Cirkulationsplats (58–67) ---- */
   c('cirkulation-grund', 'cirkulationsplats', 'trafikregler', 'Hur man kör i cirkulationsplatser', [58], 'core', 'cirkulationsplats'),
   c('cirkulation-rakt-fram', 'cirkulationsplats', 'trafikregler', 'Köra rakt fram i cirkulationsplats', [59], 'core', 'cirkulationsplats'),
   c('cirkulation-hoger', 'cirkulationsplats', 'trafikregler', 'Svänga höger i cirkulationsplats', [60], 'core', 'cirkulationsplats'),
   c('cirkulation-vanster', 'cirkulationsplats', 'trafikregler', 'Svänga vänster i cirkulationsplats', [61], 'core', 'cirkulationsplats'),
-  c('cirkulation-blinkning', 'cirkulationsplats', 'trafikregler', 'Blinkning i cirkulationsplats', [62, 63], 'core', 'cirkulationsplats'),
+  c('cirkulation-blinkning', 'cirkulationsplats', 'trafikregler', 'Blinkning i cirkulationsplats', [62, 63], 'core', 'cirkulation-korfalt'),
 
   /* ---- Stanna & parkera (68–77) ---- */
   c('stanna-definition', 'stanna-parkera', 'trafikregler', 'Vad som räknas som att stanna', [68], 'core', 'stannande-forbud'),
@@ -214,11 +223,11 @@ export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
   c('mote', 'omkorningar', 'trafikregler', 'Möte', [101], 'core', 'mote'),
 
   /* ---- Järnvägskorsningar (108–115) — no taxonomy home yet ---- */
-  c('jarnvag-avstand', 'jarnvagskorsningar', 'trafikregler', 'Avstånd till järnvägskorsning', [109], 'core', null),
-  c('jarnvag-korsa-sakert', 'jarnvagskorsningar', 'trafikregler', 'Hur man korsar en järnväg säkert', [109, 110], 'core', null),
-  c('jarnvag-stopp-pa-spar', 'jarnvagskorsningar', 'trafikregler', 'Stopp mitt på spåret', [110], 'core', null),
-  c('jarnvag-omkorning', 'jarnvagskorsningar', 'trafikregler', 'Omkörning vid plankorsning', [111], 'supporting', null),
-  c('jarnvag-bommar', 'jarnvagskorsningar', 'trafikregler', 'Olika typer av järnvägsbommar', [112, 113], 'core', null),
+  c('jarnvag-avstand', 'jarnvagskorsningar', 'trafikregler', 'Avstånd till järnvägskorsning', [109], 'core', 'plankorsning-marken'),
+  c('jarnvag-korsa-sakert', 'jarnvagskorsningar', 'trafikregler', 'Hur man korsar en järnväg säkert', [109, 110], 'core', 'plankorsning-korning'),
+  c('jarnvag-stopp-pa-spar', 'jarnvagskorsningar', 'trafikregler', 'Stopp mitt på spåret', [110], 'core', 'plankorsning-korning'),
+  c('jarnvag-omkorning', 'jarnvagskorsningar', 'trafikregler', 'Omkörning vid plankorsning', [111], 'supporting', 'plankorsning-omkorning'),
+  c('jarnvag-bommar', 'jarnvagskorsningar', 'trafikregler', 'Olika typer av järnvägsbommar', [112, 113], 'core', 'plankorsning-marken'),
 
   /* ---- Speciella gator (116–123) ---- */
   c('tattbebyggt-omrade', 'speciella-gator', 'trafikregler', 'Tättbebyggt område', [116], 'core', 'hastighetsgranser'),
@@ -265,10 +274,10 @@ export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
   c('ovriga-sinnen', 'synen', 'manniskan', 'De övriga sinnena', [157, 158], 'supporting', 'reaktion-och-sinnen'),
 
   /* ---- Nedsatt förmåga (162–167) — no taxonomy home yet ---- */
-  c('funktionsnedsattning', 'nedsatt-formaga', 'manniskan', 'Funktionsnedsättning i trafiken', [162], 'core', null),
-  c('vit-kapp', 'nedsatt-formaga', 'manniskan', 'Signaler med vit käpp', [162], 'core', null),
-  c('ledarhund', 'nedsatt-formaga', 'manniskan', 'Ledarhund', [163], 'supporting', null),
-  c('aldre-i-trafiken', 'nedsatt-formaga', 'manniskan', 'Äldre i trafiken', [163, 164], 'core', null),
+  c('funktionsnedsattning', 'nedsatt-formaga', 'manniskan', 'Funktionsnedsättning i trafiken', [162], 'core', 'nedsatt-formaga'),
+  c('vit-kapp', 'nedsatt-formaga', 'manniskan', 'Signaler med vit käpp', [162], 'core', 'nedsatt-formaga'),
+  c('ledarhund', 'nedsatt-formaga', 'manniskan', 'Ledarhund', [163], 'supporting', 'nedsatt-formaga'),
+  c('aldre-i-trafiken', 'nedsatt-formaga', 'manniskan', 'Äldre i trafiken', [163, 164], 'core', 'nedsatt-formaga'),
 
   /* ---- Barn (168–173) ---- */
   c('barn-svarigheter', 'barn', 'manniskan', 'Svårigheter med barn i trafiken', [168], 'core', 'barn-och-oskyddade'),
@@ -288,10 +297,10 @@ export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
   c('nollvisionen', 'trafikolyckor', 'manniskan', 'Nollvisionen', [183], 'supporting', 'riskbedomning'),
 
   /* ---- Indelning av fordon (188–195) — no taxonomy home yet ---- */
-  c('trafikant', 'indelning-fordon', 'fordon', 'Trafikant', [188], 'core', null),
+  c('trafikant', 'indelning-fordon', 'fordon', 'Trafikant', [188], 'core', 'fordonsslag'),
   c('slapfordon', 'indelning-fordon', 'fordon', 'Släpfordon', [189], 'core', 'slapvagn'),
-  c('efterfordon', 'indelning-fordon', 'fordon', 'Efterfordon', [189], 'peripheral', null),
-  c('hastigheter-fordon', 'indelning-fordon', 'fordon', 'Hastigheter för olika fordon', [190, 191], 'core', null),
+  c('efterfordon', 'indelning-fordon', 'fordon', 'Efterfordon', [189], 'peripheral', 'fordonsslag'),
+  c('hastigheter-fordon', 'indelning-fordon', 'fordon', 'Hastigheter för olika fordon', [190, 191], 'core', 'fordonsslag'),
 
   /* ---- Sträckor (196–203) ---- */
   c('reaktionsstracka', 'strackor', 'fordon', 'Reaktionssträcka', [196, 197], 'core', 'reaktion-och-sinnen'),
@@ -321,9 +330,9 @@ export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
   c('parkeringsbroms', 'bromsar', 'fordon', 'Parkeringsbroms', [227], 'supporting', 'dack-och-bromsar'),
 
   /* ---- Krocksäkerhet (232–237) — thin taxonomy coverage ---- */
-  c('deformationszoner', 'krocksakerhet', 'fordon', 'Deformationszoner', [232], 'core', null),
-  c('bilbalte', 'krocksakerhet', 'fordon', 'Säkerhetsbälte', [232], 'core', 'lastning'),
-  c('krockkudde', 'krocksakerhet', 'fordon', 'Krockkudde', [233, 234], 'core', null),
+  c('deformationszoner', 'krocksakerhet', 'fordon', 'Deformationszoner', [232], 'core', 'krocksakerhet'),
+  c('bilbalte', 'krocksakerhet', 'fordon', 'Säkerhetsbälte', [232], 'core', 'krocksakerhet'),
+  c('krockkudde', 'krocksakerhet', 'fordon', 'Krockkudde', [233, 234], 'core', 'krocksakerhet'),
 
   /* ---- Bilbarnstolar (238–243) ---- */
   c('bilbarnstol', 'bilbarnstolar', 'fordon', 'Bilbarnstolar och bältesstol', [238, 239, 240], 'core', 'lastning'),
@@ -354,23 +363,23 @@ export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
   c('service', 'service', 'fordon', 'Service och underhåll', [284, 285], 'supporting', 'kontroll-besiktning'),
 
   /* ---- Registreringsbevis (290–297) — no taxonomy home yet ---- */
-  c('registreringsbevis', 'registreringsbevis', 'fordon', 'Registreringsbevis', [290, 291], 'core', null),
-  c('fordonsskatt', 'registreringsbevis', 'fordon', 'Fordonsskatt och avställning', [292, 293], 'supporting', null),
+  c('registreringsbevis', 'registreringsbevis', 'fordon', 'Registreringsbevis', [290, 291], 'core', 'registrering'),
+  c('fordonsskatt', 'registreringsbevis', 'fordon', 'Fordonsskatt och avställning', [292, 293], 'supporting', 'registrering'),
 
   /* ---- Försäkring (298–303) — no taxonomy home yet ---- */
-  c('trafikforsakring', 'forsakring', 'fordon', 'Trafikförsäkring', [298, 299], 'core', null),
-  c('halvforsakring', 'forsakring', 'fordon', 'Halv- och helförsäkring', [300], 'supporting', null),
+  c('trafikforsakring', 'forsakring', 'fordon', 'Trafikförsäkring', [298, 299], 'core', 'forsakring'),
+  c('halvforsakring', 'forsakring', 'fordon', 'Halv- och helförsäkring', [300], 'supporting', 'forsakring'),
 
   /* ---- Miljö (304–311) ---- */
   c('avgaser', 'miljo', 'miljo', 'Avgaser och utsläpp', [304, 305], 'core', 'miljopaverkan'),
   c('katalysator', 'miljo', 'miljo', 'Katalysator', [306], 'core', 'miljopaverkan'),
-  c('miljozoner', 'miljo', 'miljo', 'Miljözoner', [307], 'supporting', 'miljopaverkan'),
+  c('miljozoner', 'miljo', 'miljo', 'Miljözoner', [307], 'supporting', 'drivmedel'),
 
   /* ---- Sparsam körning (312–317) ---- */
   c('sparsam-korning', 'sparsam-korning', 'miljo', 'Sparsam körning (ecodriving)', [312, 313, 314], 'core', 'sparsam-korning'),
 
   /* ---- Drivmedel (318–323) ---- */
-  c('drivmedel', 'drivmedel', 'miljo', 'Drivmedel och bränsletyper', [318, 319, 320], 'core', 'miljopaverkan'),
+  c('drivmedel', 'drivmedel', 'miljo', 'Drivmedel och bränsletyper', [318, 319, 320], 'core', 'drivmedel'),
 
   /* ---- Vägmärken (324–361) ---- */
   c('varningsmarken', 'vagmarken', 'vagmarken', 'Varningsmärken', [326, 327, 328, 329, 330], 'core', 'varningsmarken'),
@@ -383,7 +392,7 @@ export const CURRICULUM_CONCEPTS: CurriculumConcept[] = [
   c('tillaggstavlor', 'vagmarken', 'vagmarken', 'Tilläggstavlor', [354, 355], 'core', 'anvisningsmarken'),
 
   /* ---- Rättsfall (362–367) ---- */
-  c('rattsfall', 'rattsfall', 'rattsfall', 'Hur domstolar har dömt i trafikmål', [362, 363, 364, 365, 366, 367], 'peripheral', null),
+  c('rattsfall', 'rattsfall', 'rattsfall', 'Hur domstolar har dömt i trafikmål', [362, 363, 364, 365, 366, 367], 'peripheral', 'rattspraxis'),
 ];
 
 export const CHAPTER_BY_ID: ReadonlyMap<string, CurriculumChapter> = new Map(

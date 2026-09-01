@@ -9,6 +9,7 @@ import type {
   ScenarioType,
   SourceReference,
 } from '@/domain/content/types';
+import { PRIMARY_SOURCE_ID } from '@/content/sources';
 
 /**
  * Authoring helpers for the seed question bank.
@@ -57,6 +58,30 @@ export function vmf(reference: string): SourceReference {
 /** A reference to a general body of knowledge rather than a specific paragraph. */
 export function general(name: string): SourceReference {
   return { name, verifiedAt: null };
+}
+
+/**
+ * A reference into the licensed teoribok, by page.
+ *
+ * Publisher, edition and rights holder deliberately live in the source
+ * registry (src/content/sources.ts) rather than being repeated here, so
+ * attribution stays consistent and an edition change is a one-line edit.
+ * A page reference means "this is where the topic is covered" — it is not a
+ * claim that the wording below was checked and signed off by an expert.
+ */
+export function teori(reference: string, ...pages: number[]): SourceReference {
+  return {
+    name: 'Teoribok 2026-1 (Körkortonline.se)',
+    reference,
+    verifiedAt: null,
+    sourceId: PRIMARY_SOURCE_ID,
+    sourcePages: pages,
+  };
+}
+
+/** Transportstyrelsen as an authority reference. */
+export function tsv(reference: string): SourceReference {
+  return { name: 'Transportstyrelsen', reference, verifiedAt: null };
 }
 
 export interface AuthoredQuestion {

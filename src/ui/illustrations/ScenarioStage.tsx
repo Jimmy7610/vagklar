@@ -109,6 +109,21 @@ function Roads({ layout }: { layout: ScenarioLayout }) {
         </>
       );
 
+    case 'railway-crossing':
+      return (
+        <>
+          {vertical}
+          {/* Track bed, then the two rails, crossing the road east-west. */}
+          <rect x="0" y="43" width="100" height="14" fill="var(--ground-alt)" />
+          <rect x="0" y="45.6" width="100" height="1.6" fill="var(--lane)" opacity="0.85" />
+          <rect x="0" y="52.8" width="100" height="1.6" fill="var(--lane)" opacity="0.85" />
+          {/* Sleepers, drawn outside the carriageway so the road stays readable. */}
+          {[4, 12, 20, 28, 72, 80, 88, 96].map((x) => (
+            <rect key={x} x={x} y="43" width="3" height="14" fill="var(--lane)" opacity="0.35" />
+          ))}
+        </>
+      );
+
     case 'motorway-merge':
       return (
         <>

@@ -26,7 +26,8 @@ alltså inte höjas av misstag.
 
 ### Nuvarande läge
 
-**Allt seedinnehåll har status `reviewed`, och alla källhänvisningar har `verifiedAt: null`.**
+**Allt innehåll har status `reviewed`, och alla källhänvisningar har `verifiedAt: null`.**
+Banken innehåller 259 frågor; ingen av dem är märkt `verified`.
 
 Det är ett medvetet, ärligt val. Frågorna är skrivna mot Trafikförordningen och etablerad
 trafikkunskap, men de har inte kontrollerats mot källtexterna av en sakkunnig. Innan Vägklar
@@ -51,6 +52,23 @@ Regler för allt författande:
 - Källdokument stannar i `references/` — de checkas inte in och publiceras inte.
 
 Se [SOURCES-AND-RIGHTS.md](SOURCES-AND-RIGHTS.md).
+
+## Källhjälpare
+
+Använd hjälparna i [`authoring.ts`](../src/content/questions/authoring.ts) i stället
+för att skriva källsträngar för hand:
+
+| Hjälpare | Ger |
+| --- | --- |
+| `trf('3 kap. 18 §')` | Trafikförordningen |
+| `vmf('2 kap. B8')` | Vägmärkesförordningen |
+| `tsv('Trafikförsäkring')` | Transportstyrelsen |
+| `teori('Rubrik', 109)` | Teoriboken, med `sourceId` och sidnummer |
+| `general('...')` | Allmänt kunskapsstoff utan paragraf |
+
+`teori()` sätter `sourceId` automatiskt, så utgivare, upplaga och rättighetshavare
+hämtas ur källregistret i stället för att upprepas. Validatorn avvisar ett sidnummer
+som ligger utanför källans sidantal.
 
 ## Var det saknas frågor
 

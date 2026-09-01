@@ -30,9 +30,10 @@ npm run dev
 | `npm run lint`      | ESLint                                                       |
 | `npm run typecheck` | `tsc -b --force`                                             |
 | `npm test`          | Vitest                                                       |
-| `npm run verify`    | lint → typecheck → test → build (kör detta före commit)       |
+| `npm run verify`    | lint → typecheck → test → innehållsvalidering → build         |
 | `npm run verify:build` | Kontrollerar att inga källdokument hamnat i `dist/`        |
 | `npm run report:coverage` | Genererar om `docs/CONTENT-COVERAGE.md`                 |
+| `npm run report:content` | Validerar banken och skriver `docs/CONTENT-VALIDATION.md` |
 
 Ikoner och Open Graph-bilden genereras från kod:
 
@@ -124,12 +125,12 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 
 | Sak                            | Antal                                  |
 | ------------------------------ | -------------------------------------- |
-| Frågor                         | 147 (26 lätta, 92 medel, 29 svåra)     |
-| Kunskapsområden                | 16                                     |
-| Delområden med frågor          | 58 av 58                               |
-| Lektioner                      | 10                                     |
-| Scenarier                      | 6 (med varianter)                      |
-| Namngivna missuppfattningar    | 30                                     |
+| Frågor                         | 259 (44 lätta, 155 medel, 60 svåra)    |
+| Kunskapsområden                | 17                                     |
+| Delområden                     | 71                                     |
+| Lektioner                      | 13                                     |
+| Scenarier                      | 11 (med varianter)                     |
+| Namngivna missuppfattningar    | 140                                    |
 | Kursplanekapitel               | 39 (173 begrepp)                       |
 
 Allt innehåll är original, skrivet för Vägklar. Varje fråga bär källhänvisningar och en
@@ -142,7 +143,13 @@ Innehållet mäts mot en kursplan i [`src/content/curriculum/curriculum.ts`](src
 39 kapitel och 173 begrepp, med sidhänvisningar till den licensierade källan.
 Täckningsrapporten i [docs/CONTENT-COVERAGE.md](docs/CONTENT-COVERAGE.md) **genereras**
 ur den kartan och den verkliga frågebanken — kör `npm run report:coverage`. Den visar
-öppet var materialet är tunt: 90 av 173 begrepp är täckta, 19 saknar frågor helt.
+öppet var materialet är tunt: 136 av 179 begrepp är täckta, och inga kärnbegrepp
+saknar frågor helt.
+
+Innehållet valideras dessutom maskinellt. `npm run report:content` skriver
+[docs/CONTENT-VALIDATION.md](docs/CONTENT-VALIDATION.md) och avbryter med felkod om
+banken har brutna referenser, omöjliga sidhänvisningar eller saknad attribution —
+se [docs/CONTENT-VALIDATION.md](docs/CONTENT-VALIDATION.md).
 
 Källorna redovisas i [docs/SOURCES-AND-RIGHTS.md](docs/SOURCES-AND-RIGHTS.md) och i appen
 under **Källor**.

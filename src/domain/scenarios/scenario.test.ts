@@ -306,6 +306,10 @@ describe('lane discipline', () => {
       for (const vehicle of scenario.vehicles) {
         const path = vehicle.path;
         if (!path || path.length < 2) continue;
+        // Cyclists and pedestrians travel on cycle paths and pavements, which
+        // sit outside the carriageway. Carriageway lane geometry does not
+        // describe them, so judging them by it would be wrong, not strict.
+        if (vehicle.role === 'bicycle' || vehicle.role === 'pedestrian') continue;
 
         const end = path[path.length - 1]!;
         const before = path[path.length - 2]!;
