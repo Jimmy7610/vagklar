@@ -10,7 +10,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 
 ## Automatiserade tester
 
-`npm test` — **288 tester i 16 filer, alla gröna.**
+`npm test` — **299 tester i 16 filer, alla gröna.**
 
 | Område                     | Fil                                   | Täcker                                                                 |
 | -------------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
@@ -29,7 +29,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 | Provläget                  | `features/exam/ExamRunnerPage.test.tsx`   | ingen återkoppling, markering, navigering, inlämning              |
 | Scenariolabbet             | `domain/scenarios/scenario.test.ts`   | ordningar, första avvikelsen, varianter, uppspelning, körfält           |
 | Kursplan och täckning      | `domain/curriculum/coverage.test.ts`  | kapitel, begrepp, sidintervall, luckor, källregister, rättighetstext    |
-| Innehållsvalidering        | `domain/content/validation.test.ts`   | 12 planterade fel, dubbletter, källsidor, attribution                   |
+| Innehållsvalidering        | `domain/content/validation.test.ts`   | 18 planterade fel, dubbletter, källsidor, attribution, bildmetadata     |
 
 Några tester finns specifikt för att låsa fast beteenden som är lätta att råka förstöra:
 
@@ -335,3 +335,66 @@ varje färgpar. Paletten är vald för AA-kontrast men det är inte instrumentel
 
 Inga fel i konsolen under genomgången: landningssida, introduktion, träningspass, passammanfattning,
 utveckling, misstag, teori, lektion, scenarier, inställningar, radering, provläge.
+
+---
+
+## Källbildsintegration (2026-09-01)
+
+26 fotografier ur den licensierade källan integrerades i lektioner och frågor.
+
+### Verifierat i webbläsaren
+
+- **Lektionsbilder** renderas med prompt, bildtext och kreditering
+  (`Foto: Körkortonline.se, s. 55 · © Hagberg Media AB · används med tillstånd`).
+- **Bildfrågor** dyker upp i vanlig träning och visar bilden ovanför svarsalternativen.
+- **Responsivt urval fungerar mätt, inte antaget**: vid DPR 1 och 585 px ruta hämtas
+  640-varianten, vid DPR 2 och 394 px ruta hämtas 960-varianten.
+- **Ingen layoutförskjutning**: ramen bär `aspect-ratio` och bilden `width`/`height`,
+  så platsen är reserverad innan filen laddats.
+- **Höjdtaket håller**: uppmätta bildhöjder 191–458 px, alltid under taket
+  `min(58vh, 460px)`. En kvadratisk bild tar inte över en telefonskärm.
+
+### Responsiv QA
+
+| Bredd | Överflödning | Bilder för breda | Max bildhöjd |
+| --- | ---: | ---: | ---: |
+| 375 × 812 | 0 px | 0 | 341 px |
+| 390 × 844 | 0 px | 0 | 356 px |
+| 430 × 932 | 0 px | 0 | 221 px |
+| 768 × 1024 | 0 px | 0 | 458 px |
+| 1024 × 768 | 0 px | 0 | 443 px |
+| 1366 × 768 | 0 px | 0 | 443 px |
+| 1440 × 900 | 0 px | 0 | 458 px |
+| 1920 × 1080 | 0 px | 0 | 458 px |
+
+Kört i både mörkt och ljust läge över de sju lektioner som har bild.
+
+### Bugg hittad och åtgärdad — bildtexten avslöjade svaret
+
+Den första versionen visade registrets bildtext även i frågor. På frågan om
+gångfartsområde stod det då *"I ett gångfartsområde gäller gångfart, väjningsplikt mot
+gående och parkeringsförbud"* rakt ovanför svarsalternativ B, som sa exakt samma sak.
+
+Bildtexten är skriven för att förklara vad bilden lär ut — vilket är precis det en fråga
+ber eleven räkna ut. Åtgärd: `SourceImageFigure` tar en `showCaption`-flagga som
+frågekortet sätter till `false`. Krediteringen visas fortfarande alltid.
+
+### Inte ett fel: `naturalWidth` ser för litet ut
+
+Under mätningarna rapporterade `img.naturalWidth` 389 för en fil som är 960 px bred.
+Det är korrekt beteende: med `srcset`-deskriptorer i `w` delar webbläsaren den
+inneboende storleken med den upplösta densiteten. Filen kontrollerades separat med
+`createImageBitmap` och är 960 × 540.
+
+### Miljöartefakt: lazy-laddning under viewport-emulering
+
+`loading="lazy"`-bilder laddades ibland inte när de rullades in i vyn programmatiskt
+under emulerad viewport. Samma bilder laddas direkt med `loading="eager"` och laddades
+korrekt vid vanlig rullning. Mätningarna gjordes därför med påtvingad `eager`.
+
+### PWA
+
+Bilderna precachas **inte** — 0 av 47 precache-poster är bilder. De fångas av den
+befintliga `runtimeCaching`-regeln (`CacheFirst`, tak 120 poster, 60 dagar), så en bild
+du sett en gång fungerar offline efteråt utan att kosta något för den som aldrig öppnar
+den.

@@ -352,3 +352,11 @@
     min-height: 52px;
   }
 }
+
+/* A licensed source photograph the question depends on. Bounded so a tall
+   image cannot push the answer alternatives off a phone screen. */
+.sourceImage {
+  min-width: 0;
+  max-width: 620px;
+  width: 100%;
+}

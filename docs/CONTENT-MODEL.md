@@ -168,6 +168,37 @@ interaktion har ett listbaserat alternativ. Övningen kräver alltså aldrig att
 
 Se [SCENARIO-LAB.md](SCENARIO-LAB.md) för hela modellen och författningsreglerna.
 
+## Källbilder
+
+Fotografier ur den licensierade källan beskrivs i
+[`src/content/source-images.ts`](../src/content/source-images.ts). Registret är den enda
+plats som vet vad en bild visar, var den kommer ifrån och vem som äger den — frågor och
+lektioner refererar till en post via id och bär aldrig egen attribution.
+
+```ts
+interface SourceImage {
+  id: string;
+  sourceId: string;        // post i SOURCES
+  sourcePage: number;      // sida i den källan
+  subcategory: string;     // Vägklars taxonomi
+  chapter: string;         // kursplanens kapitel
+  rightsHolder: string;
+  usedWithPermission: boolean;
+  altText: string;         // kort, beskriver vad som syns
+  longDescription: string; // så uppgiften går att lösa utan att se bilden
+  caption: string;
+  usage: 'theory-lesson' | 'question-image' | 'supporting-reference';
+  asset: string;           // slug som pekar ut filerna
+  width: number; height: number;
+  status: 'approved' | 'candidate' | 'retired';
+}
+```
+
+En fråga kopplas med `sourceImageId`, en lektion med blocket
+`{ kind: 'sourceImage', imageId, prompt?, caption? }`. Bara `approved` renderas.
+
+Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för extrahering, urval och optimering.
+
 ## Validering
 
 [`src/domain/content/validation.ts`](../src/domain/content/validation.ts) är en ren
@@ -175,6 +206,10 @@ funktion som kontrollerar hela banken och skiljer på **fel** (får inte finnas)
 **varningar** (en människa bör titta). Den körs både i testsviten och av
 `npm run report:content`, som skriver [CONTENT-VALIDATION.md](CONTENT-VALIDATION.md)
 och avslutar med felkod om något är trasigt.
+
+Bildbaserat innehåll valideras på samma sätt: att bildfilen finns på disk, att bilden är
+godkänd, att alt-text, långbeskrivning, rättighetshavare och tillståndsmarkering finns,
+och att sidnumret ligger inom källan.
 
 Samma modul innehåller en enkel dubblettdetektor: normaliserad jämförelse plus
 Jaccard-likhet på ord. Exakt lika frågetext, och identiska svarsuppsättningar inom

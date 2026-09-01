@@ -1,0 +1,569 @@
+import { PRIMARY_SOURCE_ID } from '@/content/sources';
+
+/**
+ * The source image registry.
+ *
+ * Photographs from the licensed theory source, used with permission and
+ * curated by hand. This registry is the single place that knows what an image
+ * shows, where it comes from and who owns it — questions and lessons refer to
+ * an entry by id and never carry attribution of their own.
+ *
+ * Curation, not import. 263 images were extracted from the source into a
+ * working area that is never committed; 26 were selected. The extraction and
+ * optimisation steps are reproducible scripts, documented in
+ * docs/SOURCE-IMAGES.md.
+ *
+ * The rights holder's own watermark is visible in these photographs and is
+ * deliberately preserved rather than cropped out.
+ */
+
+/** How the image is used, so the UI can present it appropriately. */
+export type SourceImageUsage =
+  /** Illustrates a rule inside a theory lesson. */
+  | 'theory-lesson'
+  /** The question cannot be answered without looking at it. */
+  | 'question-image'
+  /** Extra context; the surrounding text stands on its own without it. */
+  | 'supporting-reference';
+
+export type SourceImageStatus = 'approved' | 'candidate' | 'retired';
+
+export interface SourceImage {
+  id: string;
+  /** Entry in the source registry (src/content/sources.ts). */
+  sourceId: string;
+  /** Printed page in that source. */
+  sourcePage: number;
+  title: string;
+  /** Folder the asset lives in, matching the curriculum topic. */
+  topic: string;
+  /** Vägklar subcategory the image supports. */
+  subcategory: string;
+  /** Curriculum chapter id. */
+  chapter: string;
+  rightsHolder: string;
+  usedWithPermission: boolean;
+  /**
+   * Short alternative text. Describes what is *in* the picture, not what the
+   * learner is supposed to conclude — the conclusion is the exercise.
+   */
+  altText: string;
+  /**
+   * Longer description for anyone who cannot see the image, detailed enough
+   * that the question or lesson still works without it.
+   */
+  longDescription: string;
+  /** Shown under the image. */
+  caption: string;
+  usage: SourceImageUsage;
+  /** Slug used to resolve the asset files. */
+  asset: string;
+  /** Intrinsic size of the largest variant, so the layout can reserve space. */
+  width: number;
+  height: number;
+  status: SourceImageStatus;
+  notes?: string;
+}
+
+const RIGHTS_HOLDER = 'Hagberg Media AB';
+
+/** Shorthand so 26 entries stay readable. */
+function img(entry: Omit<SourceImage, 'sourceId' | 'rightsHolder' | 'usedWithPermission'>): SourceImage {
+  return {
+    ...entry,
+    sourceId: PRIMARY_SOURCE_ID,
+    rightsHolder: RIGHTS_HOLDER,
+    usedWithPermission: true,
+  };
+}
+
+export const SOURCE_IMAGES: SourceImage[] = [
+  /* ---- Körfält --------------------------------------------------------- */
+  img({
+    id: 'korfaltsval-motorvag',
+    sourcePage: 16,
+    title: 'Körfältsvägvisare över motorväg',
+    topic: 'korfalt',
+    subcategory: 'placering',
+    chapter: 'korfalt',
+    altText:
+      'Motorväg med fyra körfält märkta A, B, C och D, en skylt som visar 80 km/h och en körfältsvägvisare över vägen.',
+    longDescription:
+      'Vy framåt från förarplatsen på en motorväg med fyra körfält i färdriktningen, märkta A, B, C och D från vänster. Till vänster står ett hastighetsmärke som visar 80. Över vägen hänger en körfältsvägvisare: de tre vänstra körfälten visar raka pilar mot Helsingborg och Göteborg, E4 och E20, medan det högra körfältet visar avfart mot Västertorp, Hägersten och Fruängen om 500 meter.',
+    caption: 'Körfältsvägvisaren visar att det högra körfältet leder till ett annat mål än de övriga.',
+    usage: 'question-image',
+    asset: 'korfalt/korfaltsval-motorvag',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'placering-landsvag',
+    sourcePage: 14,
+    title: 'Landsväg med kurva',
+    topic: 'korfalt',
+    subcategory: 'placering',
+    chapter: 'korfalt',
+    altText: 'Tvåfilig landsväg som svänger åt höger, med vägräcke på högra sidan och berg till vänster.',
+    longDescription:
+      'En landsväg med ett körfält i vardera riktningen, sedd framåt från förarplatsen. Vägen böjer av åt höger så att fortsättningen skyms. Ett vägräcke löper längs högerkanten och en bergssida reser sig till vänster.',
+    caption: 'Bakom kurvan kan det finnas både mötande trafik och hinder vid vägkanten.',
+    usage: 'theory-lesson',
+    asset: 'korfalt/placering-landsvag',
+    width: 960,
+    height: 443,
+    status: 'approved',
+  }),
+  img({
+    id: 'enkelriktat-svang',
+    sourcePage: 15,
+    title: 'Enkelriktad gata med svängpilar',
+    topic: 'korfalt',
+    subcategory: 'korfalt-och-sving',
+    chapter: 'korfalt',
+    altText: 'Smal gata med ett gult vägmärke som visar tillåtna körriktningar rakt fram och åt höger.',
+    longDescription:
+      'En smal gata mellan hus, sedd framåt från förarplatsen. Vägbanan är våt. Till höger står ett gult vägmärke med två pilar, rakt fram och åt höger, och intill det står en parkerad bil.',
+    caption: 'På enkelriktade gator behöver du inte ta hänsyn till mötande trafik.',
+    usage: 'theory-lesson',
+    asset: 'korfalt/enkelriktat-svang',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Väjningsregler --------------------------------------------------- */
+  img({
+    id: 'korsning-tva-fordon',
+    sourcePage: 22,
+    title: 'Korsning med två fordon',
+    topic: 'vajningsregler',
+    subcategory: 'hogerregeln',
+    chapter: 'vajningsregler',
+    altText: 'Stadskorsning där två bilar är markerade med A och B, och ett märke för övergångsställe syns.',
+    longDescription:
+      'En korsning i stadsmiljö sedd framåt från förarplatsen. Två bilar är markerade med bokstäverna A och B: A står till vänster i korsningen och B till höger. Ett märke för övergångsställe sitter uppe till vänster, och husfasader omger korsningen på alla sidor.',
+    caption: 'Två fordon i samma korsning — ordningen avgörs av reglerna, inte av vem som kom först.',
+    usage: 'question-image',
+    asset: 'vajningsregler/korsning-tva-fordon',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'stopplikt-buss',
+    sourcePage: 24,
+    title: 'Stopplikt där en buss korsar',
+    topic: 'vajningsregler',
+    subcategory: 'stopplikt',
+    chapter: 'vajningsregler',
+    altText: 'Ett stoppmärke vid en korsning där en röd buss kör förbi framför bilen.',
+    longDescription:
+      'Sett framåt från förarplatsen vid en korsning på landsbygden. Till vänster står ett rött åttkantigt stoppmärke tillsammans med ett blått märke. Rakt framför korsar en röd ledbuss från höger till vänster.',
+    caption: 'Vid stopplikt ska fordonet stanna helt, oavsett om något kommer eller inte.',
+    usage: 'question-image',
+    asset: 'vajningsregler/stopplikt-buss',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'oskyltad-korsning',
+    sourcePage: 31,
+    title: 'Oskyltad korsning på stadsgata',
+    topic: 'vajningsregler',
+    subcategory: 'hogerregeln',
+    chapter: 'vajningsregler',
+    altText: 'Korsning mellan bostadsgator utan väjningsmärken, med en bil på tvärgatan.',
+    longDescription:
+      'En korsning mellan två bostadsgator, sedd framåt från förarplatsen. Det finns inga väjningspliktsmärken, inga stoppmärken och ingen trafiksignal vid korsningen. Ett höstträd står i mitten av bilden och en bil skymtar på den korsande gatan.',
+    caption: 'Utan märken och signaler är det högerregeln som gäller.',
+    usage: 'theory-lesson',
+    asset: 'vajningsregler/oskyltad-korsning',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'lastbil-korsar',
+    sourcePage: 34,
+    title: 'Lastbil korsar framför',
+    topic: 'vajningsregler',
+    subcategory: 'vajningsplikt',
+    chapter: 'vajningsregler',
+    altText: 'En stor lastbil kör in i korsningen framför bilen på en vinterdag.',
+    longDescription:
+      'Sett framåt från förarplatsen mot en öppen korsning med snö på marken. En stor lastbil kommer från höger och är på väg in i korsningen framför dig.',
+    caption: 'Ett tungt fordon behöver längre tid genom korsningen än en personbil.',
+    usage: 'question-image',
+    asset: 'vajningsregler/lastbil-korsar',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'stop-flervagsstopp',
+    sourcePage: 21,
+    title: 'Stoppmärke med tilläggstavlan Flervägsstopp',
+    topic: 'vajningsregler',
+    subcategory: 'stopplikt',
+    chapter: 'vajningsregler',
+    altText: 'Ett rött stoppmärke med en vit tilläggstavla där det står Flervägsstopp.',
+    longDescription:
+      'Närbild på ett rött åttkantigt stoppmärke med texten STOP. Under märket sitter en vit tilläggstavla med texten Flervägsstopp. I bakgrunden syns ett gult bostadshus och en korsning.',
+    caption: 'Tilläggstavlan talar om att alla tillfarter till korsningen har stopplikt.',
+    usage: 'question-image',
+    asset: 'vajningsregler/stop-flervagsstopp',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+  img({
+    id: 'overgangsstalle-vajningsplikt',
+    sourcePage: 45,
+    title: 'Övergångsställe före cirkulationsplats',
+    topic: 'vajningsregler',
+    subcategory: 'oskyddade-trafikanter',
+    chapter: 'vajningsregler',
+    altText:
+      'Ett övergångsställe med märken för övergångsställe, väjningsplikt och cirkulationsplats på samma stolpe.',
+    longDescription:
+      'Sett framåt från förarplatsen mot ett målat övergångsställe. På en stolpe till vänster sitter tre märken över varandra: överst märket för övergångsställe, därunder märket för väjningsplikt och underst märket för cirkulationsplats. I bakgrunden syns höghus och en bil.',
+    caption: 'Flera märken på samma stolpe gäller samtidigt — läs dem uppifrån och ner.',
+    usage: 'theory-lesson',
+    asset: 'vajningsregler/overgangsstalle-vajningsplikt',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+
+  /* ---- Passager --------------------------------------------------------- */
+  img({
+    id: 'obevakat-overgangsstalle',
+    sourcePage: 47,
+    title: 'Obevakat övergångsställe',
+    topic: 'passager',
+    subcategory: 'oskyddade-trafikanter',
+    chapter: 'passager',
+    altText:
+      'Ett övergångsställe utan trafiksignal där en röd pil pekar mot en gående vid vägkanten.',
+    longDescription:
+      'En stadsgata sedd framåt från förarplatsen. Tvärs över vägen löper ett målat övergångsställe utan trafiksignal. En röd pil i bilden pekar ner mot en person som står vid vänster vägkant, i höjd med övergångsstället. En bil kör framför dig i samma riktning.',
+    caption: 'Personen vid kanten är just på väg ut på övergångsstället.',
+    usage: 'question-image',
+    asset: 'passager/obevakat-overgangsstalle',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'cykelpassage-landsvag',
+    sourcePage: 51,
+    title: 'Cykelpassage på landsväg',
+    topic: 'passager',
+    subcategory: 'cykelpassage-overfart',
+    chapter: 'passager',
+    altText:
+      'En landsväg med målad cykelpassage tvärs över vägbanan och märken för övergångsställe på båda sidor.',
+    longDescription:
+      'En landsväg genom skog, sedd framåt från förarplatsen. Tvärs över vägbanan löper en cykelpassage markerad med målade rutor. På båda sidor av vägen står märken för övergångsställe. En röd pil pekar mot passagen. Det finns ingen väjningslinje för biltrafiken.',
+    caption: 'Rutor i vägbanan men ingen väjningslinje: detta är en cykelpassage, inte en cykelöverfart.',
+    usage: 'theory-lesson',
+    asset: 'passager/cykelpassage-landsvag',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'overgangsstalle-cykelpassage',
+    sourcePage: 52,
+    title: 'Övergångsställe kombinerat med cykelpassage',
+    topic: 'passager',
+    subcategory: 'cykelpassage-overfart',
+    chapter: 'passager',
+    altText:
+      'En stadskorsning där ett övergångsställe och en cykelpassage löper bredvid varandra tvärs över vägen.',
+    longDescription:
+      'En bred stadsgata sedd framåt från förarplatsen. Tvärs över vägbanan löper ett övergångsställe med breda vita ränder, och intill det en cykelpassage markerad med rutor. På en stolpe till höger sitter märket för övergångsställe tillsammans med ett märke för väjningsplikt. En buss och flera bilar syns längre bort.',
+    caption: 'Övergångsställe och cykelpassage kombineras ofta — men skyldigheterna skiljer sig åt.',
+    usage: 'question-image',
+    asset: 'passager/overgangsstalle-cykelpassage',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'cykelbana-korsning',
+    sourcePage: 54,
+    title: 'Cykelbana vid vägkorsning',
+    topic: 'passager',
+    subcategory: 'cykelpassage-overfart',
+    chapter: 'passager',
+    altText:
+      'En vägkorsning där en cykelbana är markerad med bokstäverna A och B på var sin sida av vägen.',
+    longDescription:
+      'En korsning i utkanten av ett bostadsområde, sedd framåt från förarplatsen. En cykelbana löper längs vägen och är markerad med bokstaven A på vänster sida av korsningen och B på höger sida. Mellan A och B saknas målad cykelpassage tvärs över körbanan.',
+    caption: 'Cykelbanan slutar vid A och börjar igen vid B — den är alltså bruten och korsar inte vägen.',
+    usage: 'question-image',
+    asset: 'passager/cykelbana-korsning',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'cykeloverfart',
+    sourcePage: 55,
+    title: 'Cykelöverfart före cirkulationsplats',
+    topic: 'passager',
+    subcategory: 'cykelpassage-overfart',
+    chapter: 'passager',
+    altText:
+      'En cykelöverfart med eget vägmärke, målade rutor i vägbanan och en väjningslinje för biltrafiken.',
+    longDescription:
+      'Sett framåt från förarplatsen mot en upphöjd passage strax före en cirkulationsplats. Tvärs över vägbanan löper målade rutor, och framför dem finns en väjningslinje av trianglar för biltrafiken. På stolpar till höger sitter märket för cykelöverfart tillsammans med märken för övergångsställe och cirkulationsplats.',
+    caption: 'Vägmärke, rutor och väjningslinje tillsammans: det här är en cykelöverfart.',
+    usage: 'question-image',
+    asset: 'passager/cykeloverfart',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'gangbana-utfart',
+    sourcePage: 49,
+    title: 'Gångbana vid utfart',
+    topic: 'passager',
+    subcategory: 'oskyddade-trafikanter',
+    chapter: 'passager',
+    altText: 'En utfart från en fastighet där en röd pil visar färdvägen över en gångbana.',
+    longDescription:
+      'En smal utfart mellan hus, sedd framåt från förarplatsen. En röd pil visar färdriktningen ut mot gatan. På vägen ut korsar färdvägen en gångbana som löper längs husfasaden.',
+    caption: 'På väg ut korsar du gångbanan — och har väjningsplikt mot dem som går där.',
+    usage: 'theory-lesson',
+    asset: 'passager/gangbana-utfart',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Cirkulationsplats ------------------------------------------------ */
+  img({
+    id: 'cirkulation-med-trafik',
+    sourcePage: 65,
+    title: 'Infart till cirkulationsplats med trafik',
+    topic: 'cirkulationsplats',
+    subcategory: 'cirkulationsplats',
+    chapter: 'cirkulationsplats',
+    altText:
+      'Infart till en cirkulationsplats med märken för väjningsplikt och cirkulationsplats, och en gul bil inne i cirkulationen.',
+    longDescription:
+      'Sett framåt från förarplatsen mot infarten till en cirkulationsplats. På stolpar står märket för väjningsplikt tillsammans med märket för cirkulationsplats, på båda sidor av infarten. En gul bil kör redan inne i cirkulationen, från höger. En röd pil märkt A visar din färdriktning in mot cirkulationsplatsen.',
+    caption: 'Fordonet i cirkulationen är redan inne — du som ska in har väjningsplikt.',
+    usage: 'question-image',
+    asset: 'cirkulationsplats/cirkulation-med-trafik',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'rund-korsning-utan-skylt',
+    sourcePage: 63,
+    title: 'Cirkelformad korsning utan märke',
+    topic: 'cirkulationsplats',
+    subcategory: 'cirkulationsplats',
+    chapter: 'cirkulationsplats',
+    altText:
+      'En cirkelformad vägkorsning med en gräsbevuxen mittrefug, utan märke för cirkulationsplats och utan väjningspliktsmärke.',
+    longDescription:
+      'Sett framåt från förarplatsen mot en rundad vägkorsning med en gräsbevuxen ö i mitten. Det finns inget märke för cirkulationsplats och inget märke för väjningsplikt vid infarten. Byggnader och en parkering syns i bakgrunden.',
+    caption: 'Rund form, men inga märken — det här är ingen cirkulationsplats.',
+    usage: 'question-image',
+    asset: 'cirkulationsplats/rund-korsning-utan-skylt',
+    width: 960,
+    height: 540,
+    status: 'approved',
+    notes: 'Bra motexempel: formen lockar till fel slutsats.',
+  }),
+
+  /* ---- Parkering -------------------------------------------------------- */
+  img({
+    id: 'p-skylt-avgift-boende',
+    sourcePage: 67,
+    title: 'Parkeringsmärke med avgift och boendeparkering',
+    topic: 'parkering',
+    subcategory: 'parkeringsregler',
+    chapter: 'stanna-parkera',
+    altText:
+      'Ett blått parkeringsmärke med tilläggstavlor om avgift klockan 7 till 19, taxa 3, onsdag 0 till 6 och boendeparkering.',
+    longDescription:
+      'Närbild på en stolpe med ett blått parkeringsmärke. Under märket sitter flera tilläggstavlor: överst en blå tavla med texten Avgift 7–19, inom parentes 11–17, och Taxa 3. Därunder en gul tavla med en röd ring och texten Onsd 0–6. Underst en vit tavla med texten Boende. I bakgrunden syns en gata med husfasader.',
+    caption: 'Tilläggstavlorna läses uppifrån och ner och gäller alla samtidigt.',
+    usage: 'question-image',
+    asset: 'parkering/p-skylt-avgift-boende',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+  img({
+    id: 'p-skylt-tidsbegransning',
+    sourcePage: 75,
+    title: 'Parkeringsmärke med tidsbegränsning',
+    topic: 'parkering',
+    subcategory: 'parkeringsregler',
+    chapter: 'stanna-parkera',
+    altText:
+      'Ett blått parkeringsmärke med tilläggstavlor om 2 timmar klockan 9 till 18 och en gul tavla om torsdag 7 till 9.',
+    longDescription:
+      'En stolpe vid en gata med ett stort blått parkeringsmärke. Under det sitter en blå tilläggstavla med texten 2 tim, 9–18, och inom parentes 9–15. Underst sitter en gul tilläggstavla med en röd ring och texten 1/12–31/5 Torsdag 7–9. Gatan och husfasader syns i bakgrunden.',
+    caption: 'Siffror inom parentes gäller lördag; röd ring på gul botten betyder förbud.',
+    usage: 'question-image',
+    asset: 'parkering/p-skylt-tidsbegransning',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'forbud-att-stanna',
+    sourcePage: 70,
+    title: 'Förbud att stanna vid övergångsställe',
+    topic: 'parkering',
+    subcategory: 'stannande-forbud',
+    chapter: 'stanna-parkera',
+    altText:
+      'Ett märke om förbud att stanna och parkera står strax efter ett övergångsställe på en stadsgata.',
+    longDescription:
+      'En gata sedd framåt från förarplatsen. Tvärs över vägbanan löper ett målat övergångsställe. På en stolpe till höger sitter märket för övergångsställe och under det ett blått runt märke med rött kryss, som betyder förbud att stanna och parkera.',
+    caption: 'Ett stannandeförbud gäller från märket och i färdriktningen.',
+    usage: 'theory-lesson',
+    asset: 'parkering/forbud-att-stanna',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Omkörning -------------------------------------------------------- */
+  img({
+    id: 'traktor-vintervag',
+    sourcePage: 100,
+    title: 'Långsamt fordon på vinterväg',
+    topic: 'omkorning',
+    subcategory: 'omkorningsregler',
+    chapter: 'omkorningar',
+    altText: 'En traktor med varningsskylt kör långsamt framför bilen på en snömodig landsväg.',
+    longDescription:
+      'En landsväg med snö vid vägkanterna och snömodd i körfälten, sedd framåt från förarplatsen. Ett långsamtgående fordon med en röd och gul varningsskylt baktill kör i samma riktning en bit framför dig. Vägen är rak men vägbanan är blöt och delvis snötäckt.',
+    caption: 'Ett långsamt fordon frestar till omkörning — men väglaget bestämmer vad som är möjligt.',
+    usage: 'question-image',
+    asset: 'omkorning/traktor-vintervag',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'motande-landsvag',
+    sourcePage: 101,
+    title: 'Möte på landsväg',
+    topic: 'omkorning',
+    subcategory: 'mote',
+    chapter: 'omkorningar',
+    altText: 'En mötande vit bil ligger nära mittlinjen på en smal landsväg.',
+    longDescription:
+      'En landsväg genom skog, sedd framåt från förarplatsen. En vit bil möter dig och ligger nära mittlinjen. Vägen har ett körfält i vardera riktningen och gräsbevuxna kanter.',
+    caption: 'Vid möte är sidoavståndet det du faktiskt kan påverka.',
+    usage: 'theory-lesson',
+    asset: 'omkorning/motande-landsvag',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Järnvägskorsningar ----------------------------------------------- */
+  img({
+    id: 'plankorsning-bommar',
+    sourcePage: 107,
+    title: 'Plankorsning med bommar',
+    topic: 'jarnvag',
+    subcategory: 'plankorsning-marken',
+    chapter: 'jarnvagskorsningar',
+    altText:
+      'En järnvägskorsning med röd-vita kryssmärken och bommar tvärs över vägen.',
+    longDescription:
+      'En järnvägskorsning sedd framåt från förarplatsen. På båda sidor av vägen står höga stolpar med röd-vita kryssmärken och ljussignaler. Bommar sträcker sig ut över vägbanan. Spåret korsar vägen vinkelrätt och ett industriområde syns i bakgrunden.',
+    caption: 'Kryssmärket är plankorsningens kännetecken. Bommarna gör att omkörningsförbudet upphör.',
+    usage: 'question-image',
+    asset: 'jarnvag/plankorsning-bommar',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+  img({
+    id: 'plankorsning-ljussignal',
+    sourcePage: 108,
+    title: 'Plankorsning med ljussignal i stadsmiljö',
+    topic: 'jarnvag',
+    subcategory: 'plankorsning-marken',
+    chapter: 'jarnvagskorsningar',
+    altText:
+      'En plankorsning mitt i en stad med kryssmärke, ljussignal och bom vid vägbanan.',
+    longDescription:
+      'En plankorsning i tät stadsmiljö, sedd framåt från förarplatsen. Till höger står en stolpe med kryssmärke, en ljussignal med runda lampor och en fälld bom vid kanten. Spåret löper tvärs över gatan framför en modern byggnad med mönstrad fasad.',
+    caption: 'Plankorsningar finns även mitt inne i städer, där sikten ofta är sämst.',
+    usage: 'theory-lesson',
+    asset: 'jarnvag/plankorsning-ljussignal',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Speciella gator --------------------------------------------------- */
+  img({
+    id: 'gangfartsomrade',
+    sourcePage: 119,
+    title: 'Gångfartsområde',
+    topic: 'speciella-gator',
+    subcategory: 'anvisningsmarken',
+    chapter: 'speciella-gator',
+    altText:
+      'En stensatt gata med blå märken för gångfartsområde på båda sidor av infarten.',
+    longDescription:
+      'En stensatt gata i en äldre stadskärna, sedd framåt från förarplatsen. På båda sidor av infarten står blå fyrkantiga märken som visar gångfartsområde, med symboler för gående, hus och en bil. Vägbanan saknar körfältsmarkeringar och ligger i nivå med gångytorna.',
+    caption: 'I ett gångfartsområde gäller gångfart, väjningsplikt mot gående och parkeringsförbud.',
+    usage: 'question-image',
+    asset: 'speciella-gator/gangfartsomrade',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Vinter ------------------------------------------------------------ */
+  img({
+    id: 'vintervag-hjulspar',
+    sourcePage: 124,
+    title: 'Vinterväg med hjulspår',
+    topic: 'vinter',
+    subcategory: 'vinterkorning',
+    chapter: 'vinter',
+    altText: 'En snötäckt väg där hjulspår har frilagt asfalten och en lastbil möter längre fram.',
+    longDescription:
+      'En landsväg vintertid, sedd framåt från förarplatsen. Snö täcker vägbanan utom i två hjulspår där asfalten syns. Snövallar ligger längs kanterna och en lastbil kommer emot dig längre fram. Vägen är rak och omgiven av avlövade träd.',
+    caption: 'Mellan hjulspåren och utanför dem kan greppet skilja sig kraftigt.',
+    usage: 'theory-lesson',
+    asset: 'vinter/vintervag-hjulspar',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+];
+
+export const SOURCE_IMAGE_BY_ID: ReadonlyMap<string, SourceImage> = new Map(
+  SOURCE_IMAGES.map((image) => [image.id, image]),
+);
+
+export function getSourceImage(id: string): SourceImage | undefined {
+  return SOURCE_IMAGE_BY_ID.get(id);
+}
+
+/** Approved images only — the set the app is allowed to render. */
+export const APPROVED_SOURCE_IMAGES: SourceImage[] = SOURCE_IMAGES.filter(
+  (image) => image.status === 'approved',
+);

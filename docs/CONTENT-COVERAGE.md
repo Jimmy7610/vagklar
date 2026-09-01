@@ -25,26 +25,26 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Huvudområden | 6 |
 | Kapitel | 39 |
 | Begrepp | 179 |
-| Begrepp med tillräckligt (≥ 3 frågor) | 136 (76 %) |
-| Begrepp med för få (1–2 frågor) | 43 |
+| Begrepp med tillräckligt (≥ 3 frågor) | 139 (78 %) |
+| Begrepp med för få (1–2 frågor) | 40 |
 | Begrepp helt utan frågor | 0 |
 | Begrepp utan plats i taxonomin | 0 |
-| Frågor i banken | 259 |
-| Frågor kopplade till ett begrepp | 259 |
+| Frågor i banken | 275 |
+| Frågor kopplade till ett begrepp | 275 |
 | Frågor utan koppling | 0 |
 | Lektioner | 13 |
 | Scenarier | 11 |
-| Luckor | 43 |
+| Luckor | 40 |
 
 ## Per huvudområde
 
 | Område | Kapitel | Begrepp | Täckta | Andel täckta | Frågor |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Trafikregler | 12 | 79 | 57 | 72 % | 139 |
+| Trafikregler | 12 | 79 | 60 | 76 % | 155 |
 | Människan | 7 | 38 | 25 | 66 % | 43 |
 | Fordon | 15 | 48 | 43 | 90 % | 83 |
 | Miljö | 3 | 5 | 5 | 100 % | 28 |
-| Vägmärken | 1 | 8 | 5 | 63 % | 12 |
+| Vägmärken | 1 | 8 | 5 | 63 % | 13 |
 | Rättsfall | 1 | 1 | 1 | 100 % | 3 |
 
 ## Per kapitel
@@ -52,16 +52,16 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Kapitel | Område | Sidor | Begrepp | Täckta | Frågor | Status |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
 | Inledning | Trafikregler | 6–13 | 9 | 2 | 15 | Tunn |
-| Körfält | Trafikregler | 14–21 | 7 | 7 | 18 | Stark |
-| Väjningsregler | Trafikregler | 22–45 | 13 | 6 | 15 | Tunn |
-| Passager | Trafikregler | 46–57 | 6 | 6 | 18 | Stark |
-| Cirkulationsplats | Trafikregler | 58–67 | 5 | 5 | 14 | Stark |
-| Stanna & parkera | Trafikregler | 68–77 | 6 | 6 | 10 | Stark |
+| Körfält | Trafikregler | 14–21 | 7 | 7 | 19 | Stark |
+| Väjningsregler | Trafikregler | 22–45 | 13 | 9 | 19 | Täckt |
+| Passager | Trafikregler | 46–57 | 6 | 6 | 22 | Stark |
+| Cirkulationsplats | Trafikregler | 58–67 | 5 | 5 | 16 | Stark |
+| Stanna & parkera | Trafikregler | 68–77 | 6 | 6 | 12 | Stark |
 | Landsväg | Trafikregler | 78–89 | 7 | 2 | 5 | Tunn |
 | Motorväg & motortrafikled | Trafikregler | 90–97 | 5 | 3 | 8 | Täckt |
-| Omkörningar | Trafikregler | 98–107 | 5 | 4 | 8 | Täckt |
-| Järnvägskorsningar | Trafikregler | 108–115 | 5 | 5 | 16 | Stark |
-| Speciella gator | Trafikregler | 116–123 | 5 | 5 | 6 | Stark |
+| Omkörningar | Trafikregler | 98–107 | 5 | 4 | 9 | Täckt |
+| Järnvägskorsningar | Trafikregler | 108–115 | 5 | 5 | 17 | Stark |
+| Speciella gator | Trafikregler | 116–123 | 5 | 5 | 7 | Stark |
 | Vinter | Trafikregler | 124–131 | 6 | 6 | 6 | Stark |
 | Inlärning & mognad | Människan | 132–139 | 6 | 0 | 6 | Saknas |
 | Alkohol | Människan | 140–147 | 7 | 5 | 8 | Täckt |
@@ -88,7 +88,7 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Miljö | Miljö | 304–311 | 3 | 3 | 6 | Stark |
 | Sparsam körning | Miljö | 312–317 | 1 | 1 | 12 | Stark |
 | Drivmedel | Miljö | 318–323 | 1 | 1 | 10 | Stark |
-| Vägmärken | Vägmärken | 324–361 | 8 | 5 | 12 | Täckt |
+| Vägmärken | Vägmärken | 324–361 | 8 | 5 | 13 | Täckt |
 | Rättsfall | Rättsfall | 362–367 | 1 | 1 | 3 | Stark |
 
 ## Luckor
@@ -100,7 +100,7 @@ Prioritet 3 = stödjande eller perifera begrepp utan material.
 
 Inga.
 
-### Prioritet 2 — 33 st
+### Prioritet 2 — 30 st
 
 | Begrepp | Kapitel | Sidor | Frågor | Varför |
 | --- | --- | --- | ---: | --- |
@@ -116,14 +116,11 @@ Inga.
 | Grundläggande säkerhet | Inledning | 7 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Grupptryck | Inlärning & mognad | 135 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Huvudled | Väjningsregler | 25 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Högerregeln | Väjningsregler | 26, 27, 28, 29, 30, 31, 32 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Läkemedel och mediciner i trafiken | Alkohol | 141 | 2 | Endast 2 frågor — behöver fler för variation. |
-| När högerregeln inte gäller | Väjningsregler | 26 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Olika grader av mognad | Inlärning & mognad | 132 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Påfart till motorväg | Motorväg & motortrafikled | 91 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Skolbussar och skolskjuts | Barn | 169 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Skymd sikt och förutsägbara hinder | Inledning | 9 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Stopplikt | Väjningsregler | 24 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Stress | Inlärning & mognad | 134 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Svårigheter med barn i trafiken | Barn | 168 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Svänga på landsväg | Landsväg | 78, 79, 80 | 2 | Endast 2 frågor — behöver fler för variation. |
@@ -170,6 +167,33 @@ Inga.
 | Järnvägskorsningar | Järnvägskorsningar |
 | Passager | Passager |
 | Cirkulationsplats | Cirkulationsplats |
+
+## Visuellt stöd
+
+Utvalda fotografier ur källan används i lektioner och frågor där bilden gör
+skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag.
+
+| Mått | Antal |
+| --- | ---: |
+| Godkända källbilder | 26 |
+| Kapitel med visuellt stöd | 9 av 39 |
+| Bildbaserade frågor | 16 |
+| Lektioner med bild | 7 av 13 |
+
+| Kapitel | Bilder |
+| --- | ---: |
+| Körfält | 3 |
+| Väjningsregler | 6 |
+| Passager | 6 |
+| Cirkulationsplats | 2 |
+| Stanna & parkera | 3 |
+| Omkörningar | 2 |
+| Järnvägskorsningar | 2 |
+| Speciella gator | 1 |
+| Vinter | 1 |
+
+Kapitel utan visuellt stöd: **30**. De viktigaste att komplettera
+härnäst listas i [SOURCE-IMAGES.md](SOURCE-IMAGES.md).
 
 ## Källa och rättigheter
 

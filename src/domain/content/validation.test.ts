@@ -4,6 +4,9 @@ import { CURRICULUM_CONCEPTS } from '@/content/curriculum/curriculum';
 import { MISCONCEPTIONS } from '@/content/misconceptions';
 import { SOURCES } from '@/content/sources';
 import { SUBCATEGORIES } from '@/content/taxonomy';
+import { SOURCE_IMAGES } from '@/content/source-images';
+import { LESSONS } from '@/content/lessons';
+import { availableSourceImageAssets } from '@/ui/media/sourceImageAssets';
 import {
   findDuplicates,
   normalisePrompt,
@@ -24,6 +27,9 @@ function baseInput(questions: readonly Question[]) {
     misconceptionIds,
     concepts: CURRICULUM_CONCEPTS,
     sources: SOURCES,
+    sourceImages: SOURCE_IMAGES,
+    availableAssets: availableSourceImageAssets(),
+    lessons: LESSONS,
   };
 }
 
@@ -84,6 +90,84 @@ describe('validateContent — the real bank', () => {
 
   it('never attaches a misconception to a correct answer', () => {
     expect(report.issues.filter((i) => i.code === 'misconception-on-correct')).toHaveLength(0);
+  });
+
+  it('has a file on disk for every approved source image', () => {
+    const missing = report.issues.filter((i) => i.code === 'missing-image-asset');
+    const shown = missing.map((i) => `${i.questionId}: ${i.message}`).join(' | ');
+    expect(missing, shown).toHaveLength(0);
+  });
+
+  it('gives every source image alt text, a description and a rights holder', () => {
+    const codes = ['image-without-alt', 'image-without-description', 'image-without-rights-holder'];
+    expect(report.issues.filter((i) => codes.includes(i.code))).toHaveLength(0);
+  });
+
+  it('keeps every image page inside the source', () => {
+    const codes = ['image-bad-source-page', 'image-source-page-out-of-range'];
+    expect(report.issues.filter((i) => codes.includes(i.code))).toHaveLength(0);
+  });
+
+  it('only references approved images from questions and lessons', () => {
+    const codes = ['unknown-source-image', 'unapproved-source-image'];
+    expect(report.issues.filter((i) => codes.includes(i.code))).toHaveLength(0);
+  });
+});
+
+describe('validateContent — source image failure modes', () => {
+  const approved = SOURCE_IMAGES[0]!;
+
+  it('catches a question pointing at an image that does not exist', () => {
+    const report = validateContent(
+      baseInput([validQuestion({ sourceImageId: 'finns-inte' })]),
+    );
+    expect(report.errors.map((e) => e.code)).toContain('unknown-source-image');
+  });
+
+  it('catches a question using an image that is not approved', () => {
+    const report = validateContent({
+      ...baseInput([validQuestion({ sourceImageId: approved.id })]),
+      sourceImages: [{ ...approved, status: 'candidate' }],
+    });
+    expect(report.errors.map((e) => e.code)).toContain('unapproved-source-image');
+  });
+
+  it('catches an image whose asset file is missing', () => {
+    const report = validateContent({
+      ...baseInput([]),
+      sourceImages: [{ ...approved, asset: 'ingenstans/finns-inte' }],
+      availableAssets: new Set<string>(),
+    });
+    expect(report.errors.map((e) => e.code)).toContain('missing-image-asset');
+  });
+
+  it('catches an image without alt text', () => {
+    const report = validateContent({
+      ...baseInput([]),
+      sourceImages: [{ ...approved, altText: '  ' }],
+    });
+    expect(report.errors.map((e) => e.code)).toContain('image-without-alt');
+  });
+
+  it('catches an image whose page lies outside the source', () => {
+    const report = validateContent({
+      ...baseInput([]),
+      sourceImages: [{ ...approved, sourcePage: 9999 }],
+    });
+    expect(report.errors.map((e) => e.code)).toContain('image-source-page-out-of-range');
+  });
+
+  it('catches an image that is not marked as used with permission', () => {
+    const report = validateContent({
+      ...baseInput([]),
+      sourceImages: [{ ...approved, usedWithPermission: false }],
+    });
+    expect(report.errors.map((e) => e.code)).toContain('image-without-permission');
+  });
+
+  it('accepts the untouched registry', () => {
+    const report = validateContent(baseInput([]));
+    expect(report.errors).toHaveLength(0);
   });
 });
 

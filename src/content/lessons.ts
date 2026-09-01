@@ -78,6 +78,12 @@ export const LESSONS: Lesson[] = [
         ],
       },
       {
+        kind: 'sourceImage',
+        imageId: 'oskyltad-korsning',
+        prompt: 'Vad ska du leta efter först?',
+        caption: 'Inga märken, inga markeringar, ingen signal. Då är det högerregeln som gäller.',
+      },
+      {
         kind: 'illustration',
         illustration: 'crossroads',
         alt: 'En fyrvägskorsning utan vägmärken sedd uppifrån, med tre bilar.',
@@ -243,6 +249,13 @@ export const LESSONS: Lesson[] = [
         ],
       },
       {
+        kind: 'sourceImage',
+        imageId: 'p-skylt-avgift-boende',
+        prompt: 'Vad ska du lägga märke till?',
+        caption:
+          'Tilläggstavlorna gäller samtidigt och läses uppifrån och ner. Gul botten med röd ring betyder förbud.',
+      },
+      {
         kind: 'list',
         title: 'Här får du stanna men inte parkera',
         items: [
@@ -333,6 +346,12 @@ export const LESSONS: Lesson[] = [
         ],
       },
       {
+        kind: 'sourceImage',
+        imageId: 'vintervag-hjulspar',
+        prompt: 'Var skiljer sig greppet?',
+        caption: 'I hjulspåren syns asfalten, mellan dem ligger snön kvar. Greppet växlar i sidled.',
+      },
+      {
         kind: 'paragraph',
         text: 'Halkan uppstår först på broar, i skuggiga partier och där vägen går nära vatten. En bro kyls både uppifrån och underifrån och saknar markvärme.',
       },
@@ -369,6 +388,12 @@ export const LESSONS: Lesson[] = [
           'När sikten inte räcker för hela omkörningssträckan',
           'Där heldragen linje eller vägmärke förbjuder det',
         ],
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'traktor-vintervag',
+        prompt: 'Vad talar emot en omkörning här?',
+        caption: 'Sikten är god — men snömodden mellan körfälten avgör om omkörningen är säker.',
       },
       {
         kind: 'example',
@@ -452,6 +477,13 @@ export const LESSONS: Lesson[] = [
         ],
       },
       {
+        kind: 'sourceImage',
+        imageId: 'plankorsning-bommar',
+        prompt: 'Vad ska du lägga märke till?',
+        caption:
+          'Kryssmärket säger att här finns en plankorsning. Bommarna avgör dessutom omkörningsfrågan.',
+      },
+      {
         kind: 'warning',
         text: 'Det är ljussignalen som gäller, inte bommen. Bommarna hinner ofta upp innan lamporna slutar blinka, men du får inte köra förrän det röda ljuset har slocknat — ett andra tåg kan vara på väg.',
       },
@@ -505,6 +537,13 @@ export const LESSONS: Lesson[] = [
         kind: 'rule',
         title: 'Cykelöverfart',
         text: 'Här har du full väjningsplikt mot cyklande och förare av moped klass II som är ute på eller just ska färdas ut på överfarten — samma styrka som mot gående på ett obevakat övergångsställe.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'cykeloverfart',
+        prompt: 'Vad ska du lägga märke till?',
+        caption:
+          'Vägmärke, rutor och väjningslinje tillsammans. Saknas märket och linjen är det en cykelpassage.',
       },
       {
         kind: 'list',
@@ -568,6 +607,13 @@ export const LESSONS: Lesson[] = [
       {
         kind: 'warning',
         text: 'En huvudled tar slut vid cirkulationsplatsen. Att du kört på huvudled fram till infarten ger dig alltså inget företräde där.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'rund-korsning-utan-skylt',
+        prompt: 'Vad saknas på bilden?',
+        caption:
+          'Rund form, men inget märke för cirkulationsplats. Då gäller högerregeln.',
       },
       {
         kind: 'example',

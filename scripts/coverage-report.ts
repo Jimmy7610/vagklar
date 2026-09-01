@@ -17,6 +17,8 @@ import { resolve } from 'node:path';
 import { CURRICULUM_CHAPTERS } from '../src/content/curriculum/curriculum';
 import { LESSONS } from '../src/content/lessons';
 import { getSource, PRIMARY_SOURCE_ID, RIGHTS } from '../src/content/sources';
+import { APPROVED_SOURCE_IMAGES } from '../src/content/source-images';
+import { ALL_QUESTIONS } from '../src/content/questions';
 import { computeCoverage, gapsByPriority, COVERAGE_THRESHOLDS } from '../src/domain/curriculum/coverage';
 import type { CoverageStatus } from '../src/domain/curriculum/coverage';
 
@@ -146,6 +148,42 @@ for (const lesson of [...LESSONS].sort((a, b) => a.order - b.order)) {
   w(`| ${lesson.title} | ${titles} |`);
 }
 w();
+
+w('## Visuellt stöd');
+w();
+w('Utvalda fotografier ur källan används i lektioner och frågor där bilden gör');
+w('skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag.');
+w();
+{
+  const imagesByChapter = new Map<string, number>();
+  for (const image of APPROVED_SOURCE_IMAGES) {
+    imagesByChapter.set(image.chapter, (imagesByChapter.get(image.chapter) ?? 0) + 1);
+  }
+  const questionsWithImage = ALL_QUESTIONS.filter((q) => q.sourceImageId !== undefined);
+  const lessonsWithImage = LESSONS.filter((l) =>
+    l.blocks.some((b) => b.kind === 'sourceImage'),
+  );
+
+  w('| Mått | Antal |');
+  w('| --- | ---: |');
+  w(`| Godkända källbilder | ${APPROVED_SOURCE_IMAGES.length} |`);
+  w(`| Kapitel med visuellt stöd | ${imagesByChapter.size} av ${t.chapters} |`);
+  w(`| Bildbaserade frågor | ${questionsWithImage.length} |`);
+  w(`| Lektioner med bild | ${lessonsWithImage.length} av ${LESSONS.length} |`);
+  w();
+
+  w('| Kapitel | Bilder |');
+  w('| --- | ---: |');
+  for (const chapter of CURRICULUM_CHAPTERS) {
+    const n = imagesByChapter.get(chapter.id);
+    if (n) w(`| ${chapter.title} | ${n} |`);
+  }
+  w();
+  const without = CURRICULUM_CHAPTERS.filter((c) => !imagesByChapter.has(c.id));
+  w(`Kapitel utan visuellt stöd: **${without.length}**. De viktigaste att komplettera`);
+  w('härnäst listas i [SOURCE-IMAGES.md](SOURCE-IMAGES.md).');
+  w();
+}
 
 w('## Källa och rättigheter');
 w();

@@ -34,6 +34,8 @@ npm run dev
 | `npm run verify:build` | Kontrollerar att inga källdokument hamnat i `dist/`        |
 | `npm run report:coverage` | Genererar om `docs/CONTENT-COVERAGE.md`                 |
 | `npm run report:content` | Validerar banken och skriver `docs/CONTENT-VALIDATION.md` |
+| `python scripts/extract-source-images.py --extract` | Tar ut bildkandidater ur källan (aldrig incheckade) |
+| `python scripts/optimise-source-images.py` | Optimerar de kurerade bilderna till WebP |
 
 Ikoner och Open Graph-bilden genereras från kod:
 
@@ -125,12 +127,13 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 
 | Sak                            | Antal                                  |
 | ------------------------------ | -------------------------------------- |
-| Frågor                         | 259 (44 lätta, 155 medel, 60 svåra)    |
+| Frågor                         | 275 (44 lätta, 163 medel, 68 svåra)    |
 | Kunskapsområden                | 17                                     |
 | Delområden                     | 71                                     |
 | Lektioner                      | 13                                     |
 | Scenarier                      | 11 (med varianter)                     |
-| Namngivna missuppfattningar    | 140                                    |
+| Namngivna missuppfattningar    | 149                                    |
+| Källbilder (används med tillstånd) | 26                                 |
 | Kursplanekapitel               | 39 (173 begrepp)                       |
 
 Allt innehåll är original, skrivet för Vägklar. Varje fråga bär källhänvisningar och en
@@ -153,6 +156,17 @@ se [docs/CONTENT-VALIDATION.md](docs/CONTENT-VALIDATION.md).
 
 Källorna redovisas i [docs/SOURCES-AND-RIGHTS.md](docs/SOURCES-AND-RIGHTS.md) och i appen
 under **Källor**.
+
+### Källbilder
+
+26 fotografier ur den licensierade källan används i lektioner och frågor där bilden gör
+skillnad — att läsa en riktig gata går inte att lära ut i ord. De är kurerade för hand ur
+263 kandidater, optimerade till WebP i två bredder, och registrerade med alt-text,
+långbeskrivning och rättighetsdata i
+[`src/content/source-images.ts`](src/content/source-images.ts).
+
+Bilderna tillhör Hagberg Media AB och används med tillstånd. Varje bild visas med
+kreditering. Se [docs/SOURCE-IMAGES.md](docs/SOURCE-IMAGES.md) för hela arbetsflödet.
 
 ---
 
@@ -187,6 +201,9 @@ tillstånd och tillhör respektive rättighetshavare. På offentliga rättskäll
 Frågorna är originalfrågor skrivna för Vägklar — inte kopior av Trafikverkets provfrågor.
 **Vägklar är ett självständigt träningsverktyg och är inte ansluten till, sponsrad av eller
 godkänd av Trafikverket.**
+
+Fotografier ur källan används i appen med tillstånd och visas alltid med kreditering till
+Hagberg Media AB. Rättighetshavarens vattenstämpel i bilderna behålls.
 
 Källdokumenten i `references/` är licensierat tredjepartsmaterial. De checkas aldrig in
 (`.gitignore`), bundlas aldrig och publiceras aldrig; `scripts/verify-build.mjs` gör varje

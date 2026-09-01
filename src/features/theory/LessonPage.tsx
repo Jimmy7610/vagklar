@@ -6,6 +6,7 @@ import { Button, ButtonLink } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { Callout, SectionHeading } from '@/ui/components/Primitives';
 import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
+import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
 import { LESSONS, getLesson } from '@/content/lessons';
 import { SCENARIOS } from '@/content/scenarios';
 import { getQuestions } from '@/domain/content/bank';
@@ -68,6 +69,15 @@ function Block({ block }: { block: LessonBlock }) {
         </figure>
       );
     }
+    case 'sourceImage':
+      return (
+        <SourceImageFigure
+          imageId={block.imageId}
+          {...(block.prompt ? { prompt: block.prompt } : {})}
+          {...(block.caption ? { caption: block.caption } : {})}
+          sizes="(min-width: 1024px) 640px, 100vw"
+        />
+      );
     default:
       return null;
   }

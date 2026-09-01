@@ -87,6 +87,17 @@ for (const required of REQUIRED) {
   if (!existsSync(join(DIST, required))) failures.push(`Bygget saknar ${required}`);
 }
 
+/* ---- 5. Approved source images actually shipped ---------------------- */
+/*
+ * The opposite failure to the one above: the pipeline silently produces no
+ * images and every lesson renders its text fallback. Counting them here means
+ * a broken extraction step fails the build instead of quietly degrading it.
+ */
+const webp = files.filter((f) => extname(f).toLowerCase() === '.webp');
+if (webp.length === 0) {
+  failures.push('Inga källbilder i bygget — bildpipelinen verkar trasig.');
+}
+
 /* ---- Report ---------------------------------------------------------- */
 if (failures.length > 0) {
   console.error('\nverify-build MISSLYCKADES:\n');
@@ -98,5 +109,5 @@ if (failures.length > 0) {
 const pdfCount = files.filter((f) => extname(f).toLowerCase() === '.pdf').length;
 console.log(
   `verify-build OK — ${files.length} filer, 0 källdokument (${pdfCount} PDF), ` +
-    'appskal och manifest på plats.',
+    `${webp.length} källbilder, appskal och manifest på plats.`,
 );

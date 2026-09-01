@@ -1,0 +1,84 @@
+/* ==========================================================================
+   Source photograph
+   --------------------------------------------------------------------------
+   A licensed photograph shown inside a lesson or a question. The frame owns
+   the aspect ratio so the layout never shifts while the image loads, and the
+   height is capped against the viewport so a tall image cannot take over the
+   screen on a phone.
+   ========================================================================== */
+
+.figure {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin: 0;
+  min-width: 0;
+}
+
+.prompt {
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  /* Never taller than a comfortable slice of the screen: a 1:1 photograph on a
+     narrow phone would otherwise push everything else out of view. */
+  max-height: min(58vh, 460px);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: min(58vh, 460px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.caption {
+  display: grid;
+  gap: 2px;
+  font-size: var(--text-caption);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.captionText {
+  color: var(--color-text);
+}
+
+.credit {
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.fallback {
+  margin: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  font-size: var(--text-small);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

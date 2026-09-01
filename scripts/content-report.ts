@@ -14,6 +14,9 @@ import { CURRICULUM_CONCEPTS } from '../src/content/curriculum/curriculum';
 import { MISCONCEPTIONS } from '../src/content/misconceptions';
 import { SOURCES, RIGHTS } from '../src/content/sources';
 import { SUBCATEGORIES, CATEGORIES } from '../src/content/taxonomy';
+import { SOURCE_IMAGES } from '../src/content/source-images';
+import { LESSONS } from '../src/content/lessons';
+import { availableSourceImageAssets } from '../src/ui/media/sourceImageAssets';
 import { findDuplicates, validateContent } from '../src/domain/content/validation';
 
 const report = validateContent({
@@ -23,6 +26,9 @@ const report = validateContent({
   misconceptionIds: new Set(MISCONCEPTIONS.map((m) => m.id)),
   concepts: CURRICULUM_CONCEPTS,
   sources: SOURCES,
+  sourceImages: SOURCE_IMAGES,
+  availableAssets: availableSourceImageAssets(),
+  lessons: LESSONS,
 });
 
 const duplicates = findDuplicates(ALL_QUESTIONS, { threshold: 0.7 });
@@ -77,6 +83,21 @@ w('| `unknown-misconception` | Missuppfattningen finns inte |');
 w('| `misconception-on-correct` | Det rätta svaret är taggat som en missuppfattning |');
 w('| `verified-without-date` | Status `verified` utan verifieringsdatum |');
 w('| `dangling-related` | Länk till en fråga som inte finns |');
+w();
+w('Bildbaserat innehåll:');
+w();
+w('| Kod | Betyder |');
+w('| --- | --- |');
+w('| `unknown-source-image` | Frågan eller lektionen pekar på en bild som inte finns |');
+w('| `unapproved-source-image` | Bilden har inte status `approved` |');
+w('| `missing-image-asset` | Bildfilen saknas på disk |');
+w('| `duplicate-image-id` | Två bilder har samma id |');
+w('| `image-without-alt` | Bilden saknar alt-text |');
+w('| `image-without-description` | Bilden saknar användbar långbeskrivning |');
+w('| `image-without-rights-holder` | Bilden saknar rättighetshavare |');
+w('| `image-without-permission` | Bilden är inte markerad som använd med tillstånd |');
+w('| `image-unknown-subcategory` | Bildens delområde finns inte i taxonomin |');
+w('| `image-unknown-source` / `image-bad-source-page` / `image-source-page-out-of-range` | Felaktig källhänvisning |');
 w();
 w('Varje kontroll har ett test som medvetet planterar felet och kontrollerar att');
 w('validatorn fångar det — se');
@@ -144,6 +165,8 @@ for (const [status, n] of Object.entries(byStatus).sort((a, b) => b[1] - a[1])) 
   w(`| ${status} | ${n} |`);
 }
 w();
+w(`Godkända källbilder: **${SOURCE_IMAGES.filter((i) => i.status === 'approved').length}**, `
+  + `varav ${ALL_QUESTIONS.filter((q) => q.sourceImageId !== undefined).length} används i frågor.`);
 w(`Namngivna missuppfattningar: **${MISCONCEPTIONS.length}**.`);
 w(`Områden: **${CATEGORIES.length}**, delområden: **${SUBCATEGORIES.length}**.`);
 w();

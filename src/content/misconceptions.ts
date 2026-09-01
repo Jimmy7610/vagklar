@@ -9,6 +9,87 @@ import type { Misconception } from '@/domain/content/types';
  */
 export const MISCONCEPTIONS: Misconception[] = [
   {
+    id: 'vagvisare-undantag',
+    label: 'Körfältsvägvisarens undantag missas',
+    description:
+      'Man håller fast vid högra körfältet trots att körfälten leder till olika mål.',
+    correction:
+      'Leder körfälten till olika färdmål enligt vägvisaren får du välja det som passar din fortsatta färd.',
+    subcategory: 'placering',
+  },
+  {
+    id: 'flervagsstopp',
+    label: 'Flervägsstopp misstolkas',
+    description:
+      'Tavlan tolkas som upprepad stopplikt längs vägen, eller som en lättnad.',
+    correction:
+      'Flervägsstopp betyder att alla tillfarter till korsningen har stopplikt. Du ska ändå stanna helt.',
+    subcategory: 'stopplikt',
+  },
+  {
+    id: 'stopplikt-rullstopp',
+    label: 'Stopplikt tas som en kraftig inbromsning',
+    description:
+      'Man rullar förbi i låg fart när vägen ser fri ut.',
+    correction:
+      'Stopplikt betyder att fordonet ska stå helt stilla, oavsett om något kommer.',
+    subcategory: 'stopplikt',
+  },
+  {
+    id: 'bredaste-vagen',
+    label: 'Vägens utseende tas för väjningsregel',
+    description:
+      'Bredd, beläggning eller trafikmängd antas avgöra vem som har företräde.',
+    correction:
+      'Bara märken, markeringar och signaler ändrar högerregeln. Utseendet betyder ingenting.',
+    subcategory: 'hogerregeln',
+  },
+  {
+    id: 'tungt-fordon-tid',
+    label: 'Tunga fordons tidsbehov underskattas',
+    description:
+      'Ett tungt fordon antas kunna stanna och accelerera som en personbil.',
+    correction:
+      'Ett långt, tungt fordon är kvar i korsningen betydligt längre och bromsar sämre.',
+    subcategory: 'vajningsplikt',
+  },
+  {
+    id: 'gul-tavla-forbud',
+    label: 'Gul tilläggstavla läses som tillåtelse',
+    description:
+      'Tider på gul botten med röd ring tolkas som när parkering är tillåten.',
+    correction:
+      'Gul botten med röd ring betyder förbud. Tiderna anger när förbudet gäller.',
+    subcategory: 'parkeringsregler',
+  },
+  {
+    id: 'parentes-tider',
+    label: 'Tider inom parentes misstolkas',
+    description:
+      'Parentestiderna antas gälla söndagar, sommartid eller vara en rekommendation.',
+    correction:
+      'Svarta siffror gäller vardagar, parentes gäller lördag och dag före helgdag, röda siffror sön- och helgdag.',
+    subcategory: 'parkeringsregler',
+  },
+  {
+    id: 'gangfartsomrade-regler',
+    label: 'Gångfartsområdets regler blandas ihop',
+    description:
+      'Området antas ha 30 km/h, eller att gående skulle väja för fordon.',
+    correction:
+      'Gångfart, väjningsplikt mot gående och parkering endast på anvisade platser.',
+    subcategory: 'anvisningsmarken',
+  },
+  {
+    id: 'omkorning-vinter',
+    label: 'Väglaget vägs inte in i omkörningsbeslutet',
+    description:
+      'Man bedömer bara sikten och glömmer att greppet avgör hur omkörningen går.',
+    correction:
+      'Omkörning kräver grepp för både acceleration och återinträde. Snömodd gör greppet oförutsägbart.',
+    subcategory: 'omkorningsregler',
+  },
+  {
     id: 'visa-avsikt',
     label: 'Väjningsplikten utförs otydligt',
     description:

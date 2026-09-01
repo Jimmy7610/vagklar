@@ -104,6 +104,12 @@ export interface Question {
   sourceReferences: SourceReference[];
   lastReviewedAt?: string | null;
   image?: QuestionImage;
+  /**
+   * Id in the source-image registry (src/content/source-images.ts). Used when
+   * the question genuinely needs a photograph of a real situation. Attribution
+   * and the accessible description come from the registry, never from here.
+   */
+  sourceImageId?: string;
   relatedQuestionIds?: string[];
   tags?: string[];
   /** Seconds a well-prepared learner is expected to need. */
@@ -174,6 +180,15 @@ export type LessonBlock =
   | { kind: 'memory'; text: string }
   | { kind: 'example'; title: string; text: string }
   | { kind: 'illustration'; illustration: string; caption?: string; alt: string }
+  | {
+      kind: 'sourceImage';
+      /** Id in the source-image registry. */
+      imageId: string;
+      /** "Vad ska du lägga märke till?" — asked before the learner looks. */
+      prompt?: string;
+      /** Overrides the registry caption when the lesson needs a sharper point. */
+      caption?: string;
+    }
   | { kind: 'warning'; text: string };
 
 export interface Lesson {

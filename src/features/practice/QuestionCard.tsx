@@ -4,6 +4,7 @@ import { Button } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { RoadSign, hasRoadSign } from '@/ui/illustrations/RoadSign';
 import { getCategoryName, getSubcategoryName } from '@/content/taxonomy';
+import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
 import type { Question } from '@/domain/content/types';
 import type { Confidence, ConfidencePrompt } from '@/domain/learner/types';
 
@@ -152,6 +153,17 @@ export function QuestionCard({
       </div>
 
       <h1 className={styles.prompt}>{question.prompt}</h1>
+
+      {question.sourceImageId && (
+        <div className={styles.sourceImage}>
+          <SourceImageFigure
+            imageId={question.sourceImageId}
+            sizes="(min-width: 1024px) 620px, 100vw"
+            priority
+            showCaption={false}
+          />
+        </div>
+      )}
 
       {illustration && hasRoadSign(illustration) && (
         <figure className={styles.figure}>

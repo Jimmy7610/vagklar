@@ -1,6 +1,8 @@
 import type { Question } from './types';
 import type { CurriculumConcept } from '@/content/curriculum/curriculum';
 import type { SourceEntry } from '@/content/sources';
+import type { SourceImage } from '@/content/source-images';
+import type { Lesson } from './types';
 
 /**
  * Content validation.
@@ -37,6 +39,12 @@ export interface ValidationInput {
   misconceptionIds: ReadonlySet<string>;
   concepts: readonly CurriculumConcept[];
   sources: readonly SourceEntry[];
+  /** The source-image registry, for validating image-backed content. */
+  sourceImages?: readonly SourceImage[];
+  /** Asset slugs that actually exist on disk. */
+  availableAssets?: ReadonlySet<string>;
+  /** Lessons, so lesson image blocks are validated too. */
+  lessons?: readonly Lesson[];
 }
 
 export interface ValidationReport {
@@ -90,6 +98,7 @@ export function validateContent(input: ValidationInput): ValidationReport {
     input.concepts.flatMap((c) => (c.subcategory ? [c.subcategory] : [])),
   );
   const sourceById = new Map(input.sources.map((s) => [s.id, s]));
+  const imageById = new Map((input.sourceImages ?? []).map((i) => [i.id, i]));
   const seenIds = new Set<string>();
 
   for (const q of input.questions) {
@@ -249,6 +258,31 @@ export function validateContent(input: ValidationInput): ValidationReport {
       );
     }
 
+    /* ---- Source images -------------------------------------------------- */
+    if (q.sourceImageId !== undefined) {
+      const image = imageById.get(q.sourceImageId);
+      if (!image) {
+        add('error', 'unknown-source-image', q.id, `Okänd källbild "${q.sourceImageId}".`);
+      } else {
+        if (image.status !== 'approved') {
+          add(
+            'error',
+            'unapproved-source-image',
+            q.id,
+            `Källbilden "${image.id}" har status "${image.status}" och får inte visas.`,
+          );
+        }
+        if (input.availableAssets && !input.availableAssets.has(image.asset)) {
+          add(
+            'error',
+            'missing-image-asset',
+            q.id,
+            `Bildfilen för "${image.asset}" saknas på disk.`,
+          );
+        }
+      }
+    }
+
     /* ---- Cross-references --------------------------------------------- */
     for (const related of q.relatedQuestionIds ?? []) {
       if (related === q.id) {
@@ -262,6 +296,81 @@ export function validateContent(input: ValidationInput): ValidationReport {
     for (const related of q.relatedQuestionIds ?? []) {
       if (!seenIds.has(related)) {
         add('error', 'dangling-related', q.id, `Länkar till okänd fråga "${related}".`);
+      }
+    }
+  }
+
+  /* ---- The source-image registry itself -------------------------------- */
+  const seenImageIds = new Set<string>();
+  for (const image of input.sourceImages ?? []) {
+    const where = `bild:${image.id}`;
+    if (seenImageIds.has(image.id)) {
+      add('error', 'duplicate-image-id', where, `Bild-id ${image.id} används mer än en gång.`);
+    }
+    seenImageIds.add(image.id);
+
+    if (image.altText.trim().length === 0) {
+      add('error', 'image-without-alt', where, 'Källbilden saknar alt-text.');
+    }
+    if (image.longDescription.trim().length < 40) {
+      add(
+        'error',
+        'image-without-description',
+        where,
+        'Källbilden saknar en användbar långbeskrivning.',
+      );
+    }
+    if (!image.rightsHolder || image.rightsHolder.trim().length === 0) {
+      add('error', 'image-without-rights-holder', where, 'Källbilden saknar rättighetshavare.');
+    }
+    if (!image.usedWithPermission) {
+      add(
+        'error',
+        'image-without-permission',
+        where,
+        'Källbilden är inte markerad som använd med tillstånd.',
+      );
+    }
+    if (!input.subcategoryIds.has(image.subcategory)) {
+      add('error', 'image-unknown-subcategory', where, `Okänt delområde "${image.subcategory}".`);
+    }
+
+    const source = sourceById.get(image.sourceId);
+    if (!source) {
+      add('error', 'image-unknown-source', where, `Okänd källa "${image.sourceId}".`);
+    } else if (source.pageCount !== undefined) {
+      if (!Number.isInteger(image.sourcePage) || image.sourcePage < 1) {
+        add('error', 'image-bad-source-page', where, `Ogiltigt sidnummer ${image.sourcePage}.`);
+      } else if (image.sourcePage > source.pageCount) {
+        add(
+          'error',
+          'image-source-page-out-of-range',
+          where,
+          `Sidan ${image.sourcePage} finns inte i "${source.id}".`,
+        );
+      }
+    }
+
+    if (input.availableAssets && image.status === 'approved' && !input.availableAssets.has(image.asset)) {
+      add('error', 'missing-image-asset', where, `Bildfilen för "${image.asset}" saknas på disk.`);
+    }
+  }
+
+  /* ---- Lesson image blocks --------------------------------------------- */
+  for (const lesson of input.lessons ?? []) {
+    for (const block of lesson.blocks) {
+      if (block.kind !== 'sourceImage') continue;
+      const where = `lektion:${lesson.id}`;
+      const image = imageById.get(block.imageId);
+      if (!image) {
+        add('error', 'unknown-source-image', where, `Okänd källbild "${block.imageId}".`);
+      } else if (image.status !== 'approved') {
+        add(
+          'error',
+          'unapproved-source-image',
+          where,
+          `Källbilden "${image.id}" har status "${image.status}".`,
+        );
       }
     }
   }

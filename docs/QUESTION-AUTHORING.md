@@ -70,6 +70,38 @@ för att skriva källsträngar för hand:
 hämtas ur källregistret i stället för att upprepas. Validatorn avvisar ett sidnummer
 som ligger utanför källans sidantal.
 
+## Bildfrågor
+
+En fråga får en bild bara när bilden gör testet bättre. Inträdesprovet är enkelt: **går
+frågan att ställa lika bra i ord hör den inte hemma bland bildfrågorna.**
+
+Bra användning: läsa en tilläggstavla, avgöra om en cykelpassage är en överfart, se att
+märket för cirkulationsplats saknas, hitta det som skyms.
+
+Dålig användning: en bild som bara dekorerar en regel som redan står i frågetexten.
+
+```ts
+{
+  id: 'bld-007',
+  category: 'trafikregler',
+  subcategory: 'cykelpassage-overfart',
+  prompt: 'Vad på bilden visar att det här är en cykelöverfart och inte en cykelpassage?',
+  sourceImageId: 'cykeloverfart',
+  // …
+}
+```
+
+Två regler att känna till:
+
+- **Bildtexten visas inte i frågor.** Registrets bildtext förklarar vad bilden lär ut,
+  vilket är precis det frågan ber eleven räkna ut. Krediteringen visas alltid.
+- **Långbeskrivningen är en del av uppgiften.** Den ska vara detaljerad nog att en elev
+  som inte ser bilden ändå kan svara. Skriv den som en beskrivning av vad som syns, inte
+  som en ledtråd till svaret.
+
+Bildfrågorna ligger i [`bildfragor.ts`](../src/content/questions/bildfragor.ts).
+Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för hur man lägger till en ny bild.
+
 ## Var det saknas frågor
 
 [`docs/CONTENT-COVERAGE.md`](CONTENT-COVERAGE.md) listar luckorna i prioritetsordning,

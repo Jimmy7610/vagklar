@@ -30,13 +30,28 @@ Fel som avvisas:
 | `verified-without-date` | Status `verified` utan verifieringsdatum |
 | `dangling-related` | Länk till en fråga som inte finns |
 
+Bildbaserat innehåll:
+
+| Kod | Betyder |
+| --- | --- |
+| `unknown-source-image` | Frågan eller lektionen pekar på en bild som inte finns |
+| `unapproved-source-image` | Bilden har inte status `approved` |
+| `missing-image-asset` | Bildfilen saknas på disk |
+| `duplicate-image-id` | Två bilder har samma id |
+| `image-without-alt` | Bilden saknar alt-text |
+| `image-without-description` | Bilden saknar användbar långbeskrivning |
+| `image-without-rights-holder` | Bilden saknar rättighetshavare |
+| `image-without-permission` | Bilden är inte markerad som använd med tillstånd |
+| `image-unknown-subcategory` | Bildens delområde finns inte i taxonomin |
+| `image-unknown-source` / `image-bad-source-page` / `image-source-page-out-of-range` | Felaktig källhänvisning |
+
 Varje kontroll har ett test som medvetet planterar felet och kontrollerar att
 validatorn fångar det — se
 [`validation.test.ts`](../src/domain/content/validation.test.ts).
 
 ## Resultat
 
-Kontrollerade frågor: **259**
+Kontrollerade frågor: **275**
 
 - Fel: **0**
 - Varningar: **0**
@@ -48,28 +63,29 @@ modell. Exakt lika frågetext och identiska svarsuppsättningar *inom samma
 delområde* behandlas som fel i testsviten. Liknande formuleringar rapporteras
 bara, eftersom en variant som ändrar ett villkor med avsikt kan ligga nära.
 
-Inga dubbletter över tröskeln 0,70 bland 259 frågor.
+Inga dubbletter över tröskeln 0,70 bland 275 frågor.
 
 ## Bankens sammansättning
 
 | Mått | Antal | Andel |
 | --- | ---: | ---: |
-| Frågor totalt | 259 | 100 % |
-| Lätta (1) | 44 | 17 % |
-| Medel (2) | 155 | 60 % |
-| Svåra (3) | 60 | 23 % |
+| Frågor totalt | 275 | 100 % |
+| Lätta (1) | 44 | 16 % |
+| Medel (2) | 163 | 59 % |
+| Svåra (3) | 68 | 25 % |
 
 | Frågetyp | Antal |
 | --- | ---: |
-| multiple-choice | 239 |
+| multiple-choice | 255 |
 | calculation | 12 |
 | road-sign | 8 |
 
 | Granskningsstatus | Antal |
 | --- | ---: |
-| reviewed | 259 |
+| reviewed | 275 |
 
-Namngivna missuppfattningar: **140**.
+Godkända källbilder: **26**, varav 16 används i frågor.
+Namngivna missuppfattningar: **149**.
 Områden: **17**, delområden: **71**.
 
 > Ingen fråga har status `verified`. Det är avsiktligt: innehållet är skrivet

@@ -80,6 +80,10 @@ export default defineConfig({
           // 'content' put them in the eagerly preloaded startup payload.
           if (id.includes('/src/content/lessons')) return undefined;
           if (id.includes('/src/content/scenarios')) return undefined;
+          // The source-image registry carries long accessible descriptions and
+          // is only read when a photograph is actually rendered, which happens
+          // on lazily loaded routes.
+          if (id.includes('/src/content/source-images')) return undefined;
           // The rest — questions, taxonomy, sources, misconceptions — is
           // reached synchronously from the learner store, so it is startup
           // critical whatever we do with it.
