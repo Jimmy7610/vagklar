@@ -10,7 +10,7 @@ optimeras, var de bor och hur de kopplas till innehåll.
 ## Principen
 
 **Kurering, inte import.** 263 bilder togs ut ur källan till en arbetsyta som aldrig
-checkas in. 26 valdes. Resten ligger kvar utanför appen.
+checkas in. 44 har valts i två omgångar. Resten ligger kvar utanför appen.
 
 Bilden ska bära något texten inte klarar. Kan frågan ställas lika bra i ord hör den
 hemma i en vanlig frågefil, inte bland bildfrågorna.
@@ -28,7 +28,7 @@ references/extracted/teoribok-2026-1/   263 kandidater, aldrig incheckade
         │  hand: urval till CURATED-listan i optimise-source-images.py
         │  scripts/optimise-source-images.py
         ▼
-src/assets/source-images/teoribok-2026-1/<ämne>/   26 bilder × 2 bredder, incheckade
+src/assets/source-images/teoribok-2026-1/<ämne>/   44 bilder × 2 bredder, incheckade
         │  src/content/source-images.ts  (registret)
         ▼
 lektioner och frågor
@@ -78,7 +78,7 @@ de inställningarna är portaltexten, 80-skylten och körfältsbokstäverna i
 74 kB. Trafikfoton bär små men avgörande detaljer — granska en ny bild i 100 % innan du
 sänker kvaliteten ytterligare.
 
-Resultat: 26 bilder, 5 671 kB original → 3 319 kB WebP i 52 filer.
+Resultat: 44 bilder, 9 497 kB original → 5 664 kB WebP i 88 filer.
 
 ### 4. Registrera
 
@@ -169,11 +169,12 @@ WebP-filerna är separata resurser som webbläsaren hämtar när en bild faktisk
 Registret self är dessutom undantaget från `content`-paketet i `vite.config.ts`,
 eftersom långbeskrivningarna bara behövs på rutter som laddas lazy.
 
-Uppmätt effekt av hela passet på startpaketet: **+5 kB gzip**.
+Uppmätt effekt på startpaketet: **+5 kB gzip** i första omgången, och bilderna själva
+når aldrig startpaketet.
 
 ## Offline
 
-Bilderna **precachas inte**. Det vore fel att lägga 3,2 MB i varje användares cache
+Bilderna **precachas inte**. Det vore fel att lägga 5,7 MB i varje användares cache
 för bilder de kanske aldrig ser.
 
 I stället fångas de av den befintliga `runtimeCaching`-regeln i `vite.config.ts`:
@@ -209,15 +210,30 @@ Kontrollen skiljer på **källdokument** och **härledda bildresurser**: `.pdf`,
 Bygget kontrollerar dessutom att bilderna faktiskt *finns* — försvinner de tyst är det
 också ett byggfel.
 
+## Vad som inte gick att extrahera
+
+Märkeskatalogen i källan är vektorgrafik eller typsnitt, inte inbäddade rasterbilder.
+Kapitlet Vägmärken (s. 324–361) gav därför bara fyra bildkandidater, varav en i hög
+upplösning. Det är skälet till att de svenska vägmärkena ritas som vektorer i Vägklar
+i stället för att hämtas ur källan — se [ROAD-SIGNS.md](ROAD-SIGNS.md).
+
+Fotografierna bidrar i stället med märken *i verklig miljö*: flera märken på samma
+stolpe, hastighet på en avfart, kryssmärken vid en plankorsning, gågata i en gammal
+stadskärna.
+
+En kandidat valdes bort medvetet: `p097-0` visar ett runt gult märke som inte gick att
+läsa säkert i den upplösning som fanns. Att beskriva ett märke man inte kan identifiera
+vore att gissa i ett läromedel.
+
 ## Kapitel utan visuellt stöd
 
-Nio av 39 kapitel har bilder i dag. De mest värdefulla att komplettera härnäst:
+Tolv av 39 kapitel har bilder i dag. De mest värdefulla att komplettera härnäst:
 
-1. **Vägmärken** — märken i verklig miljö, inte bara som ikoner
-2. **Motorväg** — påfart, avfart och körfältsbyte i hög fart
-3. **Landsväg** — kurvor, backkrön och mötesplatser
-4. **Mörker** — halvljus, helljus och avbländning
-5. **Trafikolyckor** — varningstriangel och säkring av olycksplats
+1. **Mörker** — halvljus, helljus och avbländning
+2. **Trafikolyckor** — varningstriangel och säkring av olycksplats
+3. **Synen** — siktfält och tunnelseende
+4. **Krocksäkerhet** — bältesplacering och krockkudde
+5. **Däck** — mönsterdjup och slitage
 
 Aktuella siffror finns i [CONTENT-COVERAGE.md](CONTENT-COVERAGE.md) under
 *Visuellt stöd*.

@@ -40,7 +40,7 @@ Tillståndet omfattar både texten och bilderna i källan.
 
 **Bilderna** används däremot direkt, i ett kurerat urval:
 
-- 26 fotografier ur källan visas i lektioner och frågor, valda ur 263 kandidater.
+- 44 fotografier ur källan visas i lektioner och frågor, valda ur 263 kandidater.
 - Varje bild visas med kreditering: utgivare, sidnummer, rättighetshavare och
   att den används med tillstånd.
 - Rättighetshavarens egen vattenstämpel i fotografierna tas aldrig bort.

@@ -127,13 +127,14 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 
 | Sak                            | Antal                                  |
 | ------------------------------ | -------------------------------------- |
-| Frågor                         | 275 (44 lätta, 163 medel, 68 svåra)    |
+| Frågor                         | 343 (78 lätta, 188 medel, 77 svåra)    |
 | Kunskapsområden                | 17                                     |
 | Delområden                     | 71                                     |
-| Lektioner                      | 13                                     |
+| Lektioner                      | 14                                     |
 | Scenarier                      | 11 (med varianter)                     |
-| Namngivna missuppfattningar    | 149                                    |
-| Källbilder (används med tillstånd) | 26                                 |
+| Namngivna missuppfattningar    | 191                                    |
+| Källbilder (används med tillstånd) | 44                                 |
+| Ritade vägmärken               | 60                                     |
 | Kursplanekapitel               | 39 (173 begrepp)                       |
 
 Allt innehåll är original, skrivet för Vägklar. Varje fråga bär källhänvisningar och en
@@ -156,6 +157,15 @@ se [docs/CONTENT-VALIDATION.md](docs/CONTENT-VALIDATION.md).
 
 Källorna redovisas i [docs/SOURCES-AND-RIGHTS.md](docs/SOURCES-AND-RIGHTS.md) och i appen
 under **Källor**.
+
+### Vägmärken
+
+60 svenska vägmärken är ritade som vektorer med officiella koder ur
+Vägmärkesförordningen, och beskrivs i
+[`src/content/road-signs.ts`](src/content/road-signs.ts) med innebörd, alt-text och
+vilka märken de brukar förväxlas med. Teoriskolan visar dem som rutnät per kategori
+med jämförelsekort för de par som faktiskt blandas ihop. Se
+[docs/ROAD-SIGNS.md](docs/ROAD-SIGNS.md).
 
 ### Källbilder
 

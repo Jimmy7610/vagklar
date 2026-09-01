@@ -553,6 +553,340 @@ export const SOURCE_IMAGES: SourceImage[] = [
     height: 540,
     status: 'approved',
   }),
+
+  /* ---- Vägmärken i verklig miljö --------------------------------------- */
+  img({
+    id: 'motorvag-portal-vagvisare',
+    sourcePage: 89,
+    title: 'Vägvisning över motorväg',
+    topic: 'vagmarken',
+    subcategory: 'anvisningsmarken',
+    chapter: 'vagmarken',
+    altText:
+      'En motorväg med en portal över körbanan. Till vänster en grön vägvisare mot E6 Oslo och E20 E45 Malmö, till höger en blå vägvisare mot Mölndal och Kållered med en pil som böjer av åt höger.',
+    longDescription:
+      'Sett framåt från förarplatsen på en motorväg med tre körfält. Över körbanan hänger två vägvisare. Den vänstra är grön och visar den fortsatta färden rakt fram mot E6 Oslo och E20 E45 Malmö. Den högra är blå, gäller avfarten och visar Mölndal, Kållered och Liseberg med en pil som böjer av uppåt höger. Ovanför den blå skylten sitter ett litet gult avfartsnummer.',
+    caption:
+      'Grön botten visar den fortsatta motorvägsfärden, blå botten det du når via avfarten.',
+    usage: 'question-image',
+    asset: 'vagmarken/motorvag-portal-vagvisare',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'korfaltsvagvisare-korsning',
+    sourcePage: 84,
+    title: 'Vägvisare före korsning',
+    topic: 'vagmarken',
+    subcategory: 'anvisningsmarken',
+    chapter: 'vagmarken',
+    altText:
+      'En bred väg mot en korsning. Till höger står en blå vägvisartavla med flera färdmål och pilar som pekar rakt fram, åt höger och mot centrum.',
+    longDescription:
+      'Sett framåt från förarplatsen på en flerfilig väg som närmar sig en korsning. Till höger om vägen står en stor blå vägvisartavla med flera rader: färdmål rakt fram, färdmål åt höger, och längst ned en pil mot Centrum. En bil kör framför i det vänstra körfältet, och grönska skiljer körbanorna åt.',
+    caption: 'Vägvisaren talar om vilket körfält som leder dit du ska — läs den i god tid.',
+    usage: 'question-image',
+    asset: 'vagmarken/korfaltsvagvisare-korsning',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'hastighet-100-ledsnummer',
+    sourcePage: 95,
+    title: 'Hastighet och huvudled på landsväg',
+    topic: 'vagmarken',
+    subcategory: 'hastighetsgranser',
+    chapter: 'vagmarken',
+    altText:
+      'En landsväg med räcke. Till höger sitter en hastighetsskylt med siffran 100, under den en gul romb för huvudled, och under den en blå skylt med vägnumren 55 och 56.',
+    longDescription:
+      'Sett framåt från förarplatsen på en bred landsväg med vajerräcke på båda sidor. På en stolpe till höger sitter tre märken ovanför varandra: överst en rund skylt med gul botten, röd ram och siffran 100, i mitten en gul romb med vit ram som anger huvudled, och underst en blå skylt med vägnumren 55 och 56.',
+    caption: 'Tre märken på samma stolpe: högsta hastighet, huvudled och vägnummer.',
+    usage: 'question-image',
+    asset: 'vagmarken/hastighet-100-ledsnummer',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'avfart-hastighet-50',
+    sourcePage: 92,
+    title: 'Avfart med sänkt hastighet',
+    topic: 'vagmarken',
+    subcategory: 'pafart-avfart',
+    chapter: 'vagmarken',
+    altText:
+      'En motorväg där ett körfält viker av åt höger. En röd pil pekar mot avfarten, och vid den sitter en hastighetsskylt med siffran 50.',
+    longDescription:
+      'Sett framåt från förarplatsen på en motorväg med flera körfält. Ett körfält viker av åt höger som avfart, markerat med en röd pil i bilden. Vid avfarten sitter en rund hastighetsskylt med siffran 50 och ovanför den en blå skylt. Bilar kör framför i de genomgående körfälten.',
+    caption: 'Hastigheten på avfarten gäller avfarten — inte den motorväg du lämnar.',
+    usage: 'question-image',
+    asset: 'vagmarken/avfart-hastighet-50',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'plankorsning-kryssmarken',
+    sourcePage: 107,
+    title: 'Plankorsning med kryssmärken och bommar',
+    topic: 'vagmarken',
+    subcategory: 'plankorsning-marken',
+    chapter: 'vagmarken',
+    altText:
+      'En järnvägskorsning i en tätort. På båda sidor av vägen står röd-vita kryssmärken och fällbara bommar, och spåret korsar vägen framför bilen.',
+    longDescription:
+      'Sett framåt från förarplatsen mot en plankorsning i en mindre tätort. På båda sidor av vägen står röd-vita kryssmärken på stolpar, tillsammans med uppfällda bommar. Spåret korsar vägen tvärs framför bilen, och bakom korsningen syns en stationsbyggnad. En blå skylt står vid vägkanten till höger.',
+    caption: 'Kryssmärket markerar själva korsningen. Bommarna avgör dessutom omkörningsfrågan.',
+    usage: 'question-image',
+    asset: 'vagmarken/plankorsning-kryssmarken',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'gagata-skyltad',
+    sourcePage: 119,
+    title: 'Gågata',
+    topic: 'vagmarken',
+    subcategory: 'anvisningsmarken',
+    chapter: 'vagmarken',
+    altText:
+      'En smal stenlagd gata mellan husfasader. På båda sidor av infarten sitter blå skyltar för gågata.',
+    longDescription:
+      'Sett framåt från förarplatsen in mot en smal, stenlagd gata mellan husfasader i en äldre stadskärna. På var sin sida om infarten sitter en blå skylt för gågata. Gatan saknar tydlig uppdelning i körbana och trottoar, och möbler och skyltställ står ute på ytan.',
+    caption: 'På gågata får du köra bara för särskilda ändamål, och alltid i gångfart.',
+    usage: 'question-image',
+    asset: 'vagmarken/gagata-skyltad',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'pabjuden-korriktning-parkering',
+    sourcePage: 131,
+    title: 'Påbjuden körriktning vid parkeringshus',
+    topic: 'vagmarken',
+    subcategory: 'pabudsmarken',
+    chapter: 'vagmarken',
+    altText:
+      'En infart till ett parkeringshus. Vid vägen står en rund blå skylt med en vit pil som pekar snett uppåt höger, och över körbanan går ett övergångsställe.',
+    longDescription:
+      'Sett framåt från förarplatsen mot infarten till ett flerfärgat parkeringshus. Vid vägkanten står en rund blå skylt med en vit pil som anger påbjuden körriktning. Tvärs över körbanan framför bilen löper ett målat övergångsställe.',
+    caption: 'Rund blå skylt är ett påbud: pilen är inte ett förslag.',
+    usage: 'question-image',
+    asset: 'vagmarken/pabjuden-korriktning-parkering',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Motorväg -------------------------------------------------------- */
+  img({
+    id: 'motorvag-bro-korfalt',
+    sourcePage: 90,
+    title: 'Motorväg med två körfält',
+    topic: 'motorvag',
+    subcategory: 'motorvag-regler',
+    chapter: 'motorvag',
+    altText:
+      'En motorväg med två körfält i färdriktningen, streckad körfältslinje och en bro tvärs över vägen längre fram.',
+    longDescription:
+      'Sett framåt från förarplatsen på en motorväg med två körfält i färdriktningen, avgränsade av en streckad linje. Vägrenen till höger är bred och markerad med en heldragen kantlinje. Längre fram går en bro över vägen, och en ensam bil syns i fjärran.',
+    caption: 'Grundregeln gäller även här: ligg i högra körfältet när du inte kör om.',
+    usage: 'theory-lesson',
+    asset: 'motorvag/motorvag-bro-korfalt',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'motorvag-stillastaende-fordon',
+    sourcePage: 92,
+    title: 'Stillastående fordon på vägrenen',
+    topic: 'motorvag',
+    subcategory: 'motorvag-regler',
+    chapter: 'motorvag',
+    altText:
+      'En motorväg där en vit bil står stilla på vägrenen till höger, medan trafiken passerar i körfälten.',
+    longDescription:
+      'Sett framåt från förarplatsen på en motorväg med två körfält i färdriktningen. En vit personbil står stilla på vägrenen längre fram till höger, delvis utanför körbanan. Räcke och skogsbryn kantar vägen.',
+    caption: 'Ett stillastående fordon på vägrenen betyder människor nära körbanan.',
+    usage: 'question-image',
+    asset: 'motorvag/motorvag-stillastaende-fordon',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'motortrafikled-avsmalning',
+    sourcePage: 85,
+    title: 'Körfält som tar slut',
+    topic: 'motorvag',
+    subcategory: 'pafart-avfart',
+    chapter: 'motorvag',
+    altText:
+      'En bred väg där vägbanan smalnar av och pilar målade i körbanan visar att ett körfält går samman med nästa.',
+    longDescription:
+      'Sett framåt från förarplatsen på en bred väg utanför tätort. I körbanan är pilar målade som visar att körfältet går samman med det till vänster. Kantlinjer och spärrområde markerar avsmalningen, och en blå skylt står vid vägkanten längre fram.',
+    caption: 'Vävning fungerar bara om båda parter anpassar farten i tid.',
+    usage: 'question-image',
+    asset: 'motorvag/motortrafikled-avsmalning',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Landsväg -------------------------------------------------------- */
+  img({
+    id: 'landsvag-kantlinjer',
+    sourcePage: 80,
+    title: 'Landsväg med kantlinjer',
+    topic: 'landsvag',
+    subcategory: 'landsvag',
+    chapter: 'landsvag',
+    altText:
+      'En landsväg genom skogsmark med heldragna kantlinjer på båda sidor och en streckad mittlinje.',
+    longDescription:
+      'Sett framåt från förarplatsen på en landsväg som går genom skogsmark. Vägen har heldragna vita kantlinjer på båda sidor och en streckad mittlinje. Vägrenen är smal och övergår direkt i grus och vegetation. Långt fram syns ett fordon och en blå skylt.',
+    caption: 'Kantlinjen visar var körbanan slutar — inte var det är säkert att köra.',
+    usage: 'theory-lesson',
+    asset: 'landsvag/landsvag-kantlinjer',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'landsvag-omkorningssikt',
+    sourcePage: 80,
+    title: 'Sikt inför omkörning',
+    topic: 'landsvag',
+    subcategory: 'omkorningsregler',
+    chapter: 'landsvag',
+    altText:
+      'En landsväg med räcke där två punkter är markerade med bokstäverna A och B, och en röd pil pekar bakåt längs vägen.',
+    longDescription:
+      'Sett framåt från förarplatsen på en landsväg med vajerräcke till vänster och åkermark till höger. Två punkter längre fram är markerade med bokstäverna A och B, och en röd pil pekar bakåt längs vägen. Vägen är rak och sikten lång.',
+    caption: 'Omkörningen kräver fri sikt hela sträckan — inte bara fram till mötande.',
+    usage: 'question-image',
+    asset: 'landsvag/landsvag-omkorningssikt',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'landsvag-vagkant',
+    sourcePage: 78,
+    title: 'Mjuk vägkant',
+    topic: 'landsvag',
+    subcategory: 'landsvag',
+    chapter: 'landsvag',
+    altText:
+      'En landsväg i höstmiljö där en röd pil pekar mot den gräsbevuxna vägkanten till höger.',
+    longDescription:
+      'Sett framåt från förarplatsen på en landsväg med höstfärgade träd. En röd pil i bilden pekar mot vägkanten till höger, där asfalten övergår i gräs och grus utan tydlig kant. Vägen är rak och trafikfri.',
+    caption: 'En lös vägkant förlåter inte en hjulnedsläppning i hög fart.',
+    usage: 'question-image',
+    asset: 'landsvag/landsvag-vagkant',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'vagarbete-omledning',
+    sourcePage: 82,
+    title: 'Vägarbete med omledning',
+    topic: 'landsvag',
+    subcategory: 'landsvag',
+    chapter: 'landsvag',
+    altText:
+      'Ett vägarbete där gul-svarta pilmarkeringar leder trafiken åt vänster förbi ett avstängt område.',
+    longDescription:
+      'Sett framåt från förarplatsen mot ett vägarbete. Gul-svarta pilmarkeringar och avstängningsmaterial leder trafiken åt vänster förbi ett uppgrävt område. Betongbarriärer och arbetsfordon står innanför avspärrningen.',
+    caption: 'Tillfälliga anvisningar vid vägarbete gäller före de ordinarie märkena.',
+    usage: 'question-image',
+    asset: 'landsvag/vagarbete-omledning',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'omkorning-landsvag',
+    sourcePage: 101,
+    title: 'Omkörning på landsväg',
+    topic: 'landsvag',
+    subcategory: 'omkorningsregler',
+    chapter: 'omkorningar',
+    altText:
+      'En landsväg där en vit bil befinner sig i det mötande körfältet under en omkörning.',
+    longDescription:
+      'Sett framåt från förarplatsen på en landsväg genom skogsmark. En vit personbil är ute i det mötande körfältet under en pågående omkörning och håller på att passera fordonet framför. Vägen har streckad mittlinje och heldragna kantlinjer.',
+    caption: 'Under omkörningen är du i mötandes körfält — sikten avgör allt.',
+    usage: 'question-image',
+    asset: 'landsvag/omkorning-landsvag',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'buss-vid-hallplats',
+    sourcePage: 105,
+    title: 'Buss vid hållplats',
+    topic: 'landsvag',
+    subcategory: 'omkorningsregler',
+    chapter: 'omkorningar',
+    altText:
+      'En stadsgata där en röd buss står vid en hållplats till höger och en vit skåpbil står parkerad till vänster.',
+    longDescription:
+      'Sett framåt från förarplatsen på en trädkantad stadsgata. En röd buss står stilla vid en hållplats i högerkanten längre fram. En vit skåpbil står parkerad i vänsterkanten närmare bilen, så att den fria bredden mellan dem är begränsad.',
+    caption: 'En stillastående buss betyder människor som kan kliva ut framför den.',
+    usage: 'question-image',
+    asset: 'landsvag/buss-vid-hallplats',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
+  /* ---- Vinter ---------------------------------------------------------- */
+  img({
+    id: 'omkorning-vintervag',
+    sourcePage: 100,
+    title: 'Omkörning på vinterväg',
+    topic: 'vinter',
+    subcategory: 'vinterkorning',
+    chapter: 'vinter',
+    altText:
+      'En snötäckt landsväg där ett arbetsfordon kör framför, med snövallar längs båda vägkanterna.',
+    longDescription:
+      'Sett framåt från förarplatsen på en snötäckt landsväg. Ett långsamtgående arbetsfordon kör framför i samma riktning. Vägbanan är delvis snötäckt med hjulspår, och snövallar kantar vägen på båda sidor. Sikten framåt är god men vägmarkeringarna är dolda.',
+    caption: 'Sikten kan vara god samtidigt som greppet inte räcker för omkörningen.',
+    usage: 'question-image',
+    asset: 'vinter/omkorning-vintervag',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'snotackt-skogsvag',
+    sourcePage: 123,
+    title: 'Snötäckt skogsväg',
+    topic: 'vinter',
+    subcategory: 'vinterkorning',
+    chapter: 'vinter',
+    altText:
+      'En helt snötäckt smal väg genom granskog, utan synliga vägmarkeringar.',
+    longDescription:
+      'Sett framåt från förarplatsen på en smal väg genom snötyngd granskog. Vägbanan är helt snötäckt utan synliga vägmarkeringar eller kantlinjer, och det går inte att se var körbanan slutar och vägkanten börjar.',
+    caption: 'Utan synliga markeringar är vägens bredd en gissning — sänk farten.',
+    usage: 'theory-lesson',
+    asset: 'vinter/snotackt-skogsvag',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+
 ];
 
 export const SOURCE_IMAGE_BY_ID: ReadonlyMap<string, SourceImage> = new Map(

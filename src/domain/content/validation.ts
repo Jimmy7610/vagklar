@@ -2,6 +2,7 @@ import type { Question } from './types';
 import type { CurriculumConcept } from '@/content/curriculum/curriculum';
 import type { SourceEntry } from '@/content/sources';
 import type { SourceImage } from '@/content/source-images';
+import type { RoadSign } from '@/content/road-signs';
 import type { Lesson } from './types';
 
 /**
@@ -45,6 +46,10 @@ export interface ValidationInput {
   availableAssets?: ReadonlySet<string>;
   /** Lessons, so lesson image blocks are validated too. */
   lessons?: readonly Lesson[];
+  /** The road sign registry. */
+  roadSigns?: readonly RoadSign[];
+  /** Sign ids that actually have a drawing. */
+  availableSignGlyphs?: ReadonlySet<string>;
 }
 
 export interface ValidationReport {
@@ -296,6 +301,69 @@ export function validateContent(input: ValidationInput): ValidationReport {
     for (const related of q.relatedQuestionIds ?? []) {
       if (!seenIds.has(related)) {
         add('error', 'dangling-related', q.id, `Länkar till okänd fråga "${related}".`);
+      }
+    }
+  }
+
+  /* ---- The road sign registry ------------------------------------------ */
+  const signIds = new Set<string>();
+  const validCategories = new Set([
+    'varning',
+    'vajningsplikt',
+    'forbud',
+    'pabud',
+    'anvisning',
+    'tillaggstavla',
+  ]);
+  for (const roadSign of input.roadSigns ?? []) {
+    const where = `skylt:${roadSign.id}`;
+    if (signIds.has(roadSign.id)) {
+      add('error', 'duplicate-sign-id', where, `Skylt-id ${roadSign.id} används mer än en gång.`);
+    }
+    signIds.add(roadSign.id);
+
+    if (!validCategories.has(roadSign.category)) {
+      add('error', 'sign-bad-category', where, `Okänd kategori "${roadSign.category}".`);
+    }
+    if (roadSign.name.trim().length === 0) {
+      add('error', 'sign-without-name', where, 'Skylten saknar namn.');
+    }
+    if (roadSign.shortMeaning.trim().length === 0 || roadSign.longMeaning.trim().length < 30) {
+      add('error', 'sign-without-meaning', where, 'Skylten saknar användbar innebörd.');
+    }
+    if (roadSign.altText.trim().length < 15) {
+      add('error', 'sign-without-alt', where, 'Skylten saknar beskrivande alt-text.');
+    }
+    if (!input.subcategoryIds.has(roadSign.subcategory)) {
+      add('error', 'sign-unknown-subcategory', where, `Okänt delområde "${roadSign.subcategory}".`);
+    }
+    if (input.availableSignGlyphs && !input.availableSignGlyphs.has(roadSign.id)) {
+      add('error', 'sign-without-glyph', where, `Skylten "${roadSign.id}" saknar ritning.`);
+    }
+  }
+
+  // Confusion pairs must point at signs that exist, and never at themselves.
+  for (const roadSign of input.roadSigns ?? []) {
+    for (const similar of roadSign.similarSignIds) {
+      if (similar === roadSign.id) {
+        add('error', 'sign-self-similar', `skylt:${roadSign.id}`, 'Skylten listar sig själv som förväxlingsbar.');
+      } else if (!signIds.has(similar)) {
+        add(
+          'error',
+          'sign-dangling-similar',
+          `skylt:${roadSign.id}`,
+          `Hänvisar till okänd skylt "${similar}".`,
+        );
+      }
+    }
+  }
+
+  // A question that renders a vector sign must name one that can be drawn.
+  if (input.availableSignGlyphs) {
+    for (const q of input.questions) {
+      const illustration = q.image?.illustration;
+      if (illustration && !input.availableSignGlyphs.has(illustration)) {
+        add('error', 'unknown-sign-illustration', q.id, `Okänd skyltritning "${illustration}".`);
       }
     }
   }

@@ -102,6 +102,30 @@ Två regler att känna till:
 Bildfrågorna ligger i [`bildfragor.ts`](../src/content/questions/bildfragor.ts).
 Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för hur man lägger till en ny bild.
 
+## Skyltfrågor
+
+Två sorter med olika syfte: **ritade märken** (`image: sign(id, alt)`,
+`type: 'road-sign'`) för igenkänning, och **fotografier** (`sourceImageId`) för
+sammanhang.
+
+Undvik att ställa samma fråga om och om igen. "Vad betyder det här märket?" i elva
+frågor är både tråkigt och en exakt dubblett för detektorn, som inte ser bilden. Fråga
+efter konsekvensen i stället:
+
+> Du närmar dig en korsning med det här märket. Vad krävs av dig?
+
+Se [ROAD-SIGNS.md](ROAD-SIGNS.md) för hur man lägger till ett märke.
+
+## Svårighetsbalans
+
+Banken ska ha ungefär 20–30 % lätta frågor. Lätt betyder **en enda kärnregel eller
+igenkänning**, inte trivialt: bashastigheter, grundläggande märken, vem som väjer i en
+oskyltad korsning. Ett prov som bara innehåller svåra frågor mäter inte om grunden
+finns, och en elev som saknar grunden behöver få veta det innan hon möter
+kombinationsfrågorna.
+
+Grundfrågorna ligger i [`grunder.ts`](../src/content/questions/grunder.ts).
+
 ## Var det saknas frågor
 
 [`docs/CONTENT-COVERAGE.md`](CONTENT-COVERAGE.md) listar luckorna i prioritetsordning,

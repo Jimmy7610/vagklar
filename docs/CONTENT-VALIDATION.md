@@ -51,7 +51,7 @@ validatorn fångar det — se
 
 ## Resultat
 
-Kontrollerade frågor: **275**
+Kontrollerade frågor: **343**
 
 - Fel: **0**
 - Varningar: **0**
@@ -63,29 +63,31 @@ modell. Exakt lika frågetext och identiska svarsuppsättningar *inom samma
 delområde* behandlas som fel i testsviten. Liknande formuleringar rapporteras
 bara, eftersom en variant som ändrar ett villkor med avsikt kan ligga nära.
 
-Inga dubbletter över tröskeln 0,70 bland 275 frågor.
+Inga dubbletter över tröskeln 0,70 bland 343 frågor.
 
 ## Bankens sammansättning
 
 | Mått | Antal | Andel |
 | --- | ---: | ---: |
-| Frågor totalt | 275 | 100 % |
-| Lätta (1) | 44 | 16 % |
-| Medel (2) | 163 | 59 % |
-| Svåra (3) | 68 | 25 % |
+| Frågor totalt | 343 | 100 % |
+| Lätta (1) | 78 | 23 % |
+| Medel (2) | 188 | 55 % |
+| Svåra (3) | 77 | 22 % |
 
 | Frågetyp | Antal |
 | --- | ---: |
-| multiple-choice | 255 |
+| multiple-choice | 280 |
+| road-sign | 33 |
+| image-scenario | 15 |
 | calculation | 12 |
-| road-sign | 8 |
+| situational-judgement | 3 |
 
 | Granskningsstatus | Antal |
 | --- | ---: |
-| reviewed | 275 |
+| reviewed | 343 |
 
-Godkända källbilder: **26**, varav 16 används i frågor.
-Namngivna missuppfattningar: **149**.
+Godkända källbilder: **44**, varav 34 används i frågor.
+Namngivna missuppfattningar: **191**.
 Områden: **17**, delområden: **71**.
 
 > Ingen fråga har status `verified`. Det är avsiktligt: innehållet är skrivet

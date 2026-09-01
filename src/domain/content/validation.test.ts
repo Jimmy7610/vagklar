@@ -7,6 +7,8 @@ import { SUBCATEGORIES } from '@/content/taxonomy';
 import { SOURCE_IMAGES } from '@/content/source-images';
 import { LESSONS } from '@/content/lessons';
 import { availableSourceImageAssets } from '@/ui/media/sourceImageAssets';
+import { ROAD_SIGNS } from '@/content/road-signs';
+import { SIGN_GLYPHS } from '@/ui/illustrations/signGlyphs';
 import {
   findDuplicates,
   normalisePrompt,
@@ -30,6 +32,8 @@ function baseInput(questions: readonly Question[]) {
     sourceImages: SOURCE_IMAGES,
     availableAssets: availableSourceImageAssets(),
     lessons: LESSONS,
+    roadSigns: ROAD_SIGNS,
+    availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
   };
 }
 

@@ -175,6 +175,14 @@ export interface Category {
 
 export type LessonBlock =
   | { kind: 'paragraph'; text: string }
+  /**
+   * A group of road signs from the registry, shown as a grid the learner can
+   * open one at a time. Signs are named by id so the meanings, codes and
+   * confusion pairs come from one place.
+   */
+  | { kind: 'signGrid'; title?: string; signIds: string[] }
+  /** Two signs side by side that are genuinely confused with each other. */
+  | { kind: 'signCompare'; title: string; leftId: string; rightId: string; note: string }
   | { kind: 'rule'; title: string; text: string }
   | { kind: 'list'; title?: string; items: string[] }
   | { kind: 'memory'; text: string }

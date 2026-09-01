@@ -1,4 +1,7 @@
 import type { Question } from '@/domain/content/types';
+import { grunderQuestions } from './grunder';
+import { bildfragor2Questions } from './bildfragor2';
+import { vagmarkesskyltarQuestions } from './vagmarkesskyltar';
 import { bildfragorQuestions } from './bildfragor';
 import { berakningarQuestions } from './berakningar';
 import { samspelQuestions } from './samspel';
@@ -59,4 +62,7 @@ export const ALL_QUESTIONS: Question[] = [
   ...drivmedelQuestions,
   ...berakningarQuestions,
   ...bildfragorQuestions,
+  ...vagmarkesskyltarQuestions,
+  ...bildfragor2Questions,
+  ...grunderQuestions,
 ];

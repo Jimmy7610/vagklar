@@ -9,6 +9,384 @@ import type { Misconception } from '@/domain/content/types';
  */
 export const MISCONCEPTIONS: Misconception[] = [
   {
+    id: 'utryckning-reaktion',
+    label: 'Fel reaktion på utryckningsfordon',
+    description:
+      'Man tvärstannar, kör mot rött eller ökar farten i stället för att lämna plats säkert.',
+    correction:
+      'Lämna fri väg så snart det kan ske säkert — men bryt aldrig mot rött ljus för att göra det.',
+    subcategory: 'vagens-anvandning',
+  },
+  {
+    id: 'gult-ljus',
+    label: 'Gult ljus tolkas som en uppmaning att skynda',
+    description:
+      'Man accelererar för att hinna igenom, eller tror att gult saknar verkan.',
+    correction:
+      'Gult betyder stanna, om det kan ske utan fara.',
+    subcategory: 'trafiksignaler',
+  },
+  {
+    id: 'mittlinje-kantlinje',
+    label: 'Mittlinje och kantlinje blandas ihop',
+    description:
+      'Linjernas funktion antas bero på om de är heldragna eller streckade.',
+    correction:
+      'Mittlinjen skiljer körriktningar. Kantlinjen markerar var körbanan slutar.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'rattfylleri-grans',
+    label: 'Gränsen för grovt rattfylleri',
+    description:
+      'Gränsen för grovt rattfylleri blandas ihop med gränsen för rattfylleri.',
+    correction:
+      'Rattfylleri fran 0,2 promille. Grovt rattfylleri fran 1,0 promille.',
+    subcategory: 'alkohol-gransvarden',
+  },
+  {
+    id: 'halvljus-nar',
+    label: 'Kravet på halvljus begränsas till mörker',
+    description:
+      'Man tror att halvljus behövs först när det är helt mörkt.',
+    correction:
+      'Halvljus krävs i mörker, gryning, skymning och vid nedsatt sikt.',
+    subcategory: 'ljusanvandning',
+  },
+  {
+    id: 'tio-meter-regeln',
+    label: 'Tiometersregeln missas eller tillämpas åt fel håll',
+    description:
+      'Avståndet glöms, eller antas gälla även efter övergångsstället.',
+    correction:
+      'Tio meter före övergångsställe, korsande cykelbana och vägkorsning.',
+    subcategory: 'stannande-forbud',
+  },
+  {
+    id: 'motorvag-forbud',
+    label: 'Motorvägens förbud blandas ihop',
+    description:
+      'Omkörning eller körfältsbyte antas vara förbjudet på motorväg.',
+    correction:
+      'Förbjudet är att backa, vända, stanna och gå på vägbanan.',
+    subcategory: 'motorvag-regler',
+  },
+  {
+    id: 'p-skylt',
+    label: 'Parkeringsmärket misstolkas',
+    description:
+      'Den blå P-skylten läses som förbud eller som en avgiftsanvisning.',
+    correction:
+      'Blå fyrkant med P betyder tillåten parkering. Tilläggstavlorna sätter villkoren.',
+    subcategory: 'parkeringsregler',
+  },
+  {
+    id: 'flera-marken-stolpe',
+    label: 'Flera märken på samma stolpe läses inte ihop',
+    description:
+      'Bara det översta märket registreras, eller märkena tillskrivs fel innebörd.',
+    correction:
+      'Läs stolpen uppifrån och ner: hastighet, företräde och orientering är olika besked.',
+    subcategory: 'hastighetsgranser',
+  },
+  {
+    id: 'avfart-hastighet',
+    label: 'Avfartens hastighet tillämpas fel',
+    description:
+      'Skylten vid avfarten antas gälla motorvägen, eller först längre fram.',
+    correction:
+      'Avfartens hastighetsskylt gäller avfarten. Sänk farten i retardationsfältet.',
+    subcategory: 'pafart-avfart',
+  },
+  {
+    id: 'gron-bla-vagvisning',
+    label: 'Grön och blå vägvisning blandas ihop',
+    description:
+      'Färgen på vägvisaren antas sakna betydelse.',
+    correction:
+      'Grön botten visar den fortsatta motorvägsfärden, blå det du når via avfarten.',
+    subcategory: 'anvisningsmarken',
+  },
+  {
+    id: 'kryssmarke',
+    label: 'Kryssmärket misstolkas',
+    description:
+      'Märket läses som stoppkrav eller som en avstängning.',
+    correction:
+      'Kryssmärket markerar att järnvägen korsar vägen. Signalen och sikten avgör om du ska stanna.',
+    subcategory: 'plankorsning-marken',
+  },
+  {
+    id: 'pabud-vs-rekommendation',
+    label: 'Påbudsmärket tas för en rekommendation',
+    description:
+      'Den blå runda skylten läses som ett förslag eller en upplysning.',
+    correction:
+      'Rund blå skylt är ett påbud. Fyrkantig blå skylt är en upplysning.',
+    subcategory: 'pabudsmarken',
+  },
+  {
+    id: 'vagvisare-anvandning',
+    label: 'Vägvisaren används för sent',
+    description:
+      'Tavlan läses först i korsningen, när körfältsvalet redan är gjort.',
+    correction:
+      'Vägvisaren finns för att du ska välja körfält i god tid.',
+    subcategory: 'anvisningsmarken',
+  },
+  {
+    id: 'stillastaende-vagren',
+    label: 'Stillastående fordon på vägrenen underskattas',
+    description:
+      'Fordonet antas ofarligt eftersom det står utanför körbanan.',
+    correction:
+      'Räkna med människor utanför bilen. Öka sidoavståndet i stället för att bromsa hårt.',
+    subcategory: 'motorvag-regler',
+  },
+  {
+    id: 'sammanvavning',
+    label: 'Sammanvävning antas ha en företrädesregel',
+    description:
+      'Man tror att det genomgående körfältet, eller den som kommer först, har företräde.',
+    correction:
+      'Vid vävning har ingen företräde. Båda ska anpassa farten och underlätta för varandra.',
+    subcategory: 'pafart-avfart',
+  },
+  {
+    id: 'omkorning-sikt',
+    label: 'Siktkravet vid omkörning underskattas',
+    description:
+      'Sikten räknas fram till fordonet framför i stället för hela omkörningsförloppet.',
+    correction:
+      'Sikten måste räcka för att köra om och komma tillbaka in med marginal.',
+    subcategory: 'omkorningsregler',
+  },
+  {
+    id: 'vagkant-risk',
+    label: 'Den lösa vägkantens risk missförstås',
+    description:
+      'Vägkanten antas vara en säkerhetsmarginal snarare än en risk.',
+    correction:
+      'En lös kant ger efter under hjulet. Placera dig en bit in i körfältet.',
+    subcategory: 'landsvag',
+  },
+  {
+    id: 'tillfalliga-anvisningar',
+    label: 'Tillfälliga anvisningar rangordnas fel',
+    description:
+      'De permanenta märkena antas gälla före de tillfälliga vid vägarbete.',
+    correction:
+      'Tillfälliga anvisningar vid vägarbete gäller före de ordinarie märkena.',
+    subcategory: 'korfalt-och-sving',
+  },
+  {
+    id: 'buss-risk',
+    label: 'Risken vid en stillastående buss missbedöms',
+    description:
+      'Man fokuserar på bussens egen manöver i stället för på människorna den skymmer.',
+    correction:
+      'Den som kliver av ser inte dig. Sänk farten och håll sidoavstånd.',
+    subcategory: 'skymd-sikt',
+  },
+  {
+    id: 'snotackt-vag',
+    label: 'Snötäckt vägbana bedöms som en vanlig väg',
+    description:
+      'Man utgår från att körbanans bredd går att se.',
+    correction:
+      'Utan synliga kantlinjer är vägens bredd en gissning. Sänk farten.',
+    subcategory: 'vinterkorning',
+  },
+  {
+    id: 'kantlinje',
+    label: 'Kantlinjens betydelse missförstås',
+    description:
+      'Linjen läses som omkörningsförbud eller som en gräns för parkering.',
+    correction:
+      'Kantlinjen markerar var körbanan slutar. Utanför den är vägren.',
+    subcategory: 'landsvag',
+  },
+  {
+    id: 'form-farg-system',
+    label: 'Märkets form och färg läses inte',
+    description:
+      'Symbolen granskas medan formen och färgen — som bär budskapet på håll — förbigås.',
+    correction:
+      'Gul triangel varnar, röd ring förbjuder, blå rund påbjuder, blå fyrkant upplyser.',
+    subcategory: 'varningsmarken',
+  },
+  {
+    id: 'stopp-vs-vajning',
+    label: 'Väjningsplikt förväxlas med stopplikt',
+    description:
+      'Man tror att väjningsplikt kräver stopp, eller att stopplikt räcker med att sakta ner.',
+    correction:
+      'Väjningsplikt: du får rulla vidare om vägen är fri. Stopplikt: fordonet ska stå helt stilla.',
+    subcategory: 'vajningsplikt',
+  },
+  {
+    id: 'huvudled-innebord',
+    label: 'Huvudledsmärket misstolkas',
+    description:
+      'Den gula romben läses som väjningsplikt eller som en cirkulationsplats.',
+    correction:
+      'Huvudled betyder att korsande trafik har väjningsplikt mot dig.',
+    subcategory: 'huvudled',
+  },
+  {
+    id: 'forbud-infart-innebord',
+    label: 'Förbud mot infart misstolkas',
+    description:
+      'Märket läses som stoppförbud eller som att gatan är helt avstängd.',
+    correction:
+      'C1 förbjuder infart med fordon, oftast för att gatan är enkelriktad åt andra hållet.',
+    subcategory: 'forbudsmarken',
+  },
+  {
+    id: 'rekommenderad-vs-grans',
+    label: 'Rekommenderad hastighet tas för en gräns',
+    description:
+      'En blå hastighetsskylt läses som ett förbud, eller ett förbud som en rekommendation.',
+    correction:
+      'Röd ram är ett tak. Blå skylt är ett råd — den skyltade gränsen gäller fortfarande.',
+    subcategory: 'hastighetsgranser',
+  },
+  {
+    id: 'omkorningsforbud-omfattning',
+    label: 'Omkörningsförbudets omfattning',
+    description:
+      'Man tror att förbudet gäller alla fordon, eller att långsamma fordon är undantagna.',
+    correction:
+      'Förbudet gäller motordrivna fordon på fler än två hjul. Cykel och moped får passeras.',
+    subcategory: 'omkorningsforbud',
+  },
+  {
+    id: 'slutmarke-tillater',
+    label: 'Slutmärket läses som ett tillstånd',
+    description:
+      'Att ett förbud upphör tolkas som att manövern nu är lämplig.',
+    correction:
+      'Ett slutmärke tar bort ett förbud. Sikt, mötande trafik och vägmarkeringar avgör ändå.',
+    subcategory: 'omkorningsforbud',
+  },
+  {
+    id: 'cirk-marke-vs-varning',
+    label: 'Cirkulationsmärket förväxlas med varningsmärket',
+    description:
+      'Påbudsmärket D3 blandas ihop med varningsmärket A30, eller antas ge företräde.',
+    correction:
+      'D3 är platsen, A30 är förvarningen. Ingetdera ger dig företräde in i cirkulationen.',
+    subcategory: 'cirkulationsplats',
+  },
+  {
+    id: 'motorvag-vs-motortrafikled',
+    label: 'Motorväg förväxlas med motortrafikled',
+    description:
+      'De två skyltarna och regelverken behandlas som utbytbara.',
+    correction:
+      'Motortrafikleden har ofta ett körfält per riktning och kan ha mötande trafik. 110 km/h som bashastighet gäller motorväg.',
+    subcategory: 'motortrafikled',
+  },
+  {
+    id: 'motorvag-upphor-fart',
+    label: 'Farten behålls när motorvägen upphör',
+    description:
+      'Man håller motorvägsfarten tills en ny skylt syns.',
+    correction:
+      'Efter E2 kan korsande trafik och gående förekomma. Sänk farten i god tid.',
+    subcategory: 'motorvag-regler',
+  },
+  {
+    id: 'gagata-vs-gangfart',
+    label: 'Gågata förväxlas med gångfartsområde',
+    description:
+      'De två anvisningsmärkena antas betyda samma sak.',
+    correction:
+      'Gågatan begränsar vem som får köra. Gångfartsområdet begränsar hur du får köra.',
+    subcategory: 'anvisningsmarken',
+  },
+  {
+    id: 'boende-tavla',
+    label: 'Tilläggstavlan Boende förbises',
+    description:
+      'Parkeringsrätten antas gälla alla trots att tavlan begränsar den.',
+    correction:
+      'Tavlan inskränker huvudmärket till boende med tillstånd.',
+    subcategory: 'parkeringsregler',
+  },
+  {
+    id: 'avstand-vs-utstrackning',
+    label: 'Avstånd förväxlas med utsträckning',
+    description:
+      'T2 och T11 antas betyda samma sak.',
+    correction:
+      'Avstånd säger var regeln börjar. Utsträckning säger hur lång sträcka den gäller.',
+    subcategory: 'anvisningsmarken',
+  },
+  {
+    id: 'riktning-tavla',
+    label: 'Riktningstavlan misstolkas',
+    description:
+      'Pilen läses som hur fordonet ska ställas, eller som ett påbud att svänga.',
+    correction:
+      'Riktningstavlan visar åt vilket håll från skylten huvudmärket gäller.',
+    subcategory: 'parkeringsregler',
+  },
+  {
+    id: 'varning-ger-foretrade',
+    label: 'Varningsmärket antas ge företräde',
+    description:
+      'Att vara förvarnad om en korsning tolkas som att man kör först.',
+    correction:
+      'Ett varningsmärke reglerar aldrig företrädet. Vid A28 gäller högerregeln.',
+    subcategory: 'varningsmarken',
+  },
+  {
+    id: 'varning-barn-reaktion',
+    label: 'Fel reaktion på varning för barn',
+    description:
+      'Man behåller farten eller tutar i stället för att skapa marginal.',
+    correction:
+      'Sänk farten och räkna med att ett barn kan springa ut utan förvarning.',
+    subcategory: 'varningsmarken',
+  },
+  {
+    id: 'varningsmarken-symbol',
+    label: 'Varningsmärkets symbol läses fel',
+    description:
+      'Symbolen förväxlas med ett annat varningsmärkes.',
+    correction:
+      'Läs symbolen tillsammans med sammanhanget: väglag, vägtyp och vad som rimligen kan komma.',
+    subcategory: 'varningsmarken',
+  },
+  {
+    id: 'stopplinje',
+    label: 'Stopplinjens funktion missförstås',
+    description:
+      'Linjen tolkas som en parkeringsgräns eller som en markering för omkörning.',
+    correction:
+      'Stopplinjen visar var fordonet ska stå stilla. Saknas den stannar du där du har sikt.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'vajningslinje',
+    label: 'Väjningslinjen misstolkas',
+    description:
+      'Trianglarna i vägbanan läses som en cykelpassage eller som stopplikt.',
+    correction:
+      'Väjningslinjen markerar var väjningsplikten gäller. Den kräver inte att du stannar.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'rangordning-anvisningar',
+    label: 'Rangordningen mellan anvisningar',
+    description:
+      'Man vet inte vilken anvisning som gäller när två säger olika saker.',
+    correction:
+      'Polis före trafiksignal, trafiksignal före vägmärke, vägmärke före generella regler.',
+    subcategory: 'polisens-tecken',
+  },
+  {
     id: 'vagvisare-undantag',
     label: 'Körfältsvägvisarens undantag missas',
     description:

@@ -79,6 +79,29 @@ CURATED = [
     ('p119-0.jpeg', 'speciella-gator', 'gangfartsomrade'),
     # --- Vinter ------------------------------------------------------------
     ('p124-0.jpeg', 'vinter', 'vintervag-hjulspar'),
+    # --- Vägmärken i verklig miljö (pass 2) --------------------------------
+    ('p089-0.jpeg', 'vagmarken', 'motorvag-portal-vagvisare'),
+    ('p084-0.jpeg', 'vagmarken', 'korfaltsvagvisare-korsning'),
+    ('p095-0.jpeg', 'vagmarken', 'hastighet-100-ledsnummer'),
+    ('p092-1.jpeg', 'vagmarken', 'avfart-hastighet-50'),
+    ('p107-0.jpeg', 'vagmarken', 'plankorsning-kryssmarken'),
+    ('p119-1.jpeg', 'vagmarken', 'gagata-skyltad'),
+    ('p131-0.jpeg', 'vagmarken', 'pabjuden-korriktning-parkering'),
+    # --- Motorväg ----------------------------------------------------------
+    ('p090-0.jpeg', 'motorvag', 'motorvag-bro-korfalt'),
+    ('p092-0.jpeg', 'motorvag', 'motorvag-stillastaende-fordon'),
+    ('p085-0.jpeg', 'motorvag', 'motortrafikled-avsmalning'),
+    # --- Landsväg ----------------------------------------------------------
+    ('p080-0.jpeg', 'landsvag', 'landsvag-kantlinjer'),
+    ('p080-1.jpeg', 'landsvag', 'landsvag-omkorningssikt'),
+    ('p078-0.jpeg', 'landsvag', 'landsvag-vagkant'),
+    ('p082-0.jpeg', 'landsvag', 'vagarbete-omledning'),
+    ('p101-0.jpeg', 'landsvag', 'omkorning-landsvag'),
+    ('p105-0.jpeg', 'landsvag', 'buss-vid-hallplats'),
+    # --- Vinter och mörker -------------------------------------------------
+    ('p100-0.jpeg', 'vinter', 'omkorning-vintervag'),
+    ('p123-0.jpeg', 'vinter', 'snotackt-skogsvag'),
+
 ]
 
 

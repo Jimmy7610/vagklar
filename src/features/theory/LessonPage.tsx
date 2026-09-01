@@ -7,6 +7,7 @@ import { Icon } from '@/ui/icons/Icon';
 import { Callout, SectionHeading } from '@/ui/components/Primitives';
 import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
 import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
+import { SignGrid, SignCompare } from '@/ui/media/SignGrid';
 import { LESSONS, getLesson } from '@/content/lessons';
 import { SCENARIOS } from '@/content/scenarios';
 import { getQuestions } from '@/domain/content/bank';
@@ -69,6 +70,17 @@ function Block({ block }: { block: LessonBlock }) {
         </figure>
       );
     }
+    case 'signGrid':
+      return <SignGrid signIds={block.signIds} {...(block.title ? { title: block.title } : {})} />;
+    case 'signCompare':
+      return (
+        <SignCompare
+          title={block.title}
+          leftId={block.leftId}
+          rightId={block.rightId}
+          note={block.note}
+        />
+      );
     case 'sourceImage':
       return (
         <SourceImageFigure

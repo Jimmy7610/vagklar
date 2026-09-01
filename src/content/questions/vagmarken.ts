@@ -21,7 +21,7 @@ const seeds: AuthoredQuestion[] = [
     memory: 'Triangel varnar, cirkel bestämmer, fyrkant informerar.',
     sources: [vmf('2 kap.')],
     type: 'road-sign',
-    image: sign('varning-korsning', 'Varningsmärke: gul triangel med röd ram och ett svart kors.'),
+    image: sign('varning-vagkorsning', 'Varningsmärke: gul triangel med röd ram och ett svart kors.'),
     accessibilityText: 'En gul triangel med röd ram och ett svart kryss som symbol.',
   },
   {

@@ -168,6 +168,17 @@ interaktion har ett listbaserat alternativ. Övningen kräver alltså aldrig att
 
 Se [SCENARIO-LAB.md](SCENARIO-LAB.md) för hela modellen och författningsreglerna.
 
+## Vägmärken
+
+[`src/content/road-signs.ts`](../src/content/road-signs.ts) beskriver varje märke
+Vägklar kan rita: kod ur Vägmärkesförordningen, namn, kategori, kort och lång
+innebörd, alt-text, delområde och vilka märken det förväxlas med. Ritningarna ligger
+separat i `ui/illustrations/signGlyphs.tsx`, så registret är ren data som domänlagret
+kan validera utan React.
+
+Lektioner visar märken med blocken `signGrid` och `signCompare`; frågor renderar ett
+märke med `image: sign(id, alt)`. Se [ROAD-SIGNS.md](ROAD-SIGNS.md).
+
 ## Källbilder
 
 Fotografier ur den licensierade källan beskrivs i
@@ -206,6 +217,10 @@ funktion som kontrollerar hela banken och skiljer på **fel** (får inte finnas)
 **varningar** (en människa bör titta). Den körs både i testsviten och av
 `npm run report:content`, som skriver [CONTENT-VALIDATION.md](CONTENT-VALIDATION.md)
 och avslutar med felkod om något är trasigt.
+
+Vägmärkesregistret valideras på samma sätt: att ritning och post finns åt båda hållen,
+att kodprefixet matchar kategorin, att förväxlingsparen pekar på märken som finns, och
+att ingen fråga renderar ett märke som inte kan ritas.
 
 Bildbaserat innehåll valideras på samma sätt: att bildfilen finns på disk, att bilden är
 godkänd, att alt-text, långbeskrivning, rättighetshavare och tillståndsmarkering finns,

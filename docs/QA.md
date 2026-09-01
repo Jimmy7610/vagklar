@@ -10,7 +10,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 
 ## Automatiserade tester
 
-`npm test` — **299 tester i 16 filer, alla gröna.**
+`npm test` — **321 tester i 17 filer, alla gröna.**
 
 | Område                     | Fil                                   | Täcker                                                                 |
 | -------------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
@@ -30,6 +30,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 | Scenariolabbet             | `domain/scenarios/scenario.test.ts`   | ordningar, första avvikelsen, varianter, uppspelning, körfält           |
 | Kursplan och täckning      | `domain/curriculum/coverage.test.ts`  | kapitel, begrepp, sidintervall, luckor, källregister, rättighetstext    |
 | Innehållsvalidering        | `domain/content/validation.test.ts`   | 18 planterade fel, dubbletter, källsidor, attribution, bildmetadata     |
+| Vägmärkesregistret         | `domain/content/roadSigns.test.ts`    | ritning ↔ post, koder, förväxlingspar, 8 planterade fel                |
 
 Några tester finns specifikt för att låsa fast beteenden som är lätta att råka förstöra:
 
@@ -398,3 +399,68 @@ Bilderna precachas **inte** — 0 av 47 precache-poster är bilder. De fångas a
 befintliga `runtimeCaching`-regeln (`CacheFirst`, tak 120 poster, 60 dagar), så en bild
 du sett en gång fungerar offline efteråt utan att kosta något för den som aldrig öppnar
 den.
+
+---
+
+## Vägmärken och visuell täckning (2026-09-01)
+
+60 vägmärken ritades som vektorer, 18 nya fotografier kurerades, och frågebanken gick
+från 275 till 343 frågor.
+
+### Buggar hittade av verktygen
+
+- **Elva identiska frågetexter.** Dubblettdetektorn fångade att alla nya
+  igenkänningsfrågor började med "Vad betyder det här märket?". Den ser inte bilden,
+  så de var exakta dubbletter — och pedagogiskt var repetitionen lika illa. Varje
+  fråga fick en egen formulering som frågar efter konsekvensen.
+- **Två frågor duplicerade befintliga.** `vmk-021` och `vmk-022` upprepade `mot-007`
+  och `vag-007` ordagrant. Borttagna.
+- **Identisk förklaringstext** delades av `pas-015` och `vmk-017`. Omskriven.
+- **En frågas delområde hörde till fel område** (`hastighetsgranser` under
+  `vagmarken`). Fångat av `category-mismatch`.
+- **En stale skyltreferens.** `varning-korsning` döptes om till `varning-vagkorsning`,
+  och en befintlig fråga pekade fortfarande på det gamla namnet. Fångat av den nya
+  kontrollen `unknown-sign-illustration`.
+- **En redundant grundfråga.** `grd-008` upprepade `par-002` om tiometersregeln.
+  Ersatt med en fråga om utryckningsfordon, som saknades i banken.
+
+### Buggar hittade vid visuell granskning
+
+Alla 60 ritningar granskades i webbläsaren i förstorad form. Sex var felaktiga:
+
+- **Varning för vägarbete** ritades som en båge i stället för en arbetande figur.
+- **Varning för djur** ritades som en rundad klump utan igenkännbar älg.
+- **Cykelöverfart** hade en cykel som knappt syntes i den vita triangeln.
+- **Flervägsstopp** hade text som kolliderade med symbolen och klipptes av kanten.
+- **Nedsatt syn** hade en vit käpp som inte lästes som en käpp.
+- **Huvudled och Huvudled upphör** var ritade som roterade `<rect>`. Rotationen la
+  romben utanför mitten och klippte den mot viewBox. Ritas nu som centrerad
+  `<polygon>`. Detta var ett *befintligt* fel som ärvdes från den ursprungliga
+  ritningen och först blev synligt när märket förstorades.
+
+### Responsiv QA
+
+| Bredd | Överflödning | Minsta skylt | Max bildhöjd |
+| --- | ---: | ---: | ---: |
+| 375 × 812 | 0 px | 64 px | 341 px |
+| 390 × 844 | 0 px | 64 px | 356 px |
+| 430 × 932 | 0 px | 64 px | 394 px |
+| 768 × 1024 | 0 px | 64 px | 458 px |
+| 1024 × 768 | 0 px | 64 px | 443 px |
+| 1366 × 768 | 0 px | 64 px | 443 px |
+| 1440 × 900 | 0 px | 64 px | 458 px |
+| 1920 × 1080 | 0 px | 64 px | 458 px |
+
+Kört i både mörkt och ljust läge.
+
+**Bugg hittad och åtgärdad:** skyltrutnätet överflödade med 15 px vid 390 px och 2 px
+vid 430 px. Långa namn som "Väjningsplikt mot mötande trafik" tvingade rutnätets spår
+bredare än kolumnen. Åtgärd: `minmax(min(112px, 100%), 1fr)` på spåren plus
+`overflow-wrap: anywhere` och `min-width: 0` på namnet.
+
+### Skyltarnas färger i mörkt läge
+
+Märkena behåller sina äkta färger i båda teman, eftersom färgen är en del av det som
+ska läras in. De ligger därför alltid på en ljus neutral platta: en gul varningstriangel
+direkt på en mörk kortyta läser sig som en varning *i gränssnittet*, vilket är fel
+budskap.
