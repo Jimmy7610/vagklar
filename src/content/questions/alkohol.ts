@@ -1,4 +1,4 @@
-import { buildQuestions, general, no, ok } from './authoring';
+import { buildQuestions, general, no, ok, tbl } from './authoring';
 import type { AuthoredQuestion } from './authoring';
 
 const seeds: AuthoredQuestion[] = [
@@ -18,7 +18,7 @@ const seeds: AuthoredQuestion[] = [
     short: 'Gränsen för rattfylleri går vid 0,2 promille.',
     deep:
       'Vid 1,0 promille eller mer rubriceras brottet som grovt rattfylleri, liksom när körningen inneburit en påtaglig fara även vid lägre halt. Straffskalan går från böter till fängelse, och körkortet återkallas i praktiken alltid.',
-    sources: [general('Lag (1951:649) om straff för vissa trafikbrott')],
+    sources: [tbl()],
     related: ['alk-002'],
   },
   {
@@ -37,7 +37,7 @@ const seeds: AuthoredQuestion[] = [
     short: 'Från 1,0 promille är brottet grovt. Fängelse ingår i straffskalan.',
     deep:
       'Brottet kan bedömas som grovt även under 1,0 promille om föraren varit avsevärt påverkad eller körningen inneburit en påtaglig fara. Utöver straffet återkallas körkortet, och spärrtiden är ofta lång.',
-    sources: [general('Lag (1951:649) om straff för vissa trafikbrott')],
+    sources: [tbl()],
     related: ['alk-001'],
   },
   {
@@ -113,7 +113,7 @@ const seeds: AuthoredQuestion[] = [
     short: 'Receptet fritar dig inte. Påverkar medicinen körförmågan får du inte köra.',
     deep:
       'Läkemedelsförpackningar märks med en varningstriangel när preparatet kan påverka körförmågan. Fråga läkare eller apotekspersonal, och var särskilt uppmärksam i början av en behandling och vid dosändringar. Kombination med alkohol förstärker effekten kraftigt.',
-    sources: [general('Lag (1951:649) om straff för vissa trafikbrott')],
+    sources: [tbl()],
   },
   {
     id: 'alk-007',
@@ -131,7 +131,7 @@ const seeds: AuthoredQuestion[] = [
     short: 'För narkotika finns ingen tillåten nivå. Nolltolerans gäller.',
     deep:
       'Undantaget är narkotikaklassade läkemedel som du använder enligt läkares ordination — men även då gäller att du inte får köra om körförmågan är påverkad. Många substanser är spårbara långt efter att ruset gått över.',
-    sources: [general('Lag (1951:649) om straff för vissa trafikbrott')],
+    sources: [tbl()],
   },
   {
     id: 'alk-008',

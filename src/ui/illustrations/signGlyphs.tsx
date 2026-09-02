@@ -233,6 +233,9 @@ export const SIGN_GLYPHS: Record<string, ReactElement> = {
   ),
   'varning-cirkulationsplats': (
     <WarnFrame>
+      {/* Mirrored so the circulation runs counter-clockwise, as it does in
+          Sweden. Drawn clockwise the sign contradicts its own meaning. */}
+      <g transform="translate(100 0) scale(-1 1)">
       <g fill="none" stroke={black} strokeWidth="6" strokeLinecap="round">
         <path d="M50 44 a16 16 0 0 1 14 22" />
         <path d="M60 74 a16 16 0 0 1-24-6" />
@@ -241,6 +244,7 @@ export const SIGN_GLYPHS: Record<string, ReactElement> = {
       <path d="M64 62 l5 9 -11 1 z" fill={black} />
       <path d="M38 76 l-8-4 8-7 z" fill={black} />
       <path d="M45 42 l9 5 -9 5 z" fill={black} />
+      </g>
     </WarnFrame>
   ),
   'varning-motande-trafik': (
@@ -256,8 +260,16 @@ export const SIGN_GLYPHS: Record<string, ReactElement> = {
     </WarnFrame>
   ),
   'varning-jarnvag-utan-bommar': (
+    // A36 is a steam locomotive seen from the side, not a cross. The cross is
+    // A39 Kryssmärke — a separate, differently shaped sign that stands at the
+    // crossing itself rather than warning of one ahead.
     <WarnFrame>
-      <path d="M32 46 l36 26 M68 46 l-36 26" stroke={black} strokeWidth="7" strokeLinecap="round" />
+      {/* Boiler, cab, chimney, smoke box door and the two wheels. */}
+      <path d="M26 60 h30 v-14 h12 v14 h6 v9 h-48 z" fill={black} />
+      <rect x="30" y="40" width="8" height="8" rx="1" fill={black} />
+      <rect x="24" y="69" width="52" height="4" rx="2" fill={black} />
+      <circle cx="37" cy="76" r="5" fill={black} />
+      <circle cx="63" cy="76" r="5" fill={black} />
     </WarnFrame>
   ),
   'varning-djur': (
@@ -415,6 +427,8 @@ export const SIGN_GLYPHS: Record<string, ReactElement> = {
   ),
   cirkulationsplats: (
     <MandatoryFrame>
+      {/* Counter-clockwise, like every Swedish roundabout. See A30 above. */}
+      <g transform="translate(100 0) scale(-1 1)">
       <g stroke={white} strokeWidth="7" fill="none" strokeLinecap="round">
         <path d="M50 22 a24 24 0 0 1 22 33" />
         <path d="M66 60 a24 24 0 0 1-38 5" />
@@ -423,6 +437,7 @@ export const SIGN_GLYPHS: Record<string, ReactElement> = {
       <path d="M70 50 l6 10 l-13 1 Z" fill={white} />
       <path d="M32 66 l-9 -5 l10 -8 Z" fill={white} />
       <path d="M44 20 l10 6 l-10 6 Z" fill={white} />
+      </g>
     </MandatoryFrame>
   ),
   'pabud-cykelbana': (

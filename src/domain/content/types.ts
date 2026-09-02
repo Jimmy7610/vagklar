@@ -1,6 +1,22 @@
 /** Content-side domain types: questions, categories, lessons, scenarios. */
 
-export type QuestionStatus = 'draft' | 'reviewed' | 'verified' | 'retired';
+/**
+ * Where a question stands in the review pipeline.
+ *
+ * `draft`    — written, not yet read by anyone else.
+ * `reviewed` — read and accepted internally. This is where seed content sits.
+ * `verified` — checked against named sources by a named person on a date.
+ * `rejected` — failed review. Kept so the reason survives, never shown.
+ * `retired`  — was live, withdrawn. Kept so saved progress still resolves.
+ *
+ * `reviewed` is deliberately not a synonym for correct. Only `verified` makes
+ * that claim, and the validator refuses it without the evidence to back it up.
+ * See docs/VERIFICATION-WORKFLOW.md.
+ */
+export type QuestionStatus = 'draft' | 'reviewed' | 'verified' | 'rejected' | 'retired';
+
+/** Statuses a learner may be shown. Everything else stays out of the bank. */
+export const LEARNER_VISIBLE_STATUSES: readonly QuestionStatus[] = ['reviewed', 'verified'];
 
 /** 1 = easy, 2 = medium, 3 = hard. */
 export type Difficulty = 1 | 2 | 3;
@@ -103,6 +119,18 @@ export interface Question {
   memoryRule?: string;
   sourceReferences: SourceReference[];
   lastReviewedAt?: string | null;
+  /**
+   * Human sign-off. Set only by a person who checked the statement against the
+   * sources listed in `verificationSourceIds` — never by a generator, and never
+   * because a model agreed with itself.
+   */
+  verifiedAt?: string | null;
+  /** Who signed off. A name or initials, so the claim has an owner. */
+  verifiedBy?: string | null;
+  /** Ids into the source registry that the verifier actually opened. */
+  verificationSourceIds?: string[];
+  /** Reviewer's note: why it was rejected, or what still needs checking. */
+  reviewNotes?: string;
   image?: QuestionImage;
   /**
    * Id in the source-image registry (src/content/source-images.ts). Used when

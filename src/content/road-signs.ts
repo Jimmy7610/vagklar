@@ -202,7 +202,8 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Plankorsning utan bommar längre fram.',
     longMeaning:
       'Utan bommar finns ingen fysisk spärr. Sikten längs spåret avgör om du kan rulla över eller måste stanna, och omkörningsförbudet står kvar om inte en fullständig trafiksignal finns.',
-    altText: 'Varningsmärke: gul triangel med röd ram och ett kryss som liknar ett kors av två streck.',
+    altText:
+      'Varningsmärke: gul triangel med röd ram och ett svart ånglok sett från sidan.',
     tags: ['plankorsning'],
     similarSignIds: ['varning-jarnvag-bommar'],
     subcategory: 'varningsmarken',

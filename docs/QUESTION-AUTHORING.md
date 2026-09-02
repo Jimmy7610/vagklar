@@ -127,6 +127,18 @@ gånger är en dubblett för detektorn, som inte ser bilden. Fråga efter konsek
 vilken linje som avgör, om du får korsa, vad som skiljer den från grannmarkeringen. Se
 [ROAD-MARKINGS.md](ROAD-MARKINGS.md).
 
+## Status och verifiering
+
+Nya frågor skrivs som `reviewed`. Det betyder skriven med omsorg och läst igen —
+inte kontrollerad av sakkunnig. Sätt aldrig `verified` utan att faktiskt ha
+öppnat källan; validatorn kräver datum, namn och vilka källor som kontrollerades.
+Hela flödet står i [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md).
+
+Bär frågan ett rättsligt tal — en gräns, ett intervall, ett datum — hamnar den
+automatiskt i P1-kön. Skriv talet så att villkoret syns i själva frågan, inte
+bara i fördjupningen: "en obromsad släpvagn under 750 kg" är kontrollerbart,
+"en släpvagn" är det inte.
+
 ## Efter varje bankändring
 
 ```bash

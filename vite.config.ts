@@ -2,6 +2,17 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
+import { readFileSync } from 'node:fs';
+
+/**
+ * The product version has exactly one home: package.json. It is injected here
+ * so the footer, the "about" page and every exported backup report the same
+ * string as the published package — a second copy in source is a second thing
+ * to forget.
+ */
+const PKG_VERSION = JSON.parse(
+  readFileSync(fileURLToPath(new URL('./package.json', import.meta.url)), 'utf8'),
+).version as string;
 
 /**
  * GitHub Pages deployment
@@ -16,6 +27,7 @@ import { fileURLToPath, URL } from 'node:url';
  * For a user/organisation page (https://<user>.github.io/) set it to "/".
  */
 const BASE_PATH = process.env.VAGKLAR_BASE ?? '/vagklar/';
+
 
 
 export default defineConfig({
@@ -63,6 +75,9 @@ export default defineConfig({
       devOptions: { enabled: false },
     }),
   ],
+  define: {
+    __APP_VERSION__: JSON.stringify(PKG_VERSION),
+  },
   build: {
     target: 'es2022',
     emptyOutDir: true,

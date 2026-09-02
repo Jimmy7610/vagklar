@@ -13,6 +13,7 @@
  */
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { join, resolve, extname, relative } from 'node:path';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -98,6 +99,74 @@ if (webp.length === 0) {
   failures.push('Inga källbilder i bygget — bildpipelinen verkar trasig.');
 }
 
+/* ---- 6. Startup budget ------------------------------------------------ */
+/*
+ * The question bank was moved out of the eagerly loaded payload deliberately,
+ * and the way to lose that is not a bad decision but an ordinary import in the
+ * wrong file. A budget here turns that from something nobody notices into a
+ * build failure.
+ *
+ * The number is what the browser must download before the landing page can be
+ * painted: the entry chunk and every chunk it statically imports. The ceiling
+ * is set with headroom above the measured figure, so normal growth is fine and
+ * a regression of the "the bank came back" size is not.
+ */
+const STARTUP_BUDGET_BYTES = 185_000;
+
+const indexHtml = readFileSync(join(DIST, 'index.html'), 'utf8');
+const eagerAssets = [...new Set([...indexHtml.matchAll(/assets\/[A-Za-z0-9_.-]+\.js/g)].map((m) => m[0]))];
+let startupBytes = 0;
+for (const asset of eagerAssets) {
+  const file = join(DIST, asset);
+  if (existsSync(file)) startupBytes += gzipSync(readFileSync(file)).length;
+}
+if (startupBytes > STARTUP_BUDGET_BYTES) {
+  failures.push(
+    `Startpaketet är ${startupBytes} B gzip, taket är ${STARTUP_BUDGET_BYTES} B. ` +
+      'Något tungt har hamnat i startgrafen — se docs/CONTENT-LOADING.md.',
+  );
+}
+if (eagerAssets.some((a) => a.includes('questions-'))) {
+  failures.push('Frågebankens chunk laddas nu vid start. Se docs/CONTENT-LOADING.md.');
+}
+
+/* ---- 7. GitHub Pages base path ---------------------------------------- */
+/*
+ * The site is served from a subdirectory, so an absolute path that forgot the
+ * base resolves against the domain root and 404s. That is invisible in `vite
+ * preview` at the root and breaks only in production, which is exactly the
+ * kind of failure worth catching mechanically.
+ */
+const BASE = '/vagklar/';
+if (!indexHtml.includes(`src="${BASE}assets/`)) {
+  failures.push(`index.html laddar inte sitt entryskript från ${BASE}.`);
+}
+for (const bad of [...indexHtml.matchAll(/(?:src|href)="(\/(?!vagklar\/)[^"]*)"/g)]) {
+  failures.push(`index.html pekar på ${bad[1]} utan basvägen ${BASE}.`);
+}
+const manifestPath = join(DIST, 'manifest.webmanifest');
+if (existsSync(manifestPath)) {
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  // A relative value is resolved against the manifest's own URL, which already
+  // sits under the base — so "./" is correct here, and only a root-absolute
+  // path that forgot the base is wrong.
+  const rootAbsoluteOutsideBase = (value) =>
+    typeof value === 'string' && value.startsWith('/') && !value.startsWith(BASE);
+  for (const [field, value] of [
+    ['start_url', manifest.start_url],
+    ['scope', manifest.scope],
+  ]) {
+    if (rootAbsoluteOutsideBase(value)) {
+      failures.push(`manifest.${field} är "${value}" och saknar basvägen ${BASE}.`);
+    }
+  }
+  for (const icon of manifest.icons ?? []) {
+    if (rootAbsoluteOutsideBase(icon.src)) {
+      failures.push(`Manifestikonen ${icon.src} saknar basvägen ${BASE}.`);
+    }
+  }
+}
+
 /* ---- Report ---------------------------------------------------------- */
 if (failures.length > 0) {
   console.error('\nverify-build MISSLYCKADES:\n');
@@ -109,5 +178,8 @@ if (failures.length > 0) {
 const pdfCount = files.filter((f) => extname(f).toLowerCase() === '.pdf').length;
 console.log(
   `verify-build OK — ${files.length} filer, 0 källdokument (${pdfCount} PDF), ` +
-    `${webp.length} källbilder, appskal och manifest på plats.`,
+    `${webp.length} källbilder, appskal och manifest på plats.
+` +
+    `                 startpaket ${startupBytes} B gzip av ${STARTUP_BUDGET_BYTES} B, ` +
+    `basväg ${BASE} verifierad.`,
 );

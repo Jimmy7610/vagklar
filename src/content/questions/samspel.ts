@@ -129,7 +129,7 @@ const seeds: AuthoredQuestion[] = [
       'Tilläggstavlan för nedsatt syn har alltid gul bottenfärg och varnar för att synskadade ofta korsar där.',
     deep:
       'Det finns en motsvarande tavla för nedsatt hörsel. Båda är förvarningar om att de gående kan behöva längre tid och kanske inte kan uppfatta din bil på vanligt sätt — sänk farten i god tid och räkna med att behöva stanna.',
-    sources: [vmf('2 kap. T9'), teori('Nedsatt syn (T9)', 166)],
+    sources: [vmf('2 kap. T9'), teori('Nedsatt syn (T9)', 163)],
     tags: ['vagmarke', 'oskyddade'],
     related: ['ned-002'],
   },

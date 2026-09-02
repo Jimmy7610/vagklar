@@ -100,9 +100,15 @@ kategori, delområde, svårighet — medan frågetexterna hämtas genom en dynam
 dem. Chunkarna är namngivna i `vite.config.ts` för att hålla isär de två halvorna, och
 service workern precachar båda, så offline är oförändrat.
 
-Det halverade startpaketet — 246 kB gzip ned till 160 kB — och regeln för vad som får
-ligga var beskrivs i [CONTENT-LOADING.md](CONTENT-LOADING.md). Ett test går igenom den
-verkliga importgrafen och fallerar om banken blir nåbar utan dynamisk import.
+Det halverade startpaketet — 246 kB gzip ned till 162 kB — och regeln för vad som får
+ligga var beskrivs i [CONTENT-LOADING.md](CONTENT-LOADING.md). Två saker håller det kvar:
+ett test som går igenom den verkliga importgrafen och fallerar om banken blir nåbar utan
+dynamisk import, och en budget i `verify-build` som avbryter bygget om startpaketet
+växer förbi taket eller om frågechunken hamnar i startgrafen.
+
+`verify-build` kontrollerar i samma veva basvägen `/vagklar/` i index.html och manifestet,
+eftersom en absolut sökväg som glömt basen fungerar i `vite preview` på roten och ger 404
+först i produktion.
 
 ## Felhantering
 

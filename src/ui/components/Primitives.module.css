@@ -118,6 +118,10 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  /* A stat label is one long compound — "Kunskapsområden" — and without this
+     it sets the minimum width of its grid track at large text sizes. */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .statValue {

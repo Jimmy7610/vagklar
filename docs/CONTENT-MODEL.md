@@ -193,6 +193,13 @@ Lektioner använder `markingGrid` och `markingCompare`; frågor pekar ut en mark
 likadant oavsett om bilden är ett märke eller en markering. Se
 [ROAD-MARKINGS.md](ROAD-MARKINGS.md).
 
+## Granskningsstatus
+
+`status` är inte dekoration. `LEARNER_VISIBLE_STATUSES` avgör vad som når banken,
+och `verified` bär sin egen bevisbörda: validatorn avvisar den utan `verifiedAt`,
+`verifiedBy` och `verificationSourceIds`. `rejected` behåller `reviewNotes` så att
+skälet överlever. Se [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md).
+
 ## Frågeindexet
 
 [`src/content/question-index.ts`](../src/content/question-index.ts) är en **genererad**

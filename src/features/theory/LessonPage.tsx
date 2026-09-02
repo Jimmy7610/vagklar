@@ -24,14 +24,14 @@ function Block({ block }: { block: LessonBlock }) {
     case 'rule':
       return (
         <div className={styles.rule}>
-          <h3 className={styles.ruleTitle}>{block.title}</h3>
+          <h2 className={styles.ruleTitle}>{block.title}</h2>
           <p className={styles.ruleText}>{block.text}</p>
         </div>
       );
     case 'list':
       return (
         <div>
-          {block.title && <h3 className={styles.listTitle}>{block.title}</h3>}
+          {block.title && <h2 className={styles.listTitle}>{block.title}</h2>}
           <ul className={styles.list}>
             {block.items.map((item) => (
               <li className={styles.listItem} key={item}>
@@ -45,7 +45,7 @@ function Block({ block }: { block: LessonBlock }) {
     case 'example':
       return (
         <div className={styles.example}>
-          <h3 className={styles.exampleTitle}>{block.title}</h3>
+          <h2 className={styles.exampleTitle}>{block.title}</h2>
           <p className={styles.exampleText}>{block.text}</p>
         </div>
       );

@@ -1,4 +1,4 @@
-import { buildQuestions, general, no, ok, teori } from './authoring';
+import { buildQuestions, no, ok, teori, tvk } from './authoring';
 import type { AuthoredQuestion } from './authoring';
 
 /**
@@ -29,7 +29,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'När varvtalet sjunker till omkring 1 200–1 300 varv per minut börjar motorn förbruka bränsle igen. Växla därför ner strax innan dess om du vill behålla nollförbrukningen. Att i stället lägga i friläge och rulla ger tomgångsförbrukning — alltså mer bränsle, inte mindre.',
     memory: 'Gasen släppt och växeln i = noll förbrukning.',
-    sources: [general('Trafikverket, sparsam körning'), teori('Motorbromsa ofta', 313)],
+    sources: [tvk('Sparsam körning'), teori('Motorbromsa ofta', 313)],
     tags: ['sparsam'],
   },
   {
@@ -49,7 +49,7 @@ const seeds: AuthoredQuestion[] = [
       'Hög växel och lågt varvtal drar mindre. Ettan är stark men törstig — växla upp efter några meter.',
     deep:
       'De flesta moderna bilar klarar femman i 50 km/h. Blir bilen slö eller börjar hacka har du växlat för tidigt och ska ner ett steg. Att hoppa över växlar, till exempel andra till fjärde, sparar både bränsle och kopplingsarbete.',
-    sources: [general('Trafikverket, sparsam körning'), teori('Kör på så höga växlar som möjligt', 312)],
+    sources: [tvk('Sparsam körning'), teori('Kör på så höga växlar som möjligt', 312)],
     tags: ['sparsam'],
   },
   {
@@ -69,7 +69,7 @@ const seeds: AuthoredQuestion[] = [
       'En bil i konstant fart drar mindre än en som accelererar. Kom därför upp i fart utan att dra ut på det — men utan att varva upp.',
     deep:
       'Det låter motsägelsefullt att rask acceleration skulle vara sparsamt, men logiken håller: accelerationsfasen är den dyra delen, så den ska vara kort. Taket på ungefär 2 500 varv finns för att förbrukningen stiger brant över det.',
-    sources: [general('Trafikverket, sparsam körning'), teori('Accelerera ganska snabbt', 312)],
+    sources: [tvk('Sparsam körning'), teori('Accelerera ganska snabbt', 312)],
     tags: ['sparsam'],
     related: ['drv-002'],
   },
@@ -109,7 +109,7 @@ const seeds: AuthoredQuestion[] = [
       'En takbox kan öka förbrukningen med mer än en deciliter per mil. Vindfångande ytor kostar bränsle även när de är tomma.',
     deep:
       'Samma logik gäller öppna sidorutor och taklucka i högre farter: luftflödet runt bilen störs. Även mycket breda däck ökar motståndet. Vid släp är det inte bara vikten utan också den extra frontytan som syns i förbrukningen.',
-    sources: [general('Trafikverket'), teori('Minska luftmotståndet', 306), teori('Testa dina kunskaper', 310)],
+    sources: [tvk(), teori('Minska luftmotståndet', 306)],
     tags: ['sparsam'],
   },
   {
@@ -292,7 +292,7 @@ const seeds: AuthoredQuestion[] = [
       'Två motorer. Elmotorn används på korta sträckor i stan, och bensinmotorn kopplas in när det behövs mer räckvidd eller kraft.',
     deep:
       'En laddhybrid skiljer sig genom att batteriet kan laddas med kabel, vilket gör att den rena elsträckan blir betydligt längre.',
-    sources: [teori('Hybrid', 318), teori('Testa dina kunskaper', 322)],
+    sources: [teori('Hybrid', 318)],
     tags: ['drivmedel'],
   },
   {

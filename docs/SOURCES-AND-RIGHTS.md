@@ -73,8 +73,10 @@ i gränssnittet, så texten inte kan glida isär mellan sidor.
 Källdokumenten ligger lokalt i `references/` och lämnar aldrig utvecklingsmaskinen.
 Tre oberoende spärrar:
 
-1. **Git.** `.gitignore` ignorerar `references/*.pdf`, `references/*.epub` och
-   `references/**/extracted/`. Verifierat med `git check-ignore -v`. Rå-extraheringen
+1. **Git.** `.gitignore` ignorerar `references/*.pdf`, `references/*.epub`,
+   `references/**/extracted/` och `references/.page-text.json` — sidtextcachen som
+   sidgranskningen bygger, och som är härledd ur källan och därför omfattas av
+   samma regel som källan själv. Verifierat med `git check-ignore -v`. Rå-extraheringen
    av bildkandidater (263 filer, 31 MB) omfattas av samma regel.
 2. **Bygget.** `npm run build` kör [`scripts/verify-build.mjs`](../scripts/verify-build.mjs),
    som avbryter bygget om `dist/` innehåller `.pdf`, `.epub`, `.mobi` eller `.docx`,
@@ -99,7 +101,19 @@ bara för att det är genererat eller för att det finns en sidhänvisning bredv
 Sidhänvisningar visar var något kan läsas vidare i källan — de är inte ett intyg
 om att Vägklars text är granskad mot den.
 
-## 6. Om något ska tas bort
+## 6. Sidhänvisningar granskas maskinellt
+
+Sedan 1.1.0-beta.1 kontrolleras varje sidhänvisning mot den faktiska texten på
+den citerade sidan (`npm run audit:pages`). Granskningen skiljer på löptext,
+bildplanscher, kapitelavdelare och självtest, och underkänner en hänvisning som
+pekar på en sida som inte stödjer regeln. Det gör en sidhänvisning till ett
+kontrollerbart påstående i stället för ett ungefärligt.
+
+Den säger fortfarande ingenting om huruvida Vägklars formulering är korrekt.
+Det är vad [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md) beskriver, och
+det kräver en människa.
+
+## 7. Om något ska tas bort
 
 Om en rättighetshavare vill att något tas bort räcker det att ta bort posten ur
 `SOURCES` och de begrepp som pekar på den; kursplanen, täckningsrapporten och

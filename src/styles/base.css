@@ -63,14 +63,25 @@ button {
   cursor: pointer;
 }
 
+/*
+ * `anywhere`, not `break-word`. They break lines identically, but only
+ * `anywhere` lets an element's min-content width shrink below its longest
+ * word. Swedish compounds are long — "Kunskapsområden", "Provsimulering" —
+ * and with `break-word` a single such word set the minimum width of its grid
+ * track, pushing the whole page sideways at large text sizes. This is what
+ * makes the layout reflow instead of scroll horizontally.
+ */
 p,
+li,
+dt,
+dd,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 h1,

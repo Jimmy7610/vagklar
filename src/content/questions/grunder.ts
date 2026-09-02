@@ -1,4 +1,4 @@
-import { buildQuestions, no, ok, sign, teori, trf, vmf } from './authoring';
+import { buildQuestions, no, ok, sign, tbl, teori, trf, vmf } from './authoring';
 import type { AuthoredQuestion } from './authoring';
 
 /**
@@ -122,7 +122,7 @@ const seeds: AuthoredQuestion[] = [
     short:
       'Rattfylleri börjar vid 0,2 promille. Vid 1,0 promille eller mer räknas brottet som grovt, med fängelse i straffskalan.',
     sources: [
-      { name: 'Lag (1951:649) om straff för vissa trafikbrott', reference: '4 §', verifiedAt: null },
+      tbl('4 §'),
       teori('Alkohol', 140),
     ],
     tags: ['grundregel', 'alkohol'],
@@ -163,7 +163,7 @@ const seeds: AuthoredQuestion[] = [
       'Du ska lämna fri väg, men inte skapa en ny fara för att göra det. Att tvärstanna mitt i en korsning hjälper ingen.',
     deep:
       'Praktiskt betyder det att blinka, sakta ner och dra åt sidan där det finns utrymme. Blockerar du en korsning är det ofta bättre att köra fram några meter och sedan lämna plats.',
-    sources: [trf('2 kap. 6 §'), teori('Utryckningsfordon', 44)],
+    sources: [trf('2 kap. 6 §'), teori('Utryckningsfordon', 39)],
     tags: ['grundregel', 'utryckning'],
   },
   {

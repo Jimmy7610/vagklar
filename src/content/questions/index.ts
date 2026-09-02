@@ -1,5 +1,7 @@
 import type { Question } from '@/domain/content/types';
 import { vagmarkeringarQuestions } from './vagmarkeringar';
+import { belysningQuestions } from './belysning';
+import { vajning2Questions } from './vajning2';
 import { manniskan2Questions } from './manniskan2';
 import { grunderQuestions } from './grunder';
 import { bildfragor2Questions } from './bildfragor2';
@@ -40,6 +42,8 @@ import { vagmarkenQuestions } from './vagmarken';
  */
 export const ALL_QUESTIONS: Question[] = [
   ...trafikreglerQuestions,
+  ...belysningQuestions,
+  ...vajning2Questions,
   ...vagmarkenQuestions,
   ...hastighetQuestions,
   ...korsningarQuestions,

@@ -42,6 +42,7 @@ export function trf(reference: string): SourceReference {
     reference,
     verifiedAt: null,
     ruleVersion: '2024',
+    sourceId: 'trafikforordningen',
   };
 }
 
@@ -52,6 +53,7 @@ export function vmf(reference: string): SourceReference {
     reference,
     verifiedAt: null,
     ruleVersion: '2024',
+    sourceId: 'vagmarkesforordningen',
   };
 }
 
@@ -79,9 +81,24 @@ export function teori(reference: string, ...pages: number[]): SourceReference {
   };
 }
 
+/** Trafikverket as a road-safety and examination authority. */
+export function tvk(reference?: string): SourceReference {
+  return { name: 'Trafikverket', reference, verifiedAt: null, sourceId: 'trafikverket' };
+}
+
+/** Lag (1951:649) om straff för vissa trafikbrott — rattfylleri and the like. */
+export function tbl(reference?: string): SourceReference {
+  return {
+    name: 'Lag (1951:649) om straff för vissa trafikbrott',
+    reference,
+    verifiedAt: null,
+    sourceId: 'trafikbrottslagen',
+  };
+}
+
 /** Transportstyrelsen as an authority reference. */
 export function tsv(reference: string): SourceReference {
-  return { name: 'Transportstyrelsen', reference, verifiedAt: null };
+  return { name: 'Transportstyrelsen', reference, verifiedAt: null, sourceId: 'transportstyrelsen' };
 }
 
 export interface AuthoredQuestion {

@@ -35,6 +35,10 @@ npm run dev
 | `npm run report:coverage` | Genererar om `docs/CONTENT-COVERAGE.md`                 |
 | `npm run report:content` | Validerar banken och skriver `docs/CONTENT-VALIDATION.md` |
 | `npm run generate:index` | Genererar om `src/content/question-index.ts` efter bankändringar |
+| `npm run report:verification` | Bygger verifieringskön och det lokala granskningsverktyget |
+| `npm run report:visuals` | Ritar alla märken och markeringar förstorade för visuell granskning |
+| `npm run audit:pages` | Granskar varje sidhänvisning mot den faktiska sidtexten |
+| `python scripts/extract-source-pages.py` | Bygger den lokala sidtextcachen som sidgranskningen kräver |
 | `python scripts/extract-source-images.py --extract` | Tar ut bildkandidater ur källan (aldrig incheckade) |
 | `python scripts/optimise-source-images.py` | Optimerar de kurerade bilderna till WebP |
 
@@ -73,6 +77,8 @@ Läs vidare:
 - [docs/QA.md](docs/QA.md) — vad som testats och hur
 - [docs/CONTENT-LOADING.md](docs/CONTENT-LOADING.md) — index kontra bank, chunkar, startbudget
 - [docs/ROAD-MARKINGS.md](docs/ROAD-MARKINGS.md) — registret för vägmarkeringar
+- [docs/VERIFICATION-WORKFLOW.md](docs/VERIFICATION-WORKFLOW.md) — granskat kontra verifierat, och hur man verifierar
+- [docs/BETA-READINESS.md](docs/BETA-READINESS.md) — vad som är kontrollerat, vad som inte är det
 
 ---
 
@@ -130,28 +136,36 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 
 | Sak                            | Antal                                  |
 | ------------------------------ | -------------------------------------- |
-| Frågor                         | 343 (78 lätta, 188 medel, 77 svåra)    |
+| Frågor                         | 423 (84 lätta, 235 medel, 104 svåra)   |
 | Kunskapsområden                | 17                                     |
 | Delområden                     | 71                                     |
-| Lektioner                      | 14                                     |
-| Scenarier                      | 11 (med varianter)                     |
-| Namngivna missuppfattningar    | 191                                    |
+| Lektioner                      | 15                                     |
+| Scenarier                      | 14 (med varianter)                     |
+| Namngivna missuppfattningar    | 247                                    |
 | Källbilder (används med tillstånd) | 44                                 |
-| Ritade vägmärken               | 60                                     |
-| Kursplanekapitel               | 39 (173 begrepp)                       |
+| Ritade vägmärken               | 58                                     |
+| Ritade vägmarkeringar          | 15                                     |
+| Kursplanetäckning              | 179 av 179 begrepp i 39 kapitel        |
 
 Allt innehåll är original, skrivet för Vägklar. Varje fråga bär källhänvisningar och en
-granskningsstatus. Seedinnehållet har status `reviewed` — det är internt granskat men ännu inte
-signerat av en sakkunnig. Se [docs/QUESTION-AUTHORING.md](docs/QUESTION-AUTHORING.md).
+granskningsstatus. Samtliga 423 frågor har status `reviewed` — internt granskat, inte
+signerat av en sakkunnig. **Ingen fråga är verifierad**, och det är avsiktligt: statusen
+`verified` kräver namn, datum och vilka källor som kontrollerades, och sätts bara av en
+människa. Kön över vad som bör kontrolleras först finns i
+[docs/VERIFICATION-QUEUE.md](docs/VERIFICATION-QUEUE.md); flödet i
+[docs/VERIFICATION-WORKFLOW.md](docs/VERIFICATION-WORKFLOW.md).
+
+Sidhänvisningarna är maskinellt granskade mot den faktiska texten på de citerade
+sidorna — se [docs/SOURCE-PAGE-AUDIT.md](docs/SOURCE-PAGE-AUDIT.md).
 
 ### Kursplan och täckning
 
 Innehållet mäts mot en kursplan i [`src/content/curriculum/curriculum.ts`](src/content/curriculum/curriculum.ts):
-39 kapitel och 173 begrepp, med sidhänvisningar till den licensierade källan.
+39 kapitel och 179 begrepp, med sidhänvisningar till den licensierade källan.
 Täckningsrapporten i [docs/CONTENT-COVERAGE.md](docs/CONTENT-COVERAGE.md) **genereras**
 ur den kartan och den verkliga frågebanken — kör `npm run report:coverage`. Den visar
-öppet var materialet är tunt: 136 av 179 begrepp är täckta, och inga kärnbegrepp
-saknar frågor helt.
+öppet var materialet är tunt: sedan 1.1.0-beta.1 är 179 av 179 begrepp täckta med
+minst tre frågor vardera, och inga luckor kvarstår.
 
 Innehållet valideras dessutom maskinellt. `npm run report:content` skriver
 [docs/CONTENT-VALIDATION.md](docs/CONTENT-VALIDATION.md) och avbryter med felkod om
@@ -163,7 +177,7 @@ under **Källor**.
 
 ### Vägmärken
 
-60 svenska vägmärken är ritade som vektorer med officiella koder ur
+58 svenska vägmärken är ritade som vektorer med officiella koder ur
 Vägmärkesförordningen, och beskrivs i
 [`src/content/road-signs.ts`](src/content/road-signs.ts) med innebörd, alt-text och
 vilka märken de brukar förväxlas med. Teoriskolan visar dem som rutnät per kategori
@@ -181,7 +195,7 @@ register. Se [docs/ROAD-MARKINGS.md](docs/ROAD-MARKINGS.md).
 
 ### Källbilder
 
-26 fotografier ur den licensierade källan används i lektioner och frågor där bilden gör
+44 fotografier ur den licensierade källan används i lektioner och frågor där bilden gör
 skillnad — att läsa en riktig gata går inte att lära ut i ord. De är kurerade för hand ur
 263 kandidater, optimerade till WebP i två bredder, och registrerade med alt-text,
 långbeskrivning och rättighetsdata i

@@ -10,7 +10,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 
 ## Automatiserade tester
 
-`npm test` — **354 tester i 19 filer, alla gröna.**
+`npm test` — **420 tester i 23 filer, alla gröna.**
 
 | Område                     | Fil                                   | Täcker                                                                 |
 | -------------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
@@ -565,3 +565,164 @@ Installerat PWA-läge i ett riktigt skrivbordsfönster (fristående fönster, ik
 aktivitetsfältet) har inte kunnat provas i den här omgången. Service worker,
 precachelista och manifest är kontrollerade i webbläsaren enligt ovan; själva
 installationsupplevelsen är det inte.
+
+## Betaberedskap (2026-09-02)
+
+Sammanfattningen med kryssrutor ligger i [BETA-READINESS.md](BETA-READINESS.md).
+Här står hur siffrorna togs fram och vad som gick sönder på vägen.
+
+### Automatiserade tester
+
+420 tester i 23 filer. Nya sedan förra omgången:
+
+| Fil | Täcker |
+| --- | --- |
+| `domain/exam/examFlow.test.ts` | Provet från start till resultat: klocka, markering, navigering, omladdning, gränsvärde, oräknade frågor, tidsutgång |
+| `domain/exam/examDistribution.test.ts` | 1 000 simulerade prov: kategorifördelning, delområdesdominans, svårighet, bildandel, bankens bredd |
+| `domain/selection/selectionStress.test.ts` | 240 syntetiska Dagens 10-pass över sex elevprofiler, plus rekommendationen |
+| `storage/persistence.test.ts` | Export/import fält för fält, avbrutet pass och prov, migrationsmaskineri, halvförstörda poster |
+
+### Sidgranskning av källhänvisningar
+
+Ny kontroll (`npm run audit:pages`) som jämför varje sidhänvisning mot den
+faktiska texten på sidan. Den hittade **27 felaktiga hänvisningar** som alla
+tidigare kontroller släppt igenom, eftersom de kontrollerade att sidnumret låg
+inom bokens omfång — vilket det gjorde.
+
+| Sort | Antal | Exempel |
+| --- | ---: | --- |
+| Pekade på ett självtest eller dess facit | 9 | `ber-009` hänvisade till s. 203, som är en kapitelavdelare |
+| Pekade på fel bildplansch i märkesuppslaget | 11 | `vmk-016` (påbudsmärke) hänvisade till förbudsplanschen |
+| Pekade på en sida utan text alls | 1 | `bl2-014` hänvisade till s. 86, en helsidesbild |
+| Fel sida i löptexten | 6 | `ber-008` hänvisade till s. 80; ordet "tresekundersregeln" står på s. 81 |
+
+Efter rättning: **0 fel, 45 varningar, 2 dokumenterade undantag** av 286
+hänvisningar. Undantagen är fall där Vägklar och boken namnger samma sak olika;
+de står namngivna i skriptet med vad som faktiskt står på sidan, och rapporten
+skriver ut dem.
+
+### Visuell granskning av märken och markeringar
+
+Alla 58 märken och 15 markeringar ritade i 220–420 px och granskade en och en.
+
+**Två ritfel hittade och rättade:**
+
+- **A36 "Varning för järnvägskorsning utan bommar"** var ritat som ett kryss.
+  Krysset är A39 Kryssmärke — ett annat märke, med annan form, som står vid
+  korsningen i stället för att varna för den. A36 ritas nu som ett ånglok.
+- **A30 och D3 (cirkulationsplats)** ritade cirkulationen medurs. Svenska
+  cirkulationsplatser körs moturs, vilket märkenas egen text i registret säger.
+  Båda är speglade.
+
+Dessutom kontrollerades **alla 58 koder mot källans planschuppslag** —
+varningsmärken s. 324–327, väjningsplikt 328, förbud 329–332, påbud 333,
+anvisning 334–336, tilläggstavlor 345–347. Samtliga stämmer.
+
+**Inte löst:** pilarnas sida i A25, B6 och B7. De tre är inbördes konsekventa
+och följer den europeiska utformningen, men källan visar dem som vektorplanscher
+utan text och det gick inte att bekräfta. Att gissa vore värre än att lämna det
+öppet, så det står i [BETA-READINESS.md](BETA-READINESS.md).
+
+### Provets fördelning över 1 000 simulerade prov
+
+| Kategori | Frågor per prov | Andel |
+| --- | ---: | ---: |
+| Trafikregler och grunder | 12 | 17 % |
+| Korsningar och väjningsregler | 8 | 11 % |
+| Hastighet och avstånd | 6 | 9 % |
+| Risker | 5 | 7 % |
+| Stannande och parkering, Motorväg, Omkörning, Halka | 4 vardera | 6 % |
+| Järnväg, Alkohol, Mörker, Miljö, Fordonet, Last, Människan | 3 vardera | 4 % |
+| Trötthet och stress | 2 | 3 % |
+
+Spridningen är noll: kvoterna är fasta per kategori och det är avsiktligt.
+Variationen ligger i vilka frågor som väljs, inte i hur många per ämne.
+
+Svårighet per prov i snitt: 12,7 lätta, 39,1 medel, 18,3 svåra. Bildfrågor 11,7
+(min 4, max 20). Skyltfrågor 3,8. Över 1 000 prov användes **423 av 423 frågor**,
+och inga två prov var identiska.
+
+Vägklar gör inget anspråk på att återskapa Trafikverkets viktning, som inte är
+publicerad. Det här är Vägklars egen, dokumenterade balans.
+
+### Tillgänglighet
+
+Strukturgranskning över 14 vyer i produktionsbygget. **Tre defekter rättade:**
+
+- Scenariovyn saknade `<main>` — den renderas utanför `AppLayout` och ärvde
+  därför aldrig skalets landmärke.
+- Importfältet på Inställningar (dolt filfält bakom en knapp) saknade etikett.
+- `CardTitle` och `EmptyState` låg hårdkodat på `h3`, vilket gav ett hoppat
+  steg från sidans `h1` på varje vy som lägger kort direkt under rubriken.
+
+**Två kontrastdefekter rättade:** `dangerGhost`-knappens text låg på 4,18:1 mot
+ytan i ljust tema, och ramen som markerar en flaggad provfråga på 1,79:1 —
+alltså i praktiken osynlig som enda markör. Båda använder nu `-strong`-tonerna
+som designsystemet redan hade.
+
+Fokusmarkering kontrollerades med riktiga tabbtryck, inte programmatisk fokus:
+`:focus-visible` matchar bara efter tangentbordsinteraktion, så ett skript som
+anropar `.focus()` rapporterar falska brister. Scenariolabbets ytor i scenen har
+en egen fokusring i SVG i stället för `outline`, och den fungerar.
+
+### Reflow och textstorlek
+
+| Kombination | Resultat |
+| --- | --- |
+| 14 vyer × 14 skärmbredder, normal text | Inget överflöd |
+| 640 px med 200 % textstorlek | Inget överflöd |
+| 320 px med 200 % textstorlek | Överflöd kvar på sex vyer |
+
+Tre orsaker hittades och rättades:
+
+1. **Bottennavigationen.** `repeat(5, 1fr)` krymper inte under sitt innehåll;
+   `minmax(0, 1fr)` gör det. Etiketten trunkeras nu i stället för att skjuta
+   sidan i sidled.
+2. **Snabbstartsrutorna på Hem.** Ett enda oböjligt ord — "Provsimulering" —
+   satte rutans minsta bredd.
+3. **Den globala radbrytningsregeln.** `overflow-wrap: break-word` bryter rader
+   men påverkar inte min-content-bredden, så en grid-kolumn vägrade ändå krympa.
+   `anywhere` gör båda.
+
+320 px kombinerat med 200 % text är hårdare än både WCAG 1.4.10 och 1.4.4 kräver
+var för sig. Det är förbättrat, inte löst, och står som känd begränsning.
+
+### Offline — verifierat med servern avstängd
+
+Det här är den kontroll som betyder något efter att frågebanken gjordes lat.
+Preview-servern stoppades och sidan laddades om:
+
+| Yta | Resultat med servern nere |
+| --- | --- |
+| Landningssidan | Renderas helt |
+| Hem, Träna, Provsimulering, Utveckling | Laddar |
+| Teoriskolan och en lektion | Laddar |
+| Scenariolabbet, ett scenario | Laddar |
+| **Ett helt träningspass** | **Startade och visade frågor** |
+| Tidigare visad källbild | Renderas ur `vagklar-images` |
+
+Ett `fetch` mot servern gav `Failed to fetch` i samma session, så det var
+verkligen offline.
+
+**Noterat:** service workern tar kontroll först vid andra besöket. Det följer av
+`registerType: 'prompt'` utan `clientsClaim` och är avsiktligt — inga
+överraskande uppdateringar mitt i ett pass — men det betyder att den allra
+första sidvisningen inte är offline-skyddad.
+
+### Byggets grindar
+
+`verify-build` gör nu tre saker till, utöver att stoppa källdokument:
+
+- **Startbudget.** Avbryter över 185 000 B gzip. Kontrollerat genom att sänka
+  taket och se bygget falla — en grind som aldrig testats är en förhoppning.
+- **Frågechunken i startgrafen.** Avbryter om `questions-*.js` blir ivrigt laddad.
+- **Basvägen.** Kontrollerar att index.html och manifestet håller sig under
+  `/vagklar/`. En absolut sökväg som glömt basen fungerar i `vite preview` på
+  roten och ger 404 först i produktion.
+
+### Ostabil test
+
+`ExamRunnerPage > never reveals whether an answer is correct` föll en gång under
+parallell last och gick igenom både ensam och vid omkörning. Den är DOM-tung
+(cirka 0,6 s). Ostabil, inte trasig — men inte utredd, och därför noterad i
+stället för bortförklarad.

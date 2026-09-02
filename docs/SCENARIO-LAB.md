@@ -110,6 +110,13 @@ svarskontrollen 221–248 px från sidans topp, alltså inom första skärmen.
 
 ## Tillgänglighet
 
+Scenariovyn renderas utanför `AppLayout` och ärver därför inte skalets
+landmärken. Den har ett eget `<main>` — utan det hade en skärmläsaranvändare
+landat på en sida helt utan huvudlandmärke. Ytorna i scenen är fokuserbara och
+har en egen fokusring i SVG i stället för `outline`, eftersom en `outline` runt
+en `<g>` inte följer formen.
+
+
 - Fordon i scenen är riktiga knappar med `role="button"`, `tabIndex`,
   `aria-pressed` och Enter/Space.
 - Listan bredvid ger samma funktion utan pekprecision.

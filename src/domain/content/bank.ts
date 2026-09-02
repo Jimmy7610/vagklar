@@ -1,5 +1,6 @@
 import { ALL_QUESTIONS } from '@/content/questions';
 import { CATEGORIES, SUBCATEGORY_BY_ID } from '@/content/taxonomy';
+import { LEARNER_VISIBLE_STATUSES } from './types';
 import type { CategoryId, Question } from './types';
 
 /**
@@ -9,7 +10,9 @@ import type { CategoryId, Question } from './types';
  * freely without re-scanning the bank on every decision.
  */
 
-export const QUESTIONS: readonly Question[] = ALL_QUESTIONS.filter((q) => q.status !== 'retired');
+export const QUESTIONS: readonly Question[] = ALL_QUESTIONS.filter((q) =>
+  LEARNER_VISIBLE_STATUSES.includes(q.status),
+);
 
 export const QUESTION_BY_ID: ReadonlyMap<string, Question> = new Map(
   QUESTIONS.map((q) => [q.id, q]),

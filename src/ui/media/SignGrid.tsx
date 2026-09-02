@@ -28,7 +28,7 @@ export function SignGrid({ signIds, title }: SignGridProps) {
 
   return (
     <section className={styles.wrap}>
-      {title && <h3 className={styles.title}>{title}</h3>}
+      {title && <h2 className={styles.title}>{title}</h2>}
       <ul className={styles.grid}>
         {signs.map((sign) => {
           const open = openId === sign.id;
@@ -82,7 +82,7 @@ export function SignCompare({ title, leftId, rightId, note }: SignCompareProps) 
 
   return (
     <section className={styles.compare}>
-      <h3 className={styles.compareTitle}>{title}</h3>
+      <h2 className={styles.compareTitle}>{title}</h2>
       <div className={styles.pair}>
         {[left, right].map((sign) => (
           <div key={sign.id} className={styles.pairItem}>
@@ -122,7 +122,7 @@ export function MarkingGrid({ markingIds, title }: MarkingGridProps) {
 
   return (
     <section className={styles.wrap}>
-      {title && <h3 className={styles.title}>{title}</h3>}
+      {title && <h2 className={styles.title}>{title}</h2>}
       <ul className={styles.grid}>
         {markings.map((marking) => {
           const open = openId === marking.id;
@@ -170,7 +170,7 @@ export function MarkingCompare({ title, leftId, rightId, note }: MarkingCompareP
 
   return (
     <section className={styles.compare}>
-      <h3 className={styles.compareTitle}>{title}</h3>
+      <h2 className={styles.compareTitle}>{title}</h2>
       <div className={styles.pair}>
         {[left, right].map((marking) => (
           <div key={marking.id} className={styles.pairItemPlain}>

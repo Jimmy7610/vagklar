@@ -72,7 +72,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Grön botten hör till motorvägen och de långa färdmålen. Blå botten visar det du når genom att lämna den.',
-    sources: [vmf('2 kap. F-märken'), teori('Vägmärken', 344)],
+    sources: [vmf('2 kap. F-märken'), teori('Vägmärken', 337)],
     tags: ['vagmarke', 'motorvag'],
   },
   {
@@ -155,7 +155,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Rund blå skylt med vit symbol är ett påbud. Fyrkantig blå skylt hade varit en upplysning.',
-    sources: [vmf('2 kap. D1'), teori('Påbudsmärken (D)', 332)],
+    sources: [vmf('2 kap. D1'), teori('Påbudsmärken (D)', 333)],
     tags: ['vagmarke', 'pabud'],
   },
   {
@@ -199,7 +199,7 @@ const seeds: AuthoredQuestion[] = [
       'Ett stillastående fordon på motorväg betyder nästan alltid människor nära körbanan. Byt till vänster körfält om det är fritt.',
     deep:
       'Kraftig inbromsning i hög fart är sin egen risk när det finns trafik bakom. Det du kan styra är sidoavståndet och uppmärksamheten.',
-    sources: [trf('3 kap. 1 §'), teori('Motorväg', 92)],
+    sources: [trf('3 kap. 1 §'), teori('Motorväg', 91)],
     tags: ['motorvag', 'risk'],
   },
   {
@@ -306,7 +306,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Vid vägarbete är det de tillfälliga anvisningarna som gäller. Räkna dessutom med människor nära körbanan och löst grus.',
-    sources: [trf('2 kap. 3 §'), teori('Vägarbeten', 86)],
+    sources: [trf('2 kap. 3 §'), teori('Vägarbeten', 82)],
     tags: ['vagarbete', 'rangordning'],
   },
   {
@@ -328,7 +328,7 @@ const seeds: AuthoredQuestion[] = [
       'Den som kliver av bussen ser inte dig, och du ser inte dem. Sänk farten och håll så stort sidoavstånd som utrymmet tillåter.',
     deep:
       'Inom tättbebyggt område ska du dessutom lämna företräde åt en buss som blinkar ut från en hållplats där hastighetsgränsen är högst 50 km/h.',
-    sources: [trf('3 kap. 25 §'), teori('Barn', 168)],
+    sources: [trf('3 kap. 25 §'), teori('Barn', 169)],
     tags: ['risk', 'oskyddade'],
   },
 
@@ -370,7 +370,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Utan synliga kantlinjer är vägens bredd en gissning. Sänk farten och håll dig efter tidigare fordons spår där det går.',
-    sources: [teori('Vinter', 124)],
+    sources: [teori('Vinter', 125)],
     tags: ['vinter', 'halka'],
   },
   {

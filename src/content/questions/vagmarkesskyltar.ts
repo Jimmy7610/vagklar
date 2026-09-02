@@ -46,7 +46,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Den röda ringen är förbudets signatur. En rund blå skylt utan röd ram är tvärtom ett påbud.',
-    sources: [vmf('2 kap.'), teori('Förbudsmärken (C)', 328)],
+    sources: [vmf('2 kap.'), teori('Förbudsmärken (C)', 329)],
     tags: ['vagmarke', 'grundregel'],
     related: ['vmk-001'],
   },
@@ -65,7 +65,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Blå rund skylt påbjuder. Blå fyrkantig skylt upplyser. Skillnaden mellan rund och fyrkantig avgör om det är ett krav eller information.',
-    sources: [vmf('2 kap.'), teori('Påbudsmärken (D)', 332)],
+    sources: [vmf('2 kap.'), teori('Påbudsmärken (D)', 333)],
     tags: ['vagmarke', 'grundregel'],
     related: ['vmk-001'],
   },
@@ -176,7 +176,7 @@ const seeds: AuthoredQuestion[] = [
       'Flervägsstopp säger att alla ska stanna — inte att du slipper. När alla har stannat avgör högerregeln vem som kör.',
     deep:
       'Tavlan finns för att du ska veta att den korsande trafiken också stannar, vilket gör situationen läsbar. Den upphäver inte din egen stopplikt och ger dig inget företräde.',
-    sources: [vmf('2 kap. T14'), teori('Tilläggstavlor (T)', 345)],
+    sources: [vmf('2 kap. T14'), teori('Tilläggstavlor (T)', 346)],
     tags: ['vagmarke', 'tillaggstavla', 'stopplikt'],
     related: ['vmk-007'],
   },
@@ -348,7 +348,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Märket gör platsen till en cirkulationsplats. Saknas det är en rund korsning en helt vanlig korsning, där högerregeln gäller.',
-    sources: [vmf('2 kap. D3'), teori('Påbudsmärken (D)', 332)],
+    sources: [vmf('2 kap. D3'), teori('Påbudsmärken (D)', 333)],
     tags: ['vagmarke', 'cirkulation'],
   },
   {
@@ -370,7 +370,7 @@ const seeds: AuthoredQuestion[] = [
       'D4 gör banan till cykelbana. Det påbudet riktar sig till cyklisterna — för dig betyder det att du bara får korsa banan, och då med väjningsplikt.',
     deep:
       'Ett påbudsmärke talar om vad banan är avsedd för. Konsekvensen för andra trafikanter följer av det: en yta som är avsedd för cykeltrafik får du korsa, inte färdas i.',
-    sources: [vmf('2 kap. D4'), trf('3 kap. 61 §'), teori('Påbudsmärken (D)', 332)],
+    sources: [vmf('2 kap. D4'), trf('3 kap. 61 §'), teori('Påbudsmärken (D)', 333)],
     tags: ['vagmarke', 'cykel'],
   },
   {
@@ -499,7 +499,7 @@ const seeds: AuthoredQuestion[] = [
     short:
       'Svarta siffror utan parentes gäller vardagar. Parentes betyder lördag och dag före helgdag, röda siffror sön- och helgdag.',
     memory: 'Svart = vardag. Parentes = lördag. Rött = söndag.',
-    sources: [vmf('2 kap. T6'), teori('Tilläggstavlor (T)', 345)],
+    sources: [vmf('2 kap. T6'), teori('Tilläggstavlor (T)', 346)],
     tags: ['vagmarke', 'tillaggstavla', 'parkering'],
   },
   {
@@ -520,7 +520,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Parentesen är hela skillnaden: den anger lördag och dag före helgdag. Klockan 10 på en lördag ligger inom 8–14.',
-    sources: [vmf('2 kap. T6'), teori('Tilläggstavlor (T)', 345)],
+    sources: [vmf('2 kap. T6'), teori('Tilläggstavlor (T)', 346)],
     tags: ['vagmarke', 'tillaggstavla', 'parkering'],
     related: ['vmk-025'],
   },
@@ -562,7 +562,7 @@ const seeds: AuthoredQuestion[] = [
       'T2 pekar framåt mot en punkt. T11 anger en sträcka som börjar vid märket.',
     deep:
       'Skillnaden avgör om du ska leta efter något längre fram eller redan är inne i det som regeln gäller. Under ett parkeringsmärke betyder utsträckning hur lång sträcka platserna omfattar.',
-    sources: [vmf('2 kap. T2, T11'), teori('Tilläggstavlor (T)', 345)],
+    sources: [vmf('2 kap. T2, T11'), teori('Tilläggstavlor (T)', 346)],
     tags: ['vagmarke', 'tillaggstavla'],
   },
   {
@@ -582,7 +582,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Riktningstavlan visar om platserna ligger framför eller bakom skylten — inte hur bilen ska stå.',
-    sources: [vmf('2 kap. T12'), teori('Tilläggstavlor (T)', 345)],
+    sources: [vmf('2 kap. T12'), teori('Tilläggstavlor (T)', 346)],
     tags: ['vagmarke', 'tillaggstavla', 'parkering'],
     related: ['vmk-028'],
   },

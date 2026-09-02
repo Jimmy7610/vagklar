@@ -29,7 +29,7 @@ const seeds: AuthoredQuestion[] = [
       'Ett körfält är antingen markerat med linjer eller tillräckligt brett för trafik i en fil med fyrhjuliga fordon.',
     deep:
       'Bedömningen ska göras med rimliga säkerhetsmarginaler, inte genom att räkna hur många bilar som får plats med decimetern. Det spelar roll i praktiken: har vägen två körfält i din riktning gäller reglerna om körfältsval och körfältsbyte, även utan en enda målad linje.',
-    sources: [teori('Olika typer av körfält', 14), teori('Testa dina kunskaper', 20)],
+    sources: [teori('Olika typer av körfält', 14)],
     tags: ['definitioner', 'korfalt'],
   },
   {

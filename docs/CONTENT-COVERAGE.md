@@ -25,24 +25,24 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Huvudområden | 6 |
 | Kapitel | 39 |
 | Begrepp | 179 |
-| Begrepp med tillräckligt (≥ 3 frågor) | 168 (94 %) |
-| Begrepp med för få (1–2 frågor) | 11 |
+| Begrepp med tillräckligt (≥ 3 frågor) | 179 (100 %) |
+| Begrepp med för få (1–2 frågor) | 0 |
 | Begrepp helt utan frågor | 0 |
 | Begrepp utan plats i taxonomin | 0 |
-| Frågor i banken | 397 |
-| Frågor kopplade till ett begrepp | 397 |
+| Frågor i banken | 423 |
+| Frågor kopplade till ett begrepp | 423 |
 | Frågor utan koppling | 0 |
 | Lektioner | 15 |
-| Scenarier | 11 |
-| Luckor | 11 |
+| Scenarier | 14 |
+| Luckor | 0 |
 
 ## Per huvudområde
 
 | Område | Kapitel | Begrepp | Täckta | Andel täckta | Frågor |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Trafikregler | 12 | 79 | 73 | 92 % | 201 |
+| Trafikregler | 12 | 79 | 79 | 100 % | 213 |
 | Människan | 7 | 38 | 38 | 100 % | 85 |
-| Fordon | 15 | 48 | 43 | 90 % | 89 |
+| Fordon | 15 | 48 | 48 | 100 % | 103 |
 | Miljö | 3 | 5 | 5 | 100 % | 28 |
 | Vägmärken | 1 | 8 | 8 | 100 % | 66 |
 | Rättsfall | 1 | 1 | 1 | 100 % | 3 |
@@ -51,15 +51,15 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 
 | Kapitel | Område | Sidor | Begrepp | Täckta | Frågor | Status |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| Inledning | Trafikregler | 6–13 | 9 | 8 | 26 | Täckt |
+| Inledning | Trafikregler | 6–13 | 9 | 9 | 28 | Stark |
 | Körfält | Trafikregler | 14–21 | 7 | 7 | 22 | Stark |
-| Väjningsregler | Trafikregler | 22–45 | 13 | 10 | 21 | Täckt |
+| Väjningsregler | Trafikregler | 22–45 | 13 | 13 | 27 | Stark |
 | Passager | Trafikregler | 46–57 | 6 | 6 | 24 | Stark |
 | Cirkulationsplats | Trafikregler | 58–67 | 5 | 5 | 16 | Stark |
 | Stanna & parkera | Trafikregler | 68–77 | 6 | 6 | 12 | Stark |
 | Landsväg | Trafikregler | 78–89 | 7 | 7 | 7 | Stark |
-| Motorväg & motortrafikled | Trafikregler | 90–97 | 5 | 4 | 13 | Täckt |
-| Omkörningar | Trafikregler | 98–107 | 5 | 4 | 11 | Täckt |
+| Motorväg & motortrafikled | Trafikregler | 90–97 | 5 | 5 | 15 | Stark |
+| Omkörningar | Trafikregler | 98–107 | 5 | 5 | 13 | Stark |
 | Järnvägskorsningar | Trafikregler | 108–115 | 5 | 5 | 19 | Stark |
 | Speciella gator | Trafikregler | 116–123 | 5 | 5 | 23 | Stark |
 | Vinter | Trafikregler | 124–131 | 6 | 6 | 7 | Stark |
@@ -73,13 +73,13 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Indelning av fordon | Fordon | 188–195 | 4 | 4 | 9 | Stark |
 | Sträckor | Fordon | 196–203 | 3 | 3 | 12 | Stark |
 | Däck | Fordon | 204–213 | 6 | 6 | 9 | Stark |
-| Styrning | Fordon | 214–223 | 4 | 3 | 5 | Täckt |
+| Styrning | Fordon | 214–223 | 4 | 4 | 8 | Stark |
 | Bromsar | Fordon | 224–231 | 6 | 6 | 5 | Stark |
 | Krocksäkerhet | Fordon | 232–237 | 3 | 3 | 8 | Stark |
 | Bilbarnstolar | Fordon | 238–243 | 1 | 1 | 3 | Stark |
 | Längd & bredd | Fordon | 244–251 | 1 | 1 | 3 | Stark |
 | Last | Fordon | 252–261 | 3 | 3 | 6 | Stark |
-| Belysning | Fordon | 262–271 | 9 | 5 | 12 | Täckt |
+| Belysning | Fordon | 262–271 | 9 | 9 | 23 | Stark |
 | Säkerhetskontroller | Fordon | 272–277 | 1 | 1 | 3 | Stark |
 | Besiktning | Fordon | 278–283 | 2 | 2 | 3 | Stark |
 | Service | Fordon | 284–289 | 1 | 1 | 3 | Stark |
@@ -100,26 +100,13 @@ Prioritet 3 = stödjande eller perifera begrepp utan material.
 
 Inga.
 
-### Prioritet 2 — 9 st
+### Prioritet 2 — 0 st
 
-| Begrepp | Kapitel | Sidor | Frågor | Varför |
-| --- | --- | --- | ---: | --- |
-| Dimma och kraftigt nedsatt sikt | Belysning | 263, 264 | 1 | Endast 1 fråga — behöver fler för variation. |
-| Motortrafikled | Motorväg & motortrafikled | 93 | 1 | Endast 1 fråga — behöver fler för variation. |
-| Möte | Omkörningar | 101 | 1 | Endast 1 fråga — behöver fler för variation. |
-| Rangordning av anvisningar | Inledning | 8 | 1 | Endast 1 fråga — behöver fler för variation. |
-| Avbländning vid möte och omkörning | Belysning | 266, 267 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Huvudled | Väjningsregler | 25 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Utfartsregeln | Väjningsregler | 35, 36, 37 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Varselljus | Belysning | 264 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Vattenplaning | Styrning | 219, 220 | 2 | Endast 2 frågor — behöver fler för variation. |
+Inga.
 
-### Prioritet 3 — 2 st
+### Prioritet 3 — 0 st
 
-| Begrepp | Kapitel | Sidor | Frågor | Varför |
-| --- | --- | --- | ---: | --- |
-| Vanlig signal med pil | Väjningsregler | 41 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Övrig belysning och lyktor | Belysning | 266, 267 | 2 | Endast 2 frågor — behöver fler för variation. |
+Inga.
 
 ## Teoriskolan mot kursplanen
 

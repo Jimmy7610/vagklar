@@ -103,6 +103,31 @@ export const SOURCES: SourceEntry[] = [
     attribution: 'Lag (1951:649) om straff för vissa trafikbrott',
   },
   {
+    id: 'transportstyrelsen',
+    kind: 'authority',
+    title: 'Transportstyrelsen',
+    publisher: 'Transportstyrelsen',
+    url: 'https://www.transportstyrelsen.se',
+    permission: 'public-legal',
+    attribution: 'Transportstyrelsen',
+    usageNote:
+      'Issuing authority for vehicle registration, roadworthiness testing and driving ' +
+      'licences. Cited for administrative rules, which the regulations themselves ' +
+      'delegate to the agency.',
+  },
+  {
+    id: 'trafikverket',
+    kind: 'authority',
+    title: 'Trafikverket',
+    publisher: 'Trafikverket',
+    url: 'https://www.trafikverket.se',
+    permission: 'public-legal',
+    attribution: 'Trafikverket',
+    usageNote:
+      'Road authority and examiner. Cited for road-safety guidance and the theory ' +
+      'test format. Vägklar is not affiliated with Trafikverket.',
+  },
+  {
     id: 'vagklar-original',
     kind: 'general',
     title: 'Vägklars eget material',

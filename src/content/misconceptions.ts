@@ -2118,6 +2118,87 @@ export const MISCONCEPTIONS: Misconception[] = [
       'Väj inte så att du hamnar i mötande fil eller i diket. Bromsa rakt fram om en undanmanöver är farlig.',
     subcategory: 'djur-pa-vagen',
   },
+  {
+    id: 'dimljus-kombination',
+    label: 'Fler lampor antas ge bättre sikt',
+    description:
+      'Varselljus och dimljus antas kunna kombineras med halvljus för att synas ännu bättre.',
+    correction:
+      'Att kombinera varselljus med halvljus eller dimljus är förbjudet. Ljusbilden ska vara entydig, inte maximal.',
+    subcategory: 'belysning-fordon',
+  },
+  {
+    id: 'dimbakljus-kvar',
+    label: 'Dimbakljuset lämnas tänt',
+    description:
+      'Dimbakljuset uppfattas som ett extra säkerhetsljus som kan vara tänt så länge vädret är dåligt.',
+    correction:
+      'Dimbakljuset är bländande för den bakom. Släck det så fort du bedömer att bakomvarande har sett dig.',
+    subcategory: 'belysning-fordon',
+  },
+  {
+    id: 'helljus-dimma',
+    label: 'Helljus antas hjälpa i dimma',
+    description:
+      'Mer ljus antas alltid ge bättre sikt, även när luften är full av vattendroppar eller snö.',
+    correction:
+      'Helljuset reflekteras tillbaka i dimma och snöfall. Testa halvljus och se om sikten blir bättre.',
+    subcategory: 'dimma',
+  },
+  {
+    id: 'signal-pil-slackt',
+    label: 'Släckt pil tolkas som förbud',
+    description:
+      'En släckt grön pil bredvid en tänd rund grön signal uppfattas som att just den riktningen är stängd.',
+    correction:
+      'Är pilen släckt gäller den runda gröna signalen, som tillåter alla riktningar. Pilen lägger till, den drar inte ifrån.',
+    subcategory: 'trafiksignal-korsning',
+  },
+  {
+    id: 'vattenplaning-breda-dack',
+    label: 'Breda däck antas ge mer grepp i vatten',
+    description:
+      'Bredare däck känns stabilare och antas därför också vara säkrare på vått underlag.',
+    correction:
+      'Ett bredare däck har mer vatten att pressa undan på samma tid. Risken för vattenplaning ökar, inte minskar.',
+    subcategory: 'vattenplaning',
+  },
+  {
+    id: 'vajerracke-motortrafikled',
+    label: 'Vajerräcke antas betyda motortrafikled',
+    description:
+      'En mötesfri väg med vajerräcke antas automatiskt vara motortrafikled med motorvägens regler.',
+    correction:
+      'Motortrafikled märks alltid ut med vägmärket. En mötesfri landsväg utan det märket kan ha korsande trafik.',
+    subcategory: 'motortrafikled',
+  },
+  {
+    id: 'utfart-brutet-overgangsstalle',
+    label: 'Utfartsregeln antas gälla över varje gångbana',
+    description:
+      'Väjningsplikten enligt utfartsregeln antas gälla så fort en gång- eller cykelbana korsas, oavsett hur platsen ser ut.',
+    correction:
+      'Utfartsregeln gäller bara obrutna gång- och cykelbanor. Finns övergångsställe eller cykelpassage är banan bruten och andra regler gäller.',
+    subcategory: 'utfartsregeln',
+  },
+  {
+    id: 'omkorning-forsvara',
+    label: 'Den andres regelbrott antas upphäva egna skyldigheter',
+    description:
+      'När någon kör om otillåtet uppfattas det som tillåtet — eller lämpligt — att hålla farten uppe eller markera felet.',
+    correction:
+      'Du får inte öka hastigheten eller på annat sätt försvåra en omkörning, ens en otillåten. Fordonet i mötande fil har ingenstans att ta vägen.',
+    subcategory: 'mote',
+  },
+  {
+    id: 'mote-rak-vag',
+    label: 'Rak väg antas göra mötet lättare att bedöma',
+    description:
+      'Fri sikt på en rak sträcka antas göra det enkelt att avgöra hur långt bort och hur fort ett mötande fordon är.',
+    correction:
+      'Rakt framifrån saknar ögat rörelse i sidled att bedöma efter. På en krokig väg ser du fordonet från sidan och bedömer bättre.',
+    subcategory: 'mote',
+  },
 ];
 
 export const MISCONCEPTION_BY_ID: ReadonlyMap<string, Misconception> = new Map(

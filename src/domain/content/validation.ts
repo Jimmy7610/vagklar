@@ -108,6 +108,16 @@ export function validateContent(input: ValidationInput): ValidationReport {
     input.concepts.flatMap((c) => (c.subcategory ? [c.subcategory] : [])),
   );
   const sourceById = new Map(input.sources.map((s) => [s.id, s]));
+  // Reverse lookup by the strings a reference is likely to carry. A reference
+  // that names a registered source but does not link to it cannot be traced
+  // back to its rights holder, edition or page count — which is the whole
+  // reason the registry exists.
+  const sourceIdByName = new Map<string, string>();
+  for (const source of input.sources) {
+    for (const name of [source.title, source.attribution, source.publisher]) {
+      if (name) sourceIdByName.set(name.trim().toLowerCase(), source.id);
+    }
+  }
   const imageById = new Map((input.sourceImages ?? []).map((i) => [i.id, i]));
   const seenIds = new Set<string>();
 
@@ -217,6 +227,17 @@ export function validateContent(input: ValidationInput): ValidationReport {
       if (!ref.name || ref.name.trim().length === 0) {
         add('error', 'source-without-name', q.id, 'En källhänvisning saknar namn.');
       }
+      if (ref.sourceId === undefined) {
+        const known = sourceIdByName.get((ref.name ?? '').trim().toLowerCase());
+        if (known) {
+          add(
+            'error',
+            'source-not-linked',
+            q.id,
+            `Hänvisningen "${ref.name}" motsvarar källan "${known}" men saknar sourceId.`,
+          );
+        }
+      }
       if (ref.sourceId !== undefined) {
         const source = sourceById.get(ref.sourceId);
         if (!source) {
@@ -259,13 +280,48 @@ export function validateContent(input: ValidationInput): ValidationReport {
     }
 
     /* ---- Review status ------------------------------------------------ */
-    if (q.status === 'verified' && !q.lastReviewedAt) {
+    // "Verified" is the only status that claims a human checked the statement
+    // against a named source. It therefore has to carry the evidence: who,
+    // when, and against what. Without that the word means nothing, and a bank
+    // full of unearned "verified" is worse than one that admits it is unverified.
+    if (q.status === 'verified') {
+      if (!q.lastReviewedAt) {
+        add('error', 'verified-without-date', q.id, 'Status "verified" utan granskningsdatum.');
+      }
+      if (!q.verifiedAt) {
+        add('error', 'verified-without-signoff-date', q.id, 'Status "verified" utan verifiedAt.');
+      }
+      if (!q.verifiedBy || q.verifiedBy.trim().length === 0) {
+        add('error', 'verified-without-verifier', q.id, 'Status "verified" utan namngiven granskare.');
+      }
+      if (!q.verificationSourceIds || q.verificationSourceIds.length === 0) {
+        add(
+          'error',
+          'verified-without-sources',
+          q.id,
+          'Status "verified" utan angivna källor som kontrollerats.',
+        );
+      }
+      for (const id of q.verificationSourceIds ?? []) {
+        if (!sourceById.has(id)) {
+          add('error', 'verification-unknown-source', q.id, `Okänd verifieringskälla "${id}".`);
+        }
+      }
+    }
+
+    // The reverse: sign-off metadata on something that is not verified is a
+    // half-finished review, and it would otherwise sit unnoticed forever.
+    if (q.status !== 'verified' && (q.verifiedAt || q.verifiedBy)) {
       add(
-        'error',
-        'verified-without-date',
+        'warning',
+        'signoff-without-verified-status',
         q.id,
-        'Status "verified" utan verifieringsdatum.',
+        `Har verifieringsuppgifter men status "${q.status}".`,
       );
+    }
+
+    if (q.status === 'rejected' && !q.reviewNotes) {
+      add('warning', 'rejected-without-reason', q.id, 'Avvisad fråga utan motivering i reviewNotes.');
     }
 
     /* ---- Source images -------------------------------------------------- */

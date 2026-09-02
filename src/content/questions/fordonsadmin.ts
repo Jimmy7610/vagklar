@@ -419,7 +419,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Det här är en av de vanligaste missuppfattningarna i hela området, och den kostar pengar: så länge fordonet är påställt löper både fordonsskatt och krav på trafikförsäkring, oavsett om bilen står still eller har körförbud.',
     memory: 'Ingen ställer av åt dig.',
-    sources: [tsv('Avställning'), teori('Avställning och påställning', 292), teori('Testa dina kunskaper', 296)],
+    sources: [tsv('Avställning'), teori('Avställning och påställning', 292)],
     tags: ['registrering'],
   },
   {

@@ -10,6 +10,7 @@
  * sit in the taxonomy. Keeping that here lets the bank itself load lazily.
  */
 
+import { LEARNER_VISIBLE_STATUSES } from '@/domain/content/types';
 import type { CategoryId, Difficulty, QuestionStatus } from '@/domain/content/types';
 
 export interface QuestionIndexEntry {
@@ -33,6 +34,32 @@ const ROWS: ReadonlyArray<readonly [string, string, string, number, string, stri
   ['tra-008', 'trafikregler', 'grundregler', 2, 'reviewed', "Tecken"],
   ['tra-009', 'trafikregler', 'vagens-anvandning', 2, 'reviewed', "Busshållplats i tätort"],
   ['tra-010', 'trafikregler', 'korfalt-och-sving', 3, 'reviewed', "Körfältsbyte"],
+  ['bel-001', 'fordonet', 'belysning-fordon', 1, 'reviewed', "Varselljus"],
+  ['bel-002', 'fordonet', 'belysning-fordon', 2, 'reviewed', "Kombination av ljus"],
+  ['bel-003', 'fordonet', 'belysning-fordon', 2, 'reviewed', "Främre dimljus"],
+  ['bel-004', 'fordonet', 'belysning-fordon', 2, 'reviewed', "Dimbakljus"],
+  ['bel-005', 'halka', 'dimma', 2, 'reviewed', "Helljus i dimma"],
+  ['bel-006', 'halka', 'dimma', 3, 'reviewed', "Hastighet vid kraftigt nedsatt sikt"],
+  ['bel-007', 'morker', 'mote-i-morker', 2, 'reviewed', "Avbländning vid möte"],
+  ['bel-008', 'morker', 'mote-i-morker', 3, 'reviewed', "Avbländning vid omkörning"],
+  ['bel-009', 'morker', 'mote-i-morker', 3, 'reviewed', "Möte med lastbil i backkrön"],
+  ['bel-010', 'morker', 'mote-i-morker', 2, 'reviewed', "Helljus vid korsning i mörker"],
+  ['bel-011', 'morker', 'mote-i-morker', 1, 'reviewed', "Blickpunkt vid bländning"],
+  ['vaj-001', 'korsningar', 'polisens-tecken', 2, 'reviewed', "Rangordning: signal före vägmärke"],
+  ['vaj-002', 'korsningar', 'polisens-tecken', 2, 'reviewed', "Rangordning när signalen är ur funktion"],
+  ['vaj-003', 'korsningar', 'huvudled', 3, 'reviewed', "Var huvudledsmärket sitter"],
+  ['vaj-004', 'korsningar', 'huvudled', 2, 'reviewed', "När huvudleden upphör"],
+  ['vaj-005', 'korsningar', 'utfartsregeln', 3, 'reviewed', "När utfartsregeln inte gäller"],
+  ['vaj-006', 'korsningar', 'utfartsregeln', 2, 'reviewed', "Platser som utlöser utfartsregeln"],
+  ['vaj-007', 'korsningar', 'trafiksignal-korsning', 3, 'reviewed', "Släckt pil vid rund grön signal"],
+  ['vaj-008', 'korsningar', 'trafiksignal-korsning', 2, 'reviewed', "Grön pil"],
+  ['vaj-009', 'motorvag', 'motortrafikled', 2, 'reviewed', "Regler på motortrafikled"],
+  ['vaj-010', 'motorvag', 'motortrafikled', 3, 'reviewed', "Mötesfri väg som inte är motortrafikled"],
+  ['vaj-011', 'omkorning', 'mote', 3, 'reviewed', "Bedöma mötande fordon"],
+  ['vaj-012', 'omkorning', 'mote', 2, 'reviewed', "Skyldighet vid otillåten omkörning"],
+  ['vaj-013', 'halka', 'vattenplaning', 3, 'reviewed', "Däckbredd och vattenplaning"],
+  ['vaj-014', 'halka', 'vattenplaning', 2, 'reviewed', "Ratten vid vattenplaning"],
+  ['vaj-015', 'halka', 'vattenplaning', 2, 'reviewed', "Moddplaning"],
   ['vag-001', 'vagmarken', 'varningsmarken', 1, 'reviewed', "Varningsmärkens form och färg"],
   ['vag-002', 'vagmarken', 'varningsmarken', 2, 'reviewed', "Varningsmärkets innebörd"],
   ['vag-003', 'vagmarken', 'forbudsmarken', 1, 'reviewed', "Förbudsmärkens giltighet"],
@@ -435,14 +462,14 @@ export const QUESTION_INDEX_BY_ID: ReadonlyMap<string, QuestionIndexEntry> = new
   QUESTION_INDEX.map((q) => [q.id, q]),
 );
 
-/** Active questions only — `retired` items stay out of every count. */
+/** Learner-visible questions only — draft, rejected and retired stay out. */
 export const ACTIVE_QUESTION_INDEX: readonly QuestionIndexEntry[] =
-  QUESTION_INDEX.filter((q) => q.status !== 'retired');
+  QUESTION_INDEX.filter((q) => LEARNER_VISIBLE_STATUSES.includes(q.status));
 
 /** Bank statistics, so the landing page needs no question bodies. */
 export const BANK_TOTALS = {
-  total: 397,
-  easy: 82,
-  medium: 220,
-  hard: 95,
+  total: 423,
+  easy: 84,
+  medium: 235,
+  hard: 104,
 } as const;

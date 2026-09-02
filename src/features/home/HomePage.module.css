@@ -179,6 +179,10 @@
 .grid {
   display: grid;
   gap: var(--space-3);
+  /* min(100%, 168px) keeps the track from outgrowing a narrow screen, but the
+     track still cannot go below its content's min-content width — which is one
+     unbreakable Swedish compound like "Provsimulering". At 200 % text that word
+     alone is wider than the column, so the words have to be allowed to break. */
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 168px), 1fr));
 }
 
@@ -227,9 +231,11 @@
   font-size: var(--text-card);
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-snug);
+  overflow-wrap: anywhere;
 }
 
 .tileMeta {
+  overflow-wrap: anywhere;
   font-size: var(--text-caption);
   color: var(--color-text-secondary);
 }

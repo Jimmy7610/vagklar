@@ -53,7 +53,7 @@ export default function MorePage() {
       </header>
 
       <section aria-labelledby="learn-heading">
-        <SectionHeading title="Lära" id="learn-heading" level={3} />
+        <SectionHeading title="Lära" id="learn-heading" />
         <div className={page.rows}>
           {learning.map((entry) => (
             <Link key={entry.to} to={entry.to} className={page.row}>
@@ -87,7 +87,7 @@ export default function MorePage() {
       </section>
 
       <section aria-labelledby="app-heading">
-        <SectionHeading title="Appen" id="app-heading" level={3} />
+        <SectionHeading title="Appen" id="app-heading" />
         <div className={page.rows}>
           {app.map((entry) => (
             <Link key={entry.to} to={entry.to} className={page.row}>

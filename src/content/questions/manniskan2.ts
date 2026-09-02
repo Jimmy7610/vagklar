@@ -1,4 +1,4 @@
-import { buildQuestions, general, no, ok, teori, trf, tsv } from './authoring';
+import { buildQuestions, general, no, ok, tbl, teori, trf, tsv, tvk } from './authoring';
 import type { AuthoredQuestion } from './authoring';
 
 /**
@@ -364,7 +364,7 @@ const seeds: AuthoredQuestion[] = [
     short:
       'Gränsvärdet är en undre gräns för när halten ensam räcker. Vårdslös körning på grund av påverkan kan bedömas som rattfylleri även därunder.',
     sources: [
-      { name: 'Lag (1951:649) om straff för vissa trafikbrott', reference: '4 §', verifiedAt: null },
+      tbl('4 §'),
       teori('Alkoholupplysning', 141),
     ],
     tags: ['alkohol'],
@@ -567,7 +567,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Det farliga är att den inte känns som sömn efteråt — bara som ett minneshål. Har det hänt en gång är nästa episod nära, och den enda åtgärden är att stanna och sova.',
     type: 'situational-judgement',
-    sources: [teori('Faror & risker', 148)],
+    sources: [teori('Faror & risker', 150)],
     tags: ['trotthet', 'motorvag'],
   },
 
@@ -837,7 +837,7 @@ const seeds: AuthoredQuestion[] = [
     short:
       '90 km/h är 25 meter i sekunden. Två sekunders blick nedåt är alltså femtio meter körda utan att du sett vägen.',
     type: 'calculation',
-    sources: [general('Trafikverket'), teori('Km/h omräknat till meter per sekund', 202)],
+    sources: [tvk(), teori('Km/h omräknat till meter per sekund', 103)],
     tags: ['uppmarksamhet', 'berakning'],
     related: ['mns-039'],
   },

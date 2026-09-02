@@ -1,4 +1,4 @@
-import { buildQuestions, general, no, ok, teori } from './authoring';
+import { buildQuestions, no, ok, teori, tvk } from './authoring';
 import type { AuthoredQuestion } from './authoring';
 
 /**
@@ -35,7 +35,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Notera skillnaden mot bromssträckan, som växer kvadratiskt med hastigheten. Reaktionssträckan är linjär i både hastighet och reaktionstid. Det är därför trötthet, alkohol och distraktion slår så direkt: de förlänger sträckan innan du ens hunnit röra bromsen.',
     type: 'calculation',
-    sources: [general('Trafikverket'), teori('Reaktionssträckan kan bli längre av', 196)],
+    sources: [tvk(), teori('Reaktionssträckan kan bli längre av', 196)],
     tags: ['berakning', 'trotthet'],
   },
   {
@@ -57,7 +57,7 @@ const seeds: AuthoredQuestion[] = [
       'Faktorn 0,4 kommer av att bromssträckan från 10 km/h på torrt underlag är ungefär 0,4 meter. Formeln utgår från det värdet och ökar det kvadratiskt. Den mer exakta varianten är s = v² / (250 × f), där f är friktionstalet — cirka 0,8 på torr asfalt: 50² / (250 × 0,8) = 12,5 meter.',
     memory: 'Stryk nollan, kvadrera, gånger 0,4.',
     type: 'calculation',
-    sources: [general('Trafikverket'), teori('Räkna ut bromssträckan', 199)],
+    sources: [tvk(), teori('Räkna ut bromssträckan', 199)],
     tags: ['berakning', 'strackor'],
   },
   {
@@ -80,7 +80,7 @@ const seeds: AuthoredQuestion[] = [
       'Stoppsträckan är alltid summan av de två. Att svara 32 meter är att glömma sträckan du färdas innan bromsen tar; att svara 27 meter är att glömma själva inbromsningen. Det är just den summan som avgör om du hinner stanna före ett hinder du precis fått syn på.',
     memory: 'Stoppsträcka = reaktion + broms. Alltid båda.',
     type: 'calculation',
-    sources: [general('Trafikverket'), teori('Räkna ut stoppsträckan', 200)],
+    sources: [tvk(), teori('Räkna ut stoppsträckan', 200)],
     tags: ['berakning', 'strackor'],
     related: ['ber-003'],
   },
@@ -103,7 +103,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Poängen med att räkna i sekunder i stället för meter är att avståndet då anpassar sig automatiskt till farten. Vid halt väglag bör du utöka rejält — tänk snarare sex sekunder än tre, eftersom bromssträckan kan bli flera gånger längre.',
     type: 'calculation',
-    sources: [general('Trafikverket'), teori('Hålla rätt avstånd', 80)],
+    sources: [tvk(), teori('Hålla rätt avstånd', 81)],
     tags: ['berakning', 'avstand'],
     related: ['has-005'],
   },
@@ -125,7 +125,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Det som förlänger reaktionstiden är trötthet, alkohol, droger, läkemedel och att du måste välja mellan handlingsalternativ. Det som förkortar den är att du redan förväntar dig faran. Bilens skick hör hemma i bromssträckan.',
     type: 'calculation',
-    sources: [general('Trafikverket'), teori('Testa dina kunskaper', 203)],
+    sources: [tvk(), teori('Reaktionssträcka och bromssträcka', 200)],
     tags: ['berakning', 'strackor'],
     related: ['ber-002'],
   },
@@ -145,7 +145,7 @@ const seeds: AuthoredQuestion[] = [
     short:
       'Reaktionstiden hör till reaktionssträckan. Bromssträckan påverkas av hastighet, väglag, lutning, last och bromsarnas skick.',
     type: 'calculation',
-    sources: [general('Trafikverket'), teori('Bromssträckans längd påverkas av', 198)],
+    sources: [tvk(), teori('Bromssträckans längd påverkas av', 198)],
     tags: ['berakning', 'strackor'],
     related: ['ber-009'],
   },

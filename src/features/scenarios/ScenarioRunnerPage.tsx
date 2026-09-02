@@ -171,7 +171,9 @@ export default function ScenarioRunnerPage() {
   const nextScenario = SCENARIOS[(SCENARIOS.findIndex((s) => s.id === base.id) + 1) % SCENARIOS.length];
 
   return (
-    <div className={page.page}>
+    // Focus routes render outside AppLayout and therefore outside its <main>.
+    // Without this the page has no main landmark at all.
+    <main className={page.page}>
       <header className={page.header}>
         <Link to="/scenarier" className={page.backLink}>
           <Icon name="chevron-left" size={16} />
@@ -502,7 +504,7 @@ export default function ScenarioRunnerPage() {
         </ol>
       )}
 
-      <SectionHeading title="Fortsätt" level={3} />
+      <SectionHeading title="Fortsätt" />
       <div className={page.actions}>
         <ButtonLink to={`/utveckling/omrade/${scenario.subcategory}`} variant="secondary">
           Träna {scenario.ruleTested.toLowerCase()}
@@ -519,6 +521,6 @@ export default function ScenarioRunnerPage() {
         Situationen är Vägklars egen illustration. Reglerna följer{' '}
         {scenario.sourceReferences.map((s) => s.name).join(', ')}.
       </Callout>
-    </div>
+    </main>
   );
 }

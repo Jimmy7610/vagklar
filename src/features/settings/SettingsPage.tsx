@@ -260,6 +260,7 @@ export default function SettingsPage() {
               ref={fileInput}
               type="file"
               accept="application/json,.json"
+              aria-label="Välj en säkerhetskopia att importera"
               className="visually-hidden"
               onChange={(event) => {
                 const file = event.target.files?.[0];

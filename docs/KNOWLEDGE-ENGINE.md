@@ -174,6 +174,15 @@ kunde varje plats fylla sitt eget kvot av samma ämne och passet ändå bli enah
 som faktiskt hände för en helt ny elev, som fick åtta alkoholfrågor av tio. Ett kompletterande
 kategoritak håller passet brett även när ett enskilt delområde är tunt.
 
+### Belastad, inte bara enhetstestad
+
+Reglerna ovan testas var för sig, men felet som gjorde caps-arbetet nödvändigt
+syntes bara i kombination. `selectionStress.test.ts` bygger därför 240
+syntetiska Dagens 10-pass över sex elevprofiler — helt ny, svag, avancerad, ett
+enda svagt område, många misstag, repetitionsskuld — och kräver av varje pass
+minst fyra delområden, högst fyra frågor per kategori och högst tre per
+delområde. Ett svagt område ska nå passet ofta utan att någonsin fylla det.
+
 ### Vad motorn läser vid start
 
 Behärskning och provberedskap behöver veta vilka delområden som finns och hur de väger,

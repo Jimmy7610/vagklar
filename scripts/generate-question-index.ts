@@ -15,6 +15,7 @@
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ALL_QUESTIONS } from '../src/content/questions';
+import { LEARNER_VISIBLE_STATUSES } from '../src/domain/content/types';
 
 const rows = ALL_QUESTIONS.map((q) => ({
   id: q.id,
@@ -27,7 +28,7 @@ const rows = ALL_QUESTIONS.map((q) => ({
 
 const byDifficulty = { easy: 0, medium: 0, hard: 0 };
 for (const q of ALL_QUESTIONS) {
-  if (q.status === 'retired') continue;
+  if (!LEARNER_VISIBLE_STATUSES.includes(q.status)) continue;
   if (q.difficulty === 1) byDifficulty.easy += 1;
   else if (q.difficulty === 2) byDifficulty.medium += 1;
   else byDifficulty.hard += 1;
@@ -46,6 +47,7 @@ lines.push(' * landing page need none of that — only which questions exist and
 lines.push(' * sit in the taxonomy. Keeping that here lets the bank itself load lazily.');
 lines.push(' */');
 lines.push('');
+lines.push("import { LEARNER_VISIBLE_STATUSES } from '@/domain/content/types';");
 lines.push("import type { CategoryId, Difficulty, QuestionStatus } from '@/domain/content/types';");
 lines.push('');
 lines.push('export interface QuestionIndexEntry {');
@@ -82,13 +84,13 @@ lines.push('export const QUESTION_INDEX_BY_ID: ReadonlyMap<string, QuestionIndex
 lines.push('  QUESTION_INDEX.map((q) => [q.id, q]),');
 lines.push(');');
 lines.push('');
-lines.push('/** Active questions only — `retired` items stay out of every count. */');
+lines.push('/** Learner-visible questions only — draft, rejected and retired stay out. */');
 lines.push('export const ACTIVE_QUESTION_INDEX: readonly QuestionIndexEntry[] =');
-lines.push("  QUESTION_INDEX.filter((q) => q.status !== 'retired');");
+lines.push('  QUESTION_INDEX.filter((q) => LEARNER_VISIBLE_STATUSES.includes(q.status));');
 lines.push('');
 lines.push('/** Bank statistics, so the landing page needs no question bodies. */');
 lines.push('export const BANK_TOTALS = {');
-lines.push(`  total: ${ALL_QUESTIONS.filter((q) => q.status !== 'retired').length},`);
+lines.push(`  total: ${ALL_QUESTIONS.filter((q) => LEARNER_VISIBLE_STATUSES.includes(q.status)).length},`);
 lines.push(`  easy: ${byDifficulty.easy},`);
 lines.push(`  medium: ${byDifficulty.medium},`);
 lines.push(`  hard: ${byDifficulty.hard},`);

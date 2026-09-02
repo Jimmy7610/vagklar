@@ -1,6 +1,6 @@
 # Innehållsladdning
 
-Frågebanken är det tyngsta Vägklar har: 397 frågor med svar, förklaringar och
+Frågebanken är det tyngsta Vägklar har: 423 frågor med svar, förklaringar och
 källhänvisningar väger cirka 470 kB som JSON. Det här dokumentet beskriver hur den
 kommer in i appen — och varför den inte gör det direkt.
 
@@ -116,12 +116,23 @@ const c = await caches.open('workbox-precache-v2-' + location.origin + '/vagklar
 
 | | Före | Efter |
 | --- | --- | --- |
-| Kritisk JS (gzip) | 246 151 B | 159 788 B |
+| Kritisk JS (gzip) | 246 151 B | 161 944 B |
 | Frågetexter vid start | ja | nej |
-| Precachade poster | 48 | 53 |
+| Budget i bygget | nej | 185 000 B |
 
-**−86 kB gzip, −35 %** — samtidigt som banken växte från 343 till 397 frågor och ett
+**−84 kB gzip, −34 %** — samtidigt som banken växte från 343 till 423 frågor och ett
 helt vägmarkeringssystem tillkom.
+
+## Budgeten
+
+Ett test som beskriver strukturen räcker inte: grafen kan vara korrekt medan
+paketet ändå växer ur sitt sammanhang. Därför mäter `scripts/verify-build.mjs`
+startpaketet efter varje bygge och avbryter över **185 000 B gzip**, med
+nuvarande läge på cirka 162 000 B. Den avbryter också om `questions-*.js` skulle
+dyka upp bland de ivrigt laddade chunkarna.
+
+Grindarna är kontrollerade genom att sänka taket och se bygget falla. En grind
+som aldrig sett ett fel är en förhoppning, inte ett skydd.
 
 ## Skyddet
 

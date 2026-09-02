@@ -60,7 +60,7 @@ const seeds: AuthoredQuestion[] = [
       'Flervägsstopp betyder att varje tillfart till korsningen har stopplikt — inte att du slipper stanna.',
     deep:
       'Tavlan är en upplysning, inte en lättnad. Du ska fortfarande stanna helt vid stopplinjen. Att veta att även de andra har stopplikt hjälper dig däremot att förutse hur korsningen kommer att avvecklas: den som stannat först kör först, och sedan turas man om.',
-    sources: [vmf('2 kap. B2'), trf('3 kap. 21 §'), teori('Väjningsregler', 21)],
+    sources: [vmf('2 kap. B2'), trf('3 kap. 21 §'), teori('Flervägsstopp', 24)],
     tags: ['bild', 'vagmarke'],
   },
   {
@@ -240,7 +240,7 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Märkena vid infarten visar väjningsplikt och cirkulationsplats. Du väjer för varje fordon som redan cirkulerar.',
-    sources: [trf('3 kap. 22 §'), vmf('2 kap. D3'), teori('Cirkulationsplats', 65)],
+    sources: [trf('3 kap. 22 §'), vmf('2 kap. D3'), teori('Väjningsplikt vid infart', 62)],
     tags: ['bild', 'cirkulation'],
     related: ['cir-001'],
   },
@@ -289,7 +289,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Tilläggstavlorna läses uppifrån och ner och gäller samtidigt: avgift 7–19 på vardagar, avgift 11–17 på lördagar, taxa 3, förbud natten mot onsdag, och boendeparkering. Det är kombinationen som avgör om du får stå — inte den översta tavlan ensam.',
     memory: 'Gul botten och röd ring = förbud, inte tillåtelse.',
-    sources: [vmf('2 kap. T6'), teori('Stanna & parkera', 67)],
+    sources: [vmf('2 kap. T6'), teori('Tilläggstavlor vid parkering', 73)],
     tags: ['bild', 'parkering'],
   },
   {
@@ -311,7 +311,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Systemet är detsamma på alla tilläggstavlor med tider, vilket gör det värt att lära sig en gång. På den här skylten gäller alltså två timmars parkering 9–18 på vardagar och 9–15 på lördagar. Den gula tavlan underst lägger dessutom på ett förbud torsdagar 7–9 under vinterhalvåret.',
     memory: 'Svart = vardag, parentes = lördag, rött = söndag.',
-    sources: [vmf('2 kap. T6'), teori('Stanna & parkera', 75)],
+    sources: [vmf('2 kap. T6'), teori('Tilläggstavlor vid parkering', 73)],
     tags: ['bild', 'parkering'],
   },
 

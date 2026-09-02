@@ -1,4 +1,4 @@
-import { buildQuestions, general, no, ok, trf } from './authoring';
+import { buildQuestions, general, no, ok, teori, trf } from './authoring';
 import type { AuthoredQuestion } from './authoring';
 
 const seeds: AuthoredQuestion[] = [
@@ -166,17 +166,19 @@ const seeds: AuthoredQuestion[] = [
     subcategory: 'hastighetsgranser',
     difficulty: 2,
     ruleTested: 'Hastighet med släp',
-    prompt: 'Vilken högsta hastighet gäller normalt för en personbil med en obromsad släpvagn?',
+    prompt:
+      'En obromsad släpvagn väger högst halva bilens tjänstevikt och under 750 kg. Vilken högsta hastighet gäller för ekipaget?',
     answers: [
       ok('80 km/h.'),
       no('90 km/h.'),
       no('110 km/h om motorvägen tillåter det.'),
-      no('70 km/h.'),
+      no('40 km/h.'),
     ],
-    short: 'Med släpvagn är den högsta tillåtna hastigheten normalt 80 km/h.',
+    short:
+      'Håller släpet sig inom viktgränsen gäller 80 km/h. Är det tyngre sjunker taket till 40 km/h.',
     deep:
-      'Gränsen gäller även om vägen är skyltad högre. Har du en obromsad släpvagn finns dessutom en viktbegränsning: släpets totalvikt får normalt inte överstiga halva bilens tjänstevikt. Kontrollera alltid registreringsbeviset.',
-    sources: [trf('4 kap. 20 §')],
+      'Gränsen gäller även om vägen är skyltad högre. Villkoret för 80 km/h är att släpets totalvikt varken överstiger halva dragfordonets tjänstevikt eller 750 kg — överskrids något av dem är det 40 km/h som gäller. En bromsad släpvagn får däremot alltid dras i 80 km/h. Kontrollera registreringsbeviset.',
+    sources: [trf('4 kap. 20 §'), teori('Hastigheter för olika fordon', 190)],
     related: ['las-004'],
   },
   {

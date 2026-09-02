@@ -48,6 +48,7 @@
 }
 
 .label {
+  overflow-wrap: anywhere;
   margin-top: var(--space-2);
   font-size: var(--text-overline);
   font-weight: var(--weight-semibold);

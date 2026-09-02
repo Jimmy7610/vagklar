@@ -174,7 +174,7 @@ export function AppLayout() {
                 <Icon name={item.icon} size={21} />
                 {item.to === '/hem' && mistakes > 0 && <span className={styles.navBadge} />}
               </span>
-              {item.label}
+              <span className={styles.navLabel}>{item.label}</span>
             </NavLink>
           );
         })}

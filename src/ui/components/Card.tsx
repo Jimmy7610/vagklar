@@ -99,11 +99,12 @@ export function CardHeader({ children, className, ...rest }: HTMLAttributes<HTML
   );
 }
 
+/** A card title is a section heading: h2 under the page's h1, never h3. */
 export function CardTitle({ children, className, ...rest }: HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h3 className={[styles.title, className].filter(Boolean).join(' ')} {...rest}>
+    <h2 className={[styles.title, className].filter(Boolean).join(' ')} {...rest}>
       {children}
-    </h3>
+    </h2>
   );
 }
 

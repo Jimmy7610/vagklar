@@ -1,4 +1,6 @@
 .button {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   --button-height: 44px;
   --button-padding: 0 var(--space-5);
   --button-font-size: var(--text-body);
@@ -109,7 +111,9 @@
 .dangerGhost {
   background-color: transparent;
   border-color: var(--color-danger);
-  color: var(--color-danger);
+  /* -strong, not the base tone: the base is 4.18:1 on the light surface, which
+     is enough for the border but under the 4.5:1 that label text needs. */
+  color: var(--color-danger-strong);
 }
 
 .dangerGhost:hover:not(:disabled) {

@@ -153,3 +153,21 @@ föreskrift — inget äganderättsanspråk görs på själva märkessystemet.
 Fotografierna tillhör Hagberg Media AB och används med tillstånd, med kreditering per
 bild. Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) och
 [SOURCES-AND-RIGHTS.md](SOURCES-AND-RIGHTS.md).
+
+## Visuell granskning
+
+```bash
+npm run report:visuals
+```
+
+Ritar alla märken och markeringar i 220 px bredvid sin kod och sin skrivna
+innebörd, i `review/visual-qa.html` (lokal, gitignorerad). Reglaget går upp till
+380 px och en kryssruta byter kortyta till mörk.
+
+Det här steget är inte valfritt inför en release. Ett märke som kompilerar är
+inte ett märke som är rätt: i 64 px i ett lektionsrutnät ser i stort sett
+allting rimligt ut. Förstoringen har hittat åtta ritfel över två omgångar —
+senast att A36 var ritat som ett kryss (krysset är A39 Kryssmärke, ett annat
+märke) och att båda cirkulationsplatsmärkena cirkulerade medurs.
+
+Koderna kontrolleras separat mot källans planschuppslag; samtliga 58 stämmer.

@@ -8,8 +8,16 @@
 /** Bumped when the persisted learner schema changes. See storage/migrations.ts */
 export const SCHEMA_VERSION = 1;
 
-/** Product version, surfaced in the footer and in exported backups. */
-export const APP_VERSION = '1.0.0';
+/**
+ * Product version, surfaced in the footer and in exported backups.
+ *
+ * Injected from package.json at build time (see vite.config.ts) so there is
+ * exactly one place to change it. The fallback keeps vite-node scripts and the
+ * test runner working, where the define is not applied.
+ */
+declare const __APP_VERSION__: string | undefined;
+export const APP_VERSION =
+  typeof __APP_VERSION__ === 'string' ? __APP_VERSION__ : '1.1.0-beta.1';
 
 /* ==========================================================================
    Simulated theory exam

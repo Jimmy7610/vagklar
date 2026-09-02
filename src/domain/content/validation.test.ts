@@ -62,7 +62,9 @@ function validQuestion(overrides: Partial<Question> = {}): Question {
     correctAnswerId: 'a',
     shortExplanation:
       'Saknas vägmärken och signaler gäller högerregeln, så fordon från höger kör först.',
-    sourceReferences: [{ name: 'Trafikförordningen (1998:1276)', verifiedAt: null }],
+    sourceReferences: [
+      { name: 'Trafikförordningen (1998:1276)', verifiedAt: null, sourceId: 'trafikforordningen' },
+    ],
     lastReviewedAt: null,
     estimatedTimeSec: 30,
     ...overrides,
@@ -189,6 +191,13 @@ describe('validateContent — failure modes', () => {
     ['too few alternatives', { answers: [{ id: 'a', text: 'Ett' }, { id: 'b', text: 'Två' }] }, 'answer-count'],
     ['an empty explanation', { shortExplanation: '   ' }, 'missing-explanation'],
     ['no source at all', { sourceReferences: [] }, 'missing-source'],
+    [
+      // Naming a registered source without linking to it loses the trail back
+      // to its rights holder, edition and page count.
+      'a source named but not linked to the registry',
+      { sourceReferences: [{ name: 'Trafikförordningen (1998:1276)', verifiedAt: null }] },
+      'source-not-linked',
+    ],
     ['verified without a date', { status: 'verified', lastReviewedAt: null }, 'verified-without-date'],
     ['a dangling related id', { relatedQuestionIds: ['does-not-exist'] }, 'dangling-related'],
     [
