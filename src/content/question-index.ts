@@ -379,6 +379,14 @@ const ROWS: ReadonlyArray<readonly [string, string, string, number, string, stri
   ['bl2-016', 'motorvag', 'motorvag-regler', 1, 'reviewed', "Körfältsval på motorväg"],
   ['bl2-017', 'halka', 'vinterkorning', 1, 'reviewed', "Snötäckt vägbana"],
   ['bl2-018', 'motorvag', 'landsvag', 1, 'reviewed', "Kantlinjens betydelse"],
+  ['bl3-001', 'risker', 'skymd-sikt', 2, 'reviewed', "Sidoavstånd till cyklist"],
+  ['bl3-002', 'risker', 'barn-och-oskyddade', 2, 'reviewed', "Stannade bussar skymmer"],
+  ['bl3-003', 'risker', 'skymd-sikt', 3, 'reviewed', "Enfilig passage med skymd utfart"],
+  ['bl3-004', 'halka', 'vinterkorning', 2, 'reviewed', "Väglag i solsken"],
+  ['bl3-005', 'trafikregler', 'cykelpassage-overfart', 3, 'reviewed', "Huvudled och cykelpassage"],
+  ['bl3-006', 'risker', 'skymd-sikt', 2, 'reviewed', "Luckor mellan parkerade fordon"],
+  ['bl3-007', 'trafikregler', 'vagens-anvandning', 3, 'reviewed', "Kryssmärke vid spårväg"],
+  ['bl3-008', 'korsningar', 'polisens-tecken', 2, 'reviewed', "Signal före vägmärke"],
   ['grd-001', 'korsningar', 'hogerregeln', 1, 'reviewed', "Högerregeln"],
   ['grd-002', 'trafikregler', 'trafiksignaler', 1, 'reviewed', "Gult ljus"],
   ['grd-003', 'hastighet', 'hastighetsgranser', 1, 'reviewed', "Bashastighet utanför tätort"],
@@ -468,8 +476,8 @@ export const ACTIVE_QUESTION_INDEX: readonly QuestionIndexEntry[] =
 
 /** Bank statistics, so the landing page needs no question bodies. */
 export const BANK_TOTALS = {
-  total: 423,
+  total: 431,
   easy: 84,
-  medium: 235,
-  hard: 104,
+  medium: 240,
+  hard: 107,
 } as const;

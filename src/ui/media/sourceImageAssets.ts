@@ -52,15 +52,34 @@ export function resolveSourceImage(asset: string): ResolvedSourceImage | undefin
   };
 }
 
-/** Every slug that actually has files on disk. Used by the content validator. */
-export function availableSourceImageAssets(): Set<string> {
-  const slugs = new Set<string>();
+/**
+ * Which widths exist for each slug on disk.
+ *
+ * The validator needs the widths, not just the names: an image that shipped
+ * only its 640 variant still renders, but every phone and desktop gets the
+ * same small file and nobody finds out until someone looks closely at a sign
+ * face. A missing width is a silent quality regression, so it is an error.
+ */
+export function availableSourceImageWidths(): Map<string, number[]> {
+  const found = new Map<string, number[]>();
   const prefix = '/assets/source-images/teoribok-2026-1/';
   for (const key of Object.keys(files)) {
     const at = key.indexOf(prefix);
     if (at === -1) continue;
-    const tail = key.slice(at + prefix.length).replace(/-\d+\.webp$/, '');
-    slugs.add(tail);
+    const tail = key.slice(at + prefix.length);
+    const match = tail.match(/^(.*)-(\d+)\.webp$/);
+    if (!match) continue;
+    const slug = match[1]!;
+    const width = Number(match[2]);
+    const widths = found.get(slug);
+    if (widths) widths.push(width);
+    else found.set(slug, [width]);
   }
-  return slugs;
+  for (const widths of found.values()) widths.sort((a, b) => a - b);
+  return found;
+}
+
+/** Every slug that actually has files on disk. Used by the content validator. */
+export function availableSourceImageAssets(): Set<string> {
+  return new Set(availableSourceImageWidths().keys());
 }

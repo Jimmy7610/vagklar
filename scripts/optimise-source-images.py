@@ -44,6 +44,21 @@ QUALITY = 78
 
 # (extracted file, topic folder, output slug)
 CURATED = [
+    # --- Omgång 3: verklig trafikmiljö -------------------------------------
+    # Valda genom att titta på varje kandidat i review/source-image-candidates.html
+    # och behålla de som lär ut något en ritning inte kan: hur en skylt faktiskt
+    # ser ut på plats, hur lite man ser mellan parkerade bilar, hur en isig väg
+    # ser bedrägligt hanterbar ut i solsken.
+    ('p011-0.jpeg', 'vajningsregler', 'signal-over-vajningsmarke'),
+    ('p039-0.jpeg', 'vajningsregler', 'sparvagn-kryssmarke'),
+    ('p051-1.jpeg', 'passager', 'huvudled-cykelpassage'),
+    ('p007-0.jpeg', 'risker', 'cyklist-mellan-parkerade'),
+    ('p155-0.jpeg', 'risker', 'gaende-mellan-parkerade'),
+    ('p168-0.jpeg', 'risker', 'bussar-vid-hallplats'),
+    ('p198-0.jpeg', 'risker', 'smal-viadukt-skymd-utfart'),
+    ('p178-0.jpeg', 'landsvag', 'viltvarning-med-tillaggstavla'),
+    ('p009-0.jpeg', 'vinter', 'isig-landsvag-utan-linjer'),
+    ('p262-0.jpeg', 'morker', 'skymning-belyst-vag'),
     # --- Körfält -----------------------------------------------------------
     ('p016-0.jpeg', 'korfalt', 'korfaltsval-motorvag'),
     ('p014-0.jpeg', 'korfalt', 'placering-landsvag'),
@@ -71,7 +86,6 @@ CURATED = [
     ('p070-0.jpeg', 'parkering', 'forbud-att-stanna'),
     # --- Omkörning ---------------------------------------------------------
     ('p100-0.jpeg', 'omkorning', 'traktor-vintervag'),
-    ('p101-0.jpeg', 'omkorning', 'motande-landsvag'),
     # --- Järnvägskorsningar ------------------------------------------------
     ('p107-0.jpeg', 'jarnvag', 'plankorsning-bommar'),
     ('p108-0.jpeg', 'jarnvag', 'plankorsning-ljussignal'),
@@ -84,7 +98,6 @@ CURATED = [
     ('p084-0.jpeg', 'vagmarken', 'korfaltsvagvisare-korsning'),
     ('p095-0.jpeg', 'vagmarken', 'hastighet-100-ledsnummer'),
     ('p092-1.jpeg', 'vagmarken', 'avfart-hastighet-50'),
-    ('p107-0.jpeg', 'vagmarken', 'plankorsning-kryssmarken'),
     ('p119-1.jpeg', 'vagmarken', 'gagata-skyltad'),
     ('p131-0.jpeg', 'vagmarken', 'pabjuden-korriktning-parkering'),
     # --- Motorväg ----------------------------------------------------------
@@ -99,7 +112,6 @@ CURATED = [
     ('p101-0.jpeg', 'landsvag', 'omkorning-landsvag'),
     ('p105-0.jpeg', 'landsvag', 'buss-vid-hallplats'),
     # --- Vinter och mörker -------------------------------------------------
-    ('p100-0.jpeg', 'vinter', 'omkorning-vintervag'),
     ('p123-0.jpeg', 'vinter', 'snotackt-skogsvag'),
 
 ]

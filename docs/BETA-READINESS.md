@@ -13,7 +13,7 @@ hitta det som saknas, inte för att se färdig ut.
 
 - [x] **179 av 179 begrepp i kursplanen täckta**, 0 luckor
       (`npm run report:coverage` → [CONTENT-COVERAGE.md](CONTENT-COVERAGE.md))
-- [x] **423 frågor**, 0 fel, 0 varningar, 0 dubblettkandidater
+- [x] **431 frågor**, 0 fel, 0 varningar, 0 dubblettkandidater
       (`npm run report:content` → [CONTENT-VALIDATION.md](CONTENT-VALIDATION.md))
 - [x] Svårighetsbalans 20 % lätt / 56 % medel / 25 % svår — inom målet 20–30 % lätt
 - [x] Varje fråga har minst en källhänvisning; 0 frågor utan källa
@@ -27,9 +27,39 @@ hitta det som saknas, inte för att se färdig ut.
 - [x] 27 felaktiga sidhänvisningar hittade och rättade i den här omgången
 - [x] Höga risktal kontrollerade mot källan: promillegränser, mönsterdjup,
       bashastigheter, släpvikter, fordonsslagens hastigheter, bogsering, moped
-- [ ] **Ingen fråga är expertverifierad.** Alla 423 har status `reviewed`.
-      Kön finns i [VERIFICATION-QUEUE.md](VERIFICATION-QUEUE.md): P1 113,
-      P2 64, P3 246. Se [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md).
+- [ ] **Ingen fråga är expertverifierad.** Alla 431 har status `reviewed`.
+      Kön finns i [VERIFICATION-QUEUE.md](VERIFICATION-QUEUE.md). Se
+      [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md).
+
+## Källbilder
+
+- [x] **51 godkända fotografier**, 47 använda av en lektion eller fråga
+      (`npm run report:images` → [IMAGE-COVERAGE.md](IMAGE-COVERAGE.md))
+- [x] 18 av 39 kapitel har bildstöd; rapporten listar vilka som saknar det
+- [x] Varje bild bär alt-text, långbeskrivning, bildtext, källa, sida,
+      rättighetshavare och tillståndsmarkering — validerat
+- [x] Varje godkänd bild finns i båda responsiva bredderna — validerat
+- [x] Ingen fil ligger i bygget utan att någon post gör anspråk på den
+- [x] Inget fotografi är registrerat två gånger — regel `duplicate-image-asset`
+      efter att tre var det, varav ett par var oense om vad bilden visar
+- [x] **Provet visar nu frågornas bilder.** Det gjorde det inte: varje
+      fotografiburen fråga var obesvarbar i provsimuleringen. Skyddat av ett test
+      som kräver att varje frågevy renderar foto, markering och märke
+- [x] Bilder beskärs aldrig — ramen följer bildens egna proportioner
+- [x] Bildtexten visas aldrig i frågeläget, och kan inte smyga in via frågetexten
+- [x] Förstoring via `<dialog>` med `showModal()`: äkta modal, fokusfälla,
+      fokus återlämnas, kreditering följer med
+- [x] Fotografierna precachas inte; `verify-build` avbryter om de gör det
+- [x] Egen runtime-cache `vagklar-source-images`, så en lektionsbild inte kan
+      vräkas ut av en ikon
+- [x] En bild som aldrig cachats faller tillbaka till sin skrivna beskrivning —
+      kontrollerat med servern avstängd
+- [x] Elva bredder × tio bildbärande lektioner utan överflöd, uppskalning eller
+      trasiga filer, i båda teman
+- [ ] **21 av 39 kapitel saknar fortfarande bildstöd.** Flera behöver inget —
+      ett kapitel om registreringsbevis blir inte tydligare av ett foto — men
+      Däck, Bromsar, Bilbarnstolar och Trafikolyckor skulle bli det.
+- [ ] 4 godkända bilder används fortfarande inte av något innehåll.
 
 ## Vägmärken och vägmarkeringar
 
@@ -91,7 +121,8 @@ Kontrollerat mot produktionsbygget i webbläsaren, med servern **avstängd**:
       Scenariolabbet och Utveckling laddar med servern nere
 - [x] **Ett helt träningspass startades och visade frågor offline** — beviset
       att den lata frågeladdningen inte kostade offline
-- [x] En tidigare visad källbild renderas offline ur `vagklar-images`
+- [x] En tidigare visad källbild renderas offline ur `vagklar-source-images`;
+      en aldrig visad faller tillbaka till sin skrivna beskrivning
 - [x] Okända adresser leder till närmaste rimliga sida, aldrig en stacktrace
 - [ ] **Installationsupplevelsen är inte testad.** Fristående fönster, ikon i
       aktivitetsfältet och installationsdialogen kräver en vanlig
@@ -102,7 +133,8 @@ Kontrollerat mot produktionsbygget i webbläsaren, med servern **avstängd**:
 
 Automatiserad strukturgranskning över 14 vyer, i produktionsbygget:
 
-- [x] `<main>`, en `<h1>` per vy, inga hoppade rubriknivåer
+- [x] `<main>`, en `<h1>` per vy, inga hoppade rubriknivåer — provvyn saknade
+      `<main>` och har det nu
 - [x] Alla interaktiva element har ett tillgängligt namn
 - [x] Alla formulärfält har en etikett
 - [x] Alla bilder har alt-text; alla `svg[role="img"]` har namn
@@ -135,7 +167,7 @@ Inget horisontellt överflöd på någon av de 14 vyerna vid:
 
 ## Prestanda
 
-- [x] Startpaket **161 944 B gzip** (`content` 47 kB, `index` 37 kB,
+- [x] Startpaket **162 814 B gzip** (`content` 47 kB, `index` 37 kB,
       `router` 14 kB, `vendor` 62 kB)
 - [x] **Budget i bygget**: `verify-build` avbryter över 185 000 B
 - [x] Budgetgrindarna är bevisat verkningsfulla — kontrollerade med sänkt tak
@@ -159,7 +191,7 @@ Inget horisontellt överflöd på någon av de 14 vyerna vid:
 
 - [x] `npm run lint` — 0 fel, 9 varningar (samtliga `react-refresh`, rör bara HMR)
 - [x] `npm run typecheck` — rent, strikt TypeScript
-- [x] `npm test` — **420 tester i 23 filer**
+- [x] `npm test` — **456 tester i 24 filer**
 - [x] `npm run build` — lyckas, inklusive alla bygggrindar
 - [x] Basvägen `/vagklar/` kontrollerad i produktionsbygget och i bygget
 - [x] Versionen kommer från en källa: `package.json`, injicerad vid bygge
@@ -171,7 +203,7 @@ Inget horisontellt överflöd på någon av de 14 vyerna vid:
 
 Inget av nedanstående hindrar en beta, men allt är känt:
 
-1. Expertverifiering av P1-kön (113 frågor)
+1. Expertverifiering av P1-kön
 2. Pilarnas sida i A25/B6/B7 mot Vägmärkesförordningen
 3. Installations-PWA i en riktig webbläsarsession
 4. Skärmläsargranskning

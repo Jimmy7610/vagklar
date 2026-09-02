@@ -82,7 +82,7 @@ const seeds: AuthoredQuestion[] = [
     difficulty: 1,
     ruleTested: 'Kryssmärke vid plankorsning',
     prompt: 'Vad markerar de röd-vita kryssen på båda sidor av vägen?',
-    sourceImageId: 'plankorsning-kryssmarken',
+    sourceImageId: 'plankorsning-bommar',
     type: 'image-scenario',
     answers: [
       ok('Att här korsar järnvägen vägen.'),
@@ -102,7 +102,7 @@ const seeds: AuthoredQuestion[] = [
     difficulty: 3,
     ruleTested: 'Bommar och omkörningsförbud',
     prompt: 'Plankorsningen på bilden har bommar. Vad betyder det för omkörning i samband med korsningen?',
-    sourceImageId: 'plankorsning-kryssmarken',
+    sourceImageId: 'plankorsning-bommar',
     type: 'image-scenario',
     answers: [
       ok('Omkörningsförbudet upphävs — du får köra om alla fordon.'),
@@ -254,7 +254,7 @@ const seeds: AuthoredQuestion[] = [
     difficulty: 2,
     ruleTested: 'Omkörning på vinterväg',
     prompt: 'Sikten är god på den snötäckta vägen. Vad talar ändå emot en omkörning här?',
-    sourceImageId: 'omkorning-vintervag',
+    sourceImageId: 'traktor-vintervag',
     type: 'situational-judgement',
     answers: [
       ok('Greppet — snömodden mellan hjulspåren gör accelerationen och återinträdet oförutsägbara.'),

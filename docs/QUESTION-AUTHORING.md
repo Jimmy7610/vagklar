@@ -139,6 +139,24 @@ automatiskt i P1-kön. Skriv talet så att villkoret syns i själva frågan, int
 bara i fördjupningen: "en obromsad släpvagn under 750 kg" är kontrollerbart,
 "en släpvagn" är det inte.
 
+## När en fråga ska ha ett fotografi
+
+Bilden måste bära något texten inte klarar. Det duger som skäl när frågan
+handlar om hur mycket man faktiskt ser — luckan mellan parkerade bilar, ytan
+bakom en buss, en isig väg i solsken — eller om hur ett märke ser ut på plats,
+i vägkanten, i ögonvrån, tillsammans med en tilläggstavla.
+
+Det duger inte som skäl att frågan handlar om trafik.
+
+```ts
+sourceImageId: 'bussar-vid-hallplats',
+```
+
+Frågetexten ska peka på det som visas ("i den här situationen", "på bilden",
+"den vita bilen"), och den får aldrig innehålla registrets bildtext — den
+förklarar vad bilden lär ut. Långbeskrivningen i registret måste ensam räcka
+för att besvara frågan, eftersom det är den en skärmläsare får.
+
 ## Efter varje bankändring
 
 ```bash

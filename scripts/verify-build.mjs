@@ -14,7 +14,7 @@
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
-import { join, resolve, extname, relative } from 'node:path';
+import { join, resolve, extname, relative, sep } from 'node:path';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -97,6 +97,38 @@ for (const required of REQUIRED) {
 const webp = files.filter((f) => extname(f).toLowerCase() === '.webp');
 if (webp.length === 0) {
   failures.push('Inga källbilder i bygget — bildpipelinen verkar trasig.');
+}
+
+/*
+ * The service worker routes the licensed photographs to their own cache by
+ * matching the .webp extension, because Vite flattens the folder they live in.
+ * That rule is exact only as long as WebP means "source photograph" — so a
+ * WebP that is not one, or a photograph in another format, has to fail here
+ * rather than quietly land in the wrong cache with the wrong eviction policy.
+ */
+const strayWebp = webp.filter((f) => !relative(DIST, f).split(sep).join('/').startsWith('assets/'));
+if (strayWebp.length > 0) {
+  failures.push(
+    `WebP utanför assets/: ${strayWebp.map((f) => relative(DIST, f)).join(', ')}. ` +
+      'Service workern antar att alla .webp är källbilder.',
+  );
+}
+
+/* ---- 5b. Source photographs stay out of the precache ------------------ */
+/*
+ * 6 MB of photographs must not be forced onto every device at install time.
+ * They are runtime-cached the first time a lesson or question actually shows
+ * one, which is what keeps the install small while still working offline
+ * afterwards.
+ */
+if (existsSync(swPath)) {
+  const swSource = readFileSync(swPath, 'utf8');
+  const precachedWebp = (swSource.match(/[\w./-]+\.webp/g) ?? []).length;
+  if (precachedWebp > 0) {
+    failures.push(
+      `${precachedWebp} källbilder ligger i förhandscachen. De ska cachas vid körning.`,
+    );
+  }
 }
 
 /* ---- 6. Startup budget ------------------------------------------------ */

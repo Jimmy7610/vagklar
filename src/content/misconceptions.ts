@@ -2199,6 +2199,60 @@ export const MISCONCEPTIONS: Misconception[] = [
       'Rakt framifrån saknar ögat rörelse i sidled att bedöma efter. På en krokig väg ser du fordonet från sidan och bedömer bättre.',
     subcategory: 'mote',
   },
+  {
+    id: 'omkorning-cyklist',
+    label: 'Cyklisten antas hålla sig vid kanten',
+    description:
+      'En cyklist uppfattas som ett hinder som ska passeras snabbt, och sidoavståndet antas kunna vara litet så länge man kör förbi fort.',
+    correction:
+      'Cyklisten kan behöva svänga ut när som helst, särskilt längs parkerade bilar. Passera först när du kan lämna det utrymme en öppnad bildörr kräver.',
+    subcategory: 'skymd-sikt',
+  },
+  {
+    id: 'buss-hallplats',
+    label: 'Bussen ses som hindret',
+    description:
+      'En stannad buss uppfattas som ett fordon att ta sig förbi, i stället för som något som döljer människor.',
+    correction:
+      'Risken är inte bussen utan det du inte ser bakom den. Välj farten innan du är i jämnhöjd med den, inte när något rör sig.',
+    subcategory: 'barn-och-oskyddade',
+  },
+  {
+    id: 'solsken-grepp',
+    label: 'Vackert väder antas betyda bra grepp',
+    description:
+      'Klar himmel och sol tolkas som att vägbanan är torr, trots att underlaget är packad snö eller is.',
+    correction:
+      'Läs vägbanan, inte himlen. Blankslitna hjulspår och snötäckt yta betyder dåligt grepp oavsett hur det ser ut ovanför.',
+    subcategory: 'vinterkorning',
+  },
+  {
+    id: 'cykelpassage-vajning',
+    label: 'Passage och överfart blandas ihop',
+    description:
+      'En cykelpassage antas ge antingen full väjningsplikt eller inget ansvar alls, beroende på vem som tillfrågas.',
+    correction:
+      'Passage betyder anpassad hastighet. Överfart — med vägmärke B8 och väjningslinje — betyder full väjningsplikt. Rutorna ensamma räcker inte för det senare.',
+    subcategory: 'cykelpassage-overfart',
+  },
+  {
+    id: 'skymd-sikt-parkerade',
+    label: 'Det största fordonet antas vara den största risken',
+    description:
+      'Uppmärksamheten fastnar på lastbilen eller den stora bilen, medan luckorna mellan fordonen förbises.',
+    correction:
+      'Det stora fordonet skymmer förutsägbart — du vet att du inte ser bakom det. Luckorna ger en känsla av överblick utan att ge tid.',
+    subcategory: 'skymd-sikt',
+  },
+  {
+    id: 'kryssmarke-varning',
+    label: 'Kryssmärket antas vara en varning',
+    description:
+      'Kryssmärket uppfattas som ett varningsmärke som säger att en korsning kommer längre fram.',
+    correction:
+      'Kryssmärket markerar att korsningen är här. Varningen för korsningen kom tidigare, som en gul triangel.',
+    subcategory: 'plankorsning-marken',
+  },
 ];
 
 export const MISCONCEPTION_BY_ID: ReadonlyMap<string, Misconception> = new Map(

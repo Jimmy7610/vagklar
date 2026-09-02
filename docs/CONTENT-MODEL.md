@@ -200,6 +200,21 @@ och `verified` bär sin egen bevisbörda: validatorn avvisar den utan `verifiedA
 `verifiedBy` och `verificationSourceIds`. `rejected` behåller `reviewNotes` så att
 skälet överlever. Se [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md).
 
+## Källbilder i innehållet
+
+En fråga pekar på ett fotografi med `sourceImageId`; en lektion med blocket
+`sourceImage` (`imageId`, valfri `prompt` och `caption`). Ingetdera bär
+attribution — den kommer ur registret, så den kan inte glömmas på anropsplatsen.
+
+Bildtexten visas i lektioner men **inte** i frågor: den säger vad bilden lär ut,
+vilket är precis det frågan ber eleven komma fram till. Ett test kontrollerar
+dessutom att bildtexten inte smugit sig in i frågetexten i stället.
+
+Varje yta som visar en fråga måste visa alla tre sorters illustration —
+fotografi, vägmarkering och vägmärke. Provet renderade länge bara märkena, vilket
+gjorde varje bildburen fråga obesvarbar just där. Ett test går igenom källkoden
+för både `QuestionCard` och `ExamRunnerPage` och kräver alla tre.
+
 ## Frågeindexet
 
 [`src/content/question-index.ts`](../src/content/question-index.ts) är en **genererad**

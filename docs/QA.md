@@ -10,7 +10,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 
 ## Automatiserade tester
 
-`npm test` — **420 tester i 23 filer, alla gröna.**
+`npm test` — **456 tester i 24 filer, alla gröna.**
 
 | Område                     | Fil                                   | Täcker                                                                 |
 | -------------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
@@ -726,3 +726,141 @@ första sidvisningen inte är offline-skyddad.
 parallell last och gick igenom både ensam och vid omkörning. Den är DOM-tung
 (cirka 0,6 s). Ostabil, inte trasig — men inte utredd, och därför noterad i
 stället för bortförklarad.
+
+## Bokbilder i produkten (2026-09-02)
+
+Omgången handlade om att få de licensierade fotografierna att fungera i appen,
+inte om att lägga till fler av dem. Två av de tre viktigaste fynden var buggar
+som fanns redan innan en enda ny bild kurerades.
+
+### Provet visade inte frågornas bilder
+
+`ExamRunnerPage` renderade `question.image` (de ritade märkena) men aldrig
+`question.sourceImageId` och aldrig vägmarkeringarna. Effekten: varje
+fotografiburen fråga — "vad ser du på bilden?" — kom upp **utan bild** i
+provsimuleringen, medan samma fråga fungerade i träningen. Ungefär var tionde
+fråga i ett prov var alltså obesvarbar.
+
+Upptäckt genom att stega igenom 51 provfrågor och inte hitta en enda `<img>`.
+Rättat, och skyddat av ett test som läser källkoden för varje yta som visar en
+fråga och kräver att alla tre illustrationssorterna finns där. Ett källtest med
+flit: felet var en saknad gren, och en renderingstest av de grenar som *finns*
+hade aldrig sett den.
+
+Provvyn saknade dessutom `<main>`, precis som scenariovyn gjorde före förra
+omgången. Även det rättat.
+
+### Tre fotografier var registrerade två gånger
+
+`p100-0`, `p101-0` och `p107-0` hade var och en kurerats in i två ämnesmappar
+med två slugar, två bildtexter och två långbeskrivningar. Vite deduplicerar
+identiska filer, så bygget levererade bara en kopia — vilket är varför ingen
+märkte det — men registret påstod sex bilder där det finns tre.
+
+Värre: ett av paren var oense om vad bilden visar. `p101-0` är en vit bil i
+mötande körfält sedd bakifrån, mitt i en omkörning. Posten `motande-landsvag`
+beskrev den som en mötande bil nära mittlinjen. Den korrekta posten lever
+vidare, den felaktiga är pensionerad, och en validatorregel
+(`duplicate-image-asset`) gör att samma fil inte kan få två poster igen.
+
+### Cachen matchade fel
+
+Den nya regeln som skulle ge fotografierna en egen cache träffade aldrig:
+`url.pathname.includes('/assets/source-images/')` fungerar i förvaret men inte i
+produktion, eftersom Vite plattar ut alla resurser till `/assets/`. Bilderna
+hamnade fortfarande i den delade `vagklar-images` med tak på 120 poster.
+
+Rättat till att matcha på `.webp`, vilket är exakt: fotografierna är det enda
+WebP appen levererar. `verify-build` avbryter nu om en WebP dyker upp utanför
+`assets/`, så antagandet inte kan ruttna.
+
+### Beskuren bild
+
+`SourceImageFigure` använde `object-fit: cover` inuti en höjdbegränsad ram.
+På en bred kolumn klipptes toppen och botten av ett fotografi bort — och i en
+trafikbild är det kanterna som bär betydelsen: skylten i vägrenen, cyklisten vid
+de parkerade bilarna, konerna vid kanten. Ramen följer nu bildens egna
+proportioner och det är bredden som begränsas, så ingenting försvinner.
+
+### Kurering
+
+10 nya bilder valda genom att titta på kandidaterna i en genererad kontaktkarta,
+inte genom att läsa filnamn. Urvalskriteriet var att bilden lär ut något en
+ritning inte kan.
+
+Avvisade exempel: de kvadratiska ~1220×1220-bilderna är kapitelöppnare, inte
+lärobilder. Närbilden på ljusreglaget (s. 265) valdes bort därför att den röda
+pilen pekar på ett läge vars innebörd inte gick att fastställa säkert — en
+bildtext som hedgar är fyllnad. Vinterutrustningen (s. 126) är en produktbild,
+inte en trafikmiljö.
+
+Dessutom fick 5 redan licensierade men oanvända bilder ett hem. De låg i bygget
+utan att undervisa någonting, vilket `npm run report:images` numera skriver ut.
+
+### Bildernas plats i lektionerna
+
+| Lektion | Bild | Vad den gör |
+| --- | --- | --- |
+| Grundreglerna | `signal-over-vajningsmarke` | Visar rangordningen i stället för att påstå den: grön signal och väjningspliktsmärke samtidigt |
+| Grundreglerna | `placering-landsvag` | Vad "så långt höger som är lämpligt" ser ut som |
+| Mörkerkörning | `skymning-belyst-vag` | Belyst väg tar inte bort ljuskravet |
+| Riskbedömning | `bussar-vid-hallplats` | Hur mycket två bussar döljer |
+| Vägmärken | `viltvarning-med-tillaggstavla` | Det ritade märket bredvid samma märke i vägkanten |
+| Halka | `isig-landsvag-utan-linjer` | Solsken säger ingenting om greppet |
+| Passager | `huvudled-cykelpassage` | Huvudleden gäller inte mot passagen tvärs din egen körbana |
+| Utfartsregeln | `gangbana-utfart` | Gångbanan du korsar innan du ens nått bilvägen |
+| Omkörning | `omkorning-landsvag` | Var den vita bilen faktiskt befinner sig |
+| Stanna och parkera | `forbud-att-stanna` | Från vilken punkt förbudet gäller |
+| Järnvägskorsningar | `plankorsning-ljussignal` | Plankorsning mitt i stan, där sikten är sämst |
+
+### Bildstorlek
+
+Två varianter, av samma skäl som en lektion och en fråga är olika saker.
+
+| Variant | Tak | Varför |
+| --- | --- | --- |
+| `lesson` | `min(100%, 62vh × 16/9)` | Bilden *är* det som diskuteras och får läskolumnen |
+| `question` | `min(100%, 38vh × 16/9)`, 46vh från 768 px | Bilden är bevis, och de fyra alternativen måste rymmas bredvid |
+
+Kontrollerat på en 390 px-telefon i provet: fotografiet blir 199 px högt och tre
+av fyra svarsalternativ syns utan att man scrollar.
+
+### Förstoring
+
+Detaljerna i en trafikbild är små — en skyltyta, en blinkers, en cyklist vid
+kanten. Knappen i bildens hörn öppnar en `<dialog>` med `showModal()`, alltså
+webbläsarens egen fokusfälla, inerta bakgrund och Escape-hantering i stället för
+en handbyggd overlay.
+
+Kontrollerat: dialogen öppnas som äkta modal (`:modal`), fokus landar på Stäng,
+Tab stannar kvar inuti, stängning återlämnar fokus till knappen som öppnade den,
+och krediteringen följer med in i det förstorade läget. Escape gick inte att
+skicka genom automationen, men ingenting förhindrar `cancel`-händelsen som
+webbläsaren stänger på.
+
+### Offline
+
+Fotografierna precachas inte — 6 MB ska inte tvingas på varje enhet vid
+installationen. `verify-build` avbryter om en enda källbild hamnar i
+förhandscachen.
+
+Kontrollerat med servern avstängd:
+
+| | Resultat |
+| --- | --- |
+| Lektion vars bild setts tidigare | Renderas ur `vagklar-source-images` |
+| Lektion vars bild aldrig setts | Faller tillbaka till långbeskrivningen |
+| Bildtext och kreditering i fallbacket | Kvar |
+| Precachade poster | 53, varav 0 källbilder |
+
+Fallbacket är nytt i den här omgången. Tidigare visade webbläsaren sin trasiga
+bild-ikon och lektionens poäng försvann under tystnad.
+
+### Responsiv kontroll
+
+Tio bildbärande lektioner kontrollerade på elva bredder — 320, 360, 375, 390,
+412, 430, 768, 1024, 1366, 1440 och 1920 px — mot fem villkor per bild: inget
+horisontellt överflöd, ingen bild bredare än kolumnen, ingen högre än 85 % av
+skärmen, ingen trasig, ingen uppskalad mer än 1,35× sin egen upplösning.
+
+Inga fynd. Kontrollerat i både ljust och mörkt läge.

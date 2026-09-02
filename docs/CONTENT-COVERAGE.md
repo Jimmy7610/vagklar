@@ -29,8 +29,8 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Begrepp med för få (1–2 frågor) | 0 |
 | Begrepp helt utan frågor | 0 |
 | Begrepp utan plats i taxonomin | 0 |
-| Frågor i banken | 423 |
-| Frågor kopplade till ett begrepp | 423 |
+| Frågor i banken | 431 |
+| Frågor kopplade till ett begrepp | 431 |
 | Frågor utan koppling | 0 |
 | Lektioner | 15 |
 | Scenarier | 14 |
@@ -40,9 +40,9 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 
 | Område | Kapitel | Begrepp | Täckta | Andel täckta | Frågor |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Trafikregler | 12 | 79 | 79 | 100 % | 213 |
-| Människan | 7 | 38 | 38 | 100 % | 85 |
-| Fordon | 15 | 48 | 48 | 100 % | 103 |
+| Trafikregler | 12 | 79 | 79 | 100 % | 220 |
+| Människan | 7 | 38 | 38 | 100 % | 86 |
+| Fordon | 15 | 48 | 48 | 100 % | 104 |
 | Miljö | 3 | 5 | 5 | 100 % | 28 |
 | Vägmärken | 1 | 8 | 8 | 100 % | 66 |
 | Rättsfall | 1 | 1 | 1 | 100 % | 3 |
@@ -51,10 +51,10 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 
 | Kapitel | Område | Sidor | Begrepp | Täckta | Frågor | Status |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| Inledning | Trafikregler | 6–13 | 9 | 9 | 28 | Stark |
+| Inledning | Trafikregler | 6–13 | 9 | 9 | 33 | Stark |
 | Körfält | Trafikregler | 14–21 | 7 | 7 | 22 | Stark |
 | Väjningsregler | Trafikregler | 22–45 | 13 | 13 | 27 | Stark |
-| Passager | Trafikregler | 46–57 | 6 | 6 | 24 | Stark |
+| Passager | Trafikregler | 46–57 | 6 | 6 | 25 | Stark |
 | Cirkulationsplats | Trafikregler | 58–67 | 5 | 5 | 16 | Stark |
 | Stanna & parkera | Trafikregler | 68–77 | 6 | 6 | 12 | Stark |
 | Landsväg | Trafikregler | 78–89 | 7 | 7 | 7 | Stark |
@@ -62,17 +62,17 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Omkörningar | Trafikregler | 98–107 | 5 | 5 | 13 | Stark |
 | Järnvägskorsningar | Trafikregler | 108–115 | 5 | 5 | 19 | Stark |
 | Speciella gator | Trafikregler | 116–123 | 5 | 5 | 23 | Stark |
-| Vinter | Trafikregler | 124–131 | 6 | 6 | 7 | Stark |
+| Vinter | Trafikregler | 124–131 | 6 | 6 | 8 | Stark |
 | Inlärning & mognad | Människan | 132–139 | 6 | 6 | 19 | Stark |
 | Alkohol | Människan | 140–147 | 7 | 7 | 19 | Stark |
 | Trötthet | Människan | 148–153 | 3 | 3 | 9 | Stark |
 | Synen | Människan | 154–161 | 5 | 5 | 12 | Stark |
 | Nedsatt förmåga | Människan | 162–167 | 4 | 4 | 7 | Stark |
-| Barn | Människan | 168–173 | 4 | 4 | 7 | Stark |
+| Barn | Människan | 168–173 | 4 | 4 | 8 | Stark |
 | Trafikolyckor | Människan | 174–187 | 9 | 9 | 12 | Stark |
 | Indelning av fordon | Fordon | 188–195 | 4 | 4 | 9 | Stark |
 | Sträckor | Fordon | 196–203 | 3 | 3 | 12 | Stark |
-| Däck | Fordon | 204–213 | 6 | 6 | 9 | Stark |
+| Däck | Fordon | 204–213 | 6 | 6 | 10 | Stark |
 | Styrning | Fordon | 214–223 | 4 | 4 | 8 | Stark |
 | Bromsar | Fordon | 224–231 | 6 | 6 | 5 | Stark |
 | Krocksäkerhet | Fordon | 232–237 | 3 | 3 | 8 | Stark |
@@ -135,27 +135,33 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 
 | Mått | Antal |
 | --- | ---: |
-| Godkända källbilder | 44 |
-| Kapitel med visuellt stöd | 12 av 39 |
-| Bildbaserade frågor | 34 |
-| Lektioner med bild | 9 av 15 |
+| Godkända källbilder | 51 |
+| Kapitel med visuellt stöd | 18 av 39 |
+| Bildbaserade frågor | 42 |
+| Lektioner med bild | 13 av 15 |
 
 | Kapitel | Bilder |
 | --- | ---: |
+| Inledning | 3 |
 | Körfält | 3 |
-| Väjningsregler | 6 |
-| Passager | 6 |
+| Väjningsregler | 7 |
+| Passager | 7 |
 | Cirkulationsplats | 2 |
 | Stanna & parkera | 3 |
 | Landsväg | 4 |
 | Motorväg & motortrafikled | 3 |
-| Omkörningar | 4 |
+| Omkörningar | 3 |
 | Järnvägskorsningar | 2 |
 | Speciella gator | 1 |
-| Vinter | 3 |
-| Vägmärken | 7 |
+| Vinter | 2 |
+| Synen | 1 |
+| Barn | 1 |
+| Trafikolyckor | 1 |
+| Sträckor | 1 |
+| Belysning | 1 |
+| Vägmärken | 6 |
 
-Kapitel utan visuellt stöd: **27**. De viktigaste att komplettera
+Kapitel utan visuellt stöd: **21**. De viktigaste att komplettera
 härnäst listas i [SOURCE-IMAGES.md](SOURCE-IMAGES.md).
 
 ## Källa och rättigheter

@@ -5,6 +5,8 @@ import { Button } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { Modal } from '@/ui/components/Modal';
 import { RoadSign, hasRoadSign } from '@/ui/illustrations/RoadSign';
+import { RoadMarking, hasRoadMarking } from '@/ui/illustrations/RoadMarking';
+import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
 import { useActiveExam, useLearnerActions } from '@/app/state/useLearner';
 import { getQuestion } from '@/domain/content/bank';
 import { EXAM } from '@/domain/constants';
@@ -188,7 +190,10 @@ export default function ExamRunnerPage() {
   );
 
   return (
-    <div className={styles.runner}>
+    // A focus route rendered outside AppLayout, so it does not inherit the
+    // shell's landmarks. Without its own <main> the whole exam is a page with
+    // no main region to jump to.
+    <main className={styles.runner}>
       <div className={styles.runnerBar}>
         <span style={{ fontSize: 'var(--text-small)', fontWeight: 600 }}>
           Fråga {currentIndex + 1} / {total}
@@ -250,6 +255,44 @@ export default function ExamRunnerPage() {
           </div>
 
           <h1 className={styles.examPrompt}>{question.prompt}</h1>
+
+          {/*
+            * The exam has to show everything a question depends on.
+            *
+            * It used to render only the drawn signs, so every photograph-backed
+            * question — "vad ser du på bilden?" — arrived without its picture,
+            * and every road-marking question without its marking. Both were
+            * unanswerable in the simulation while being fine in training. The
+            * two renderers below close that gap; the credit line comes from the
+            * registry as everywhere else, and the caption stays hidden because
+            * it says what the picture teaches.
+            */}
+          {question.sourceImageId && (
+            <div style={{ margin: '0 0 var(--space-5)' }}>
+              <SourceImageFigure
+                imageId={question.sourceImageId}
+                variant="question"
+                sizes="(min-width: 1024px) 620px, 100vw"
+                showCaption={false}
+              />
+            </div>
+          )}
+
+          {illustration && hasRoadMarking(illustration) && (
+            <figure
+              style={{
+                display: 'grid',
+                justifyItems: 'center',
+                padding: 'var(--space-5)',
+                background: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-card)',
+                margin: '0 0 var(--space-5)',
+              }}
+            >
+              <RoadMarking name={illustration} size={132} alt={question.image?.alt ?? ''} />
+            </figure>
+          )}
 
           {illustration && hasRoadSign(illustration) && (
             <figure
@@ -378,6 +421,6 @@ export default function ExamRunnerPage() {
           </div>
         )}
       </Modal>
-    </div>
+    </main>
   );
 }

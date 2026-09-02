@@ -9,7 +9,7 @@ import { PRIMARY_SOURCE_ID } from '@/content/sources';
  * an entry by id and never carry attribution of their own.
  *
  * Curation, not import. 263 images were extracted from the source into a
- * working area that is never committed; 26 were selected. The extraction and
+ * working area that is never committed; 54 were selected across three passes. The extraction and
  * optimisation steps are reproducible scripts, documented in
  * docs/SOURCE-IMAGES.md.
  *
@@ -67,7 +67,7 @@ export interface SourceImage {
 
 const RIGHTS_HOLDER = 'Hagberg Media AB';
 
-/** Shorthand so 26 entries stay readable. */
+/** Shorthand so the entries stay readable. */
 function img(entry: Omit<SourceImage, 'sourceId' | 'rightsHolder' | 'usedWithPermission'>): SourceImage {
   return {
     ...entry,
@@ -78,6 +78,194 @@ function img(entry: Omit<SourceImage, 'sourceId' | 'rightsHolder' | 'usedWithPer
 }
 
 export const SOURCE_IMAGES: SourceImage[] = [
+  /* ---- Verklig trafikmiljö (omgång 3) ---------------------------------- */
+  img({
+    id: 'signal-over-vajningsmarke',
+    sourcePage: 11,
+    title: 'Grön signal under väjningspliktsmärke',
+    topic: 'vajningsregler',
+    subcategory: 'polisens-tecken',
+    chapter: 'inledning',
+    altText:
+      'Korsning där trafiksignalen lyser grönt samtidigt som väjningspliktsmärken står uppsatta på båda sidor om vägen.',
+    longDescription:
+      'Vy framåt från förarplatsen mot en fyrvägskorsning på en landsväg. På båda sidor om körbanan står en trafiksignal som lyser grönt, och strax intill varje signal står ett väjningspliktsmärke — en gul triangel med röd ram, spetsen nedåt. Tvärs över körbanan löper en bred vit stopplinje, och på båda sidor korsar två rader vita rutor som markerar en cykelpassage. En mörk personbil rullar framför dig genom korsningen.',
+    caption:
+      'Signalen och märket säger olika saker samtidigt. Rangordningen avgör vilket som gäller.',
+    usage: 'theory-lesson',
+    asset: 'vajningsregler/signal-over-vajningsmarke',
+    width: 960,
+    height: 540,
+    status: 'approved',
+    notes: 'Visar rangordningen konkret: signal före vägmärke.',
+  }),
+  img({
+    id: 'sparvagn-kryssmarke',
+    sourcePage: 39,
+    title: 'Kryssmärke vid spårvägskorsning',
+    topic: 'vajningsregler',
+    subcategory: 'vagens-anvandning',
+    chapter: 'vajningsregler',
+    altText:
+      'Stadsgata med spårvagnsspår i körbanan och en märkesstolpe med varning för spårväg, kryssmärke och texten Lämna fri väg för spårvagn.',
+    longDescription:
+      'En bred stadsgata sedd framåt från förarplatsen. Spårvagnsspår löper i körbanan och korsar den snett framför dig, med kontaktledningar spända över gatan. Till höger står en stolpe med tre märken ovanpå varandra: överst en gul varningstriangel med en spårvagn, därunder ett vitt kryssmärke med röda spetsar, och underst en gul tavla med texten "Lämna fri väg för spårvagn". Längre fram syns en spårvagn och en buss vid en hållplats.',
+    caption:
+      'Kryssmärket står vid själva korsningen. Varningstriangeln varnade för den redan tidigare.',
+    usage: 'theory-lesson',
+    asset: 'vajningsregler/sparvagn-kryssmarke',
+    width: 960,
+    height: 540,
+    status: 'approved',
+    notes: 'Kompletterar vektormärkena A37 och A39 med hur de faktiskt sitter på plats.',
+  }),
+  img({
+    id: 'huvudled-cykelpassage',
+    sourcePage: 51,
+    title: 'Huvudled med cykelpassage',
+    topic: 'passager',
+    subcategory: 'cykelpassage-overfart',
+    chapter: 'passager',
+    altText:
+      'Stadsgata med ett gult huvudledsmärke till höger och en cykelpassage markerad med vita rutor tvärs över vägen.',
+    longDescription:
+      'En stadsgata sedd framåt från förarplatsen. Till höger står ett huvudledsmärke — en gul kvadrat ställd på hörn med vit ram — på en stolpe intill en cykelbana. Tvärs över körbanan strax framför dig löper en cykelpassage markerad med två rader vita rutor. Längre fram till vänster syns ett övergångsställe med blått märke och vita band över vägen. En mörk bil kör bort från dig i fjärran.',
+    caption:
+      'Huvudleden gäller mot korsande vägar. Cykelpassagen framför dig är en egen sak.',
+    usage: 'question-image',
+    asset: 'passager/huvudled-cykelpassage',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'cyklist-mellan-parkerade',
+    sourcePage: 7,
+    title: 'Cyklist längs parkerade bilar',
+    topic: 'risker',
+    subcategory: 'skymd-sikt',
+    chapter: 'inledning',
+    altText:
+      'Stadsgata med bilar parkerade längs båda sidor och en cyklist som kör tätt intill de parkerade bilarna till höger.',
+    longDescription:
+      'En smal stadsgata med bostadshus på båda sidor, sedd framåt från förarplatsen. Längs vänster kant står en lång rad parkerade bilar, och längs höger kant står ytterligare parkerade bilar. En cyklist kör i samma riktning som du, tätt intill de parkerade bilarna på höger sida, med bara någon meter mellan cykeln och bildörrarna. Körbanan mellan bilraderna är knappt bred nog för två fordon i bredd.',
+    caption: 'Cyklisten kör i dörrzonen. Det utrymme som ser ledigt ut är inte ledigt.',
+    usage: 'question-image',
+    asset: 'risker/cyklist-mellan-parkerade',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'gaende-mellan-parkerade',
+    sourcePage: 155,
+    title: 'Parkerad rad på gatstensgata',
+    topic: 'risker',
+    subcategory: 'skymd-sikt',
+    chapter: 'synen',
+    altText:
+      'Rad med parkerade bilar och en lastbil längs en gatstensgata, med parkeringsmärke och huvudledsmärke på husväggen.',
+    longDescription:
+      'En smal gatstensgata sedd snett framifrån. Längs höger sida står en tät rad parkerade personbilar och längre fram en vit lastbil. På husväggen ovanför bilraden sitter ett gult huvudledsmärke och ett blått parkeringsmärke. Mellan fordonen längre fram skymtar en person i ljusa kläder, delvis dold av lastbilen.',
+    caption: 'Mellan fordonen finns luckor. Det är i luckorna någon kliver ut.',
+    usage: 'question-image',
+    asset: 'risker/gaende-mellan-parkerade',
+    width: 794,
+    height: 783,
+    status: 'approved',
+  }),
+  img({
+    id: 'bussar-vid-hallplats',
+    sourcePage: 168,
+    title: 'Bussar vid hållplats',
+    topic: 'risker',
+    subcategory: 'barn-och-oskyddade',
+    chapter: 'barn',
+    altText:
+      'Två röda bussar som står vid en hållplats till höger om körbanan, med en gångbro över gatan och en hållplatsyta till vänster.',
+    longDescription:
+      'En gata vid en bussterminal, sedd framåt från förarplatsen. Två röda ledbussar står stilla vid kanten på höger sida, den närmaste alldeles framför dig. En gångbro med glasräcken går över gatan ovanför bussarna. Till vänster ligger en hållplatsyta med väderskydd och cykelparkering, och mellan körbanorna löper en upphöjd refug. Bortom bussarna fortsätter gatan och en mörk bil är på väg bort från dig.',
+    caption: 'Bussarna skymmer allt som rör sig framför dem.',
+    usage: 'question-image',
+    asset: 'risker/bussar-vid-hallplats',
+    width: 960,
+    height: 540,
+    status: 'approved',
+    notes: 'Samma situation som scenariot sc-risk-barn-buss, men i verklig miljö.',
+  }),
+  img({
+    id: 'smal-viadukt-skymd-utfart',
+    sourcePage: 198,
+    title: 'Smal viadukt under järnvägen',
+    topic: 'risker',
+    subcategory: 'skymd-sikt',
+    chapter: 'strackor',
+    altText:
+      'Smal väg som går genom en enfilig viadukt under en järnvägsbro, med gula höjdmarkeringar i valvet.',
+    longDescription:
+      'En smal landsväg sedd framåt från förarplatsen, på väg in i en viadukt under en järnvägsbro av sten. Öppningen rymmer bara ett fordon i taget och är markerad med gula pilar i taket. Bakom valvet svänger vägen och fortsätter bort mellan träd, så det går inte att se om något är på väg emot dig. Till vänster reser sig en stenmur och en slänt, till höger växer buskar tätt intill vägen.',
+    caption: 'Passagen rymmer ett fordon. Du ser inte om någon redan är inne i den.',
+    usage: 'question-image',
+    asset: 'risker/smal-viadukt-skymd-utfart',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'viltvarning-med-tillaggstavla',
+    sourcePage: 178,
+    title: 'Viltvarning med avståndstavla',
+    topic: 'landsvag',
+    subcategory: 'djur-pa-vagen',
+    chapter: 'trafikolyckor',
+    altText:
+      'Landsväg genom höstskog med ett varningsmärke för älg och en tilläggstavla som anger 0–800 meter.',
+    longDescription:
+      'En landsväg som svänger svagt åt vänster genom höstfärgad skog, sedd framåt från förarplatsen. Vägen har heldragna vita kantlinjer och en streckad mittlinje. Till höger står ett varningsmärke — gul triangel med röd ram och en svart älg — och under det en gul tilläggstavla med texten "0–800 m". Bakom märket öppnar sig en gräsyta mot skogsbrynet.',
+    caption: 'Tilläggstavlan säger hur länge varningen gäller, inte hur farlig den är.',
+    usage: 'theory-lesson',
+    asset: 'landsvag/viltvarning-med-tillaggstavla',
+    width: 960,
+    height: 540,
+    status: 'approved',
+    notes: 'Visar A19 med tilläggstavla T2 i verklig miljö.',
+  }),
+  img({
+    id: 'isig-landsvag-utan-linjer',
+    sourcePage: 9,
+    title: 'Isig väg i solsken',
+    topic: 'vinter',
+    subcategory: 'vinterkorning',
+    chapter: 'inledning',
+    altText:
+      'Smal landsväg täckt av packad snö och is, med hjulspår och en kurva framåt, i klart solsken.',
+    longDescription:
+      'En smal landsväg genom vinterlandskap, sedd framåt från förarplatsen. Vägbanan är täckt av packad snö och is med tydliga hjulspår, och inga vägmarkeringar syns någonstans. Vägen svänger åt vänster längre fram så att fortsättningen skyms av skogsbrynet. Solen skiner från klarblå himmel och snön ligger fläckvis på marken runt omkring. En snöstör står i vägkanten till vänster.',
+    caption: 'Solsken säger ingenting om greppet. Det gör hjulspåren.',
+    usage: 'question-image',
+    asset: 'vinter/isig-landsvag-utan-linjer',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'skymning-belyst-vag',
+    sourcePage: 262,
+    title: 'Skymning på belyst väg',
+    topic: 'morker',
+    subcategory: 'morkerkorning',
+    chapter: 'belysning',
+    altText:
+      'Bred väg i skymning med tända gatlyktor, en mötande buss med tända lyktor och en avstängning med orange koner till höger.',
+    longDescription:
+      'En bred väg med två körfält i vardera riktningen, sedd framåt från förarplatsen i skymning. Gatlyktorna längs vägen är tända och himlen är gråblå. En buss möter dig i vänster körriktning med lyktorna tända, och längre fram kör en mörk bil bort från dig. Vägmarkeringarna syns tydligt: streckad körfältslinje i mitten och heldragen kantlinje åt höger. Vid högra kanten står en rad orange koner framför ett avstängt område.',
+    caption: 'Belyst väg tar inte bort kravet på ljus. Den gör bara att du ser mer.',
+    usage: 'theory-lesson',
+    asset: 'morker/skymning-belyst-vag',
+    width: 794,
+    height: 657,
+    status: 'approved',
+  }),
   /* ---- Körfält --------------------------------------------------------- */
   img({
     id: 'korfaltsval-motorvag',
@@ -474,7 +662,9 @@ export const SOURCE_IMAGES: SourceImage[] = [
     asset: 'omkorning/motande-landsvag',
     width: 960,
     height: 540,
-    status: 'approved',
+    status: 'retired',
+    notes:
+      'Samma fotografi som omkorning-landsvag. Kurerades två gånger under olika slug; den posten är den som används.',
   }),
 
   /* ---- Järnvägskorsningar ----------------------------------------------- */
@@ -644,7 +834,9 @@ export const SOURCE_IMAGES: SourceImage[] = [
     asset: 'vagmarken/plankorsning-kryssmarken',
     width: 960,
     height: 540,
-    status: 'approved',
+    status: 'retired',
+    notes:
+      'Samma fotografi som plankorsning-bommar. Kurerades två gånger under olika slug; den posten är den som används.',
   }),
   img({
     id: 'gagata-skyltad',
@@ -866,7 +1058,9 @@ export const SOURCE_IMAGES: SourceImage[] = [
     asset: 'vinter/omkorning-vintervag',
     width: 960,
     height: 540,
-    status: 'approved',
+    status: 'retired',
+    notes:
+      'Samma fotografi som traktor-vintervag. Kurerades två gånger under olika slug; den posten är den som används.',
   }),
   img({
     id: 'snotackt-skogsvag',

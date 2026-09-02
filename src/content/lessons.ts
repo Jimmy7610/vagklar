@@ -33,6 +33,18 @@ export const LESSONS: Lesson[] = [
       },
       {
         kind: 'rule',
+        title: 'Rangordningen',
+        text: 'Får du flera budskap samtidigt gäller de i den här ordningen: polisens tecken, trafiksignal, vägmärke, allmän regel. Det som står högre upp ersätter det som står lägre.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'signal-over-vajningsmarke',
+        prompt: 'Två anvisningar samtidigt — vilken gäller?',
+        caption:
+          'Signalen lyser grönt och väjningspliktsmärket står kvar bredvid den. Signalen står högre i rangordningen, så du får köra utan att väja. Slocknar signalen är det märket som gäller igen.',
+      },
+      {
+        kind: 'rule',
         title: 'Placering',
         text: 'Kör så långt till höger som är lämpligt med hänsyn till säkerhet och framkomlighet — inte så långt höger som fysiskt möjligt.',
       },
@@ -40,6 +52,13 @@ export const LESSONS: Lesson[] = [
         kind: 'example',
         title: 'Vad "lämpligt" betyder',
         text: 'På en smal väg med lös grusvägkant är rätt placering en bit in i körfältet. Ligger du för nära kanten riskerar du att dra ner bilen i diket, och du tar bort din egen marginal om något dyker upp.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'placering-landsvag',
+        prompt: 'Var lägger du bilen här?',
+        caption:
+          'Kurvan döljer både mötande trafik och vägkanten bakom den. Placeringen en bit in i körfältet ger marginal åt båda hållen — så långt höger som är lämpligt, inte så långt höger som går.',
       },
       {
         kind: 'memory',
@@ -131,6 +150,13 @@ export const LESSONS: Lesson[] = [
           'Cykelgata',
           'Terräng',
         ],
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'gangbana-utfart',
+        prompt: 'Vem väjer du för på väg ut?',
+        caption:
+          'Ut från fastigheten korsar du först gångbanan och sedan cykelbanan, och har väjningsplikt mot båda — innan du ens är framme vid bilvägen.',
       },
       {
         kind: 'example',
@@ -250,6 +276,13 @@ export const LESSONS: Lesson[] = [
       },
       {
         kind: 'sourceImage',
+        imageId: 'forbud-att-stanna',
+        prompt: 'Från var gäller förbudet?',
+        caption:
+          'Märket gäller framåt i din färdriktning, från stolpen och tills något upphäver det. Bakom stolpen gäller det inte — och tio meter före övergångsstället gäller förbudet ändå, med eller utan märke.',
+      },
+      {
+        kind: 'sourceImage',
         imageId: 'p-skylt-avgift-boende',
         prompt: 'Vad ska du lägga märke till?',
         caption:
@@ -301,6 +334,13 @@ export const LESSONS: Lesson[] = [
         ],
       },
       {
+        kind: 'sourceImage',
+        imageId: 'skymning-belyst-vag',
+        prompt: 'Vad ska du lägga märke till?',
+        caption:
+          'Skymning på belyst väg. Gatlyktorna gör att du ser vägbanan, men halvljuset krävs ändå — främst för att du ska synas. Helljuset ska däremot vara släckt här, både för den mötande bussen och för den belysta vägen.',
+      },
+      {
         kind: 'warning',
         text: 'Varselljus räcker inte i mörker. De saknar ofta bakljus, vilket gör bilen osynlig bakifrån. Kontrollera att bakljusen faktiskt lyser.',
       },
@@ -335,6 +375,13 @@ export const LESSONS: Lesson[] = [
         kind: 'rule',
         title: 'Vinterdäck',
         text: 'Vid vinterväglag under perioden 1 december till 31 mars krävs vinterdäck. Både datumet och väglaget måste stämma.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'isig-landsvag-utan-linjer',
+        prompt: 'Hur mycket grepp finns här?',
+        caption:
+          'Klar himmel och sol säger ingenting om underlaget. Vägbanan är packad snö, hjulspåren är blankslitna och inga vägmarkeringar syns — så vägens bredd och kant får du bedöma själv.',
       },
       {
         kind: 'list',
@@ -391,6 +438,13 @@ export const LESSONS: Lesson[] = [
       },
       {
         kind: 'sourceImage',
+        imageId: 'omkorning-landsvag',
+        prompt: 'Var befinner sig den vita bilen?',
+        caption:
+          'Ute i mötande körfält, mitt i en omkörning. Linjen på din sida är heldragen — det är den som avgör vad du själv får göra, oavsett vad någon annan gör.',
+      },
+      {
+        kind: 'sourceImage',
         imageId: 'traktor-vintervag',
         prompt: 'Vad talar emot en omkörning här?',
         caption: 'Sikten är god — men snömodden mellan körfälten avgör om omkörningen är säker.',
@@ -441,6 +495,13 @@ export const LESSONS: Lesson[] = [
         text: 'Barn är särskilt utsatta eftersom förmågan att bedöma hastighet och avstånd utvecklas sent, och eftersom deras synfält i sidled är smalare än vuxnas. En boll som rullar ut på gatan går före allt annat i ett barns huvud.',
       },
       {
+        kind: 'sourceImage',
+        imageId: 'bussar-vid-hallplats',
+        prompt: 'Var kan någon dyka upp här?',
+        caption:
+          'Två bussar vid hållplatsen skymmer hela ytan framför sig. Den som klivit av syns inte förrän hen är ute i din körbana — så farten måste vara vald redan innan du är i jämnhöjd med den första bussen.',
+      },
+      {
         kind: 'warning',
         text: 'Ett fordon som saktar in före ett övergångsställe gör det ofta för att någon ska gå över. Att passera det i det läget är en av de mest typiska allvarliga olyckorna med gående.',
       },
@@ -475,6 +536,13 @@ export const LESSONS: Lesson[] = [
           'Två markeringar: två tredjedelar av avståndet återstår.',
           'En markering: sista tredjedelen — korsningen är nära.',
         ],
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'plankorsning-ljussignal',
+        prompt: 'Vad gör den här korsningen svårare än en på landet?',
+        caption:
+          'Mitt i stan konkurrerar plankorsningen med allt annat om uppmärksamheten, och husen tar bort sikten längs spåret. Ljussignalen är då det enda du har att gå på.',
       },
       {
         kind: 'sourceImage',
@@ -537,6 +605,13 @@ export const LESSONS: Lesson[] = [
         kind: 'rule',
         title: 'Cykelöverfart',
         text: 'Här har du full väjningsplikt mot cyklande och förare av moped klass II som är ute på eller just ska färdas ut på överfarten — samma styrka som mot gående på ett obevakat övergångsställe.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'huvudled-cykelpassage',
+        prompt: 'Vad ändrar huvudledsmärket här?',
+        caption:
+          'Huvudleden ger dig företräde mot korsande vägar. Den säger ingenting om cykelpassagen tvärs över din egen körbana — där gäller anpassad hastighet oavsett vilket märke som står i vägkanten.',
       },
       {
         kind: 'sourceImage',
@@ -665,6 +740,13 @@ export const LESSONS: Lesson[] = [
           'varning-jarnvag-bommar',
           'varning-jarnvag-utan-bommar',
         ],
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'viltvarning-med-tillaggstavla',
+        prompt: 'Så här ser märket ut när du möter det.',
+        caption:
+          'Samma varningsmärke som i rutnätet ovan, men på plats: i vägkanten, i ögonvrån, med en tilläggstavla under sig. Tavlan säger 0–800 m — hur långt varningen gäller, inte hur stor risken är.',
       },
       {
         kind: 'warning',

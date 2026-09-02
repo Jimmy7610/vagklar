@@ -5,6 +5,7 @@ import { vajning2Questions } from './vajning2';
 import { manniskan2Questions } from './manniskan2';
 import { grunderQuestions } from './grunder';
 import { bildfragor2Questions } from './bildfragor2';
+import { bildfragor3Questions } from './bildfragor3';
 import { vagmarkesskyltarQuestions } from './vagmarkesskyltar';
 import { bildfragorQuestions } from './bildfragor';
 import { berakningarQuestions } from './berakningar';
@@ -70,6 +71,7 @@ export const ALL_QUESTIONS: Question[] = [
   ...bildfragorQuestions,
   ...vagmarkesskyltarQuestions,
   ...bildfragor2Questions,
+  ...bildfragor3Questions,
   ...grunderQuestions,
   ...manniskan2Questions,
   ...vagmarkeringarQuestions,

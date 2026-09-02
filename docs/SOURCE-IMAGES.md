@@ -25,10 +25,11 @@ references/teoribok-2026-1.pdf          licensierad källa, aldrig incheckad
         │  scripts/extract-source-images.py --extract
         ▼
 references/extracted/teoribok-2026-1/   263 kandidater, aldrig incheckade
+        │  scripts/review-source-images.py  → kontaktkarta att titta i
         │  hand: urval till CURATED-listan i optimise-source-images.py
         │  scripts/optimise-source-images.py
         ▼
-src/assets/source-images/teoribok-2026-1/<ämne>/   44 bilder × 2 bredder, incheckade
+src/assets/source-images/teoribok-2026-1/<ämne>/   51 bilder × 2 bredder, incheckade
         │  src/content/source-images.ts  (registret)
         ▼
 lektioner och frågor
@@ -109,16 +110,45 @@ kan inte glömmas bort i en enskild post.
 `status` styr om bilden får visas. Bara `approved` renderas; validatorn avvisar en fråga
 eller lektion som pekar på något annat.
 
+## Att titta på kandidaterna
+
+```bash
+python scripts/review-source-images.py            # hela boken
+python scripts/review-source-images.py 148-173    # eller ett sidintervall
+```
+
+Skriver `review/source-image-candidates.html` — lokal, gitignorerad, med varje
+kandidat inbäddad som miniatyr bredvid sidnummer, mått, om den redan är kurerad
+och vilka ord som står på den sidan i boken. Filtren delar upp på kapitel, på
+kurerad eller ej, och på form:
+
+| Form | Vad det är | Duger som lärobild |
+| --- | --- | --- |
+| `photo` | Bred 1325×745-bild ur löptexten | Oftast ja |
+| `diagram` | Figur, urklipp eller närbild | Ibland |
+| `divider` | Kvadratisk ~1220×1220 kapitelöppnare | Nej — dekoration |
+
+Det här steget är inte valfritt. Att välja bilder ur en filnamnslista är precis
+så en kapitelöppnare hamnar som illustration till en regel den inte handlar om.
+Hela boken blir ungefär 6 MB inbäddade miniatyrer, vilket vissa visare vägrar
+öppna — ta ett sidintervall i taget.
+
 ## Att lägga till en ny bild
 
 1. Kör extraheringen om `references/extracted/` saknas.
-2. Leta upp kandidaten och lägg till en rad i `CURATED` i
+2. Titta på kandidaterna med `review-source-images.py`.
+3. Lägg till en rad i `CURATED` i
    `scripts/optimise-source-images.py`: `('p123-0.jpeg', 'ämne', 'slug')`.
-3. Kör `python scripts/optimise-source-images.py`.
-4. Lägg till en post i `src/content/source-images.ts` med alt-text, långbeskrivning,
+4. Kör `python scripts/optimise-source-images.py`.
+5. Lägg till en post i `src/content/source-images.ts` med alt-text, långbeskrivning,
    bildtext och rätt sidnummer.
-5. Kör `npm run report:content`. Validatorn kontrollerar att filen finns, att sidan finns
-   i källan och att rättighetsfälten är ifyllda.
+6. Kör `npm run report:content` och `npm run report:images`.
+
+Validatorn kontrollerar att filen finns i **båda** bredderna, att måtten är
+rimliga, att sidan finns i källan, att rättighetsfälten är ifyllda — och att
+inget annat fotografi redan registrerats under samma fil. Den sista regeln
+finns för att tre bilder en gång kurerades två gånger var, med två bildtexter
+och två beskrivningar som kunde säga emot varandra. En av dem gjorde det.
 
 ### Koppla till en lektion
 
@@ -174,13 +204,31 @@ når aldrig startpaketet.
 
 ## Offline
 
-Bilderna **precachas inte**. Det vore fel att lägga 5,7 MB i varje användares cache
-för bilder de kanske aldrig ser.
+Bilderna **precachas inte**. Det vore fel att lägga 6 MB i varje användares cache
+för bilder de kanske aldrig ser. `verify-build` avbryter bygget om en enda
+källbild hamnar i förhandscachen.
 
-I stället fångas de av den befintliga `runtimeCaching`-regeln i `vite.config.ts`:
-`CacheFirst` för allt med `request.destination === 'image'`, med tak på 120 poster och
-60 dagars livslängd. En bild du sett en gång fungerar alltså offline efteråt, medan en
-bild du aldrig öppnat aldrig kostar något.
+De fångas i stället av en egen `runtimeCaching`-regel i `vite.config.ts`:
+`CacheFirst` mot `vagklar-source-images`, tak 160 poster, 180 dagar. Egen cache
+för att de tidigare delade hink med alla andra bilder under ett tak på 120 —
+och då kunde en lektionsbild vräkas ut för att ge plats åt en ikon, offline och
+utan möjlighet att hämta den igen.
+
+Regeln matchar på filändelsen `.webp`, inte på mappen: Vite plattar ut alla
+resurser till `/assets/` vid bygget, så sökvägen bilderna ligger under i förvaret
+finns inte i produktion. WebP är exakt här — fotografierna är det enda WebP
+appen levererar, ikonerna är PNG och SVG — och `verify-build` avbryter om det
+antagandet slutar stämma.
+
+### När bilden inte finns
+
+En bild du aldrig sett finns inte i cachen. Går du offline och öppnar den
+lektionen visar `SourceImageFigure` långbeskrivningen i stället för en trasig
+bild — samma text som en skärmläsare alltid får, skriven för att bära samma
+innehåll. Bildtexten och krediteringen står kvar.
+
+Kontrollerat med servern avstängd: en förhandsvisad bild renderas ur cachen, en
+aldrig visad faller tillbaka till text.
 
 ## Rättigheter
 

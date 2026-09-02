@@ -43,6 +43,10 @@ export interface ValidationInput {
   sources: readonly SourceEntry[];
   /** The source-image registry, for validating image-backed content. */
   sourceImages?: readonly SourceImage[];
+  /** Which responsive widths each asset slug actually has on disk. */
+  availableAssetWidths?: ReadonlyMap<string, readonly number[]>;
+  /** Widths every approved image is expected to ship. */
+  requiredAssetWidths?: readonly number[];
   /** Asset slugs that actually exist on disk. */
   availableAssets?: ReadonlySet<string>;
   /** Lessons, so lesson image blocks are validated too. */
@@ -509,12 +513,32 @@ export function validateContent(input: ValidationInput): ValidationReport {
 
   /* ---- The source-image registry itself -------------------------------- */
   const seenImageIds = new Set<string>();
+  // Two entries pointing at the same file is not a duplicate id — it is the
+  // same photograph curated twice, with two captions and two accessible
+  // descriptions that can disagree about what the picture shows. That happened
+  // once and one of the two descriptions was wrong.
+  const seenAssets = new Map<string, string>();
+
   for (const image of input.sourceImages ?? []) {
     const where = `bild:${image.id}`;
     if (seenImageIds.has(image.id)) {
       add('error', 'duplicate-image-id', where, `Bild-id ${image.id} används mer än en gång.`);
     }
     seenImageIds.add(image.id);
+
+    if (image.status !== 'retired') {
+      const owner = seenAssets.get(image.asset);
+      if (owner) {
+        add(
+          'error',
+          'duplicate-image-asset',
+          where,
+          `Samma bildfil som "${owner}". Ett fotografi ska ha en registerpost.`,
+        );
+      } else {
+        seenAssets.set(image.asset, image.id);
+      }
+    }
 
     if (image.altText.trim().length === 0) {
       add('error', 'image-without-alt', where, 'Källbilden saknar alt-text.');
@@ -540,6 +564,35 @@ export function validateContent(input: ValidationInput): ValidationReport {
     }
     if (!input.subcategoryIds.has(image.subcategory)) {
       add('error', 'image-unknown-subcategory', where, `Okänt delområde "${image.subcategory}".`);
+    }
+
+    if (!Number.isInteger(image.width) || image.width < 1 ||
+        !Number.isInteger(image.height) || image.height < 1) {
+      add(
+        'error',
+        'image-bad-dimensions',
+        where,
+        `Ogiltiga mått ${image.width}×${image.height} — layouten reserverar plats efter dem.`,
+      );
+    }
+
+    if (image.status === 'approved') {
+      // An approved image with no file is a dead entry: the figure falls back
+      // to text and nobody notices until a learner reaches that lesson.
+      if (input.availableAssets && !input.availableAssets.has(image.asset)) {
+        add('error', 'image-asset-missing', where, `Bildfilen för "${image.asset}" saknas på disk.`);
+      } else if (input.availableAssetWidths && input.requiredAssetWidths) {
+        const have = input.availableAssetWidths.get(image.asset) ?? [];
+        const missing = input.requiredAssetWidths.filter((w) => !have.includes(w));
+        if (missing.length > 0) {
+          add(
+            'error',
+            'image-missing-widths',
+            where,
+            `Saknar bredderna ${missing.join(', ')} px — kör scripts/optimise-source-images.py.`,
+          );
+        }
+      }
     }
 
     const source = sourceById.get(image.sourceId);

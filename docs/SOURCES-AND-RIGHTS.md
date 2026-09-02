@@ -113,7 +113,18 @@ Den säger fortfarande ingenting om huruvida Vägklars formulering är korrekt.
 Det är vad [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md) beskriver, och
 det kräver en människa.
 
-## 7. Om något ska tas bort
+## 7. Bildattribution syns alltid
+
+Varje fotografi renderas genom `SourceImageFigure`, som hämtar källa, sida och
+rättighetshavare ur registret och skriver dem under bilden — i lektioner, i
+frågor, i provet och i det förstorade läget. Krediteringen kan inte stängas av
+med en prop; bara den beskrivande bildtexten kan det, och bara i frågeläget där
+den skulle röja svaret.
+
+Faller bilden tillbaka till sin skrivna beskrivning, till exempel offline,
+följer krediteringen med.
+
+## 8. Om något ska tas bort
 
 Om en rättighetshavare vill att något tas bort räcker det att ta bort posten ur
 `SOURCES` och de begrepp som pekar på den; kursplanen, täckningsrapporten och

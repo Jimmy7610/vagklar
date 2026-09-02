@@ -159,6 +159,7 @@ export function QuestionCard({
         <div className={styles.sourceImage}>
           <SourceImageFigure
             imageId={question.sourceImageId}
+            variant="question"
             sizes="(min-width: 1024px) 620px, 100vw"
             priority
             showCaption={false}

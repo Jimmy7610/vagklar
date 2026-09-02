@@ -12,14 +12,15 @@
     "typecheck": "tsc -b --force",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "npm run lint && npm run typecheck && npm run test && npm run report:content && npm run report:verification && npm run build",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run report:content && npm run report:verification && npm run report:images && npm run build",
     "verify:build": "node scripts/verify-build.mjs",
     "report:coverage": "vite-node scripts/coverage-report.ts",
     "report:content": "vite-node scripts/content-report.ts",
     "generate:index": "vite-node scripts/generate-question-index.ts",
     "audit:pages": "vite-node scripts/audit-source-pages.ts",
     "report:verification": "vite-node scripts/verification-report.ts",
-    "report:visuals": "vite-node scripts/visual-qa-sheet.ts"
+    "report:visuals": "vite-node scripts/visual-qa-sheet.ts",
+    "report:images": "vite-node scripts/image-report.ts"
   },
   "dependencies": {
     "react": "^19.2.0",

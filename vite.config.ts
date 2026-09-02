@@ -61,13 +61,42 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
-            // Scenario / sign illustrations are fetched on demand and cached
-            // with a hard ceiling so we never balloon the user's storage.
+            /*
+             * The licensed photographs get their own cache.
+             *
+             * They used to share one bucket with every other image, under a
+             * 120-entry ceiling. With 54 photographs in two widths that bucket
+             * could evict a lesson's picture to make room for an icon, and the
+             * learner would meet the written fallback instead — offline, with
+             * no way to fetch it again. A dedicated cache makes the eviction
+             * behaviour predictable: photographs only ever push out other
+             * photographs, and the ceiling is set above the whole set.
+             *
+             * CacheFirst because these files never change: the filename carries
+             * a content hash, so a new picture is a new URL.
+             *
+             * Matched on the extension, not the folder: Vite flattens every
+             * asset into /assets/ at build time, so the source-images path the
+             * files live under in the repository does not survive into
+             * production. WebP is exact here — the photographs are the only
+             * WebP the app ships, and the icons are PNG and SVG. A test in
+             * verify-build keeps that true.
+             */
+            urlPattern: ({ url }) => url.pathname.endsWith('.webp'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'vagklar-source-images',
+              expiration: { maxEntries: 160, maxAgeSeconds: 60 * 60 * 24 * 180 },
+            },
+          },
+          {
+            // Everything else that is an image: scenario art, icons, anything
+            // added later. Kept small on purpose.
             urlPattern: ({ request }) => request.destination === 'image',
             handler: 'CacheFirst',
             options: {
               cacheName: 'vagklar-images',
-              expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 60 },
+              expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 60 },
             },
           },
         ],

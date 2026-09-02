@@ -2,9 +2,14 @@
    Source photograph
    --------------------------------------------------------------------------
    A licensed photograph shown inside a lesson or a question. The frame owns
-   the aspect ratio so the layout never shifts while the image loads, and the
-   height is capped against the viewport so a tall image cannot take over the
-   screen on a phone.
+   the aspect ratio so the layout never shifts while the image loads.
+
+   The picture is never cropped. An earlier version used object-fit: cover
+   inside a height-capped frame, which quietly cut the top and bottom off wide
+   photographs on a desktop column — and in a traffic photograph the edges are
+   where the meaning lives: the sign on the verge, the cyclist by the parked
+   cars, the cones at the kerb. The frame now follows the picture's own ratio
+   and the *width* is what gets limited, so nothing is ever lost.
    ========================================================================== */
 
 .figure {
@@ -25,9 +30,6 @@
 .frame {
   position: relative;
   width: 100%;
-  /* Never taller than a comfortable slice of the screen: a 1:1 photograph on a
-     narrow phone would otherwise push everything else out of view. */
-  max-height: min(58vh, 460px);
   overflow: hidden;
   border-radius: var(--radius-md);
   background-color: var(--color-surface-sunken);
@@ -38,9 +40,146 @@
   display: block;
   width: 100%;
   height: 100%;
-  max-height: min(58vh, 460px);
-  object-fit: cover;
+  /* contain, not cover: show the whole frame, never a crop. The frame already
+     matches the picture's ratio, so this only matters if the two ever drift. */
+  object-fit: contain;
   object-position: center;
+}
+
+/* ---- Lesson --------------------------------------------------------------
+   The photograph is the thing being discussed, so it gets the reading column.
+   The cap is generous but still keeps the following paragraph in view on a
+   phone, so the picture and the sentence that interprets it stay together. */
+.lesson .frame {
+  max-width: min(100%, calc(62vh * 16 / 9));
+  margin-inline: auto;
+}
+
+/* ---- Question ------------------------------------------------------------
+   Here the photograph is evidence, and the four alternatives have to remain
+   on screen next to it. A tighter cap costs a little detail and buys the
+   thing that makes the question answerable without scrolling; the expand
+   button gives the detail back on demand. */
+.question .frame {
+  max-width: min(100%, calc(38vh * 16 / 9));
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .question .frame {
+    max-width: min(100%, calc(46vh * 16 / 9));
+  }
+}
+
+/* ---- Expand --------------------------------------------------------------
+   Small in the corner, out of the way of the picture, but a full 44 px target
+   and keyboard reachable like any other control. */
+.expand {
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--color-surface) 82%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-standard);
+}
+
+.expand:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+.expand:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* A native <dialog>: the browser owns the focus trap, the inert background and
+   Escape. All this has to do is undo the default box and paint the backdrop. */
+.overlay {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: var(--space-4);
+  border: 0;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.overlay:not([open]) {
+  display: none;
+}
+
+.overlay[open] {
+  display: grid;
+  place-items: center;
+}
+
+.overlay::backdrop {
+  background-color: rgb(0 0 0 / 0.8);
+}
+
+.overlayInner {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: center;
+  max-width: min(100%, 1100px);
+}
+
+.overlayImage {
+  display: block;
+  max-width: 100%;
+  /* Room for the credit and the close button underneath, always. */
+  max-height: 74vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  background-color: #000;
+}
+
+.overlayCredit {
+  margin: 0;
+  text-align: center;
+  font-size: var(--text-caption);
+  color: #d6dade;
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: var(--radius-pill, 999px);
+  background-color: rgb(255 255 255 / 0.1);
+  color: #fff;
+  font: inherit;
+  font-size: var(--text-small);
+  cursor: pointer;
+}
+
+.close:hover {
+  background-color: rgb(255 255 255 / 0.18);
+}
+
+.close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .caption {
@@ -60,6 +199,9 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Shown when the optimised file is missing — a build without the assets, or an
+   offline visit to an image that was never cached. The written description
+   carries the same information, so the lesson or question still works. */
 .fallback {
   margin: 0;
   padding: var(--space-4);
@@ -81,4 +223,10 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expand {
+    transition: none;
+  }
 }

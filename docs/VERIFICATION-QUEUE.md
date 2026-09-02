@@ -13,7 +13,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 
 | Status | Antal | Betyder |
 | --- | ---: | --- |
-| `reviewed` | 423 | Läst och godkänd internt. Inget påstående om expertgranskning. |
+| `reviewed` | 431 | Läst och godkänd internt. Inget påstående om expertgranskning. |
 | `verified` | 0 | Kontrollerad mot namngiven källa av namngiven person. |
 
 ## Kön
@@ -21,9 +21,9 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | Prioritet | Antal | Vad som står på spel |
 | --- | ---: | --- |
 | P1 | 113 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
-| P2 | 64 | Undantag, villkorade regler och beräkningar. |
-| P3 | 246 | Förklarande kunskap utan rättsligt tal. |
-| **Totalt** | **423** | |
+| P2 | 65 | Undantag, villkorade regler och beräkningar. |
+| P3 | 253 | Förklarande kunskap utan rättsligt tal. |
+| **Totalt** | **431** | |
 
 ## P1 — 113 frågor
 
@@ -265,7 +265,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | --- | --- | --- | --- |
 | `kor-008` | Huvudled | Huvudled | Vägmärkesförordningen (2007:90) B4 · Trafikförordningen (1998:1276) 3 kap. 55 § |
 
-## P2 — 64 frågor
+## P2 — 65 frågor
 
 ### Alkohol — 3
 
@@ -358,7 +358,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `omk-002` | Omkörningsregler | Omkörning till höger | Trafikförordningen (1998:1276) 3 kap. 34 § |
 | `omk-004` | Förbud mot omkörning | Omkörning före korsning | Trafikförordningen (1998:1276) 3 kap. 40 § |
 
-### Passager — 9
+### Passager — 10
 
 | Fråga | Delområde | Regel | Källor |
 | --- | --- | --- | --- |
@@ -370,6 +370,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `pas-012` | Cykelpassage och cykelöverfart | Vilka väjningsplikten vid cykelöverfart omfattar | Trafikförordningen (1998:1276) 3 kap. 61 b § · Teoribok — Körkortsboken 2026 för B-körkort Cykelöverfart s. 52 |
 | `pas-015` | Cykelpassage och cykelöverfart | Att korsa en cykelbana | Trafikförordningen (1998:1276) 3 kap. 61 § · Teoribok — Körkortsboken 2026 för B-körkort Cykelbana s. 53 |
 | `bld-009` | Cykelpassage och cykelöverfart | Övergångsställe kombinerat med cykelpassage | Trafikförordningen (1998:1276) 3 kap. 61 § · Trafikförordningen (1998:1276) 3 kap. 61 a § · Teoribok — Körkortsboken 2026 för B-körkort Cykelpassage s. 52 |
+| `bl3-005` | Cykelpassage och cykelöverfart | Huvudled och cykelpassage | Trafikförordningen (1998:1276) 3 kap. 61 § · Vägmärkesförordningen (2007:90) 2 kap. B4 · Teoribok — Körkortsboken 2026 för B-körkort Cykelpassage s. 51 |
 | `grd-011` | Gående och cyklister | Väjningsplikt vid obevakat övergångsställe | Trafikförordningen (1998:1276) 3 kap. 61 § · Teoribok — Körkortsboken 2026 för B-körkort Obevakat övergångsställe s. 46 |
 
 ### Rättsfall — 1
@@ -431,7 +432,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `kor-011` | Trafiksignal i korsning | Gult ljus | Trafikförordningen (1998:1276) 3 kap. 6 § |
 | `bld-002` | Stopplikt | Tilläggstavlan Flervägsstopp | Vägmärkesförordningen (2007:90) 2 kap. B2 · Trafikförordningen (1998:1276) 3 kap. 21 § · Teoribok — Körkortsboken 2026 för B-körkort Flervägsstopp s. 24 |
 
-## P3 — 246 frågor
+## P3 — 253 frågor
 
 ### Alkohol — 2
 
@@ -440,11 +441,12 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `alk-006` | Droger och läkemedel | Läkemedel och körning | Lag (1951:649) om straff för vissa trafikbrott |
 | `mns-020` | Droger och läkemedel | Ansvar för läkemedelspåverkan | Teoribok — Körkortsboken 2026 för B-körkort Läkemedel & mediciner i trafiken s. 141 |
 
-### Barn — 5
+### Barn — 6
 
 | Fråga | Delområde | Regel | Källor |
 | --- | --- | --- | --- |
 | `ris-004` | Barn och oskyddade | Barn i trafiken | Trafikpsykologi: barns utveckling i trafiken |
+| `bl3-002` | Barn och oskyddade | Stannade bussar skymmer | Trafikförordningen (1998:1276) 3 kap. 1 § · Teoribok — Körkortsboken 2026 för B-körkort Barn s. 168 |
 | `mns-028` | Barn och oskyddade | Barns sinnen | Teoribok — Körkortsboken 2026 för B-körkort Sinnena är inte färdigutvecklade s. 169 |
 | `mns-030` | Barn och oskyddade | Barn bakom parkerade fordon | Teoribok — Körkortsboken 2026 för B-körkort Barn är små s. 169 |
 | `mns-031` | Barn och oskyddade | Ögonkontakt med barn | Teoribok — Körkortsboken 2026 för B-körkort Lekande och impulsiva s. 168 · Trafikförordningen (1998:1276) 3 kap. 1 § |
@@ -499,7 +501,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `drv-015` | Drivmedel och utsläppsklasser | Elbilens miljöpåverkan | Teoribok — Körkortsboken 2026 för B-körkort El s. 318 · Teoribok — Körkortsboken 2026 för B-körkort Miljözoner s. 319 |
 | `drv-016` | Drivmedel och utsläppsklasser | Miljözoner | Teoribok — Körkortsboken 2026 för B-körkort Miljözoner s. 319 · Teoribok — Körkortsboken 2026 för B-körkort Utsläppsklasser s. 319 |
 
-### Inledning — 15
+### Inledning — 20
 
 | Fråga | Delområde | Regel | Källor |
 | --- | --- | --- | --- |
@@ -512,6 +514,11 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `ris-007` | Skymd sikt | Parkerade bilar som risk | Riskutbildning: stadsmiljö |
 | `man-008` | Körstrategi | Blickteknik | Körstrategi: blickteknik |
 | `man-009` | Körstrategi | Uppmärksamhetens gränser | Kognitionsforskning: uppmärksamhet och körning |
+| `bl3-001` | Skymd sikt | Sidoavstånd till cyklist | Trafikförordningen (1998:1276) 3 kap. 33 § · Teoribok — Körkortsboken 2026 för B-körkort Defensiv körning s. 7 |
+| `bl3-003` | Skymd sikt | Enfilig passage med skymd utfart | Trafikförordningen (1998:1276) 3 kap. 8 § · Trafikverket |
+| `bl3-006` | Skymd sikt | Luckor mellan parkerade fordon | Trafikförordningen (1998:1276) 3 kap. 1 § · Teoribok — Körkortsboken 2026 för B-körkort Bedöma vad som händer s. 155 |
+| `bl3-007` | Vägens användning | Kryssmärke vid spårväg | Vägmärkesförordningen (2007:90) 2 kap. A37, A39 · Trafikförordningen (1998:1276) 3 kap. 24 § |
+| `bl3-008` | Polisens tecken | Signal före vägmärke | Trafikförordningen (1998:1276) 2 kap. 2 § · Teoribok — Körkortsboken 2026 för B-körkort Rangordning s. 8 |
 | `grd-009` | Grundläggande bestämmelser | Aktsamhetsplikten | Trafikförordningen (1998:1276) 2 kap. 1 § · Teoribok — Körkortsboken 2026 för B-körkort Trafikens grundregler s. 6 |
 | `mns-001` | Körstrategi | Överinlärning | Teoribok — Körkortsboken 2026 för B-körkort Olika typer av inlärning s. 132 |
 | `mns-002` | Körstrategi | Ytinlärning | Teoribok — Körkortsboken 2026 för B-körkort Olika typer av inlärning s. 132 |
@@ -742,7 +749,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `mns-025` | Trötthet | Monotoni som trötthetsorsak | Teoribok — Körkortsboken 2026 för B-körkort Orsaker till trötthet s. 148 |
 | `mns-026` | Trötthet | Trötthetssignaler | Teoribok — Körkortsboken 2026 för B-körkort Trötthetssignaler s. 149 |
 
-### Vinter — 7
+### Vinter — 8
 
 | Fråga | Delområde | Regel | Källor |
 | --- | --- | --- | --- |
@@ -753,6 +760,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `hal-007` | Halka | Underkylt regn | Väglag och vinterväghållning |
 | `hal-009` | Vinterkörning | Sikt och snö på fordonet | Trafikförordningen (1998:1276) 3 kap. 84 § |
 | `bl2-017` | Vinterkörning | Snötäckt vägbana | Teoribok — Körkortsboken 2026 för B-körkort Vinter s. 125 |
+| `bl3-004` | Vinterkörning | Väglag i solsken | Teoribok — Körkortsboken 2026 för B-körkort Förrädiskt väglag s. 124 · Trafikförordningen (1998:1276) 3 kap. 14 § |
 
 ### Vägmärken — 36
 
@@ -823,10 +831,10 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 
 | Grupp | Antal |
 | --- | ---: |
-| Bildburna (foto ur källan) | 34 |
+| Bildburna (foto ur källan) | 42 |
 | Ritade märken eller markeringar | 44 |
 | Beräkningar | 13 |
-| Hänvisar till licensierad teoribok | 276 |
-| Hänvisar till författning | 263 |
-| Hänvisar till myndighet | 24 |
+| Hänvisar till licensierad teoribok | 282 |
+| Hänvisar till författning | 271 |
+| Hänvisar till myndighet | 25 |
 | Endast allmän kunskapskälla | 54 |

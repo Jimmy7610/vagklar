@@ -43,6 +43,7 @@ export type IconName =
   | 'arrow-right'
   | 'arrow-left'
   | 'close'
+  | 'maximize'
   | 'check'
   | 'check-circle'
   | 'x-circle'
@@ -241,6 +242,7 @@ const paths: Record<IconName, ReactElement> = {
     </>
   ),
   close: <path d="m6 6 12 12M18 6 6 18" />,
+  maximize: <path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5" />,
   check: <path d="m5 12.5 4.5 4.5L19 7" />,
   'check-circle': (
     <>

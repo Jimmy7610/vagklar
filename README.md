@@ -36,6 +36,8 @@ npm run dev
 | `npm run report:content` | Validerar banken och skriver `docs/CONTENT-VALIDATION.md` |
 | `npm run generate:index` | Genererar om `src/content/question-index.ts` efter bankändringar |
 | `npm run report:verification` | Bygger verifieringskön och det lokala granskningsverktyget |
+| `npm run report:images` | Skriver `docs/IMAGE-COVERAGE.md` — var källbilderna sitter och var de saknas |
+| `python scripts/review-source-images.py` | Kontaktkarta över bildkandidaterna, att välja ur |
 | `npm run report:visuals` | Ritar alla märken och markeringar förstorade för visuell granskning |
 | `npm run audit:pages` | Granskar varje sidhänvisning mot den faktiska sidtexten |
 | `python scripts/extract-source-pages.py` | Bygger den lokala sidtextcachen som sidgranskningen kräver |
@@ -79,6 +81,7 @@ Läs vidare:
 - [docs/ROAD-MARKINGS.md](docs/ROAD-MARKINGS.md) — registret för vägmarkeringar
 - [docs/VERIFICATION-WORKFLOW.md](docs/VERIFICATION-WORKFLOW.md) — granskat kontra verifierat, och hur man verifierar
 - [docs/BETA-READINESS.md](docs/BETA-READINESS.md) — vad som är kontrollerat, vad som inte är det
+- [docs/IMAGE-COVERAGE.md](docs/IMAGE-COVERAGE.md) — bildstöd per kapitel, och oanvända bilder
 
 ---
 
@@ -136,13 +139,13 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 
 | Sak                            | Antal                                  |
 | ------------------------------ | -------------------------------------- |
-| Frågor                         | 423 (84 lätta, 235 medel, 104 svåra)   |
+| Frågor                         | 431 (84 lätta, 240 medel, 107 svåra)   |
 | Kunskapsområden                | 17                                     |
 | Delområden                     | 71                                     |
 | Lektioner                      | 15                                     |
 | Scenarier                      | 14 (med varianter)                     |
-| Namngivna missuppfattningar    | 247                                    |
-| Källbilder (används med tillstånd) | 44                                 |
+| Namngivna missuppfattningar    | 253                                    |
+| Källbilder (används med tillstånd) | 51                                 |
 | Ritade vägmärken               | 58                                     |
 | Ritade vägmarkeringar          | 15                                     |
 | Kursplanetäckning              | 179 av 179 begrepp i 39 kapitel        |
@@ -195,7 +198,7 @@ register. Se [docs/ROAD-MARKINGS.md](docs/ROAD-MARKINGS.md).
 
 ### Källbilder
 
-44 fotografier ur den licensierade källan används i lektioner och frågor där bilden gör
+51 fotografier ur den licensierade källan används i lektioner och frågor där bilden gör
 skillnad — att läsa en riktig gata går inte att lära ut i ord. De är kurerade för hand ur
 263 kandidater, optimerade till WebP i två bredder, och registrerade med alt-text,
 långbeskrivning och rättighetsdata i

@@ -16,7 +16,11 @@ import { SOURCES, RIGHTS } from '../src/content/sources';
 import { SUBCATEGORIES, CATEGORIES } from '../src/content/taxonomy';
 import { SOURCE_IMAGES } from '../src/content/source-images';
 import { LESSONS } from '../src/content/lessons';
-import { availableSourceImageAssets } from '../src/ui/media/sourceImageAssets';
+import {
+  SOURCE_IMAGE_WIDTHS,
+  availableSourceImageAssets,
+  availableSourceImageWidths,
+} from '../src/ui/media/sourceImageAssets';
 import { ROAD_SIGNS } from '../src/content/road-signs';
 import { SIGN_GLYPHS } from '../src/ui/illustrations/signGlyphs';
 import { ROAD_MARKINGS } from '../src/content/road-markings';
@@ -32,6 +36,8 @@ const report = validateContent({
   sources: SOURCES,
   sourceImages: SOURCE_IMAGES,
   availableAssets: availableSourceImageAssets(),
+  availableAssetWidths: availableSourceImageWidths(),
+  requiredAssetWidths: SOURCE_IMAGE_WIDTHS,
   lessons: LESSONS,
   roadSigns: ROAD_SIGNS,
   availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
