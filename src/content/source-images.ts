@@ -8,8 +8,9 @@ import { PRIMARY_SOURCE_ID } from '@/content/sources';
  * shows, where it comes from and who owns it — questions and lessons refer to
  * an entry by id and never carry attribution of their own.
  *
- * Curation, not import. 263 images were extracted from the source into a
- * working area that is never committed; 54 were selected across three passes. The extraction and
+ * Curation, not import. 263 photographs were extracted and 11 diagrams rendered and
+ * cropped from the page, into working areas that are never committed; 66
+ * entries were selected across four passes. The extraction and
  * optimisation steps are reproducible scripts, documented in
  * docs/SOURCE-IMAGES.md.
  *
@@ -27,6 +28,22 @@ export type SourceImageUsage =
   | 'supporting-reference';
 
 export type SourceImageStatus = 'approved' | 'candidate' | 'retired';
+
+/**
+ * What the asset actually is, which decides how it should be presented.
+ *
+ * A photograph of a road is read as a whole: the eye takes in the scene and
+ * the interesting part may be anywhere in it. A technical drawing is read for
+ * its labels — "40 cm", "3 m", a numbered zone — and those labels have a size
+ * below which the picture stops being a picture and becomes a smudge. The two
+ * therefore need different minimum sizes and different backgrounds, so the
+ * registry says which it is rather than the layout guessing from proportions.
+ */
+export type SourceImageKind =
+  /** A photograph: a road situation, a component, a control. */
+  | 'photo'
+  /** A drawn figure from the book: dimensions, zones, light beams. */
+  | 'diagram';
 
 export interface SourceImage {
   id: string;
@@ -56,6 +73,17 @@ export interface SourceImage {
   /** Shown under the image. */
   caption: string;
   usage: SourceImageUsage;
+  /** Photograph or drawn figure. Defaults to a photograph. */
+  kind?: SourceImageKind;
+  /**
+   * Words printed inside the picture, reproduced as text.
+   *
+   * A diagram's numbers are its content. Rendered as pixels they are invisible
+   * to a screen reader, unsearchable, and the first thing to disappear when the
+   * image is scaled down on a phone. Listing them here means the information
+   * survives all three.
+   */
+  labelText?: string[];
   /** Slug used to resolve the asset files. */
   asset: string;
   /** Intrinsic size of the largest variant, so the layout can reserve space. */
@@ -78,6 +106,297 @@ function img(entry: Omit<SourceImage, 'sourceId' | 'rightsHolder' | 'usedWithPer
 }
 
 export const SOURCE_IMAGES: SourceImage[] = [
+  /* ---- Fordonets säkerhet: ritade figurer (omgång 4) ------------------- */
+  img({
+    id: 'deformationszoner',
+    sourcePage: 232,
+    title: 'Deformationszoner',
+    topic: 'fordonet',
+    subcategory: 'krocksakerhet',
+    chapter: 'krocksakerhet',
+    kind: 'diagram',
+    labelText: ['1', '2'],
+    altText:
+      'Ritning av en bil sedd uppifrån där fram- och bakpartiet är markerat med 1 och sidorna med 2.',
+    longDescription:
+      'En schematisk bil sedd rakt uppifrån, ritad i blått mot en grön bakgrund. Fram- och bakpartiet är inramade med streckade rutor märkta 1 — det är deformationszonerna, som är byggda för att tryckas ihop vid en krock. Sidorna, i höjd med kupén, är inramade med streckade rutor märkta 2. Där finns nästan inget utrymme mellan plåten och den som sitter i bilen.',
+    caption:
+      'Zon 1 är byggd för att tryckas ihop. Zon 2 har knappt något utrymme alls att ge.',
+    usage: 'theory-lesson',
+    asset: 'fordonet/deformationszoner',
+    width: 960,
+    height: 817,
+    status: 'approved',
+  }),
+  img({
+    id: 'lastbredd-tillaten',
+    sourcePage: 244,
+    title: 'Tillåten lastbredd',
+    topic: 'last',
+    subcategory: 'lastning',
+    chapter: 'langd-bredd',
+    kind: 'diagram',
+    labelText: ['260 cm'],
+    altText:
+      'Ritning av en bil framifrån med en bräda på taket, måttsatt till 260 cm och lika mycket utanför på båda sidor.',
+    longDescription:
+      'En bil sedd rakt framifrån med en lång bräda tvärs över takräcket. Ett måttstreck över lasten visar 260 cm. Brädan sticker ut lika mycket på båda sidor om bilen, ungefär 20 cm åt varje håll. Rubriken över figuren lyder "Exempel 1, tillåtet".',
+    caption: 'Totalbredden håller sig inom 260 cm och lasten sticker ut högst 20 cm åt sidan.',
+    usage: 'theory-lesson',
+    asset: 'last/lastbredd-tillaten',
+    width: 960,
+    height: 746,
+    status: 'approved',
+  }),
+  img({
+    id: 'lastbredd-otillaten',
+    sourcePage: 245,
+    title: 'Otillåten lastbredd',
+    topic: 'last',
+    subcategory: 'lastning',
+    chapter: 'langd-bredd',
+    kind: 'diagram',
+    labelText: ['260 cm', '40 cm'],
+    altText:
+      'Ritning av en bil framifrån med en bräda på taket, måttsatt till 260 cm men 40 cm utanför bilen på ena sidan, överkryssad med rött.',
+    longDescription:
+      'Samma bil framifrån med en bräda på taket. Måttstrecket över lasten visar 260 cm, alltså inom gränsen för totalbredd. Men brädan är förskjuten åt ena sidan: ett mått nere till höger visar att den sticker ut 40 cm utanför bilen. Ett stort rött kryss ligger över hela figuren. Rubriken lyder "Exempel 2, ej tillåtet".',
+    caption: 'Bredden är godkänd, men lasten sticker ut 40 cm åt ena sidan. Det är det som fäller den.',
+    usage: 'question-image',
+    asset: 'last/lastbredd-otillaten',
+    width: 960,
+    height: 811,
+    status: 'approved',
+  }),
+  img({
+    id: 'lastlangd-utmarkning',
+    sourcePage: 247,
+    title: 'Utskjutande last i längd',
+    topic: 'last',
+    subcategory: 'lastning',
+    chapter: 'langd-bredd',
+    kind: 'diagram',
+    labelText: ['3 m', '4 m'],
+    altText:
+      'Ritning av en bil från sidan med en lång last som skjuter ut 3 meter fram och 4 meter bak, med markeringsflaggor i ändarna.',
+    longDescription:
+      'En bil sedd från sidan med en lång bräda på takräcket. Brädan skjuter ut framför bilen, måttsatt till 3 meter, och bakom bilen, måttsatt till 4 meter. I båda ändarna av lasten sitter en markering i rött och gult. Fordon plus last blir tillsammans 13 meter, alltså under den högsta tillåtna längden på 24 meter.',
+    caption: 'Skjuter lasten ut mer än en meter bak, eller alls framför bilen, ska den märkas ut.',
+    usage: 'theory-lesson',
+    asset: 'last/lastlangd-utmarkning',
+    width: 960,
+    height: 336,
+    status: 'approved',
+  }),
+  img({
+    id: 'bogsering-utmarkning',
+    sourcePage: 248,
+    title: 'Utmärkning vid bogsering',
+    topic: 'last',
+    subcategory: 'slapvagn',
+    chapter: 'langd-bredd',
+    kind: 'diagram',
+    labelText: ['4 m'],
+    altText:
+      'Ritning av två bilar efter varandra med en bogserlina emellan, där avståndet är måttsatt till 4 meter och linan är märkt.',
+    longDescription:
+      'En grön bil bogserar en lila bil. Mellan dem löper en streckad bogserlina, och avståndet mellan bilarna är måttsatt till 4 meter. Mitt på linan sitter en liten röd och gul markering. Är avståndet mellan fordonen över 2 meter ska linan märkas ut så att andra ser den.',
+    caption: 'Över två meter mellan bilarna: då måste linan märkas ut.',
+    usage: 'question-image',
+    asset: 'last/bogsering-utmarkning',
+    width: 960,
+    height: 284,
+    status: 'approved',
+  }),
+  img({
+    id: 'kultryck-hogt',
+    sourcePage: 256,
+    title: 'Högt kultryck',
+    topic: 'last',
+    subcategory: 'slapvagn',
+    chapter: 'last',
+    kind: 'diagram',
+    altText:
+      'Ritning av bil med släpvagn där lasten ligger längst fram i släpet och en pil pekar nedåt vid kopplingen.',
+    longDescription:
+      'En röd bil drar en släpvagn, sedda från sidan. Lasten — en brun låda — ligger längst fram i släpet, precis bakom kopplingen. En pil vid kopplingen pekar rakt nedåt. Bilens framvagn har lyfts något, så att fronten pekar uppåt och bakvagnen trycks ned.',
+    caption: 'Lasten fram trycker kopplingen nedåt. Bilens framhjul lättar och greppet fram blir sämre.',
+    usage: 'theory-lesson',
+    asset: 'last/kultryck-hogt',
+    width: 960,
+    height: 299,
+    status: 'approved',
+  }),
+  img({
+    id: 'kultryck-lagt',
+    sourcePage: 256,
+    title: 'Lågt kultryck',
+    topic: 'last',
+    subcategory: 'slapvagn',
+    chapter: 'last',
+    kind: 'diagram',
+    altText:
+      'Ritning av bil med släpvagn där lasten ligger längst bak i släpet och en pil pekar uppåt vid kopplingen.',
+    longDescription:
+      'Samma bil och släpvagn från sidan, men nu ligger den bruna lådan längst bak i släpet. Släpet tippar bakåt kring sitt hjul och en pil vid kopplingen pekar rakt uppåt. Bilens bakvagn lyfts.',
+    caption: 'Lasten bak lyfter kopplingen. Bilens bakhjul lättar, och det är de som håller bilen rak.',
+    usage: 'question-image',
+    asset: 'last/kultryck-lagt',
+    width: 960,
+    height: 308,
+    status: 'approved',
+  }),
+  img({
+    id: 'avblandning-mote-1',
+    sourcePage: 266,
+    title: 'Avbländning steg 1',
+    topic: 'morker',
+    subcategory: 'mote-i-morker',
+    chapter: 'belysning',
+    kind: 'diagram',
+    altText:
+      'Ritning uppifrån av en mörk väg där två mötande bilar långt från varandra båda lyser med långa ljuskäglor.',
+    longDescription:
+      'En mörk väg sedd rakt uppifrån. Två bilar möter varandra men är fortfarande långt ifrån varandra. Båda kastar en lång, ljus kägla framför sig som når långt fram på vägen utan att nå den andra bilen.',
+    caption: 'Långt ifrån varandra: båda kör med helljus och ser så mycket som möjligt.',
+    usage: 'theory-lesson',
+    asset: 'morker/avblandning-mote-1',
+    width: 960,
+    height: 355,
+    status: 'approved',
+  }),
+  img({
+    id: 'avblandning-mote-2',
+    sourcePage: 266,
+    title: 'Avbländning steg 2',
+    topic: 'morker',
+    subcategory: 'mote-i-morker',
+    chapter: 'belysning',
+    kind: 'diagram',
+    altText:
+      'Ritning uppifrån där de två bilarnas ljuskäglor möts och båda har växlat till kortare, mörkare käglor.',
+    longDescription:
+      'Samma mörka väg uppifrån. Bilarna har närmat sig varandra och deras ljuskäglor når nu fram till varandra. Båda käglorna har blivit kortare och mörkare, vilket visar att förarna slagit om till halvljus.',
+    caption: 'När käglorna möts är det dags att blända av — inte när du redan är bländad.',
+    usage: 'theory-lesson',
+    asset: 'morker/avblandning-mote-2',
+    width: 960,
+    height: 355,
+    status: 'approved',
+  }),
+  img({
+    id: 'avblandning-mote-3',
+    sourcePage: 266,
+    title: 'Avbländning steg 3',
+    topic: 'morker',
+    subcategory: 'mote-i-morker',
+    chapter: 'belysning',
+    kind: 'diagram',
+    altText:
+      'Ritning uppifrån där bilarna är i jämnhöjd med varandra och båda åter lyser med långa ljuskäglor.',
+    longDescription:
+      'Samma väg uppifrån. Bilarna är nu i jämnhöjd med varandra, sida vid sida i var sin körriktning. Båda har långa ljusa käglor igen, riktade framåt förbi den andra bilen.',
+    caption: 'I jämnhöjd kan ingen blända den andra. Då ska helljuset tillbaka direkt.',
+    usage: 'question-image',
+    asset: 'morker/avblandning-mote-3',
+    width: 960,
+    height: 354,
+    status: 'approved',
+  }),
+  img({
+    id: 'helljus-i-kurva',
+    sourcePage: 268,
+    title: 'Helljus i kurva',
+    topic: 'morker',
+    subcategory: 'mote-i-morker',
+    chapter: 'belysning',
+    kind: 'diagram',
+    labelText: ['A', 'B'],
+    altText:
+      'Ritning uppifrån av en kurva där bil A:s ljuskägla sveper in mot mötande bil B, medan bil B:s kägla pekar bort från A.',
+    longDescription:
+      'En vänsterkurva sedd uppifrån i mörker. Bil A kommer från vänster på insidan av kurvan och bil B från höger. Bil A:s ljuskägla sveper rakt in mot bil B, eftersom kurvan riktar ljuset mot den mötande. Bil B:s kägla pekar däremot bort från A, ut mot kurvans utsida.',
+    caption: 'I kurvan når den enes ljus fram tidigare än den andres. De ska alltså inte blända av samtidigt.',
+    usage: 'question-image',
+    asset: 'morker/helljus-i-kurva',
+    width: 960,
+    height: 434,
+    status: 'approved',
+  }),
+
+  /* ---- Fordonets säkerhet: komponenter och reglage --------------------- */
+  img({
+    id: 'bilbarnstol-bakatvand',
+    sourcePage: 238,
+    title: 'Bakåtvänt babyskydd',
+    topic: 'fordonet',
+    subcategory: 'krocksakerhet',
+    chapter: 'bilbarnstolar',
+    labelText: ['AIRBAG'],
+    altText:
+      'Ett bakåtvänt babyskydd med bärhandtag, med en gul varningsdekal om airbag på sidan.',
+    longDescription:
+      'Ett mörkt bakåtvänt babyskydd med bärhandtag uppfällt, ställt på en pall utomhus. På skyddets sida sitter en gul varningsdekal med texten AIRBAG och en symbol med ett överkryssat barn framför en krockkudde. Skyddets fempunktssele ligger öppen i sitsen.',
+    caption: 'Dekalen på sidan säger det som gäller: aldrig i ett framsäte med aktiv krockkudde.',
+    usage: 'theory-lesson',
+    asset: 'fordonet/bilbarnstol-bakatvand',
+    width: 706,
+    height: 706,
+    status: 'approved',
+  }),
+  img({
+    id: 'krockkudde-indikator',
+    sourcePage: 233,
+    title: 'Indikator för passagerarkrockkudde',
+    topic: 'fordonet',
+    subcategory: 'krocksakerhet',
+    chapter: 'krocksakerhet',
+    labelText: ['PASSENGER AIR BAG', 'OFF', 'ON'],
+    altText:
+      'Panel i bilens innertak med texten PASSENGER AIR BAG samt lägena OFF och ON, där ON lyser gult.',
+    longDescription:
+      'En smal panel i takkonsolen ovanför framrutan. Till vänster står texten PASSENGER AIR BAG, sedan ordet OFF med en symbol för ett barn i bakåtvänd stol, och längst till höger ordet ON som lyser i gult. Lampan visar alltså att passagerarkrockkudden just nu är aktiv.',
+    caption: 'Här lyser ON. Krockkudden är aktiv, och då får ingen bakåtvänd stol sitta i framsätet.',
+    usage: 'question-image',
+    asset: 'fordonet/krockkudde-indikator',
+    width: 705,
+    height: 524,
+    status: 'approved',
+  }),
+  img({
+    id: 'bromsskiva',
+    sourcePage: 224,
+    title: 'Bromsskiva och ok',
+    topic: 'fordonet',
+    subcategory: 'dack-och-bromsar',
+    chapter: 'bromsar',
+    altText: 'En bromsskiva av metall med ett blått bromsok, fotograferad med hjulet avtaget.',
+    longDescription:
+      'En bromsskiva i blank metall sedd snett framifrån med hjulet avmonterat. Runt skivans kant sitter ett blått bromsok som greppar om skivan. Innanför oket skymtar bromsbeläggen. Skivans yta har fina spår efter beläggen.',
+    caption: 'Oket klämmer belägget mot skivan. Friktionen där är hela bromsverkan.',
+    usage: 'theory-lesson',
+    asset: 'fordonet/bromsskiva',
+    width: 520,
+    height: 490,
+    status: 'approved',
+  }),
+  img({
+    id: 'spannband',
+    sourcePage: 252,
+    title: 'Spännband med spärr',
+    topic: 'last',
+    subcategory: 'lastning',
+    chapter: 'last',
+    altText: 'Ett orange spännband med metallkrokar och en spännanordning med spak.',
+    longDescription:
+      'Ett orange spännband i två delar med blå etiketter som anger bandets hållfasthet. I ena änden sitter en böjd metallkrok, i den andra en spännanordning av metall med spak som drar åt bandet. Banden är gjorda för att surra fast last så att den inte kan glida.',
+    caption: 'Etiketten anger hur mycket bandet håller. Ett band som inte är spänt håller ingenting.',
+    usage: 'theory-lesson',
+    asset: 'last/spannband',
+    width: 388,
+    height: 517,
+    status: 'approved',
+  }),
   /* ---- Verklig trafikmiljö (omgång 3) ---------------------------------- */
   img({
     id: 'signal-over-vajningsmarke',
@@ -317,7 +636,8 @@ export const SOURCE_IMAGES: SourceImage[] = [
     asset: 'korfalt/enkelriktat-svang',
     width: 960,
     height: 540,
-    status: 'approved',
+    status: 'retired',
+    notes: 'Ingen lektion behandlar sväng på enkelriktad gata, och bilden lär inget som frågorna inte redan säger i text.',
   }),
 
   /* ---- Väjningsregler --------------------------------------------------- */
@@ -336,7 +656,8 @@ export const SOURCE_IMAGES: SourceImage[] = [
     asset: 'vajningsregler/korsning-tva-fordon',
     width: 960,
     height: 540,
-    status: 'approved',
+    status: 'retired',
+    notes: 'Högerregelslektionen använder oskyltad-korsning, som visar samma sak tydligare. Två bilder av samma situation lär inte dubbelt.',
   }),
   img({
     id: 'stopplikt-buss',
@@ -422,7 +743,8 @@ export const SOURCE_IMAGES: SourceImage[] = [
     asset: 'vajningsregler/overgangsstalle-vajningsplikt',
     width: 960,
     height: 960,
-    status: 'approved',
+    status: 'retired',
+    notes: 'Passagerlektionen har redan cykeloverfart och huvudled-cykelpassage. En tredje bild på samma sida blir dekoration.',
   }),
 
   /* ---- Passager --------------------------------------------------------- */
@@ -460,7 +782,8 @@ export const SOURCE_IMAGES: SourceImage[] = [
     asset: 'passager/cykelpassage-landsvag',
     width: 960,
     height: 540,
-    status: 'approved',
+    status: 'retired',
+    notes: 'Samma sak: passagerlektionen täcker skillnaden passage/överfart med två bilder redan.',
   }),
   img({
     id: 'overgangsstalle-cykelpassage',
@@ -761,7 +1084,7 @@ export const SOURCE_IMAGES: SourceImage[] = [
     usage: 'question-image',
     asset: 'vagmarken/motorvag-portal-vagvisare',
     width: 960,
-    height: 540,
+    height: 959,
     status: 'approved',
   }),
   img({
@@ -871,7 +1194,7 @@ export const SOURCE_IMAGES: SourceImage[] = [
     usage: 'question-image',
     asset: 'vagmarken/pabjuden-korriktning-parkering',
     width: 960,
-    height: 540,
+    height: 960,
     status: 'approved',
   }),
 
@@ -1077,7 +1400,7 @@ export const SOURCE_IMAGES: SourceImage[] = [
     usage: 'theory-lesson',
     asset: 'vinter/snotackt-skogsvag',
     width: 960,
-    height: 540,
+    height: 961,
     status: 'approved',
   }),
 

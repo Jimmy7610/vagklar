@@ -244,15 +244,31 @@ interface SourceImage {
   caption: string;
   usage: 'theory-lesson' | 'question-image' | 'supporting-reference';
   asset: string;           // slug som pekar ut filerna
-  width: number; height: number;
+  width: number; height: number;   // filens verkliga mått, testat mot disken
+  kind?: 'photo' | 'diagram';      // utelämnat betyder foto
+  labelText?: string[];            // text tryckt inne i bilden, ordagrant
   status: 'approved' | 'candidate' | 'retired';
 }
 ```
 
+`kind` styr både utseende och kreditering: en ritning läggs på en fast ljus platta
+som inte vänds i mörkt läge, och krediteras `Illustration:` i stället för `Foto:`.
+
+`labelText` är den text som är *tryckt inne i bilden* — måttet `260 cm`, panelen som
+lyser `ON`. Renderad som pixlar når den ingen som använder skärmläsare, och ingen
+alls när filen saknas offline, så den läses ut i den dolda beskrivningen och i
+textreservet. Ett test kräver att varje etikett också finns i `longDescription`.
+
+`width` och `height` är inte dekoration: de sätter den bildruta layouten reserverar
+innan filen kommit fram. Fel mått ger fel form på rutan, bilden ritas mindre än
+utrymmet den fått och sidan hoppar när filen landar. Ett test läser därför de
+verkliga måtten ur WebP-huvudet och jämför.
+
 En fråga kopplas med `sourceImageId`, en lektion med blocket
 `{ kind: 'sourceImage', imageId, prompt?, caption? }`. Bara `approved` renderas.
 
-Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för extrahering, urval och optimering.
+Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för extrahering, urval och optimering, och
+[SOURCE-DIAGRAMS.md](SOURCE-DIAGRAMS.md) för ritningarna.
 
 ## Validering
 

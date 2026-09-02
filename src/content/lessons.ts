@@ -335,6 +335,26 @@ export const LESSONS: Lesson[] = [
       },
       {
         kind: 'sourceImage',
+        imageId: 'avblandning-mote-1',
+        prompt: 'Steg 1 — långt ifrån varandra',
+        caption: 'Båda kör med helljus. Ljuset når långt fram på vägen utan att nå den mötande.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'avblandning-mote-2',
+        prompt: 'Steg 2 — käglorna möts',
+        caption:
+          'Nu når ljuset fram till den andra bilen. Det är här du bländar av — inte när du själv blir bländad.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'avblandning-mote-3',
+        prompt: 'Steg 3 — i jämnhöjd',
+        caption:
+          'Bredvid varandra kan ingen blända den andre. Helljuset ska tillbaka direkt, inte efter mötet.',
+      },
+      {
+        kind: 'sourceImage',
         imageId: 'skymning-belyst-vag',
         prompt: 'Vad ska du lägga märke till?',
         caption:
@@ -955,6 +975,166 @@ export const LESSONS: Lesson[] = [
     ],
     curriculumChapterIds: ['vagmarken', 'korfalt'],
     checkQuestionIds: ['mrk-001', 'mrk-004', 'mrk-007', 'mrk-009'],
+  },
+  {
+    id: 'les-krockskydd',
+    categoryId: 'fordonet',
+    subcategoryIds: ['krocksakerhet', 'dack-och-bromsar'],
+    title: 'Krockskydd i bilen',
+    summary: 'Vad som tar upp krocken, och var det inte finns något att ta upp den med.',
+    estimatedMinutes: 5,
+    order: 16,
+    curriculumChapterIds: ['krocksakerhet', 'bilbarnstolar', 'bromsar'],
+    checkQuestionIds: ['bl4-005', 'krk-002', 'krk-007'],
+    blocks: [
+      {
+        kind: 'paragraph',
+        text: 'En modern bil är byggd för att offra sig. Plåten längst fram och längst bak är gjord för att tryckas ihop, eftersom varje centimeter som viks ihop är en centimeter som kroppen inne i bilen slipper bromsas på.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'deformationszoner',
+        prompt: 'Titta på bilden — var finns utrymmet?',
+        caption:
+          'Zonerna märkta 1 är byggda för att tryckas ihop. Zonerna märkta 2 är sidorna, där det knappt finns någon plåt alls mellan vägen och den som sitter i bilen.',
+      },
+      {
+        kind: 'rule',
+        title: 'Därför är sidokrockar värre',
+        text: 'Fram och bak finns en halvmeter konstruktion att ta av. I sidled finns en dörr. Det är hela förklaringen till varför en korsning är farligare än en upphinnandeolycka i samma hastighet.',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Krockkudden är inte ett mjukt skydd utan en kraftig gasgenerator. Den blåses upp på några hundradels sekunder och är beräknad för en framåtvänd vuxen som har bältet på sig. Möter den något annat blir den ett slag i stället för ett skydd.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'krockkudde-indikator',
+        prompt: 'Vad står det i taket?',
+        caption:
+          'Panelen visar om passagerarkrockkudden är på. Här lyser ON — kudden är aktiv, och då får ingen bakåtvänd barnstol sitta i framsätet.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'bilbarnstol-bakatvand',
+        prompt: 'Samma besked, på stolen.',
+        caption:
+          'Den gula dekalen på babyskyddets sida säger det med en symbol i stället för ord. Skyddet ska sitta bakåtvänt, och aldrig framför en aktiv krockkudde.',
+      },
+      {
+        kind: 'warning',
+        text: 'Ingen omständighet gör undantag från det: inte barnets ålder, inte ISOFIX-fästen, inte att sätet är skjutet långt bak. Antingen är kudden urkopplad, eller så sitter stolen i baksättet.',
+      },
+      {
+        kind: 'list',
+        title: 'Vanliga missuppfattningar',
+        items: [
+          'Att bältet räcker i låg fart — vid 50 km/h motsvarar krocken ett fall från tredje våningen',
+          'Att en krockkudde ersätter bältet — den är beräknad för att komplettera det, inte ersätta det',
+          'Att barn under 15 år är passagerarens eget ansvar — det är förarens',
+          'Att nackskyddet är en kudde — det är ett skydd mot pisksnärt och ska nå upp i höjd med hjässan',
+        ],
+      },
+      {
+        kind: 'paragraph',
+        text: 'Allt detta förutsätter att bilen kan bromsa. Skivbromsen arbetar genom att bromsoket klämmer ett belägg mot en roterande skiva; hela bromsverkan är friktionen mellan de två ytorna.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'bromsskiva',
+        prompt: 'Så fungerar det',
+        caption:
+          'Oket sitter runt skivans kant och klämmer belägget mot den. Sjunker bromspedalen långsamt mot golvet är det oftast läckage i systemet; känns den fjädrande är det luft.',
+      },
+      {
+        kind: 'memory',
+        text: 'Bilen skyddar dig genom att gå sönder på rätt ställe. Sidorna är inte ett av dem.',
+      },
+    ],
+  },
+  {
+    id: 'les-last-och-slap',
+    categoryId: 'last',
+    subcategoryIds: ['lastning', 'slapvagn'],
+    title: 'Last och släp',
+    summary: 'Måtten, markeringen och var i släpet tyngden ska ligga.',
+    estimatedMinutes: 6,
+    order: 17,
+    curriculumChapterIds: ['last', 'langd-bredd'],
+    checkQuestionIds: ['bl4-001', 'bl4-002', 'bl4-006'],
+    blocks: [
+      {
+        kind: 'paragraph',
+        text: 'Reglerna om last handlar om två saker som är lätta att blanda ihop: hur brett och långt ekipaget får vara, och hur lasten ska sitta fast. Det första är mått, det andra är fysik.',
+      },
+      {
+        kind: 'rule',
+        title: 'På bredden gäller två krav samtidigt',
+        text: 'Totalbredden får vara högst 260 cm, och lasten får skjuta ut högst 20 cm utanför bilen åt sidan. Båda måste vara uppfyllda — det räcker inte att klara ett av dem.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'lastbredd-tillaten',
+        prompt: 'Vad händer här?',
+        caption:
+          'Lasten är 260 cm bred och ligger mitt på, så den sticker ut ungefär lika mycket åt båda hållen. Båda kraven är uppfyllda.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'lastbredd-otillaten',
+        prompt: 'Och här?',
+        caption:
+          'Samma bredd, 260 cm — men lasten är förskjuten och sticker ut 40 cm på ena sidan. Måttet på bredden räddar inte situationen.',
+      },
+      {
+        kind: 'rule',
+        title: 'På längden gäller utmärkning',
+        text: 'Skjuter lasten ut mer än en meter bakåt ska den märkas ut. Skjuter den ut framför bilen ska den märkas ut oavsett hur lite. I dagsljus med flagga eller tydlig färg, i mörker med lykta och reflex — vitt framåt, rött bakåt.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'lastlangd-utmarkning',
+        prompt: 'Titta på markeringarna.',
+        caption:
+          'Lasten skjuter ut 3 meter fram och 4 meter bak, och båda ändarna är märkta. Bil och last blir tillsammans 13 meter, alltså långt under den högsta tillåtna längden på 24 meter.',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Släpvagnen lyder under samma tanke men med en extra faktor: var tyngden ligger i förhållande till släpets hjulaxel. Det avgör hur mycket av lasten som vilar på bilens dragkrok — kultrycket.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'kultryck-hogt',
+        prompt: 'Lasten längst fram',
+        caption:
+          'Tyngden pressar kopplingen nedåt. Bilens framvagn lättar, styrningen blir vag och halvljuset pekar upp i ögonen på mötande.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'kultryck-lagt',
+        prompt: 'Lasten längst bak',
+        caption:
+          'Släpet tippar bakåt och lyfter kopplingen. Nu lättar bilens bakvagn i stället — och det är bakvagnen som håller ekipaget rakt när släpet börjar vandra.',
+      },
+      {
+        kind: 'memory',
+        text: 'Tungt strax framför släpets hjulaxel. Varken längst fram eller längst bak.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'spannband',
+        prompt: 'Kom ihåg',
+        caption:
+          'Etiketten på bandet anger hur mycket det håller. Vid en inbromsning från 50 km/h drar lasten framåt med långt mer än sin egen vikt — ett oskyddat bagage i kupén blir ett projektil.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'bogsering-utmarkning',
+        prompt: 'Och vid bogsering',
+        caption:
+          'Är avståndet mellan bilarna över två meter ska linan märkas ut. Bogsering sker i högst 30 km/h, och på motorväg bara fram till närmaste avfart.',
+      },
+    ],
   },
 ];
 

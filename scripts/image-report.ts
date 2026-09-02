@@ -1,5 +1,5 @@
 /**
- * Where the licensed photographs are, and where they are not.
+ * Where the licensed pictures are, and where they are not.
  *
  *   npm run report:images
  *
@@ -108,12 +108,21 @@ lines.push('');
 
 lines.push('## Kapitel med bildstöd');
 lines.push('');
-lines.push('| Kapitel | Sidor | Bilder |');
-lines.push('| --- | --- | ---: |');
+lines.push('Foto och ritning gör olika saker. Ett fotografi visar hur en situation faktiskt');
+lines.push('ser ut genom vindrutan; en ritning visar ett mått eller ett förhållande som inte');
+lines.push('går att fotografera. Ett kapitel om last behöver det senare, ett om sikt det');
+lines.push('förra, och kolumnerna hålls isär så att den skillnaden syns.');
+lines.push('');
+lines.push('| Kapitel | Sidor | Foto | Ritning |');
+lines.push('| --- | --- | ---: | ---: |');
 for (const chapter of CURRICULUM_CHAPTERS) {
-  const n = imagesPerChapter.get(chapter.id) ?? 0;
-  if (n === 0) continue;
-  lines.push(`| ${chapter.title} | ${chapter.startPage}–${chapter.endPage} | ${n} |`);
+  const inChapter = approved.filter((i) => i.chapter === chapter.id);
+  if (inChapter.length === 0) continue;
+  const diagrams = inChapter.filter((i) => i.kind === 'diagram').length;
+  lines.push(
+    `| ${chapter.title} | ${chapter.startPage}–${chapter.endPage} | ` +
+      `${inChapter.length - diagrams} | ${diagrams} |`,
+  );
 }
 lines.push('');
 
@@ -132,13 +141,14 @@ lines.push('');
 
 lines.push('## Bilder och var de används');
 lines.push('');
-lines.push('| Bild | Delområde | Sida | Lektioner | Frågor |');
-lines.push('| --- | --- | ---: | --- | --- |');
+lines.push('| Bild | Slag | Delområde | Sida | Lektioner | Frågor |');
+lines.push('| --- | --- | --- | ---: | --- | --- |');
 for (const image of approved) {
   const lessons = lessonUse.get(image.id) ?? [];
   const questions = questionUse.get(image.id) ?? [];
   lines.push(
-    `| \`${image.id}\` | ${getSubcategoryName(image.subcategory)} | ${image.sourcePage} | ` +
+    `| \`${image.id}\` | ${image.kind === 'diagram' ? 'ritning' : 'foto'} | `+
+      `${getSubcategoryName(image.subcategory)} | ${image.sourcePage} | ` +
       `${lessons.length ? lessons.join(', ') : '—'} | ${questions.length ? questions.join(', ') : '—'} |`,
   );
 }

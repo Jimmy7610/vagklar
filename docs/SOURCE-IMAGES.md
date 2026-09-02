@@ -1,8 +1,14 @@
 # Källbilder
 
-Vägklar använder ett urval fotografier ur den licensierade teoriboken. De visar
-verkliga svenska trafiksituationer sedda från förarplatsen — något varken vektorgrafik
-eller text kan ersätta när man ska lära sig att *läsa en gata*.
+Vägklar använder ett urval bilder ur den licensierade teoriboken: dels fotografier
+av verkliga svenska trafiksituationer sedda från förarplatsen, dels bokens egna
+ritningar. Fotografiet visar hur något ser ut genom vindrutan; ritningen visar ett
+mått eller ett förhållande som inte går att fotografera. Varken vektorgrafik eller
+text ersätter dem.
+
+Den här filen beskriver fotografierna och kedjan de delar. Ritningarna har egna
+krav — de bär tryckta mått som måste finnas som text också — och beskrivs i
+[SOURCE-DIAGRAMS.md](SOURCE-DIAGRAMS.md).
 
 Den här filen beskriver hela kedjan: hur bilder tas ut ur källan, hur de väljs, hur de
 optimeras, var de bor och hur de kopplas till innehåll.
@@ -10,7 +16,10 @@ optimeras, var de bor och hur de kopplas till innehåll.
 ## Principen
 
 **Kurering, inte import.** 263 bilder togs ut ur källan till en arbetsyta som aldrig
-checkas in. 44 har valts i två omgångar. Resten ligger kvar utanför appen.
+checkas in. 62 har valts i fyra omgångar — 51 fotografier och 11 ritningar. Resten
+ligger kvar utanför appen. Fyra tidigare godkända fotografier har satts till
+`retired`: de dubblerade undervisning som en bättre bild i samma lektion redan
+skötte, och en godkänd bild som ingen använder är inte gratis.
 
 Bilden ska bära något texten inte klarar. Kan frågan ställas lika bra i ord hör den
 hemma i en vanlig frågefil, inte bland bildfrågorna.

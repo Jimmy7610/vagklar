@@ -33,9 +33,18 @@ hitta det som saknas, inte för att se färdig ut.
 
 ## Källbilder
 
-- [x] **51 godkända fotografier**, 47 använda av en lektion eller fråga
+- [x] **62 godkända bilder** — 51 fotografier och 11 ritningar ur källan — och
+      samtliga används av en lektion eller en fråga
       (`npm run report:images` → [IMAGE-COVERAGE.md](IMAGE-COVERAGE.md))
-- [x] 18 av 39 kapitel har bildstöd; rapporten listar vilka som saknar det
+- [x] 23 av 39 kapitel har bildstöd; rapporten redovisar foto och ritning i
+      skilda kolumner, så det syns vilket slag ett kapitel faktiskt fått
+- [x] Ritningarna bär mått som text i `labelText`, upprepade i långbeskrivningen
+      — kontrollerat av test, så en måttfråga är lösbar utan att se figuren
+- [x] Registrets `width`/`height` stämmer med filerna, läst ur WebP-huvudet.
+      Sju poster gjorde det inte och ritades därför mindre än sin egen ruta
+- [x] Ritningar krediteras `Illustration:`, foton `Foto:`
+- [x] Varje godkänd bilds sidhänvisning finns i källan och ligger i rätt
+      kapitel (`npm run audit:pages`, 0 fel)
 - [x] Varje bild bär alt-text, långbeskrivning, bildtext, källa, sida,
       rättighetshavare och tillståndsmarkering — validerat
 - [x] Varje godkänd bild finns i båda responsiva bredderna — validerat
@@ -56,10 +65,15 @@ hitta det som saknas, inte för att se färdig ut.
       kontrollerat med servern avstängd
 - [x] Elva bredder × tio bildbärande lektioner utan överflöd, uppskalning eller
       trasiga filer, i båda teman
-- [ ] **21 av 39 kapitel saknar fortfarande bildstöd.** Flera behöver inget —
+- [ ] **16 av 39 kapitel saknar fortfarande bildstöd.** Flera behöver inget —
       ett kapitel om registreringsbevis blir inte tydligare av ett foto — men
-      Däck, Bromsar, Bilbarnstolar och Trafikolyckor skulle bli det.
-- [ ] 4 godkända bilder används fortfarande inte av något innehåll.
+      Däck och Trafikolyckor skulle bli det. Genomgången av fordonskapitlen
+      visade att källan har färre äkta scheman än väntat: mycket av det som ser
+      ut som figurer är formelrutor och textstycken satta som grafik, och de hör
+      inte hemma i Vägklar, som skriver sin egen text.
+- [x] Inga godkända bilder ligger oanvända. Fyra som dubblerade undervisning en
+      bättre bild redan skötte är satta till `retired` med skäl och borttagna
+      ur bygget.
 
 ## Vägmärken och vägmarkeringar
 
@@ -209,6 +223,8 @@ Inget av nedanstående hindrar en beta, men allt är känt:
 4. Skärmläsargranskning
 5. 320 px kombinerat med 200 % text
 6. Utred den ostabila provtesten
+7. Däck och Trafikolyckor saknar bildstöd; källan verkar inte ha en ritning som
+   löser det, så det kräver antingen ett foto eller egen vektorgrafik
 
 ## Omdöme
 

@@ -864,3 +864,63 @@ horisontellt överflöd, ingen bild bredare än kolumnen, ingen högre än 85 % 
 skärmen, ingen trasig, ingen uppskalad mer än 1,35× sin egen upplösning.
 
 Inga fynd. Kontrollerat i både ljust och mörkt läge.
+
+## Bokens ritningar i fordonsdelen (2026-09-02)
+
+Elva ritningar och fyra komponentfoton ur källan togs in i kapitlen om
+krocksäkerhet, last, släp och belysning. Genomgången nedan är körd i
+webbläsaren mot ett riktigt bygge (`npm run preview`), inte mot dev-servern.
+
+### Vad som kontrollerades
+
+| Yta | Resultat |
+| --- | --- |
+| Lektionen *Last och släp* — 7 figurer | Alla renderar, mått läsbara ned till 320 px |
+| Lektionen *Krockskydd i bilen* — 4 figurer | Alla renderar |
+| Frågekortet (kontrollfrågorna) | Ritningen visas, bildtexten döljs — inget svar läcker |
+| Provsimuleringen | Ett prov innehöll två ritningsfrågor (nr 40 och 51) och fyra foton; båda renderade |
+| Förstoringen | Öppnar, visar samma bild i full bredd, `Esc` stänger, fokus återgår |
+| Mörkt läge | Ritningen ligger på fast ljus platta — röda kryss och gula markeringar behåller sin betydelse |
+| Ljust läge, 320 px | Ingen horisontell scroll, `260 cm` och `40 cm` läsbara |
+| Nätverk | 62 förfrågningar, samtliga 200 |
+| Konsolen | Inga fel från appen |
+
+### Offline — servern verkligen avstängd
+
+Servern stoppades och sidan laddades om:
+
+- *Last och släp*, tidigare besökt: **7 av 7 ritningar** hämtades ur
+  `vagklar-source-images`.
+- *Krockskydd i bilen*, aldrig besökt medan servicearbetaren styrde: **0 av 4**
+  bilder fanns i cachen, och alla fyra föll tillbaka på den skrivna
+  beskrivningen med bildtext och kreditering intakta. Ingen trasig bildikon.
+
+Det är det avsedda beteendet, inte en brist: källbilderna precachas inte, vilket
+håller installationen liten. En lektion man har läst fungerar offline; en man
+aldrig öppnat degraderar till text — och gör det läsbart.
+
+### Vad genomgången hittade och som rättades
+
+1. **Registret angav fel mått för sju bilder.** `kultryck-hogt` stod som
+   960×211 men filen är 960×299, och tre äldre foton stod som 960×540 fast de
+   är närmast kvadratiska. Layouten reserverar en ruta ur de talen, så bilden
+   ritades mindre än utrymmet den fått. Måtten rättades mot filerna, och ett
+   test läser dem nu ur WebP-huvudet.
+2. **Förstoringsknappen låg ovanpå ritningen.** På ett foto finns slack i
+   hörnet; en ritning är beskuren till sitt innehåll, så knappen hamnade på den
+   bogserade bilen. Den ligger nu under plattan. (Två mellansteg dit fungerade
+   inte: `padding` på ramen kröp ihop bilden, och `position: static` inuti ramen
+   klipptes bort av `overflow: hidden`.)
+3. **Ritningar krediterades som `Foto:`.** Nu `Illustration:`, valt av `kind`.
+4. **Fyra godkända foton användes inte av något.** De dubblerade undervisning
+   som en bättre bild i samma lektion redan skötte, och är satta till `retired`
+   med skäl. Filerna är borttagna ur bygget.
+
+### Kvarstående
+
+- Förstoringen ger lite för en bred remsritning: figuren fyller redan spalten,
+  så helskärm tillför ingen upplösning. Den fungerar, men den hjälper mindre än
+  den gör på ett foto.
+- Sju bilder ligger utanför sitt kapitels sidintervall i
+  `docs/SOURCE-PAGE-AUDIT.md`. Samtliga är foton vars *ämne* hör till ett annat
+  kapitel än sidan de trycktes på — förväntat, och redovisat i rapporten.

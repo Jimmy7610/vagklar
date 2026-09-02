@@ -40,7 +40,9 @@ Tillståndet omfattar både texten och bilderna i källan.
 
 **Bilderna** används däremot direkt, i ett kurerat urval:
 
-- 44 fotografier ur källan visas i lektioner och frågor, valda ur 263 kandidater.
+- 62 bilder ur källan visas i lektioner och frågor: 51 fotografier och 11 ritningar.
+- Ritningarna krediteras som `Illustration:`, fotografierna som `Foto:`. Att kalla
+  en ritning för ett fotografi vore fel både mot läsaren och mot rättighetshavaren.
 - Varje bild visas med kreditering: utgivare, sidnummer, rättighetshavare och
   att den används med tillstånd.
 - Rättighetshavarens egen vattenstämpel i fotografierna tas aldrig bort.
@@ -49,7 +51,8 @@ Tillståndet omfattar både texten och bilderna i källan.
   rättighetsdata per bild, och innehållsvalidatorn avvisar en bild som saknar
   rättighetshavare eller tillståndsmarkering.
 
-Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för hela bildkedjan.
+Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för hela bildkedjan och
+[SOURCE-DIAGRAMS.md](SOURCE-DIAGRAMS.md) för ritningarna.
 
 Rättigheterna till boken tillhör Hagberg Media AB. Inget i det här projektet gör
 anspråk på dem, och Jimmy Eliasson äger inte det materialet.

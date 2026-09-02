@@ -583,7 +583,16 @@ export function validateContent(input: ValidationInput): ValidationReport {
         add('error', 'image-asset-missing', where, `Bildfilen för "${image.asset}" saknas på disk.`);
       } else if (input.availableAssetWidths && input.requiredAssetWidths) {
         const have = input.availableAssetWidths.get(image.asset) ?? [];
-        const missing = input.requiredAssetWidths.filter((w) => !have.includes(w));
+        const largest = Math.max(...input.requiredAssetWidths);
+        // A variant wider than the original would be an upscale, and the
+        // optimiser refuses to write one — so only the widths the source can
+        // actually fill are required. The largest is always required, because
+        // that is the file the srcset falls back to; for a small original it
+        // simply holds the original size.
+        const expected = input.requiredAssetWidths.filter(
+          (w) => w <= image.width || w === largest,
+        );
+        const missing = expected.filter((w) => !have.includes(w));
         if (missing.length > 0) {
           add(
             'error',

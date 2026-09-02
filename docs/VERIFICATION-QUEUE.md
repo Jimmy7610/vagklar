@@ -13,19 +13,19 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 
 | Status | Antal | Betyder |
 | --- | ---: | --- |
-| `reviewed` | 431 | Läst och godkänd internt. Inget påstående om expertgranskning. |
+| `reviewed` | 437 | Läst och godkänd internt. Inget påstående om expertgranskning. |
 | `verified` | 0 | Kontrollerad mot namngiven källa av namngiven person. |
 
 ## Kön
 
 | Prioritet | Antal | Vad som står på spel |
 | --- | ---: | --- |
-| P1 | 113 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
-| P2 | 65 | Undantag, villkorade regler och beräkningar. |
-| P3 | 253 | Förklarande kunskap utan rättsligt tal. |
-| **Totalt** | **431** | |
+| P1 | 116 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
+| P2 | 66 | Undantag, villkorade regler och beräkningar. |
+| P3 | 255 | Förklarande kunskap utan rättsligt tal. |
+| **Totalt** | **437** | |
 
-## P1 — 113 frågor
+## P1 — 116 frågor
 
 ### Alkohol — 14
 
@@ -60,13 +60,14 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `mor-001` | Mörkerkörning | Hastighet i mörker | Trafikförordningen (1998:1276) 3 kap. 14 § |
 | `mor-005` | Mörkerkörning | Att upptäcka gående i mörker | Trafiksäkerhet: synbarhet i mörker |
 
-### Bilbarnstolar — 3
+### Bilbarnstolar — 4
 
 | Fråga | Delområde | Regel | Källor |
 | --- | --- | --- | --- |
 | `las-003` | Lastning och lastsäkring | Lastsäkring | Trafikförordningen (1998:1276) 3 kap. 81 § |
 | `las-004` | Lastning och lastsäkring | Utskjutande last | Trafikförordningen (1998:1276) 3 kap. 81 § |
 | `las-006` | Lastning och lastsäkring | Passagerare och bälte | Trafikförordningen (1998:1276) 4 kap. 10 § |
+| `bl4-001` | Lastning och lastsäkring | Last som skjuter ut i sidled | Trafikförordningen (1998:1276) 4 kap. 15 § · Teoribok — Körkortsboken 2026 för B-körkort På bredden s. 244, 245 |
 
 ### Däck — 5
 
@@ -87,7 +88,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `frs-003` | Försäkring | Halvförsäkring | Teoribok — Körkortsboken 2026 för B-körkort Halvförsäkring (delkaskoförsäkring) s. 298 |
 | `frs-004` | Försäkring | Regressrätt | Teoribok — Körkortsboken 2026 för B-körkort Trafikförsäkring s. 298 |
 
-### Indelning av fordon — 9
+### Indelning av fordon — 11
 
 | Fråga | Delområde | Regel | Källor |
 | --- | --- | --- | --- |
@@ -100,6 +101,8 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `fsl-004` | Fordonsslag och hastigheter | Högsta hastighet vid bogsering | Trafikförordningen (1998:1276) 4 kap. 20 § · Teoribok — Körkortsboken 2026 för B-körkort Hastigheter för olika fordon s. 190 |
 | `fsl-005` | Fordonsslag och hastigheter | Moped klass I och klass II | Teoribok — Körkortsboken 2026 för B-körkort Indelning av fordon s. 189 · Teoribok — Körkortsboken 2026 för B-körkort Kollektivkörfält s. 18 |
 | `fsl-006` | Fordonsslag och hastigheter | Varför andra fordons hastigheter spelar roll | Teoribok — Körkortsboken 2026 för B-körkort Hastigheter för olika fordon s. 190 |
+| `bl4-002` | Släpvagn | Lastens placering i släpet | Teoribok — Körkortsboken 2026 för B-körkort Kultryck s. 256 · Trafikverket |
+| `bl4-006` | Släpvagn | Utmärkning av bogserlina | Trafikförordningen (1998:1276) 5 kap. 1 § · Teoribok — Körkortsboken 2026 för B-körkort Utmärkning vid bogsering s. 248 |
 
 ### Inledning — 11
 
@@ -265,7 +268,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | --- | --- | --- | --- |
 | `kor-008` | Huvudled | Huvudled | Vägmärkesförordningen (2007:90) B4 · Trafikförordningen (1998:1276) 3 kap. 55 § |
 
-## P2 — 65 frågor
+## P2 — 66 frågor
 
 ### Alkohol — 3
 
@@ -325,6 +328,12 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `jvg-014` | Omkörning vid plankorsning | Vilken signal som upphäver omkörningsförbudet | Trafikförordningen (1998:1276) 3 kap. 40 § · Teoribok — Körkortsboken 2026 för B-körkort Rätt typ av signal s. 111 |
 | `bld-014` | Omkörning vid plankorsning | Omkörning vid plankorsning med bommar | Trafikförordningen (1998:1276) 3 kap. 40 § · Teoribok — Körkortsboken 2026 för B-körkort Omkörning vid plankorsning s. 111 |
 | `bl2-005` | Omkörning vid plankorsning | Bommar och omkörningsförbud | Trafikförordningen (1998:1276) 3 kap. 40 § · Teoribok — Körkortsboken 2026 för B-körkort Omkörning vid plankorsning s. 111 |
+
+### Krocksäkerhet — 1
+
+| Fråga | Delområde | Regel | Källor |
+| --- | --- | --- | --- |
+| `bl4-005` | Krocksäkerhet | Passagerarkrockkudde och bakåtvänd stol | Trafikförordningen (1998:1276) 4 kap. 10 § · Teoribok — Körkortsboken 2026 för B-körkort Krockkudde (airbag) s. 233 |
 
 ### Körfält — 8
 
@@ -432,7 +441,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `kor-011` | Trafiksignal i korsning | Gult ljus | Trafikförordningen (1998:1276) 3 kap. 6 § |
 | `bld-002` | Stopplikt | Tilläggstavlan Flervägsstopp | Vägmärkesförordningen (2007:90) 2 kap. B2 · Trafikförordningen (1998:1276) 3 kap. 21 § · Teoribok — Körkortsboken 2026 för B-körkort Flervägsstopp s. 24 |
 
-## P3 — 253 frågor
+## P3 — 255 frågor
 
 ### Alkohol — 2
 
@@ -452,7 +461,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `mns-031` | Barn och oskyddade | Ögonkontakt med barn | Teoribok — Körkortsboken 2026 för B-körkort Lekande och impulsiva s. 168 · Trafikförordningen (1998:1276) 3 kap. 1 § |
 | `mns-032` | Barn och oskyddade | Barn vid bussar | Teoribok — Körkortsboken 2026 för B-körkort Barn s. 168 |
 
-### Belysning — 18
+### Belysning — 20
 
 | Fråga | Delområde | Regel | Källor |
 | --- | --- | --- | --- |
@@ -474,6 +483,8 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | `hal-008` | Dimma | Körning i dimma | Trafikförordningen (1998:1276) 3 kap. 74 § |
 | `for-004` | Belysning | Trasig lykta | Trafikförordningen (1998:1276) 3 kap. 68 § |
 | `for-007` | Belysning | Varningsblinkers | Trafikförordningen (1998:1276) 3 kap. 74 § |
+| `bl4-003` | Möte i mörker | När helljuset ska tillbaka | Teoribok — Körkortsboken 2026 för B-körkort Korrekt avbländning — möte s. 266 · Trafikförordningen (1998:1276) 3 kap. 69 § |
+| `bl4-004` | Möte i mörker | Avbländning i kurva | Teoribok — Körkortsboken 2026 för B-körkort Kurvor s. 268 · Trafikförordningen (1998:1276) 3 kap. 69 § |
 
 ### Cirkulationsplats — 13
 
@@ -831,10 +842,10 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 
 | Grupp | Antal |
 | --- | ---: |
-| Bildburna (foto ur källan) | 42 |
+| Bildburna (foto ur källan) | 48 |
 | Ritade märken eller markeringar | 44 |
 | Beräkningar | 13 |
-| Hänvisar till licensierad teoribok | 282 |
-| Hänvisar till författning | 271 |
-| Hänvisar till myndighet | 25 |
+| Hänvisar till licensierad teoribok | 288 |
+| Hänvisar till författning | 276 |
+| Hänvisar till myndighet | 26 |
 | Endast allmän kunskapskälla | 54 |

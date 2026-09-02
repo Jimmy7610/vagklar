@@ -118,13 +118,17 @@ export function SourceImageFigure({
 
   if (!image) return null;
 
+  const kind = image.kind ?? 'photo';
+
   const resolved = resolveSourceImage(image.asset);
   const source = getSource(image.sourceId);
   const descriptionId = `${reactId}-desc`;
+  // A drawing is not a photograph, and crediting it as one misdescribes what
+  // the reader is looking at as well as what the rights holder supplied.
   const credit = (
     <span className={styles.credit}>
-      Foto: {source?.publisher ?? 'Körkortonline.se'}, s. {image.sourcePage} · ©{' '}
-      {image.rightsHolder} · används med tillstånd
+      {kind === 'diagram' ? 'Illustration' : 'Foto'}: {source?.publisher ?? 'Körkortonline.se'}, s.{' '}
+      {image.sourcePage} · © {image.rightsHolder} · används med tillstånd
     </span>
   );
 
@@ -135,7 +139,12 @@ export function SourceImageFigure({
     return (
       <figure className={styles.figure}>
         {prompt && <p className={styles.prompt}>{prompt}</p>}
-        <p className={styles.fallback}>{image.longDescription}</p>
+        <p className={styles.fallback}>
+          {image.longDescription}
+          {image.labelText && image.labelText.length > 0
+            ? ` Text i bilden: ${image.labelText.join(', ')}.`
+            : ''}
+        </p>
         <figcaption className={styles.caption}>
           {showCaption && <span className={styles.captionText}>{caption ?? image.caption}</span>}
           {credit}
@@ -161,31 +170,52 @@ export function SourceImageFigure({
     />
   );
 
+  const expandButton = (
+    <button
+      ref={openerRef}
+      type="button"
+      className={styles.expand}
+      onClick={() => setExpanded(true)}
+      aria-label={`Förstora bilden: ${image.title}`}
+    >
+      <Icon name="maximize" size={16} />
+    </button>
+  );
+
   return (
-    <figure className={[styles.figure, styles[variant]].join(' ')}>
+    <figure
+      className={[styles.figure, styles[variant], kind === 'diagram' ? styles.diagram : '']
+        .filter(Boolean)
+        .join(' ')}
+    >
       {prompt && <p className={styles.prompt}>{prompt}</p>}
 
+      {/* Traffic detail is small: a sign face, an indicator, a cyclist at the
+          kerb. The expand exists so a learner can look closer without the page
+          having to give the photograph that much room by default.
+
+          On a photograph it sits in a corner, where there is slack. A diagram
+          is cropped to its content, so the same corner holds the towed car or
+          the drawbar of a trailer — there the button goes underneath instead
+          of on top. */}
       <div
         className={styles.frame}
         style={{ aspectRatio: `${image.width} / ${image.height}` }}
       >
         {picture}
-        {/* Traffic detail is small: a sign face, an indicator, a cyclist at the
-            kerb. The expand exists so a learner can look closer without the
-            page having to give the photograph that much room by default. */}
-        <button
-          ref={openerRef}
-          type="button"
-          className={styles.expand}
-          onClick={() => setExpanded(true)}
-          aria-label={`Förstora bilden: ${image.title}`}
-        >
-          <Icon name="maximize" size={16} />
-        </button>
+        {kind === 'diagram' ? null : expandButton}
       </div>
+
+      {kind === 'diagram' ? <div className={styles.expandRow}>{expandButton}</div> : null}
 
       <p id={descriptionId} className={styles.srOnly}>
         {image.longDescription}
+        {/* The numbers drawn inside a diagram are its content. Rendered as
+            pixels they reach nobody using a screen reader, so they are read
+            out here as well. */}
+        {image.labelText && image.labelText.length > 0
+          ? ` Text i bilden: ${image.labelText.join(', ')}.`
+          : ''}
       </p>
 
       <figcaption className={styles.caption}>

@@ -29,10 +29,10 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Begrepp med för få (1–2 frågor) | 0 |
 | Begrepp helt utan frågor | 0 |
 | Begrepp utan plats i taxonomin | 0 |
-| Frågor i banken | 431 |
-| Frågor kopplade till ett begrepp | 431 |
+| Frågor i banken | 437 |
+| Frågor kopplade till ett begrepp | 437 |
 | Frågor utan koppling | 0 |
-| Lektioner | 15 |
+| Lektioner | 17 |
 | Scenarier | 14 |
 | Luckor | 0 |
 
@@ -42,7 +42,7 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Trafikregler | 12 | 79 | 79 | 100 % | 220 |
 | Människan | 7 | 38 | 38 | 100 % | 86 |
-| Fordon | 15 | 48 | 48 | 100 % | 104 |
+| Fordon | 15 | 48 | 48 | 100 % | 114 |
 | Miljö | 3 | 5 | 5 | 100 % | 28 |
 | Vägmärken | 1 | 8 | 8 | 100 % | 66 |
 | Rättsfall | 1 | 1 | 1 | 100 % | 3 |
@@ -70,16 +70,16 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Nedsatt förmåga | Människan | 162–167 | 4 | 4 | 7 | Stark |
 | Barn | Människan | 168–173 | 4 | 4 | 8 | Stark |
 | Trafikolyckor | Människan | 174–187 | 9 | 9 | 12 | Stark |
-| Indelning av fordon | Fordon | 188–195 | 4 | 4 | 9 | Stark |
+| Indelning av fordon | Fordon | 188–195 | 4 | 4 | 11 | Stark |
 | Sträckor | Fordon | 196–203 | 3 | 3 | 12 | Stark |
 | Däck | Fordon | 204–213 | 6 | 6 | 10 | Stark |
 | Styrning | Fordon | 214–223 | 4 | 4 | 8 | Stark |
 | Bromsar | Fordon | 224–231 | 6 | 6 | 5 | Stark |
-| Krocksäkerhet | Fordon | 232–237 | 3 | 3 | 8 | Stark |
-| Bilbarnstolar | Fordon | 238–243 | 1 | 1 | 3 | Stark |
-| Längd & bredd | Fordon | 244–251 | 1 | 1 | 3 | Stark |
-| Last | Fordon | 252–261 | 3 | 3 | 6 | Stark |
-| Belysning | Fordon | 262–271 | 9 | 9 | 23 | Stark |
+| Krocksäkerhet | Fordon | 232–237 | 3 | 3 | 9 | Stark |
+| Bilbarnstolar | Fordon | 238–243 | 1 | 1 | 4 | Stark |
+| Längd & bredd | Fordon | 244–251 | 1 | 1 | 4 | Stark |
+| Last | Fordon | 252–261 | 3 | 3 | 9 | Stark |
+| Belysning | Fordon | 262–271 | 9 | 9 | 25 | Stark |
 | Säkerhetskontroller | Fordon | 272–277 | 1 | 1 | 3 | Stark |
 | Besiktning | Fordon | 278–283 | 2 | 2 | 3 | Stark |
 | Service | Fordon | 284–289 | 1 | 1 | 3 | Stark |
@@ -127,6 +127,8 @@ Inga.
 | Cirkulationsplats | Cirkulationsplats |
 | Vägmärken | Vägmärken |
 | Vägmarkeringar | Vägmärken, Körfält |
+| Krockskydd i bilen | Krocksäkerhet, Bilbarnstolar, Bromsar |
+| Last och släp | Last, Längd & bredd |
 
 ## Visuellt stöd
 
@@ -135,17 +137,17 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 
 | Mått | Antal |
 | --- | ---: |
-| Godkända källbilder | 51 |
-| Kapitel med visuellt stöd | 18 av 39 |
-| Bildbaserade frågor | 42 |
-| Lektioner med bild | 13 av 15 |
+| Godkända källbilder | 62 |
+| Kapitel med visuellt stöd | 23 av 39 |
+| Bildbaserade frågor | 48 |
+| Lektioner med bild | 15 av 17 |
 
 | Kapitel | Bilder |
 | --- | ---: |
 | Inledning | 3 |
-| Körfält | 3 |
-| Väjningsregler | 7 |
-| Passager | 7 |
+| Körfält | 2 |
+| Väjningsregler | 5 |
+| Passager | 6 |
 | Cirkulationsplats | 2 |
 | Stanna & parkera | 3 |
 | Landsväg | 4 |
@@ -158,10 +160,15 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 | Barn | 1 |
 | Trafikolyckor | 1 |
 | Sträckor | 1 |
-| Belysning | 1 |
+| Bromsar | 1 |
+| Krocksäkerhet | 2 |
+| Bilbarnstolar | 1 |
+| Längd & bredd | 4 |
+| Last | 3 |
+| Belysning | 5 |
 | Vägmärken | 6 |
 
-Kapitel utan visuellt stöd: **21**. De viktigaste att komplettera
+Kapitel utan visuellt stöd: **16**. De viktigaste att komplettera
 härnäst listas i [SOURCE-IMAGES.md](SOURCE-IMAGES.md).
 
 ## Källa och rättigheter

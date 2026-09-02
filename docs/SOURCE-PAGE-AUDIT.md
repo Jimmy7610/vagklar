@@ -8,18 +8,18 @@ sidan verkligen handlar om det frågan prövar.
 
 | | Antal |
 | --- | ---: |
-| Frågor med sidhänvisning | 276 |
-| Sidhänvisningar granskade | 286 |
-| Bekräftat stöd | 239 |
+| Frågor med sidhänvisning | 288 |
+| Sidhänvisningar granskade | 299 |
+| Bekräftat stöd | 251 |
 | Fel | 0 |
-| Varningar | 45 |
+| Varningar | 46 |
 | Granskade undantag | 2 |
 
 ## Fel — 0 st
 
 Inga.
 
-## Varningar — 45 st
+## Varningar — 46 st
 
 | Fråga | Sida | Kod | Vad |
 | --- | ---: | --- | --- |
@@ -60,6 +60,7 @@ Inga.
 | `bl2-014` | 82 | page-outside-chapter | Sidan ligger utanför kapitlen för "korfalt-och-sving" (14–21). |
 | `bl2-015` | 169 | page-outside-chapter | Sidan ligger utanför kapitlen för "skymd-sikt" (6–13). |
 | `bl2-018` | 80 | page-weak-support | Svag överlappning (vägens) och inget ord ur "Kantlinjens betydelse". |
+| `bl3-006` | 155 | page-outside-chapter | Sidan ligger utanför kapitlen för "skymd-sikt" (6–13). |
 | `grd-004` | 232 | page-outside-chapter | Sidan ligger utanför kapitlen för "grundregler" (6–13). |
 | `grd-008` | 39 | page-outside-chapter | Sidan ligger utanför kapitlen för "vagens-anvandning" (6–13). |
 | `grd-013` | 334 | page-is-plate | Bildplansch som inte namnger "Parkeringsmärket". |
@@ -68,6 +69,34 @@ Inga.
 | `mns-038` | 134 | page-outside-chapter | Sidan ligger utanför kapitlen för "riskbedomning" (174–187). |
 | `mns-040` | 103 | page-outside-chapter | Sidan ligger utanför kapitlen för "reaktion-och-sinnen" (78–89, 140–147, 154–161, 196–203). |
 | `mrk-013` | 8 | page-outside-chapter | Sidan ligger utanför kapitlen för "vagmarkeringar" (324–361). |
+
+## Bildernas sidhänvisningar — 62 st
+
+Varje godkänd källbild anger sidan den är hämtad från. Kontrollen är enklare än
+för frågorna — en figursida bär etiketter, inte meningar — men den fångar det som
+faktiskt går fel: ett sidnummer utanför källan, eller ett som hamnat i fel
+kapitel. Avdelare och självtestsidor räknas inte som fel här — i den här boken
+är en kapitelavdelare ett helsidesfoto, och självtesten är illustrerade.
+
+En varning här är sällan ett fel. En bilds kapitel är det kapitel den *lär ut*,
+och ett fotografi av en vägvisarportal hör till vägmärken även när det är taget
+ur motorvägskapitlet. Vad varningen fångar är sidnummer som hamnat helt fel.
+
+| | Antal |
+| --- | ---: |
+| Bekräftade | 55 |
+| Fel | 0 |
+| Varningar | 7 |
+
+| Bild | Sida | Kod | Vad |
+| --- | ---: | --- | --- |
+| `motorvag-portal-vagvisare` | 89 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |
+| `korfaltsvagvisare-korsning` | 84 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |
+| `hastighet-100-ledsnummer` | 95 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |
+| `avfart-hastighet-50` | 92 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |
+| `gagata-skyltad` | 119 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |
+| `pabjuden-korriktning-parkering` | 131 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |
+| `motortrafikled-avsmalning` | 85 | page-outside-chapter | Sidan ligger utanför kapitlet "motorvag" (90–97). |
 
 ## Granskade undantag — 2 st
 

@@ -37,13 +37,30 @@ except ImportError:  # pragma: no cover
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / 'references' / 'extracted' / 'teoribok-2026-1'
+DIAGRAM_SRC = ROOT / 'references' / 'extracted' / 'diagrams'
 DEST = ROOT / 'src' / 'assets' / 'source-images' / 'teoribok-2026-1'
 
 WIDTHS = (640, 960)
 QUALITY = 78
 
+# Diagrams get a higher quality setting than photographs.
+#
+# A photograph hides compression artefacts in its own noise. A technical drawing
+# is flat colour and hard edges, and it carries small numerals — "40 cm", "3 m"
+# — that turn to mush at the quality a photograph tolerates. The files are
+# small anyway because flat colour compresses well, so the extra quality costs
+# very little and buys the thing the diagram exists for.
+DIAGRAM_QUALITY = 92
+
 # (extracted file, topic folder, output slug)
 CURATED = [
+    # --- Omgång 4: fordonets säkerhet --------------------------------------
+    # Närbilder på komponenter och reglage, för kapitel som saknat all visuell
+    # hjälp. Det som lärs ut är en etikett eller ett läge, inte en trafikmiljö.
+    ('p238-0.jpeg', 'fordonet', 'bilbarnstol-bakatvand'),
+    ('p233-0.jpeg', 'fordonet', 'krockkudde-indikator'),
+    ('p224-0.jpeg', 'fordonet', 'bromsskiva'),
+    ('p252-0.jpeg', 'last', 'spannband'),
     # --- Omgång 3: verklig trafikmiljö -------------------------------------
     # Valda genom att titta på varje kandidat i review/source-image-candidates.html
     # och behålla de som lär ut något en ritning inte kan: hur en skylt faktiskt
@@ -62,17 +79,13 @@ CURATED = [
     # --- Körfält -----------------------------------------------------------
     ('p016-0.jpeg', 'korfalt', 'korfaltsval-motorvag'),
     ('p014-0.jpeg', 'korfalt', 'placering-landsvag'),
-    ('p015-0.jpeg', 'korfalt', 'enkelriktat-svang'),
     # --- Väjningsregler ----------------------------------------------------
-    ('p022-0.jpeg', 'vajningsregler', 'korsning-tva-fordon'),
     ('p024-0.jpeg', 'vajningsregler', 'stopplikt-buss'),
     ('p031-0.jpeg', 'vajningsregler', 'oskyltad-korsning'),
     ('p034-1.jpeg', 'vajningsregler', 'lastbil-korsar'),
     ('p021-0.jpeg', 'vajningsregler', 'stop-flervagsstopp'),
-    ('p045-0.jpeg', 'vajningsregler', 'overgangsstalle-vajningsplikt'),
     # --- Passager ----------------------------------------------------------
     ('p047-0.jpeg', 'passager', 'obevakat-overgangsstalle'),
-    ('p051-0.jpeg', 'passager', 'cykelpassage-landsvag'),
     ('p052-0.jpeg', 'passager', 'overgangsstalle-cykelpassage'),
     ('p054-1.jpeg', 'passager', 'cykelbana-korsning'),
     ('p055-0.jpeg', 'passager', 'cykeloverfart'),
@@ -116,6 +129,30 @@ CURATED = [
 
 ]
 
+# Diagrams cropped from rendered pages by scripts/extract-source-diagrams.py.
+# Separate list because they come from a different place and are compressed
+# differently — the crop names are already the output slugs, so the first field
+# is the crop file rather than an extracted photograph.
+#
+# (crop file, topic folder, output slug)
+CURATED_DIAGRAMS = [
+    # --- Krocksäkerhet ----------------------------------------------------
+    ('deformationszoner.png', 'fordonet', 'deformationszoner'),
+    # --- Längd & bredd ----------------------------------------------------
+    ('lastbredd-tillaten.png', 'last', 'lastbredd-tillaten'),
+    ('lastbredd-otillaten.png', 'last', 'lastbredd-otillaten'),
+    ('lastlangd-utmarkning.png', 'last', 'lastlangd-utmarkning'),
+    ('bogsering-utmarkning.png', 'last', 'bogsering-utmarkning'),
+    # --- Last / släp ------------------------------------------------------
+    ('kultryck-hogt.png', 'last', 'kultryck-hogt'),
+    ('kultryck-lagt.png', 'last', 'kultryck-lagt'),
+    # --- Belysning --------------------------------------------------------
+    ('avblandning-mote-1.png', 'morker', 'avblandning-mote-1'),
+    ('avblandning-mote-2.png', 'morker', 'avblandning-mote-2'),
+    ('avblandning-mote-3.png', 'morker', 'avblandning-mote-3'),
+    ('helljus-i-kurva.png', 'morker', 'helljus-i-kurva'),
+]
+
 
 def main() -> int:
     if not SRC.exists():
@@ -128,8 +165,9 @@ def main() -> int:
     written = 0
     missing = []
 
-    for filename, topic, slug in CURATED:
-        origin = SRC / filename
+    for filename, topic, slug in CURATED + CURATED_DIAGRAMS:
+        is_diagram = (filename, topic, slug) in CURATED_DIAGRAMS
+        origin = (DIAGRAM_SRC if is_diagram else SRC) / filename
         if not origin.exists():
             missing.append(filename)
             continue
@@ -140,6 +178,7 @@ def main() -> int:
         with Image.open(origin) as im:
             im = im.convert('RGB')
             total_before += origin.stat().st_size
+            quality = DIAGRAM_QUALITY if is_diagram else QUALITY
             for width in WIDTHS:
                 if im.width <= width and width != WIDTHS[-1]:
                     # Never upscale; the largest width still gets written so
@@ -149,7 +188,7 @@ def main() -> int:
                 size = (round(im.width * scale), round(im.height * scale))
                 out = folder / f'{slug}-{width}.webp'
                 im.resize(size, Image.LANCZOS).save(
-                    out, 'WEBP', quality=QUALITY, method=6
+                    out, 'WEBP', quality=quality, method=6
                 )
                 total_after += out.stat().st_size
                 written += 1
@@ -159,7 +198,7 @@ def main() -> int:
 
     print(
         f'{written} filer skrivna till {DEST.relative_to(ROOT)}\n'
-        f'{len(CURATED) - len(missing)} bilder, '
+        f'{len(CURATED) + len(CURATED_DIAGRAMS) - len(missing)} bilder, '
         f'{total_before // 1024} kB original -> {total_after // 1024} kB webp'
     )
     return 1 if missing else 0

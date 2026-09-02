@@ -43,6 +43,7 @@ npm run dev
 | `python scripts/extract-source-pages.py` | Bygger den lokala sidtextcachen som sidgranskningen kräver |
 | `python scripts/extract-source-images.py --extract` | Tar ut bildkandidater ur källan (aldrig incheckade) |
 | `python scripts/optimise-source-images.py` | Optimerar de kurerade bilderna till WebP |
+| `python scripts/extract-source-diagrams.py` | Renderar sidor och klipper ut kuraterade ritningar |
 
 Ikoner och Open Graph-bilden genereras från kod:
 
@@ -145,7 +146,7 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 | Lektioner                      | 15                                     |
 | Scenarier                      | 14 (med varianter)                     |
 | Namngivna missuppfattningar    | 253                                    |
-| Källbilder (används med tillstånd) | 51                                 |
+| Källbilder (används med tillstånd) | 62 (51 foton, 11 ritningar)        |
 | Ritade vägmärken               | 58                                     |
 | Ritade vägmarkeringar          | 15                                     |
 | Kursplanetäckning              | 179 av 179 begrepp i 39 kapitel        |
@@ -198,14 +199,16 @@ register. Se [docs/ROAD-MARKINGS.md](docs/ROAD-MARKINGS.md).
 
 ### Källbilder
 
-51 fotografier ur den licensierade källan används i lektioner och frågor där bilden gör
+62 bilder ur den licensierade källan används i lektioner och frågor där bilden gör
 skillnad — att läsa en riktig gata går inte att lära ut i ord. De är kurerade för hand ur
 263 kandidater, optimerade till WebP i två bredder, och registrerade med alt-text,
 långbeskrivning och rättighetsdata i
 [`src/content/source-images.ts`](src/content/source-images.ts).
 
 Bilderna tillhör Hagberg Media AB och används med tillstånd. Varje bild visas med
-kreditering. Se [docs/SOURCE-IMAGES.md](docs/SOURCE-IMAGES.md) för hela arbetsflödet.
+kreditering. Se [docs/SOURCE-IMAGES.md](docs/SOURCE-IMAGES.md) för hela arbetsflödet och
+[docs/SOURCE-DIAGRAMS.md](docs/SOURCE-DIAGRAMS.md) för ritningarna, som lyder under
+egna regler: de bär mått, och måtten måste finnas som text också.
 
 ---
 

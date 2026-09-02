@@ -122,9 +122,23 @@ describe('source image files', () => {
     expect(missing, missing.join(', ')).toHaveLength(0);
   });
 
-  it('ships every responsive width', () => {
+  /**
+   * Which widths an image is expected to have on disk.
+   *
+   * The optimiser never upscales, so an original narrower than 640 px only
+   * gets the largest variant — which then simply holds the original size.
+   * Requiring a 640 px file for a 520 px photograph would demand a blurry one.
+   */
+  const expectedWidths = (intrinsic: number) => {
+    const largest = Math.max(...SOURCE_IMAGE_WIDTHS);
+    return SOURCE_IMAGE_WIDTHS.filter((w) => w <= intrinsic || w === largest);
+  };
+
+  it('ships every responsive width the original can fill', () => {
     const incomplete = approved
-      .filter((i) => SOURCE_IMAGE_WIDTHS.some((w) => !(widths.get(i.asset) ?? []).includes(w)))
+      .filter((i) =>
+        expectedWidths(i.width).some((w) => !(widths.get(i.asset) ?? []).includes(w)),
+      )
       .map((i) => i.id);
     expect(incomplete, incomplete.join(', ')).toHaveLength(0);
   });
@@ -133,7 +147,7 @@ describe('source image files', () => {
     for (const image of approved) {
       const resolved = resolveSourceImage(image.asset);
       expect(resolved, image.id).toBeTruthy();
-      for (const width of SOURCE_IMAGE_WIDTHS) {
+      for (const width of expectedWidths(image.width)) {
         expect(resolved!.srcSet, `${image.id} saknar ${width}w`).toContain(`${width}w`);
       }
     }
@@ -160,6 +174,53 @@ describe('source image files', () => {
     const claimed = new Set(SOURCE_IMAGES.map((i) => i.asset));
     const orphans = [...assets].filter((slug) => !claimed.has(slug));
     expect(orphans, orphans.join(', ')).toHaveLength(0);
+  });
+});
+
+/**
+ * Reads the pixel size straight out of a WebP header.
+ *
+ * Three chunk layouts exist and all three turn up in the pipeline, so all
+ * three are handled. Parsing sixteen bytes by hand is cheaper than pulling an
+ * image library into the test run, and the registry claims about size are too
+ * consequential to take on trust.
+ */
+const webpSize = (file: string): [number, number] => {
+  const b = readFileSync(file);
+  const chunk = b.toString('ascii', 12, 16);
+  if (chunk === 'VP8X') return [(b.readUIntLE(24, 3) & 0xffffff) + 1, (b.readUIntLE(27, 3) & 0xffffff) + 1];
+  if (chunk === 'VP8 ') return [b.readUInt16LE(26) & 0x3fff, b.readUInt16LE(28) & 0x3fff];
+  if (chunk === 'VP8L') {
+    const bits = b.readUInt32LE(21);
+    return [(bits & 0x3fff) + 1, ((bits >> 14) & 0x3fff) + 1];
+  }
+  throw new Error(`okänt WebP-format i ${file}: ${chunk}`);
+};
+
+/**
+ * The registry says how big each picture is, and the layout believes it.
+ *
+ * Those two numbers set the aspect ratio the browser reserves before the file
+ * arrives. Get them wrong and the box is the wrong shape: the image is
+ * letterboxed inside it, the page jumps when the real file lands, and the
+ * picture is drawn smaller than the space it was given. Nothing looks broken,
+ * which is why this has to be checked rather than eyeballed.
+ */
+describe('recorded size matches the file', () => {
+  it('records the true pixel size of every approved image', () => {
+    const wrong: string[] = [];
+    for (const image of approved) {
+      const largest = Math.max(...SOURCE_IMAGE_WIDTHS);
+      const file = resolve(
+        process.cwd(),
+        `src/assets/source-images/${image.sourceId}/${image.asset}-${largest}.webp`,
+      );
+      const [w, h] = webpSize(file);
+      if (w !== image.width || h !== image.height) {
+        wrong.push(`${image.id}: registret ${image.width}x${image.height}, filen ${w}x${h}`);
+      }
+    }
+    expect(wrong, wrong.join('; ')).toHaveLength(0);
   });
 });
 
@@ -355,5 +416,87 @@ describe('every surface that shows a question shows its picture', () => {
       'utf8',
     );
     expect(source).toContain('showCaption={false}');
+  });
+});
+
+/**
+ * The book's own drawings, which are a different kind of promise.
+ *
+ * A photograph illustrates; a diagram *measures*. The load-width figures carry
+ * the numbers 260 cm and 40 cm, and the whole question turns on them. So a
+ * diagram has to satisfy something a photograph does not: the figures printed
+ * inside it must also exist as text, or the question becomes unanswerable for
+ * anyone using a screen reader — and for everyone, on the day the image fails
+ * to load offline.
+ */
+/**
+ * Text that is printed inside a picture.
+ *
+ * Some images are pictures of words: a dimension line reading 260 cm, an
+ * airbag panel reading ON. Whoever cannot see the image still has to be told
+ * what it says, so `labelText` transcribes it — and the long description has
+ * to contain the same words, since that is what a screen reader and the
+ * offline fallback actually read out.
+ */
+describe('text printed inside images', () => {
+  it('repeats every label in the long description, so the words survive alone', () => {
+    const lost: string[] = [];
+    for (const image of approved) {
+      for (const label of image.labelText ?? []) {
+        if (!image.longDescription.includes(label)) lost.push(`${image.id}: ${label}`);
+      }
+    }
+    expect(lost, lost.join(', ')).toHaveLength(0);
+  });
+
+  it('never transcribes an empty label list', () => {
+    const empty = approved.filter((i) => i.labelText?.length === 0).map((i) => i.id);
+    expect(empty, empty.join(', ')).toHaveLength(0);
+  });
+});
+
+describe('diagrams from the source book', () => {
+  const diagrams = approved.filter((i) => i.kind === 'diagram');
+
+  it('has diagrams at all', () => {
+    expect(diagrams.length).toBeGreaterThan(8);
+  });
+
+  it('describes a drawing in enough detail to rebuild it in the head', () => {
+    // Not every diagram carries printed text — the tongue-weight figures teach
+    // purely by geometry. What every diagram does owe the reader is a
+    // description that conveys the arrangement, which takes more words than
+    // saying what a photograph shows.
+    const thin = diagrams.filter((i) => i.longDescription.length < 160).map((i) => i.id);
+    expect(thin, thin.join(', ')).toHaveLength(0);
+  });
+
+  it('uses every diagram it ships', () => {
+    const used = new Set<string>();
+    for (const q of ALL_QUESTIONS) if (q.sourceImageId) used.add(q.sourceImageId);
+    for (const lesson of LESSONS) {
+      for (const block of lesson.blocks) {
+        if (block.kind === 'sourceImage') used.add(block.imageId);
+      }
+    }
+    const idle = diagrams.filter((i) => !used.has(i.id)).map((i) => i.id);
+    expect(idle, idle.join(', ')).toHaveLength(0);
+  });
+
+  it('tests at least a few of them as questions, not only as illustration', () => {
+    const ids = new Set(diagrams.map((i) => i.id));
+    const asked = ALL_QUESTIONS.filter((q) => q.sourceImageId && ids.has(q.sourceImageId));
+    expect(asked.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it('reaches the reader through the figure component', () => {
+    // The labels are only worth transcribing if something renders them. This
+    // is the same reasoning as the exam parity check above: a missing branch
+    // is invisible to a test of the branches that exist.
+    const source = readFileSync(
+      resolve(process.cwd(), 'src/ui/media/SourceImageFigure.tsx'),
+      'utf8',
+    );
+    expect(source, 'ritningens text når aldrig ut').toContain('labelText');
   });
 });

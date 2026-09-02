@@ -21,6 +21,10 @@ references/**/extracted/
 # Per-page text cache built by scripts/extract-source-pages.py for the
 # source-page audit. Derived from the licensed source, so it stays local too.
 references/.page-text.json
+# Diagram crops rendered from the licensed source by
+# scripts/extract-source-diagrams.py. Inputs to the optimiser, never shipped
+# as-is — only the optimised WebP files reach the app.
+references/extracted/diagrams/
 
 # Scratch output from source-extraction tooling.
 /tmp-extract/

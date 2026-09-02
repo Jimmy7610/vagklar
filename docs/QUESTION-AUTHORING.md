@@ -99,8 +99,21 @@ Två regler att känna till:
   som inte ser bilden ändå kan svara. Skriv den som en beskrivning av vad som syns, inte
   som en ledtråd till svaret.
 
-Bildfrågorna ligger i [`bildfragor.ts`](../src/content/questions/bildfragor.ts).
-Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för hur man lägger till en ny bild.
+Bildfrågorna ligger i [`bildfragor.ts`](../src/content/questions/bildfragor.ts) och
+uppföljarna `bildfragor2.ts`–`bildfragor4.ts`. Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md)
+för hur man lägger till en ny bild.
+
+### Frågor på en ritning
+
+`bildfragor4.ts` vilar på bokens ritningar i stället för dess fotografier, och
+kvalificerar sig av en annan anledning. Ett fotografi tas in när frågan kräver att
+man *läser en gata*. En ritning tas in när figuren bär ett **mått** eller ett
+**förhållande**: "lasten är 260 cm bred men skjuter ut 40 cm åt ena sidan" är en
+mening att läsa två gånger och en bild att förstå på en sekund.
+
+Måtten som frågan hänger på skrivs av i registrets `labelText`, så att frågan går
+att besvara av någon som inte ser figuren. Utan det är en måttfråga olöslig med
+skärmläsare — och olöslig för alla den dagen bilden inte hunnit ned i cachen.
 
 ## Skyltfrågor
 

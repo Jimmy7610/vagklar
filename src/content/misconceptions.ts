@@ -2253,6 +2253,51 @@ export const MISCONCEPTIONS: Misconception[] = [
       'Kryssmärket markerar att korsningen är här. Varningen för korsningen kom tidigare, som en gul triangel.',
     subcategory: 'plankorsning-marken',
   },
+  {
+    id: 'lastbredd-tva-krav',
+    label: 'Bara ett av lastens breddkrav räknas',
+    description:
+      'Totalbredden 260 cm uppfattas som hela regeln, så en last som håller sig inom den antas vara tillåten oavsett hur den ligger.',
+    correction:
+      'Två krav gäller samtidigt: högst 260 cm totalt, och högst 20 cm utanför bilen åt sidan. Båda måste klaras.',
+    subcategory: 'lastning',
+  },
+  {
+    id: 'kultryck',
+    label: 'Lastens placering i släpet antas sakna betydelse',
+    description:
+      'Vikten uppfattas som densamma oavsett var i släpet den ligger, så placeringen känns som en bekvämlighetsfråga.',
+    correction:
+      'Placeringen avgör hur mycket tryck som hamnar på kopplingen. Last längst bak lättar bilens bakvagn, som är den som håller ekipaget rakt.',
+    subcategory: 'slapvagn',
+  },
+  {
+    id: 'helljus-kurva',
+    label: 'Avbländning antas ske samtidigt för båda',
+    description:
+      'Mötet uppfattas som symmetriskt, så båda förarna antas behöva blända av i samma ögonblick.',
+    correction:
+      'I en kurva pekar ljuset inte dit bilen ska. Den som har kurvan på sin insida når den mötande med ljuset först och måste blända av tidigare.',
+    subcategory: 'mote-i-morker',
+  },
+  {
+    id: 'krockkudde-bakatvand',
+    label: 'Bakåtvänd stol framför aktiv krockkudde antas kunna tillåtas',
+    description:
+      'Undantag söks i barnets ålder, i fästmetoden eller i hur långt bak sätet är skjutet.',
+    correction:
+      'Ingen sådan omständighet hjälper. Kudden löser ut mot stolens rygg. Antingen är kudden urkopplad, eller så sitter stolen i baksätet.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'bogsering-utmarkning',
+    label: 'Bogserlinan antas synas av sig själv',
+    description:
+      'Linan mellan bilarna uppfattas som tydlig nog, eftersom de två förarna vet att den finns.',
+    correction:
+      'Markeringen finns för korsande trafik och gående, inte för förarna. Är avståndet över två meter ska linan märkas ut.',
+    subcategory: 'slapvagn',
+  },
 ];
 
 export const MISCONCEPTION_BY_ID: ReadonlyMap<string, Misconception> = new Map(

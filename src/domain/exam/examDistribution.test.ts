@@ -101,12 +101,21 @@ describe('exam distribution over 1000 attempts', () => {
   });
 
   it('includes visual questions without letting them take over', () => {
-    const shares = exams.map(
+    // Two separate concerns. Photographs cost bytes and vertical space, so
+    // their share is capped tighter; drawn signs and markings are cheap and a
+    // theory test is expected to be full of them. Both are bounded so that
+    // "add an image" can never quietly become the default way to write a
+    // question.
+    const visual = exams.map(
       (e) => e.filter((q) => q.image !== undefined || q.sourceImageId !== undefined).length,
     );
-    const mean = shares.reduce((a, b) => a + b, 0) / shares.length;
-    expect(mean).toBeGreaterThan(2);
-    expect(Math.max(...shares)).toBeLessThanOrEqual(EXAM.totalQuestions / 3);
+    const photos = exams.map((e) => e.filter((q) => q.sourceImageId !== undefined).length);
+    const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
+
+    expect(mean(visual)).toBeGreaterThan(2);
+    expect(mean(visual)).toBeLessThan(EXAM.totalQuestions * 0.35);
+    expect(Math.max(...visual)).toBeLessThanOrEqual(EXAM.totalQuestions / 2);
+    expect(Math.max(...photos)).toBeLessThanOrEqual(EXAM.totalQuestions * 0.4);
   });
 
   it('uses the breadth of the bank rather than the same few hundred questions', () => {

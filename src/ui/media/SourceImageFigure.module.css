@@ -71,6 +71,55 @@
   }
 }
 
+/* ---- Diagram -------------------------------------------------------------
+   A drawn figure is read for its labels, so it needs two things a photograph
+   does not.
+
+   First a fixed light plate. The book draws on white, and a white figure on a
+   dark card in dark mode reads as a hole punched through the page. The plate
+   is the same in both themes on purpose — inverting a technical drawing would
+   change what its colours mean, and here red means "not allowed".
+
+   Second a floor under its width. A photograph shrunk to 200 px is still a
+   photograph; a dimension drawing shrunk to 200 px is a smudge with unreadable
+   numbers. On a narrow phone the figure keeps the full column and the expand
+   control does the rest. */
+.diagram .frame {
+  background-color: #f2f3f5;
+  border-color: color-mix(in srgb, var(--color-border) 70%, transparent);
+}
+
+.diagram.question .frame,
+.diagram.lesson .frame {
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .diagram.question .frame {
+    max-width: min(100%, calc(52vh * 16 / 9));
+  }
+}
+
+.diagram .image {
+  /* Small margin so a figure drawn to the edge of its crop is not clipped by
+     the rounded corner. */
+  padding: 2px;
+}
+
+/* Where a diagram's expand button goes: its own row under the plate, right
+   aligned, out of the artwork. It cannot live inside the frame — the frame is
+   held to the picture's aspect ratio and clips what overflows, so a button
+   placed in normal flow there disappears. */
+.expandRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-1);
+}
+
+.expandRow .expand {
+  position: static;
+}
+
 /* ---- Expand --------------------------------------------------------------
    Small in the corner, out of the way of the picture, but a full 44 px target
    and keyboard reachable like any other control. */

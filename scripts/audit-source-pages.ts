@@ -21,6 +21,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ALL_QUESTIONS } from '../src/content/questions';
+import { SOURCE_IMAGES } from '../src/content/source-images';
 import { PRIMARY_SOURCE_ID, SOURCES } from '../src/content/sources';
 import { CURRICULUM_CHAPTERS, CURRICULUM_CONCEPTS } from '../src/content/curriculum/curriculum';
 
@@ -291,6 +292,58 @@ for (const q of ALL_QUESTIONS) {
   }
 }
 
+/**
+ * The same check, applied to where each picture came from.
+ *
+ * A photograph or a drawing cites a page just as a question does, and the page
+ * number is just as easy to mistype. Keyword overlap means little here — a
+ * figure page carries labels, not prose — so what is checked instead is that
+ * the page exists, is not a divider or a self-test, and falls inside the
+ * chapter the picture is filed under. That is the shape a wrong number takes.
+ */
+const imageFindings: Finding[] = [];
+let imagePagesChecked = 0;
+let imagePagesSupported = 0;
+
+for (const image of SOURCE_IMAGES) {
+  if (image.status !== 'approved' || image.sourceId !== PRIMARY_SOURCE_ID) continue;
+  const page = image.sourcePage;
+  imagePagesChecked += 1;
+
+  if (!Number.isInteger(page) || page < 1 || page > pageCount) {
+    imageFindings.push({
+      severity: 'error',
+      questionId: image.id,
+      page,
+      code: 'page-out-of-range',
+      message: `Sidan finns inte i källan (1–${pageCount}).`,
+    });
+    continue;
+  }
+
+  // Deliberately no divider or self-test check here. Those pages cannot
+  // support a *rule*, which is why a question citing one is an error — but in
+  // this book a chapter divider is a full-page traffic photograph and the
+  // self-tests are illustrated. As the origin of a *picture* they are exactly
+  // right, and flagging them would be the audit misreading its own evidence.
+  const chapter = chapterById.get(image.chapter);
+  if (chapter && (page < chapter.startPage - 2 || page > chapter.endPage + 2)) {
+    imageFindings.push({
+      severity: 'warning',
+      questionId: image.id,
+      page,
+      code: 'page-outside-chapter',
+      message: `Sidan ligger utanför kapitlet "${image.chapter}" (${chapter.startPage}–${chapter.endPage}).`,
+    });
+    continue;
+  }
+
+  imagePagesSupported += 1;
+}
+
+const imageErrors = imageFindings.filter((f) => f.severity === 'error');
+const imageWarnings = imageFindings.filter((f) => f.severity === 'warning');
+
 const accepted = findings.filter((f) => ACCEPTED[`${f.questionId}:${f.page}`] !== undefined);
 const open = findings.filter((f) => ACCEPTED[`${f.questionId}:${f.page}`] === undefined);
 const errors = open.filter((f) => f.severity === 'error');
@@ -336,6 +389,35 @@ for (const [title, group] of [
   lines.push('');
 }
 
+lines.push(`## Bildernas sidhänvisningar — ${imagePagesChecked} st`);
+lines.push('');
+lines.push('Varje godkänd källbild anger sidan den är hämtad från. Kontrollen är enklare än');
+lines.push('för frågorna — en figursida bär etiketter, inte meningar — men den fångar det som');
+lines.push('faktiskt går fel: ett sidnummer utanför källan, eller ett som hamnat i fel');
+lines.push('kapitel. Avdelare och självtestsidor räknas inte som fel här — i den här boken');
+lines.push('är en kapitelavdelare ett helsidesfoto, och självtesten är illustrerade.');
+lines.push('');
+lines.push('En varning här är sällan ett fel. En bilds kapitel är det kapitel den *lär ut*,');
+lines.push('och ett fotografi av en vägvisarportal hör till vägmärken även när det är taget');
+lines.push('ur motorvägskapitlet. Vad varningen fångar är sidnummer som hamnat helt fel.');
+lines.push('');
+lines.push('| | Antal |');
+lines.push('| --- | ---: |');
+lines.push(`| Bekräftade | ${imagePagesSupported} |`);
+lines.push(`| Fel | ${imageErrors.length} |`);
+lines.push(`| Varningar | ${imageWarnings.length} |`);
+lines.push('');
+if (imageFindings.length === 0) {
+  lines.push('Inga anmärkningar.');
+} else {
+  lines.push('| Bild | Sida | Kod | Vad |');
+  lines.push('| --- | ---: | --- | --- |');
+  for (const f of imageFindings) {
+    lines.push(`| \`${f.questionId}\` | ${f.page} | ${f.code} | ${f.message} |`);
+  }
+}
+lines.push('');
+
 lines.push(`## Granskade undantag — ${accepted.length} st`);
 lines.push('');
 if (accepted.length === 0) {
@@ -372,7 +454,8 @@ lines.push('');
 
 writeFileSync(resolve(root, 'docs/SOURCE-PAGE-AUDIT.md'), lines.join('\n'), 'utf8');
 console.log(
-  `docs/SOURCE-PAGE-AUDIT.md skriven — ${citationsChecked} hänvisningar, ` +
-    `${errors.length} fel, ${warnings.length} varningar.`,
+  `docs/SOURCE-PAGE-AUDIT.md skriven — ${citationsChecked} hänvisningar ` +
+    `och ${imagePagesChecked} bildsidor, ${errors.length + imageErrors.length} fel, ` +
+    `${warnings.length + imageWarnings.length} varningar.`,
 );
-process.exitCode = errors.length > 0 ? 1 : 0;
+process.exitCode = errors.length + imageErrors.length > 0 ? 1 : 0;
