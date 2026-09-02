@@ -31,6 +31,29 @@ const FORBIDDEN_EXTENSIONS = new Set(['.pdf', '.epub', '.mobi', '.docx']);
  */
 const FORBIDDEN_STRINGS = ['teoribok-2026-1.pdf', 'references/teoribok', 'references\\teoribok'];
 
+/**
+ * Things that exist to help build the product and must never be shipped with
+ * it.
+ *
+ * The reviewer tool is the sharp one. It contains the whole question bank with
+ * the correct answers marked, every source page citation, and — where the
+ * local cache exists — words taken from the licensed book. It is exactly what
+ * a person preparing verification needs and exactly what a learner must not be
+ * handed. It lives in `review/`, outside the Vite root, and is gitignored;
+ * this checks that no route, no copy step and no future refactor has moved it
+ * into a build.
+ *
+ * The page-text cache is the same story: derived from the licensed source, fine
+ * on a maintainer's disk, not something to publish.
+ */
+const DEV_ONLY_ARTEFACTS = [
+  'granskningsverktyg',
+  'vagklar-granskning',
+  'granskningsanteckningar',
+  '.page-text.json',
+  'VERIFICATION-QUEUE',
+];
+
 /** Files the build must produce for GitHub Pages to work. */
 const REQUIRED = ['index.html', 'manifest.webmanifest', 'sw.js'];
 
@@ -67,6 +90,21 @@ for (const file of files) {
   for (const needle of FORBIDDEN_STRINGS) {
     if (contents.includes(needle)) {
       failures.push(`Referens till källdokument i ${relative(ROOT, file)}: "${needle}"`);
+    }
+  }
+}
+
+/* ---- 2b. Reviewer tooling and verification data stay out of the build -- */
+for (const file of files) {
+  const rel = relative(DIST, file).split(sep).join('/');
+  if (rel.startsWith('review/') || rel === 'review') {
+    failures.push(`Granskningsverktyget ligger i bygget: ${rel}`);
+  }
+  if (!textLike.has(extname(file).toLowerCase())) continue;
+  const contents = readFileSync(file, 'utf8');
+  for (const needle of DEV_ONLY_ARTEFACTS) {
+    if (contents.includes(needle)) {
+      failures.push(`Utvecklingsartefakt i ${rel}: "${needle}"`);
     }
   }
 }

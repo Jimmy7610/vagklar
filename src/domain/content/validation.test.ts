@@ -5,6 +5,7 @@ import { MISCONCEPTIONS } from '@/content/misconceptions';
 import { SOURCES } from '@/content/sources';
 import { SUBCATEGORIES } from '@/content/taxonomy';
 import { SOURCE_IMAGES } from '@/content/source-images';
+import { contentFingerprint } from './fingerprint';
 import { ORIGINAL_VISUALS } from '@/content/original-visuals';
 import { ORIGINAL_VISUAL_GLYPHS } from '@/ui/visuals/originalVisualGlyphs';
 import { LESSONS } from '@/content/lessons';
@@ -354,5 +355,137 @@ describe('findDuplicates', () => {
     const pairs = findDuplicates(ALL_QUESTIONS).filter((p) => p.kind === 'identical-answers');
     const shown = pairs.map((p) => `${p.a} ~ ${p.b}`).join(', ');
     expect(pairs, shown).toHaveLength(0);
+  });
+});
+
+/**
+ * Answers have to be distinguishable by their own words.
+ *
+ * This is a content rule with a testing consequence, which is how it was
+ * found. The exam runner test asks for an answer button by name, and used to
+ * build a regular expression out of the first thirty characters of the correct
+ * answer to do it. `omk-001`'s correct answer is "Till vänster." — and in a
+ * regex the full stop matches any character, so the pattern also matched "Till
+ * vänster på landsväg och till höger i tätort." Two buttons matched, the query
+ * threw, and because the exam paper is randomly generated it only happened
+ * when that question landed in slot one: 0.30 % of runs, measured over two
+ * thousand generated papers.
+ *
+ * The test now matches on the whole answer text as a plain substring. That is
+ * only safe while no answer's text is contained in another answer of the same
+ * question, so the condition is asserted here rather than assumed there — and
+ * it is worth having for its own sake, since two answers where one contains
+ * the other read as a trick to a learner.
+ */
+describe('answers are distinguishable', () => {
+  it('never lets one answer contain another word for word', () => {
+    const overlapping: string[] = [];
+    for (const q of ALL_QUESTIONS) {
+      for (const a of q.answers) {
+        for (const b of q.answers) {
+          if (a.id === b.id) continue;
+          if (b.text.includes(a.text)) overlapping.push(`${q.id}: "${a.text}" ⊂ "${b.text}"`);
+        }
+      }
+    }
+    expect(overlapping, overlapping.join('; ')).toHaveLength(0);
+  });
+});
+
+/**
+ * Verification has to be able to lapse.
+ *
+ * Signing a question off is a claim about a moment: this person checked this
+ * wording against these pages on this date. Nothing stops the wording being
+ * edited afterwards, and when that happens the sign-off silently becomes a
+ * claim about a text nobody read. A bank full of "verified" that means that is
+ * worse than one which admits it is unverified.
+ *
+ * The rule is deliberately one-directional. Nothing here ever re-verifies
+ * anything or recomputes a fingerprint to make an error go away — it only
+ * refuses to keep trusting a signature after the thing signed has changed.
+ */
+describe('verification goes stale', () => {
+  const source = SOURCES.find((s) => s.edition)!;
+
+  const signOff = (q: Question): Question => ({
+    ...q,
+    status: 'verified',
+    lastReviewedAt: '2026-09-02',
+    verifiedAt: '2026-09-02',
+    verifiedBy: 'JE',
+    verificationSourceIds: [source.id],
+    verifiedFingerprint: contentFingerprint(q),
+    verifiedAgainstEditions: { [source.id]: source.edition! },
+  });
+
+  const codesFor = (q: Question) =>
+    validateContent(baseInput([q])).issues.map((i) => i.code);
+
+  const base = ALL_QUESTIONS.find((q) => q.sourceReferences.length > 0)!;
+
+  it('accepts a sign-off that matches the current content', () => {
+    expect(codesFor(signOff(base))).not.toContain('verification-stale-content');
+  });
+
+  it('catches a verified question whose prompt was edited afterwards', () => {
+    const verified = signOff(base);
+    const edited: Question = { ...verified, prompt: verified.prompt + ' Och vad gäller i mörker?' };
+    expect(codesFor(edited)).toContain('verification-stale-content');
+  });
+
+  it('catches a change to which answer is correct', () => {
+    const verified = signOff(base);
+    const other = verified.answers.find((a) => a.id !== verified.correctAnswerId)!;
+    expect(codesFor({ ...verified, correctAnswerId: other.id })).toContain(
+      'verification-stale-content',
+    );
+  });
+
+  it('catches a changed source page', () => {
+    const verified = signOff(base);
+    const refs = verified.sourceReferences.map((r, i) =>
+      i === 0 ? { ...r, sourcePages: [(r.sourcePages?.[0] ?? 1) + 40] } : r,
+    );
+    expect(codesFor({ ...verified, sourceReferences: refs })).toContain(
+      'verification-stale-content',
+    );
+  });
+
+  it('ignores changes that are not part of what was checked', () => {
+    // Difficulty, tags and review notes do not change the claim, so editing
+    // them must not force a re-review — otherwise nobody will ever tidy
+    // metadata on a verified question.
+    const verified = signOff(base);
+    const retagged: Question = {
+      ...verified,
+      difficulty: verified.difficulty === 3 ? 1 : 3,
+      tags: [...(verified.tags ?? []), 'omtaggad'],
+      reviewNotes: 'Städat efter granskningen.',
+      estimatedTimeSec: verified.estimatedTimeSec + 7,
+    };
+    expect(codesFor(retagged)).not.toContain('verification-stale-content');
+  });
+
+  it('catches a sign-off with no fingerprint at all', () => {
+    const { verifiedFingerprint: _drop, ...rest } = signOff(base);
+    expect(codesFor(rest as Question)).toContain('verified-without-fingerprint');
+  });
+
+  it('catches verification against a superseded edition of the source', () => {
+    const verified = signOff(base);
+    const old = { ...verified, verifiedAgainstEditions: { [source.id]: '2019-3' } };
+    expect(codesFor(old)).toContain('verification-stale-source');
+  });
+
+  it('warns when the edition was never recorded', () => {
+    const { verifiedAgainstEditions: _drop, ...rest } = signOff(base);
+    expect(codesFor(rest as Question)).toContain('verification-without-edition');
+  });
+
+  it('never marks anything verified by itself', () => {
+    // The whole bank is reviewed, not verified, and no tool in this repo may
+    // change that. Only a human editing the content can.
+    expect(ALL_QUESTIONS.filter((q) => q.status === 'verified')).toHaveLength(0);
   });
 });

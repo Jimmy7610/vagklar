@@ -30,67 +30,19 @@ import { resolve } from 'node:path';
 import { ALL_QUESTIONS } from '../src/content/questions';
 import { SOURCE_BY_ID } from '../src/content/sources';
 import { CURRICULUM_CHAPTERS, CURRICULUM_CONCEPTS } from '../src/content/curriculum/curriculum';
+import { MISCONCEPTION_BY_ID } from '../src/content/misconceptions';
+import { contentFingerprint } from '../src/domain/content/fingerprint';
+import { existsSync, readFileSync } from 'node:fs';
 import { getSubcategoryName } from '../src/content/taxonomy';
 import type { Question } from '../src/domain/content/types';
-
-type Priority = 'P1' | 'P2' | 'P3';
-
-/** A number followed by a unit that carries legal weight. */
-const LEGAL_NUMBER =
-  /\d+(?:[.,]\d+)?\s*(?:km\/h|promille|mg\/l|mm|cm|kg|ton|månader?|år\b|tim(?:mar)?\b|minuter|meter\b|m\b|%|kr\b)/i;
-
-/**
- * Subcategories whose content is set by regulation that changes on its own
- * schedule. Even a question with no number in it can go stale here.
- */
-const VOLATILE_SUBCATEGORIES = new Set([
-  'alkohol-gransvarden',
-  'alkohol-effekter',
-  'dack-och-bromsar',
-  'besiktning',
-  'registrering',
-  'forsakring',
-  'korkortsregler',
-  'hastighetsgranser',
-  'slapvagn',
-  'lastning',
-  'fordonsslag',
-  'miljozon',
-  'miljo-fordon',
-  'parkeringsregler',
-  'parkeringsforbud',
-]);
-
-/** Words that mark a rule as conditional — the shape mistakes live in. */
-const EXCEPTION_WORDS =
-  /\b(utom|undantag|gäller inte|förutom|endast om|bara om|om inte|till skillnad|däremot|men inte)\b/i;
-
-function textOf(q: Question): string {
-  return [
-    q.prompt,
-    ...q.answers.map((a) => a.text),
-    q.shortExplanation,
-    q.deepExplanation ?? '',
-    q.ruleTested,
-  ].join(' ');
-}
-
-function priorityOf(q: Question): { priority: Priority; because: string } {
-  const text = textOf(q);
-  if (LEGAL_NUMBER.test(text)) {
-    return { priority: 'P1', because: 'Innehåller ett rättsligt tal, gränsvärde eller intervall.' };
-  }
-  if (VOLATILE_SUBCATEGORIES.has(q.subcategory)) {
-    return { priority: 'P1', because: 'Delområdet styrs av regler som ändras på egen hand.' };
-  }
-  if (EXCEPTION_WORDS.test(text)) {
-    return { priority: 'P2', because: 'Formulerar ett undantag eller en villkorad regel.' };
-  }
-  if (q.questionType === 'calculation') {
-    return { priority: 'P2', because: 'Beräkning — ett fel i formeln syns inte utan kontroll.' };
-  }
-  return { priority: 'P3', because: 'Förklarande kunskap utan rättsligt tal.' };
-}
+import {
+  OTHER_BATCH,
+  TAG_MEANING,
+  batchOfSubcategory,
+  priorityOf,
+  textOf,
+} from '../src/domain/content/verificationPriority';
+import type { P1Tag, Priority } from '../src/domain/content/verificationPriority';
 
 const chapterOfSubcategory = new Map<string, string>();
 for (const chapter of CURRICULUM_CHAPTERS) {
@@ -109,17 +61,24 @@ interface Row {
   q: Question;
   priority: Priority;
   because: string;
+  tags: P1Tag[];
+  batchId: string;
+  batchTitle: string;
   chapter: string;
   sources: string;
   needsVerification: boolean;
 }
 
 const rows: Row[] = ALL_QUESTIONS.map((q) => {
-  const { priority, because } = priorityOf(q);
+  const { priority, because, tags } = priorityOf(q);
+  const batch = batchOfSubcategory.get(q.subcategory) ?? OTHER_BATCH;
   return {
     q,
     priority,
     because,
+    tags,
+    batchId: batch.id,
+    batchTitle: batch.title,
     chapter: chapterOfSubcategory.get(q.subcategory) ?? 'Utanför kursplanens kapitel',
     sources: q.sourceReferences
       .map((r) => {
@@ -182,7 +141,107 @@ md.push(`| P3 | ${count('P3')} | Förklarande kunskap utan rättsligt tal. |`);
 md.push(`| **Totalt** | **${queue.length}** | |`);
 md.push('');
 
-for (const priority of ['P1', 'P2', 'P3'] as const) {
+md.push('## P1 efter typ');
+md.push('');
+md.push('En fråga kan bära flera. De tre första avgör att den hamnar i P1; resten säger');
+md.push('vad slags kontroll den kräver.');
+md.push('');
+md.push('| Typ | Antal | Betyder |');
+md.push('| --- | ---: | --- |');
+for (const tag of ['P1-NUMERIC', 'P1-VOLATILE', 'P1-ADMIN', 'P1-LAW', 'P1-SAFETY', 'P1-EXCEPTION'] as const) {
+  const n = queue.filter((r) => r.tags.includes(tag)).length;
+  md.push(`| \`${tag}\` | ${n} | ${TAG_MEANING[tag]} |`);
+}
+md.push('');
+
+const p1 = queue.filter((r) => r.priority === 'P1');
+
+md.push('## Var arbetet ligger');
+md.push('');
+md.push('| Kapitel | P1 |');
+md.push('| --- | ---: |');
+const burden = [...new Set(p1.map((r) => r.chapter))]
+  .map((c) => ({ c, n: p1.filter((r) => r.chapter === c).length }))
+  .sort((a, b) => b.n - a.n || a.c.localeCompare(b.c, 'sv'));
+for (const b of burden.slice(0, 12)) md.push(`| ${b.c} | ${b.n} |`);
+md.push('');
+
+md.push('| Grupp som kräver extra omsorg | Antal |');
+md.push('| --- | ---: |');
+md.push(`| Bär tre eller fler P1-typer | ${p1.filter((r) => r.tags.length >= 3).length} |`);
+md.push(`| Rättsligt tal med undantag | ${p1.filter((r) => r.tags.includes('P1-EXCEPTION')).length} |`);
+md.push(`| Bildburna P1 (foto eller ritning) | ${p1.filter((r) => r.q.sourceImageId || r.q.originalVisualId).length} |`);
+md.push(`| Beräkningar i P1 | ${p1.filter((r) => r.q.questionType === 'calculation').length} |`);
+md.push(`| Utan hänvisning till författning | ${p1.filter((r) => !r.tags.includes('P1-LAW')).length} |`);
+md.push('');
+
+/* ---- Stale verifications ---------------------------------------------
+   Nothing is verified yet, so this is normally empty. It is here so that the
+   day something is signed off, an edit to it shows up as work to redo rather
+   than sitting silently as a stale claim. */
+const stale = rows.filter(
+  (r) => r.q.status === 'verified' && r.q.verifiedFingerprint !== contentFingerprint(r.q),
+);
+md.push('## Verifieringar som gått ur takt');
+md.push('');
+if (stale.length === 0) {
+  md.push('Inga. En verifiering blir ogiltig när frågans text, svar, regel, förklaring');
+  md.push('eller källhänvisning ändras efter signeringen — validatorn fångar det.');
+} else {
+  md.push('| Fråga | Signerad av | Datum |');
+  md.push('| --- | --- | --- |');
+  for (const r of stale) md.push(`| \`${r.q.id}\` | ${r.q.verifiedBy ?? '—'} | ${r.q.verifiedAt ?? '—'} |`);
+}
+md.push('');
+
+/* ---- P1, batch by batch ---------------------------------------------- */
+md.push('## P1 i granskningsomgångar');
+md.push('');
+md.push('En omgång är ett arbetspass: samma ämne, samma källor uppslagna. Ordningen');
+md.push('inom en omgång är godtycklig; ordningen mellan dem är det inte — de tidiga');
+md.push('rör tal som står i författning och går att slå upp direkt.');
+md.push('');
+md.push('| Omgång | Antal |');
+md.push('| --- | ---: |');
+const batchIds = [...new Set(p1.map((r) => r.batchId))].sort();
+for (const id of batchIds) {
+  const group = p1.filter((r) => r.batchId === id);
+  md.push(`| ${id} — ${group[0]!.batchTitle} | ${group.length} |`);
+}
+md.push('');
+
+for (const id of batchIds) {
+  const group = p1.filter((r) => r.batchId === id);
+  md.push(`### Omgång ${id} — ${group[0]!.batchTitle} · ${group.length} frågor`);
+  md.push('');
+  for (const r of group) {
+    const correct = r.q.answers.find((a) => a.id === r.q.correctAnswerId);
+    const misconceptions = r.q.misconceptions
+      .map((m) => MISCONCEPTION_BY_ID.get(m)?.label ?? m)
+      .join('; ');
+    md.push(`#### \`${r.q.id}\` · ${r.q.ruleTested}`);
+    md.push('');
+    md.push(`${r.q.prompt}`);
+    md.push('');
+    md.push(`**Rätt svar:** ${correct?.text ?? '—'}`);
+    md.push('');
+    md.push(`**Förklaring:** ${r.q.shortExplanation}`);
+    md.push('');
+    md.push('| | |');
+    md.push('| --- | --- |');
+    md.push(`| Typ | ${r.tags.join(', ') || '—'} |`);
+    md.push(`| Varför i kön | ${r.because} |`);
+    md.push(`| Kapitel · delområde | ${r.chapter} · ${getSubcategoryName(r.q.subcategory)} |`);
+    md.push(`| Källa och exakt hänvisning | ${r.sources || '—'} |`);
+    md.push(`| Status | \`${r.q.status}\` |`);
+    md.push(`| Missuppfattning | ${misconceptions || '—'} |`);
+    md.push(`| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint \`${contentFingerprint(r.q)}\` |`);
+    md.push('');
+  }
+}
+
+/* ---- P2 and P3 stay compact ------------------------------------------ */
+for (const priority of ['P2', 'P3'] as const) {
   const group = queue.filter((r) => r.priority === priority);
   md.push(`## ${priority} — ${group.length} frågor`);
   md.push('');
@@ -191,48 +250,13 @@ for (const priority of ['P1', 'P2', 'P3'] as const) {
     md.push('');
     continue;
   }
-  const chapters = [...new Set(group.map((r) => r.chapter))].sort();
-  for (const chapter of chapters) {
-    const inChapter = group.filter((r) => r.chapter === chapter);
-    md.push(`### ${chapter} — ${inChapter.length}`);
-    md.push('');
-    md.push('| Fråga | Delområde | Regel | Källor |');
-    md.push('| --- | --- | --- | --- |');
-    for (const r of inChapter) {
-      md.push(
-        `| \`${r.q.id}\` | ${getSubcategoryName(r.q.subcategory)} | ${r.q.ruleTested} | ${r.sources} |`,
-      );
-    }
-    md.push('');
+  md.push('| Fråga | Delområde | Regel |');
+  md.push('| --- | --- | --- |');
+  for (const r of group) {
+    md.push(`| \`${r.q.id}\` | ${getSubcategoryName(r.q.subcategory)} | ${r.q.ruleTested} |`);
   }
+  md.push('');
 }
-
-md.push('## Grupperingar för planering');
-md.push('');
-const facet = (label: string, predicate: (r: Row) => boolean) => {
-  const n = queue.filter(predicate).length;
-  md.push(`| ${label} | ${n} |`);
-};
-md.push('| Grupp | Antal |');
-md.push('| --- | ---: |');
-facet('Bildburna (foto ur källan)', (r) => r.q.sourceImageId !== undefined);
-facet('Ritade märken eller markeringar', (r) => r.q.image !== undefined);
-facet('Beräkningar', (r) => r.q.questionType === 'calculation');
-facet('Hänvisar till licensierad teoribok', (r) =>
-  r.q.sourceReferences.some((s) => s.sourceId === 'teoribok-2026-1'),
-);
-facet('Hänvisar till författning', (r) =>
-  r.q.sourceReferences.some(
-    (s) => s.sourceId && SOURCE_BY_ID.get(s.sourceId)?.kind === 'regulation',
-  ),
-);
-facet('Hänvisar till myndighet', (r) =>
-  r.q.sourceReferences.some(
-    (s) => s.sourceId && SOURCE_BY_ID.get(s.sourceId)?.kind === 'authority',
-  ),
-);
-facet('Endast allmän kunskapskälla', (r) => r.q.sourceReferences.every((s) => !s.sourceId));
-md.push('');
 
 writeFileSync(resolve(process.cwd(), 'docs/VERIFICATION-QUEUE.md'), md.join('\n'), 'utf8');
 
@@ -240,9 +264,49 @@ writeFileSync(resolve(process.cwd(), 'docs/VERIFICATION-QUEUE.md'), md.join('\n'
 /* Local reviewer                                                      */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Short orientation for a cited page.
+ *
+ * The page-text cache holds a sorted bag of words per page, never sentences, so
+ * nothing here can reproduce the book. What it can do is tell a reviewer
+ * whether the page they are about to open is plausibly about the rule at hand:
+ * the words shown are the ones the page and the question have in common.
+ *
+ * The cache is derived from the licensed source and is gitignored, so this is
+ * empty for anyone who has not built it locally. That is fine — it degrades to
+ * showing nothing.
+ */
+const cachePath = resolve(process.cwd(), 'references/.page-text.json');
+const pageWords: Record<string, string[]> = existsSync(cachePath)
+  ? (JSON.parse(readFileSync(cachePath, 'utf8')).pages ?? {})
+  : {};
+
+function citationContext(q: Question): { page: number; shared: string[] }[] {
+  const words = new Set(
+    textOf(q)
+      .toLocaleLowerCase('sv')
+      .split(/[^a-zà-ÿåäö0-9]+/)
+      .filter((w) => w.length > 4),
+  );
+  const out: { page: number; shared: string[] }[] = [];
+  for (const ref of q.sourceReferences) {
+    for (const page of ref.sourcePages ?? []) {
+      const onPage = pageWords[String(page)];
+      if (!onPage) continue;
+      const shared = onPage.filter((w) => words.has(w)).slice(0, 12);
+      out.push({ page, shared });
+    }
+  }
+  return out;
+}
+
 const payload = rows.map((r) => ({
   id: r.q.id,
   p: r.priority,
+  tags: r.tags,
+  batch: r.batchId + ' — ' + r.batchTitle,
+  fingerprint: contentFingerprint(r.q),
+  context: citationContext(r.q),
   because: r.because,
   chapter: r.chapter,
   sub: getSubcategoryName(r.q.subcategory),
@@ -316,12 +380,15 @@ const html = `<!doctype html>
     <option value="P2">P2 — undantag och beräkning</option>
     <option value="P3">P3 — förklarande</option>
   </select>
+  <select id="tag"><option value="">Alla P1-typer</option></select>
+  <select id="batch"><option value="">Alla omgångar</option></select>
   <select id="chapter"><option value="">Alla kapitel</option></select>
   <select id="status"><option value="">Alla statusar</option></select>
   <input id="q" type="search" placeholder="Sök id, regel eller text" size="24">
   <button id="prev">← Föregående</button>
   <button id="next">Nästa →</button>
   <span class="count" id="count"></span>
+  <button id="export">Exportera anteckningar</button>
 </header>
 <main id="out"></main>
 <script>
@@ -330,16 +397,40 @@ const $ = (id) => document.getElementById(id);
 for (const c of [...new Set(DATA.map(d => d.chapter))].sort()) {
   $('chapter').append(new Option(c, c));
 }
+for (const t of [...new Set(DATA.flatMap(d => d.tags))].sort()) {
+  $('tag').append(new Option(t, t));
+}
+for (const b of [...new Set(DATA.map(d => d.batch))].sort()) {
+  $('batch').append(new Option(b, b));
+}
 for (const s of [...new Set(DATA.map(d => d.status))].sort()) {
   $('status').append(new Option(s, s));
 }
 let index = 0;
 function filtered() {
   const p = $('prio').value, c = $('chapter').value, s = $('status').value;
+  const t = $('tag').value, b = $('batch').value;
   const term = $('q').value.trim().toLowerCase();
   return DATA.filter(d =>
     (!p || d.p === p) && (!c || d.chapter === c) && (!s || d.status === s) &&
+    (!t || d.tags.includes(t)) && (!b || d.batch === b) &&
     (!term || (d.id + ' ' + d.rule + ' ' + d.prompt + ' ' + d.short).toLowerCase().includes(term)));
+}
+
+/* Reviewer notes live in this browser only. They are working notes, not the
+   record: a question becomes verified when a person edits the content files
+   and signs it there. Export writes them out so that edit can be made. */
+const NOTES_KEY = 'vagklar-granskning';
+let notes = {};
+try { notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '{}'); } catch { notes = {}; }
+function saveNote(id, value) {
+  if (value.trim()) notes[id] = value; else delete notes[id];
+  try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch {}
+  renderNoteCount();
+}
+function renderNoteCount() {
+  const n = Object.keys(notes).length;
+  $('export').textContent = n ? 'Exportera ' + n + ' anteckningar' : 'Exportera anteckningar';
 }
 function esc(t) { const n = document.createElement('div'); n.textContent = t; return n.innerHTML; }
 function render() {
@@ -371,16 +462,44 @@ function render() {
         ? '<div class="label">Missuppfattningar</div><div class="src">' +
           esc(d.misconceptions.join(', ')) + '</div>' : '') +
       '<div class="label">Varför i kön</div><div>' + esc(d.because) + '</div>' +
-      (d.notes ? '<div class="label">Granskarens notering</div><div>' + esc(d.notes) + '</div>' : '') +
+      (d.context.length
+        ? '<div class="label">Ord som sidan och frågan delar</div>' +
+          d.context.map(c =>
+            '<div class="src">s. ' + c.page + ': ' +
+            (c.shared.length ? esc(c.shared.join(', ')) : '<em>inga gemensamma ord</em>') +
+            '</div>').join('') +
+          '<div class="src" style="margin-top:4px">Bara en orientering — slå upp sidan innan du signerar.</div>'
+        : '') +
+      (d.notes ? '<div class="label">Notering i innehållsfilen</div><div>' + esc(d.notes) + '</div>' : '') +
+      '<div class="label">Att fylla i vid signering</div>' +
+      '<div class="src">verifiedFingerprint: ' + esc(d.fingerprint) +
+        ' <button onclick="navigator.clipboard.writeText(' + JSON.stringify(d.fingerprint) + ')">⧉</button>' +
+        ' · <button onclick="navigator.clipboard.writeText(' + JSON.stringify(d.sources) + ')">kopiera källhänvisning ⧉</button>' +
+      '</div>' +
+      '<div class="label">Granskarens anteckning (lokal)</div>' +
+      '<textarea id="note" rows="3" style="width:100%">' + esc(notes[d.id] || '') + '</textarea>' +
+      '<div class="src">Sparas bara i den här webbläsaren. Verifiering sker genom att ' +
+        'redigera innehållsfilen och signera där.</div>' +
     '</div>';
+  const note = document.getElementById('note');
+  if (note) note.oninput = () => saveNote(d.id, note.value);
 }
 $('next').onclick = () => { index++; render(); };
 $('prev').onclick = () => { index = Math.max(0, index - 1); render(); };
-for (const id of ['prio', 'chapter', 'status', 'q']) {
+for (const id of ['prio', 'chapter', 'status', 'q', 'tag', 'batch']) {
   $(id).oninput = () => { index = 0; render(); };
 }
+$('export').onclick = () => {
+  const lines = Object.entries(notes).map(([id, text]) => '## ' + id + '\n' + text);
+  const blob = new Blob([lines.join('\n\n') || 'Inga anteckningar.'], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'granskningsanteckningar.md';
+  a.click();
+};
+renderNoteCount();
 addEventListener('keydown', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+  if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
   if (e.key === 'ArrowRight' || e.key === 'j') $('next').click();
   if (e.key === 'ArrowLeft' || e.key === 'k') $('prev').click();
 });

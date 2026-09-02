@@ -21,7 +21,12 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  white-space: nowrap;
+  /* Not `nowrap`. A button label is short enough to stay on one line at
+     ordinary sizes without being told to, and at 200 % text "Exportera eller
+     radera min data" is not — it kept the button 439 px wide inside a 204 px
+     column and pushed the whole About page sideways. Letting it wrap costs
+     nothing when there is room. */
+  white-space: normal;
   transition:
     background-color var(--dur-fast) var(--ease-standard),
     border-color var(--dur-fast) var(--ease-standard),
@@ -132,6 +137,12 @@
 
 .label {
   display: inline-block;
+  /* A flex item will not shrink below its own min-content width unless told
+     to. Without this, a long button label such as "Exportera eller radera min
+     data" kept the button 439 px wide at 200 % text and pushed the page
+     sideways. */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .loading .label,

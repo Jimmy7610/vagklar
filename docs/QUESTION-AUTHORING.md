@@ -289,3 +289,28 @@ Sikta på:
 - flera frågor som delar `misconceptionId`, så mönstren i misstagsanalysen blir verkliga
 
 Nuvarande fördelning finns i [README](../README.md#innehåll).
+
+
+## Svaren måste gå att skilja åt på sin egen text
+
+Inget svar får vara en delsträng av ett annat svar i samma fråga. Två alternativ
+där det ena innehåller det andra läser eleven som en fälla, och det är dessutom
+svårt att peka ut ett av dem entydigt i ett test.
+
+Regeln kom ur en verklig bugg. Provets UI-test letade upp svarsknappen genom att
+bygga ett reguljärt uttryck av de trettio första tecknen i det rätta svaret, och
+`omk-001`:s rätta svar är "Till vänster." — där punkten är ett jokertecken. Det
+matchade även "Till vänster på landsväg och till höger i tätort.", två knappar
+träffades, och frågan togs bara med i 0,30 % av de slumpgenererade proven. Ett
+test som faller en gång på trehundra körningar.
+
+`answers are distinguishable` i valideringssviten upprätthåller regeln.
+
+## Att ändra en verifierad fråga
+
+Ändrar du frågetext, svar, vilket svar som är rätt, regeln, förklaringen eller
+källhänvisningen på en fråga med status `verified` faller verifieringen och
+validatorn säger till. Det är avsiktligt: signaturen gällde den gamla texten.
+
+Räkna aldrig om `verifiedFingerprint` för hand för att tysta felet. Sätt tillbaka
+status till `reviewed` och lägg frågan i kön igen.

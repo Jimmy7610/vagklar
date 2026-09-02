@@ -95,10 +95,13 @@ hitta det som saknas, inte för att se färdig ut.
       Kryssmärke) och ritas nu som ett ånglok; A30 och D3 cirkulerade medurs
       och cirkulerar nu moturs, vilket är vad deras egen text säger
 - [x] Märkesfärger inverteras inte med tema — fasta hexvärden, inte tokens
-- [ ] **Pilarnas sida i A25/B6/B7 är inte verifierad mot Vägmärkesförordningen.**
-      De tre tvåpilsmärkena är inbördes konsekventa (uppåtpil till vänster) och
-      följer den europeiska utformningen, men det gick inte att bekräfta mot
-      källan, som här är en vektorplansch utan text. En människa bör titta.
+- [x] **Pilarnas sida i A25, B6 och B7 är löst.** Avgjord mot källans egna
+      märkesplanscher (s. 326 och 328). Alla tre var speglade och A25 hade
+      dessutom fel färg — märket bär två svarta pilar. Rättat, och låst av
+      `opposedArrowSigns.test.ts`.
+- [x] Märkets ritning och dess alt-text säger samma sak åt samma håll — testat
+      för de tre tvåpilsmärkena, där alt-texten tidigare sa "en svart och en
+      röd" om ett märke med två svarta pilar
 
 ## Adaptiv träning och prov
 
@@ -171,10 +174,21 @@ Automatiserad strukturgranskning över 14 vyer, i produktionsbygget:
       markeringsramen för flaggade provfrågor på 1,79:1 i ljust tema
 - [x] Reflow: inget horisontellt överflöd vid 320 px och normal textstorlek
 - [x] Textstorlek: inget överflöd vid 200 % text i ett 640 px-fönster
-- [ ] **320 px och 200 % text samtidigt överflödar på sex vyer.** Det är
-      hårdare än både WCAG 1.4.10 och 1.4.4 kräver var för sig. Förbättrat
-      kraftigt i den här omgången (Hem, Träna och Prov är nu rena), men inte
-      löst överallt.
+- [x] **320 px och 200 % text samtidigt: alla 15 rutter rena.** Hårdare än både
+      WCAG 1.4.10 och 1.4.4 kräver var för sig. Sju rutter överflödade innan;
+      orsakerna var `white-space: nowrap` på knappar och pills, flex-objekt
+      utan `min-width: 0`, rutnät med implicita `auto`-spår, och saknad
+      `overflow-wrap: anywhere` på listrader och callouts
+- [x] Bottennavigeringens etiketter klipps inte längre med ellips utan bryts —
+      "Utveckl…" är en etikett läsaren får gissa
+- [x] Provets frågeöversikt fungerar vid 320 px och 200 % text: 70 mål,
+      36×36 px, ingen horisontell scroll
+- [x] Fokusmarkering kontrollerad med riktiga tangenttryckningar. Programmatiskt
+      `focus()` utlöser inte `:focus-visible` och gav först ett falskt larm om
+      17 kontroller utan markering — den mätningen var fel, inte appen
+- [ ] **Ingen skärmläsargranskning är gjord.** Strukturen är förberedd och
+      testad automatiskt, men ingen har kört appen med NVDA eller VoiceOver.
+      Automatiska kontroller ersätter inte det.
 - [ ] Ingen granskning med riktig skärmläsare. Strukturen är kontrollerad,
       upplevelsen är det inte.
 
@@ -226,14 +240,14 @@ Inget horisontellt överflöd på någon av de 14 vyerna vid:
 
 Inget av nedanstående hindrar en beta, men allt är känt:
 
-1. Expertverifiering av P1-kön
-2. Pilarnas sida i A25/B6/B7 mot Vägmärkesförordningen
-3. Installations-PWA i en riktig webbläsarsession
-4. Skärmläsargranskning
-5. 320 px kombinerat med 200 % text
-6. Utred den ostabila provtesten
-7. Delområdet vägmarkeringar har nu ett verkligt fotografi (väjningslinje), men
+1. Expertverifiering av P1-kön — 131 frågor, indelade i fjorton
+   granskningsomgångar med allt en granskare behöver per fråga
+2. Installations-PWA i en riktig webbläsarsession
+3. Skärmläsargranskning med NVDA eller VoiceOver
+4. Delområdet vägmarkeringar har nu ett verkligt fotografi (väjningslinje), men
    bara ett. Fler markeringar skulle tjäna på samma vektor-plus-foto-par
+5. Frågeöversiktens mål är 36×36 px vid 200 % text — över WCAG 2.2 AA:s krav på
+   24 px men under de 44 px som är bekvämt
 
 ## Omdöme
 
@@ -248,3 +262,13 @@ Innehållet är komplett mot kursplanen och internt konsekvent, men det är
 granskat och inte expertverifierat — och det står tydligt både här, i
 gränssnittet och i kön. Det är rätt läge för en beta, och fel läge för att
 kalla produkten färdig.
+
+Sedan förra omdömet har tre saker som stod som kända brister blivit gjorda: det
+instabila provtestet har en fastställd orsak och är deterministiskt, pilarnas
+sida i A25/B6/B7 är avgjord mot källan och rättad, och 320 px vid 200 % text är
+rent på samtliga rutter. Kön är dessutom inte längre en lista över id utan ett
+arbetsmaterial: fjorton omgångar, med frågetext, facit, källhänvisning och
+signeringsfält per fråga.
+
+Kvar står det som bara en människa kan göra: expertgranskningen och en riktig
+skärmläsarsession.

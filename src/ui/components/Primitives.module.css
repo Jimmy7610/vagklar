@@ -14,7 +14,13 @@
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-snug);
   line-height: 1.4;
-  white-space: nowrap;
+  /* A pill is short enough not to wrap at ordinary sizes. At 200 % text it is
+     not, and `nowrap` then made it push the page sideways rather than take a
+     second line. Wrapping costs nothing when there is room and saves the
+     layout when there is not. */
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .pillNeutral {
@@ -369,6 +375,10 @@
   border-radius: var(--radius-md);
   font-size: var(--text-small);
   line-height: var(--leading-relaxed);
+  /* Swedish compounds are long and a callout is narrow. Without this the
+     word decides the box width instead of the other way round. */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .calloutIcon {

@@ -176,7 +176,8 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Mötande trafik börjar på en väg som saknat den.',
     longMeaning:
       'Typiskt där en enkelriktad sträcka eller en fyrfältsväg övergår i tvåvägstrafik. Placera dig åt höger och räkna med möte.',
-    altText: 'Varningsmärke: gul triangel med röd ram och två pilar mot varandra, en svart och en röd.',
+    altText:
+      'Varningsmärke: gul triangel med röd ram och två svarta pilar mot varandra, den vänstra nedåt och den högra uppåt.',
     tags: ['mote', 'landsvag'],
     similarSignIds: ['vajningsplikt-motande', 'motande-har-vajningsplikt'],
     subcategory: 'varningsmarken',
@@ -309,7 +310,8 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Mötande trafik kör först genom passagen.',
     longMeaning:
       'Sätts upp där vägen smalnar av så att bara ett fordon kommer fram, till exempel vid en bro eller ett avsmalnande parti.',
-    altText: 'Rund skylt med gul botten och röd ram, en röd pil uppåt och en svart pil nedåt.',
+    altText:
+      'Rund skylt med gul botten och röd ram. Till vänster en svart pil nedåt, till höger en röd pil uppåt — den röda pekar åt ditt håll.',
     tags: ['mote'],
     similarSignIds: ['motande-har-vajningsplikt'],
     subcategory: 'mote',
@@ -322,7 +324,8 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Du kör först genom passagen.',
     longMeaning:
       'Motsatsen till B6, och den lätta att blanda ihop med den. Det avgörande är färgen: den vita pilen är din körriktning, den röda är den som ska vänta.',
-    altText: 'Blå rektangulär skylt med en stor vit pil uppåt och en mindre röd pil nedåt.',
+    altText:
+      'Blå fyrkantig skylt. Till vänster en röd pil nedåt, till höger en vit pil uppåt — den vita pekar åt ditt håll.',
     tags: ['mote'],
     similarSignIds: ['vajningsplikt-motande'],
     subcategory: 'mote',

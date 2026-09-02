@@ -3,6 +3,7 @@ import type { CurriculumConcept } from '@/content/curriculum/curriculum';
 import type { SourceEntry } from '@/content/sources';
 import type { SourceImage } from '@/content/source-images';
 import type { OriginalVisual } from '@/content/original-visuals';
+import { contentFingerprint } from './fingerprint';
 import type { RoadSign } from '@/content/road-signs';
 import type { RoadMarking } from '@/content/road-markings';
 import type { Lesson } from './types';
@@ -314,6 +315,51 @@ export function validateContent(input: ValidationInput): ValidationReport {
       for (const id of q.verificationSourceIds ?? []) {
         if (!sourceById.has(id)) {
           add('error', 'verification-unknown-source', q.id, `Okänd verifieringskälla "${id}".`);
+        }
+      }
+
+      // Verification lapses when what was verified changes.
+      //
+      // Without this, an edit to a verified question leaves the sign-off in
+      // place and the question keeps claiming that a named person checked
+      // *this* wording on a named date. They checked a different wording. The
+      // fix is never to recompute the fingerprint automatically — it is for a
+      // human to look again and sign the new version.
+      if (q.verifiedFingerprint === undefined) {
+        add(
+          'error',
+          'verified-without-fingerprint',
+          q.id,
+          'Status "verified" utan verifiedFingerprint — då går det inte att se om texten ändrats sedan granskningen.',
+        );
+      } else if (q.verifiedFingerprint !== contentFingerprint(q)) {
+        add(
+          'error',
+          'verification-stale-content',
+          q.id,
+          'Frågans innehåll har ändrats sedan den verifierades. Låt en människa granska om och signera på nytt.',
+        );
+      }
+
+      // And when the source it was checked against has moved on.
+      for (const sourceId of q.verificationSourceIds ?? []) {
+        const entry = sourceById.get(sourceId);
+        const checkedAgainst = q.verifiedAgainstEditions?.[sourceId];
+        if (!entry?.edition) continue;
+        if (checkedAgainst === undefined) {
+          add(
+            'warning',
+            'verification-without-edition',
+            q.id,
+            `Verifierad mot "${sourceId}" utan att notera vilken utgåva.`,
+          );
+        } else if (checkedAgainst !== entry.edition) {
+          add(
+            'error',
+            'verification-stale-source',
+            q.id,
+            `Verifierad mot utgåva ${checkedAgainst} av "${sourceId}", men registret anger ${entry.edition}.`,
+          );
         }
       }
     }

@@ -44,6 +44,7 @@ npm run dev
 | `python scripts/extract-source-images.py --extract` | Tar ut bildkandidater ur källan (aldrig incheckade) |
 | `python scripts/optimise-source-images.py` | Optimerar de kurerade bilderna till WebP |
 | `python scripts/extract-source-diagrams.py` | Renderar sidor och klipper ut kuraterade ritningar |
+| `npm run report:verification` | Bygger granskningskön och det lokala granskningsverktyget |
 
 Ikoner och Open Graph-bilden genereras från kod:
 

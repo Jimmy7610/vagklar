@@ -98,12 +98,19 @@
 .rowTitle {
   font-size: var(--text-small);
   font-weight: var(--weight-medium);
+  /* `anywhere`, not `break-word`: only `anywhere` lets the element's
+     min-content width shrink, which is what stops a long Swedish compound
+     from widening the whole grid row. */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .rowMeta {
   font-size: var(--text-caption);
   color: var(--color-text-secondary);
   margin-top: 2px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .chevron {
@@ -117,6 +124,12 @@
 }
 
 .panel {
+  /* Several pages turn a panel into a grid with an inline style and no track
+     definition. The implicit track is `auto`, which refuses to shrink below
+     its content — at 200 % text that made a 288 px panel lay out a 350 px
+     column and pushed the page sideways. Naming a shrinkable track here fixes
+     every one of them at once, and does nothing when the panel is not a grid. */
+  grid-template-columns: minmax(0, 1fr);
   padding: var(--space-5);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);

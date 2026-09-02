@@ -106,10 +106,11 @@
   min-height: var(--bottom-nav-height);
   padding: var(--space-2) 2px;
   /* Five fixed columns plus text that can be scaled to 200 % is more than a
-     narrow phone can hold. Let the column shrink and the label truncate rather
-     than pushing the whole page sideways — the icon still identifies it. */
+     narrow phone can hold, so the column has to be allowed to shrink. What it
+     must not do is clip: a label cut to "Utveckl…" is a label the reader has
+     to guess at, and guessing is exactly what someone using large text should
+     not have to do. The label wraps instead and the bar grows taller. */
   min-width: 0;
-  overflow: hidden;
   color: var(--color-text-tertiary);
   text-decoration: none;
   font-size: 0.6875rem;
@@ -121,9 +122,10 @@
 
 .navLabel {
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  min-width: 0;
+  text-align: center;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .navItem:hover {

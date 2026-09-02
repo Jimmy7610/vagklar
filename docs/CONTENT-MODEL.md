@@ -347,3 +347,26 @@ varje kapitel hör till ett verkligt huvudområde, att kapitlens sidintervall va
 som finns, att en fråga bara får ange ett `sourceId` som existerar i registret — och
 att rättighetstexterna faktiskt namnger tredjepartsinnehavaren och friskriver sig
 från koppling till Trafikverket.
+
+
+## Verifieringens fingeravtryck
+
+En fråga som är `verified` bär fyra saker utöver statusen: `verifiedBy`,
+`verifiedAt`, `verificationSourceIds` och `verifiedFingerprint`.
+
+Fingeravtrycket är en hash av frågans **materiella** innehåll — det som en
+granskare faktiskt tog ställning till:
+
+```
+prompt · svaren och vilket som är rätt · ruleTested ·
+shortExplanation · deepExplanation · källhänvisningarna
+```
+
+Allt annat är utanför. Svårighetsgrad, taggar, uppskattad tid och
+granskningsnoteringar går att ändra på en verifierad fråga utan att
+verifieringen faller, eftersom de inte ändrar vad som påstods.
+
+`verifiedAgainstEditions` noterar utgåvan per källa, så att en ny upplaga av
+boken syns som arbete att göra om snarare än som ett tyst antagande.
+
+Se [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md).

@@ -149,3 +149,67 @@ av gammal vana.
 
 Produkten kan vara betaklar med en dokumenterad verifieringskö. Den kan inte
 vara det med en påhittad verifieringsgrad.
+
+
+## P1-typer
+
+En platt P1 säger bara *att* något ska granskas först. Typerna säger *vad slags
+kontroll* det kräver, vilket är skillnaden mellan att slå upp en paragraf och
+att ta reda på om något ändrats i år. En fråga kan bära flera.
+
+De tre första avgör att frågan hamnar i P1:
+
+| Typ | Vad det betyder | Vad granskaren gör |
+| --- | --- | --- |
+| `P1-NUMERIC` | Innehåller ett tal som är rätt eller fel | Slår upp talet |
+| `P1-VOLATILE` | Regelområdet ändras på egen hand | Kontrollerar om något ändrats sedan senast |
+| `P1-ADMIN` | Administrativ regel — besiktning, registrering, försäkring | Kontrollerar mot myndighetens aktuella besked |
+
+De övriga beskriver hur:
+
+| Typ | Vad det betyder |
+| --- | --- |
+| `P1-LAW` | Går att slå upp ordagrant i författning |
+| `P1-SAFETY` | Fel här kan leda till skada, inte bara till ett felaktigt svar — värt en andra läsare |
+| `P1-EXCEPTION` | Ett rättsligt tal som dessutom har undantag; både talet och undantaget måste stämma |
+
+Modellen ligger i `src/domain/content/verificationPriority.ts` och testas. Att
+den ligger i domänen och inte i rapportskriptet är en följd av att den haft fel
+två gånger: en tidig version befordrade allt som hänvisade till en författning
+och satte 376 av 442 frågor i P1, och en senare version stavade fyra
+delområdes-id fel så att reglerna aldrig utlöstes. Ett felstavat id i en `Set`
+kastar inget fel — det matchar bara aldrig.
+
+## Granskningsomgångar
+
+Kön är grupperad i fjorton omgångar. En omgång är ett arbetspass: samma ämne,
+samma källor uppslagna. Att hoppa mellan promillegränser och släpvagnsvikter
+slösar bort arbetet med att ha slagit upp något.
+
+Varje P1-fråga står i [VERIFICATION-QUEUE.md](VERIFICATION-QUEUE.md) med sin
+frågetext, sitt rätta svar, sin förklaring, sin exakta källhänvisning, sina
+typer och det fingeravtryck som ska klistras in vid signering.
+
+## När en verifiering går ur takt
+
+Verifiering är ett påstående om ett ögonblick: den här personen kontrollerade
+den här formuleringen mot de här sidorna det här datumet. Ändras formuleringen
+efteråt handlar påståendet plötsligt om något annat.
+
+Därför bär en signerad fråga ett `verifiedFingerprint` — en hash av det som
+faktiskt granskades: frågetext, svar, vilket svar som är rätt, regeln,
+förklaringarna och källhänvisningarna. Ändras något av det stämmer inte
+fingeravtrycket längre och validatorn ger `verification-stale-content`.
+
+Metadata som inte påverkar påståendet ingår inte: svårighetsgrad, taggar,
+uppskattad tid och granskningsnoteringar går att ändra utan att verifieringen
+faller.
+
+`verifiedAgainstEditions` noterar vilken utgåva av varje källa som användes. En
+ny utgåva av boken gör inte svaret fel, men den betyder att ingen har
+kontrollerat svaret mot den bok som nu står i hänvisningen —
+`verification-stale-source`.
+
+**Ingenting räknar om ett fingeravtryck automatiskt.** Det vore att signera i
+någon annans namn. Vägen tillbaka är alltid att en människa läser om och
+signerar på nytt.

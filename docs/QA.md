@@ -999,3 +999,126 @@ eagerly laddade `content`-chunken och drev upp startpaketet med 5 kB gzip;
 
 De 726 byte som återstår är de fem nya frågorna i det genererade frågeindexet,
 inte ritningarna.
+
+
+## P1-kö, provtestets instabilitet och extrem reflow (2026-09-02)
+
+### Det instabila provtestet — orsak, inte symptom
+
+`ExamRunnerPage.test.tsx` föll sällan och oförklarligt. Orsaken visade sig vara
+två saker som förstärkte varandra.
+
+Provet genereras från `now ^ Math.random()`, så varje körning fick ett nytt
+prov. Testet letade sedan upp svarsknappen genom att bygga ett **reguljärt
+uttryck av de trettio första tecknen i det rätta svaret**. `omk-001`:s rätta
+svar är `Till vänster.` — och punkten är ett jokertecken. Uttrycket matchade
+därför även `Till vänster på landsväg och till höger i tätort.`, två knappar
+träffades och `getByRole` kastade.
+
+Sannolikheten mättes i stället för att gissas: över 2 000 genererade prov låg en
+sådan fråga i plats ett i **0,30 %** av fallen. En körning på trehundra.
+
+**Åtgärd**, båda halvorna:
+
+- `Math.random` *och* `Date.now` låses i sviten. Bara den ena räckte inte —
+  provets nedräkning mäts mot `Date.now`, så ett låst frö med levande klocka
+  gav en deadline i det förflutna och provet omdirigerade innan det renderades.
+  Klockan stubbas i stället för att fejkade timers installeras, så `userEvent`
+  ligger kvar på riktiga timers.
+- Svar matchas på **hela sin text som delsträng**, aldrig som mönster.
+
+Att det är säkert att göra så vilar på ett innehållsvillkor, så villkoret
+kontrolleras: `answers are distinguishable` underkänner ett svar vars text är en
+delsträng av ett annat svar i samma fråga. Noll i dag.
+
+**Stresskörning:** 100 hela körningar av testfilen i följd, **0 misslyckanden**.
+Vid den gamla felfrekvensen hade 100 körningar gett ungefär 26 % chans till minst
+ett fall — så körningen ensam bevisar inte stabilitet. Det som gör det är att
+testet nu är deterministiskt till sin konstruktion, och ett test hävdar det
+direkt: samma prov dras varje gång.
+
+### Extrem reflow — 320 px vid 200 % text
+
+Emulerat genom att dubbla rotens teckenstorlek till 32 px, vilket är rätt
+motsvarighet eftersom hela typskalan är rem-baserad.
+
+**Före:** 7 av 15 rutter orsakade horisontell scroll.
+**Efter:** 0 av 15.
+
+| Orsak | Var | Åtgärd |
+| --- | --- | --- |
+| `white-space: nowrap` på knappetiketter | överallt | Får radbrytas; "Exportera eller radera min data" höll knappen 439 px bred i en 204 px spalt |
+| Flex-objekt utan `min-width: 0` | knappetikett | Ett flex-objekt krymper inte under sin min-content utan tillsägelse |
+| Rutnät utan spårdefinition | `.panel` | Inline-stilar gör panelen till ett rutnät utan `grid-template-columns`; det implicita `auto`-spåret vägrar krympa och la ut en 350 px spalt i en 288 px panel |
+| `white-space: nowrap` på pills | statusmärken | Får radbrytas |
+| Saknad `overflow-wrap` | listrader, kategorinamn, callouts | `anywhere`, inte `break-word` — bara `anywhere` krymper min-content |
+| Klippt text i bottennavigeringen | `.navLabel` | Ellips ersatt med radbrytning; en etikett kapad till "Utveckl…" är en etikett läsaren får gissa |
+
+Bottennavigeringen visade sig vara ett *symptom* i fem av rutterna, inte en
+orsak: med den dold var överflödet oförändrat. Kontrollmätning på en ren rutt
+gav 320 px bredd och fem 64 px-spalter.
+
+**Kontrollerat efteråt vid 320×568, 200 % text:** alla 15 rutter, träningsfråga,
+frågeåterkoppling, provfråga och frågeöversikten. Översikten har 70 mål på
+36×36 px — under 44 px men klart över WCAG 2.2 AA:s 24 px.
+
+### Vanlig responsiv genomgång
+
+| Bredd | Resultat |
+| --- | --- |
+| 320, 360, 375, 390, 412, 430, 768, 1024, 1366, 1440, 1920 | Ingen horisontell scroll på någon granskad rutt |
+| 320 / 375 / 390 vid 200 % text | Ingen horisontell scroll |
+
+### A25, B6 och B7 — löst
+
+Den stående osäkerheten om pilarnas sida gick att avgöra genom att rendera
+källans egna märkesplanscher (s. 326 för A25, s. 328 för B6 och B7) och titta.
+
+Alla tre var **speglade**, och A25 hade dessutom **fel färg**: märket bär två
+svarta pilar, inte en svart och en röd. Att de tre var konsekventa med varandra
+är just därför ingen läsning av koden avslöjade det.
+
+| Märke | Källan visar | Appen visade |
+| --- | --- | --- |
+| A25 | svart nedåt vänster, svart uppåt höger | svart uppåt vänster, **röd** nedåt höger |
+| B6 | svart nedåt vänster, röd uppåt höger | speglat |
+| B7 | röd nedåt vänster, vit uppåt höger | speglat |
+
+Betydelsen överlevde felet — på B6 pekar den röda pilen åt ditt håll, på B7 den
+vita — så det var bildens riktighet som var fel, inte det som lärdes ut.
+Alt-texterna sa dock "en svart och en röd" om A25, vilket var sakfel.
+`opposedArrowSigns.test.ts` låser nu båda.
+
+### Automatiserad grind mot klippt SVG-text
+
+Webbläsarmätningen från förra passet är nu ett test. jsdom saknar layout, så
+bredden uppskattas — medvetet generöst, så att den hellre klagar i onödan än
+missar. Grinden bevisas åt båda hållen: den godkänner alla 15 ritningar och
+underkänner alla sex etiketter som faktiskt låg klippta innan de rättades.
+
+### Strukturell tillgänglighet
+
+Genomsökning av sex rutter: **0 dubblettid, 0 rutter med fel antal `h1` eller
+`main`, 0 namnlösa knappar eller länkar, 0 omärkta fält.**
+
+Fokusmarkeringen kontrollerades med riktiga tangenttryckningar, inte
+programmatiskt `focus()` — det senare utlöser inte `:focus-visible` och gav
+först ett falskt larm om 17 kontroller utan markering. Med Tab: `:focus-visible`
+matchar och ger 2 px heldragen kontur.
+
+### Offline
+
+Servern stoppades och sidan laddades om: skalet, hemvyn, träningsvyn och
+provvyn renderade, Däck-lektionens fem egna ritningar ritades ut, och det
+pågående provet gick fortfarande att återuppta.
+
+### Prestanda
+
+| | Före | Efter |
+| --- | ---: | ---: |
+| Startpaket (gzip) | 164 310 B | 164 341 B |
+
+De 31 byten är CSS för radbrytning. Granskningsverktyget ligger utanför bygget
+och kontrolleras av en byggrind som provades med planterade artefakter: både en
+kopia av verktyget i `dist/` och en fil som innehöll ordet `granskningsverktyg`
+fick bygget att falla.

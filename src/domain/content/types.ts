@@ -129,6 +129,20 @@ export interface Question {
   verifiedBy?: string | null;
   /** Ids into the source registry that the verifier actually opened. */
   verificationSourceIds?: string[];
+  /**
+   * Fingerprint of the material content at the moment of sign-off, from
+   * `contentFingerprint`. Verification is a claim about a specific wording; if
+   * the wording changes afterwards the claim is about something else, and the
+   * validator says so rather than letting it stand.
+   */
+  verifiedFingerprint?: string;
+  /**
+   * Which edition of each source the verifier actually worked from, keyed by
+   * source id — `{ 'teoribok-2026-1': '2026-1' }`. A new edition of the book
+   * does not make the answer wrong, but it does mean nobody has checked the
+   * answer against the book that is now cited.
+   */
+  verifiedAgainstEditions?: Record<string, string>;
   /** Reviewer's note: why it was rejected, or what still needs checking. */
   reviewNotes?: string;
   image?: QuestionImage;

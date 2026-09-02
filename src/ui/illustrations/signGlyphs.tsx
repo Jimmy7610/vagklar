@@ -247,10 +247,19 @@ export const SIGN_GLYPHS: Record<string, ReactElement> = {
       </g>
     </WarnFrame>
   ),
+  /* A25, B6 and B7 all show two opposed arrows, and all three were drawn
+     mirrored — and A25 additionally had one arrow in the wrong colour. The
+     three were consistent with each other, which is why reading the code never
+     revealed it; what settled it was rendering the source's own sign plates
+     (Körkortsboken 2026, s. 326 for A25 and s. 328 for B6/B7) and looking.
+
+     A25 carries two *black* arrows: down on the left, up on the right. It
+     warns that oncoming traffic begins — neither direction has priority, so
+     neither arrow is red. */
   'varning-motande-trafik': (
     <WarnFrame>
-      <path d="M40 78 V48 M40 40 l-8 10 h16 z" fill={black} stroke={black} strokeWidth="6" strokeLinejoin="round" />
-      <path d="M61 42 V72 M61 80 l-8-10 h16 z" fill={red} stroke={red} strokeWidth="6" strokeLinejoin="round" />
+      <path d="M40 42 V72 M40 80 l-8-10 h16 z" fill={black} stroke={black} strokeWidth="6" strokeLinejoin="round" />
+      <path d="M61 78 V48 M61 40 l-8 10 h16 z" fill={black} stroke={black} strokeWidth="6" strokeLinejoin="round" />
     </WarnFrame>
   ),
   'varning-jarnvag-bommar': (
@@ -318,17 +327,21 @@ export const SIGN_GLYPHS: Record<string, ReactElement> = {
       <Pedestrian scale={0.5} y={64} />
     </>
   ),
+  /* B6: black down on the left, red up on the right. The red arrow is the one
+     pointing the way you are travelling — you are the one who yields. */
   'vajningsplikt-motande': (
     <ProhibitFrame>
-      <path d="M40 76 V44 M40 34 l-9 12 h18 z" fill={red} stroke={red} strokeWidth="6" strokeLinejoin="round" />
-      <path d="M61 34 V66 M61 76 l-9-12 h18 z" fill={black} stroke={black} strokeWidth="6" strokeLinejoin="round" />
+      <path d="M40 34 V66 M40 76 l-9-12 h18 z" fill={black} stroke={black} strokeWidth="6" strokeLinejoin="round" />
+      <path d="M61 76 V44 M61 34 l-9 12 h18 z" fill={red} stroke={red} strokeWidth="6" strokeLinejoin="round" />
     </ProhibitFrame>
   ),
+  /* B7: red down on the left, white up on the right. The mirror image of B6 in
+     meaning — your direction is the white one, so you go first. */
   'motande-har-vajningsplikt': (
     <>
       <rect x="6" y="10" width="88" height="80" rx="5" fill={blue} />
-      <path d="M40 78 V38 M40 26 l-10 14 h20 z" fill={white} stroke={white} strokeWidth="6" strokeLinejoin="round" />
-      <path d="M62 30 V64 M62 78 l-10-14 h20 z" fill={red} stroke={red} strokeWidth="6" strokeLinejoin="round" />
+      <path d="M40 30 V64 M40 78 l-10-14 h20 z" fill={red} stroke={red} strokeWidth="6" strokeLinejoin="round" />
+      <path d="M62 78 V38 M62 26 l-10 14 h20 z" fill={white} stroke={white} strokeWidth="6" strokeLinejoin="round" />
     </>
   ),
   cykeloverfart: (
