@@ -168,6 +168,20 @@ mångfaldsvillkor.
 Sammansättningen begränsar hur många frågor som får komma från samma delområde, så att ett pass
 aldrig blir enahanda. Taket släpps bara om passet annars inte kan fyllas.
 
+Dagens 10 sätter ihop passet av flera platser med olika syfte, och taken räknas över
+**hela** passet, inte per plats: `assemble` får med sig det som redan valts. Utan det
+kunde varje plats fylla sitt eget kvot av samma ämne och passet ändå bli enahanda — vad
+som faktiskt hände för en helt ny elev, som fick åtta alkoholfrågor av tio. Ett kompletterande
+kategoritak håller passet brett även när ett enskilt delområde är tunt.
+
+### Vad motorn läser vid start
+
+Behärskning och provberedskap behöver veta vilka delområden som finns och hur de väger,
+inte vad frågorna säger. Den härledningen görs ur det genererade frågeindexet i
+[`domain/content/indexView.ts`](../src/domain/content/indexView.ts), så modellen kan
+räknas fram innan frågebanken laddats. Urvalet, som behöver riktiga frågor, ligger på
+andra sidan den gränsen. Se [CONTENT-LOADING.md](CONTENT-LOADING.md).
+
 ### Dagens 10
 
 3 svaga + 2 förfallna + 2 misstag + 2 förstärkning + 1 osedd, med efterfyllnad i prioritetsordning

@@ -212,3 +212,13 @@ export function buildQuestions(seeds: AuthoredQuestion[]): Question[] {
 export function sign(illustration: string, alt: string): QuestionImage {
   return { illustration, alt, aspectRatio: 1 };
 }
+
+/**
+ * Convenience for road-marking questions.
+ *
+ * Same shape as `sign()` — the renderer picks by id, so a marking and a sign
+ * are authored identically and only the registry they resolve against differs.
+ */
+export function marking(illustration: string, alt: string): QuestionImage {
+  return { illustration, alt, aspectRatio: 1 };
+}

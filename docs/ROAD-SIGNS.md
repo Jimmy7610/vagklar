@@ -9,6 +9,10 @@ Därför består systemet av två delar som gör olika saker:
 | **Ritade märken** | Exakt igenkänning — form, färg, symbol | `ui/illustrations/signGlyphs.tsx` |
 | **Fotografier** | Sammanhang — var märket sitter och vad det gör med situationen | `content/source-images.ts` |
 
+Markeringarna i vägbanan är ett eget, likadant uppbyggt system — se
+[ROAD-MARKINGS.md](ROAD-MARKINGS.md). Ett märke gäller alla; en markering gäller ofta
+bara den ena körriktningen, och den skillnaden är värd sitt eget register.
+
 Ingen av dem ersätter den andra. Ett foto av en skylt i motljus är dålig igenkänning;
 en ritad skylt säger ingenting om att den sitter tillsammans med två andra på samma
 stolpe.

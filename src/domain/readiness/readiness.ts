@@ -1,5 +1,5 @@
 import { EXAM, READINESS } from '@/domain/constants';
-import { COVERED_SUBCATEGORY_IDS, subcategoryWeight } from '@/domain/content/bank';
+import { COVERED_SUBCATEGORY_IDS, subcategoryWeight } from '@/domain/content/indexView';
 import { CATEGORIES } from '@/content/taxonomy';
 import { categoryMastery, clamp01, effectiveMastery, isReliable } from '@/domain/mastery/mastery';
 import { overdueRatio } from '@/domain/repetition/repetition';

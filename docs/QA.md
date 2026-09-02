@@ -10,7 +10,7 @@ Senast genomförd: 2026-09-01, mot produktionsbygget serverat med `npm run previ
 
 ## Automatiserade tester
 
-`npm test` — **321 tester i 17 filer, alla gröna.**
+`npm test` — **354 tester i 19 filer, alla gröna.**
 
 | Område                     | Fil                                   | Täcker                                                                 |
 | -------------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
@@ -49,22 +49,23 @@ Några tester finns specifikt för att låsa fast beteenden som är lätta att r
 
 | Kontroll            | Resultat                                                        |
 | ------------------- | --------------------------------------------------------------- |
-| `npm run lint`      | 0 fel, 3 varningar (samtliga `react-refresh/only-export-components`, rör bara HMR i utveckling) |
+| `npm run lint`      | 0 fel, 9 varningar (samtliga `react-refresh/only-export-components`, rör bara HMR i utveckling) |
 | `npm run typecheck` | Rent. Strikt TypeScript, `noUncheckedIndexedAccess` på, inga `any` |
 | `npm run build`     | Lyckas                                                           |
 
-Bundlestorlek (gzip):
+Startpaketet — det webbläsaren måste hämta innan landningssidan kan ritas (gzip):
 
-| Chunk        | Rå      | Gzip   |
-| ------------ | ------- | ------ |
-| `vendor`     | 198 kB  | 62 kB  |
-| `content`    | 166 kB  | 49 kB  |
-| `index`      | 129 kB  | 39 kB  |
-| `router`     | 39 kB   | 14 kB  |
-| CSS          | 48 kB   | 10 kB  |
+| Chunk        | Gzip   |
+| ------------ | ------ |
+| `vendor`     | 62 kB  |
+| `content`    | 47 kB  |
+| `index`      | 37 kB  |
+| `router`     | 14 kB  |
+| CSS          | 10 kB  |
+| **Summa JS** | **160 kB** |
 
-`content` är frågebanken, lektionerna och scenarierna. Den är stor för att den *är* produkten, och
-den precachas en gång.
+Frågetexterna ligger inte där. De hämtas genom en dynamisk import i `learnerStore.init()`
+och precachas ändå av service workern. Se [CONTENT-LOADING.md](CONTENT-LOADING.md).
 
 ---
 
@@ -464,3 +465,103 @@ Märkena behåller sina äkta färger i båda teman, eftersom färgen är en del
 ska läras in. De ligger därför alltid på en ljus neutral platta: en gul varningstriangel
 direkt på en mörk kortyta läser sig som en varning *i gränssnittet*, vilket är fel
 budskap.
+## Människan, vägmarkeringar och innehållsladdning (2026-09-02)
+
+### Automatiserade tester
+
+354 tester i 19 filer, alla gröna. Nya sedan förra omgången:
+
+| Fil | Täcker |
+| --- | --- |
+| `domain/content/roadMarkings.test.ts` | Markeringsregistret, M-koder, ritningar, förväxlingspar, lektionsblock, Scenariolabbets koppling, sju planterade fel |
+| `app/state/contentLoading.test.ts` | Den statiska importgrafen från `main.tsx`, indexet mot banken, dubbletter över modulgränser |
+
+`contentLoading.test.ts` är ett strukturtest, inte ett storlekstest. Den går igenom
+grafen och fallerar om banken, urvalet, insikterna, provmodulen eller `useContent` blir
+nåbara utan dynamisk import — och även om indexet eller behärskningsmodellen skulle
+*sluta* vara nåbara, så att garantin inte kan bli sann av misstag.
+
+### Regression hittad av testsviten
+
+`selection.test.ts` fallerade på "blir inte ett enämnespass" efter att Människan växte
+med 40 frågor: en helt ny elev fick **åtta alkoholfrågor av tio** i Dagens 10. Orsaken
+var inte det nya innehållet utan en latent bugg det råkade avslöja — `maxPerSubcategory`
+nollställdes för varje plats i passet, så varje plats kunde fylla sin egen kvot av samma
+ämne. Åtgärd: `assemble` får med sig det redan valda (`taken`) och ett kompletterande
+kategoritak. Resultat efter fix: 5 delområden och 4 kategorier i samma pass.
+
+### Verifierat i webbläsaren
+
+Kört mot `npm run preview` (produktionsbygge med service worker).
+
+| Yta | Resultat |
+| --- | --- |
+| Landningssidan | Ritas utan frågebanken; hjältescenariot renderas |
+| Hem (nu lazy) | Laddas efter hydrering, provberedskap och nästa steg visas |
+| Träningspass | Frågor, svar och förklaring fungerar — banken löses ut dynamiskt |
+| Teoriskolan → Vägmarkeringar | Rutnät, jämförelsekort och källbild med kreditering |
+| Scenariolabbet → `sc-risk-barn-buss` | Scen, listalternativ, rättning och per-hotspot-förklaring |
+| Konsolen | Inga fel på någon yta |
+
+### Offline efter lazy-laddningen
+
+Den viktigaste frågan i hela omgången: gör en dynamisk import att banken saknas offline?
+Nej. Kontrollerat direkt i Workbox-cachen:
+
+```js
+const c = await caches.open('workbox-precache-v2-' + location.origin + '/vagklar/');
+(await c.keys()).map((r) => r.url).filter((u) => u.includes('questions-'));
+```
+
+→ `questions-*.js` finns i precachen, tillsammans med samtliga 53 poster och alla lata
+ruttchunkar. Service workern är registrerad och `vagklar-images` finns kvar. Skillnaden
+är alltså *när* webbläsaren måste vänta på chunken, inte om den finns.
+
+### Startpaketet
+
+| | Före | Efter |
+| --- | --- | --- |
+| Kritisk JS (gzip) | 246 151 B | 159 788 B |
+| Precachade poster | 48 | 53 |
+
+**−86 363 B, −35 %**, samtidigt som banken växte från 343 till 397 frågor och ett helt
+vägmarkeringssystem tillkom.
+
+Tre saker krävdes, och bara den första var uppenbar:
+
+1. `learnerStore` importerar banken och provmodulen dynamiskt före hydreringen
+2. Chunkarna namnges i `vite.config.ts` — utan det lyfter Rollup den delade banken till
+   startchunken, eftersom åtta lata rutter importerar den
+3. Hemsidan laddas lazy och landningsscenariot bor i egen modul; båda drog in innehåll
+   de bara behövde en liten del av
+
+### Responsiv QA
+
+Horisontellt överflöd mätt som `scrollingElement.scrollWidth − innerWidth` på Hem,
+Träna, Teoriskolans markeringslektion, ett människoscenario, Utveckling och Mina misstag:
+
+| Vy | Överflöd |
+| --- | --- |
+| 375 × 812 | 0 px |
+| 390 × 844 | 0 px |
+| 430 × 932 | 0 px |
+| 768 × 1024 | 0 px |
+| 1024 × 768 | 0 px |
+| 1366 × 768 | 0 px |
+| 1920 × 1080 | 0 px |
+
+Markeringsrutnätet lägger sig två i bredd på 375 px utan att streckmönstren blir
+otydliga.
+
+### Markeringarnas färger i båda teman
+
+Markeringsritningarna använder fasta gråtoner i stället för temavariabler. En vit linje
+på mörk asfalt måste se likadan ut i ljust och mörkt läge — annars byter kontrasten håll
+och bilden säger emot sig själv. Kontrollerat i båda lägena.
+
+### Inte verifierat
+
+Installerat PWA-läge i ett riktigt skrivbordsfönster (fristående fönster, ikon i
+aktivitetsfältet) har inte kunnat provas i den här omgången. Service worker,
+precachelista och manifest är kontrollerade i webbläsaren enligt ovan; själva
+installationsupplevelsen är det inte.

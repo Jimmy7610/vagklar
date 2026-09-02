@@ -3,6 +3,7 @@ import type { CurriculumConcept } from '@/content/curriculum/curriculum';
 import type { SourceEntry } from '@/content/sources';
 import type { SourceImage } from '@/content/source-images';
 import type { RoadSign } from '@/content/road-signs';
+import type { RoadMarking } from '@/content/road-markings';
 import type { Lesson } from './types';
 
 /**
@@ -50,6 +51,10 @@ export interface ValidationInput {
   roadSigns?: readonly RoadSign[];
   /** Sign ids that actually have a drawing. */
   availableSignGlyphs?: ReadonlySet<string>;
+  /** The road marking registry. */
+  roadMarkings?: readonly RoadMarking[];
+  /** Marking ids that actually have a drawing. */
+  availableMarkingGlyphs?: ReadonlySet<string>;
 }
 
 export interface ValidationReport {
@@ -358,12 +363,90 @@ export function validateContent(input: ValidationInput): ValidationReport {
     }
   }
 
-  // A question that renders a vector sign must name one that can be drawn.
-  if (input.availableSignGlyphs) {
+  // A question illustration must resolve against one of the two vector
+  // registries — signs or markings. The renderer picks by id, so either is
+  // valid; naming neither is a broken image.
+  if (input.availableSignGlyphs || input.availableMarkingGlyphs) {
     for (const q of input.questions) {
       const illustration = q.image?.illustration;
-      if (illustration && !input.availableSignGlyphs.has(illustration)) {
-        add('error', 'unknown-sign-illustration', q.id, `Okänd skyltritning "${illustration}".`);
+      if (!illustration) continue;
+      const drawable =
+        (input.availableSignGlyphs?.has(illustration) ?? false) ||
+        (input.availableMarkingGlyphs?.has(illustration) ?? false);
+      if (!drawable) {
+        add('error', 'unknown-sign-illustration', q.id, `Okänd ritning "${illustration}".`);
+      }
+    }
+  }
+
+  /* ---- The road marking registry ---------------------------------------- */
+  const markingIds = new Set<string>();
+  const validMarkingCategories = new Set(['langsgaende', 'tvargaende', 'symbol', 'omrade']);
+  for (const m of input.roadMarkings ?? []) {
+    const where = `markering:${m.id}`;
+    if (markingIds.has(m.id)) {
+      add('error', 'duplicate-marking-id', where, `Markerings-id ${m.id} används mer än en gång.`);
+    }
+    markingIds.add(m.id);
+
+    if (!validMarkingCategories.has(m.category)) {
+      add('error', 'marking-bad-category', where, `Okänd kategori "${m.category}".`);
+    }
+    if (m.name.trim().length === 0) {
+      add('error', 'marking-without-name', where, 'Markeringen saknar namn.');
+    }
+    // Both halves matter: what it is, and what it demands of the driver.
+    if (m.meaning.trim().length < 20 || m.forDriver.trim().length < 30) {
+      add('error', 'marking-without-meaning', where, 'Markeringen saknar användbar innebörd.');
+    }
+    if (m.altText.trim().length < 15) {
+      add('error', 'marking-without-alt', where, 'Markeringen saknar beskrivande alt-text.');
+    }
+    if (!input.subcategoryIds.has(m.subcategory)) {
+      add('error', 'marking-unknown-subcategory', where, `Okänt delområde "${m.subcategory}".`);
+    }
+    if (input.availableMarkingGlyphs && !input.availableMarkingGlyphs.has(m.id)) {
+      add('error', 'marking-without-glyph', where, `Markeringen "${m.id}" saknar ritning.`);
+    }
+    for (const signId of m.relatedSignIds) {
+      if (signIds.size > 0 && !signIds.has(signId)) {
+        add('error', 'marking-dangling-sign', where, `Hänvisar till okänd skylt "${signId}".`);
+      }
+    }
+  }
+
+  for (const m of input.roadMarkings ?? []) {
+    for (const similar of m.similarMarkingIds) {
+      if (similar === m.id) {
+        add('error', 'marking-self-similar', `markering:${m.id}`, 'Markeringen listar sig själv.');
+      } else if (!markingIds.has(similar)) {
+        add(
+          'error',
+          'marking-dangling-similar',
+          `markering:${m.id}`,
+          `Hänvisar till okänd markering "${similar}".`,
+        );
+      }
+    }
+  }
+
+  /* ---- Lesson marking blocks -------------------------------------------- */
+  for (const lesson of input.lessons ?? []) {
+    for (const block of lesson.blocks) {
+      const where = `lektion:${lesson.id}`;
+      if (block.kind === 'markingGrid') {
+        for (const id of block.markingIds) {
+          if (markingIds.size > 0 && !markingIds.has(id)) {
+            add('error', 'unknown-marking', where, `Okänd markering "${id}".`);
+          }
+        }
+      }
+      if (block.kind === 'markingCompare') {
+        for (const id of [block.leftId, block.rightId]) {
+          if (markingIds.size > 0 && !markingIds.has(id)) {
+            add('error', 'unknown-marking', where, `Okänd markering "${id}".`);
+          }
+        }
       }
     }
   }

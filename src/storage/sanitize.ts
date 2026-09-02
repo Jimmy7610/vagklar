@@ -1,6 +1,6 @@
 import { REPETITION } from '@/domain/constants';
 import { SUBCATEGORY_BY_ID } from '@/content/taxonomy';
-import { QUESTION_BY_ID } from '@/domain/content/bank';
+import { QUESTION_INDEX_BY_ID } from '@/content/question-index';
 import { DEFAULT_PREFERENCES, createOnboardingState, createProfile, createStreakState } from './defaults';
 import type {
   AchievementUnlock,
@@ -77,7 +77,7 @@ const EXAM_STATUS = ['in-progress', 'submitted', 'expired', 'abandoned'] as cons
 export function readAnswer(raw: unknown): AnswerRecord | null {
   if (!isRecord(raw)) return null;
   const questionId = str(raw.questionId);
-  const question = QUESTION_BY_ID.get(questionId);
+  const question = QUESTION_INDEX_BY_ID.get(questionId);
   // An answer to a question that no longer exists is kept for the totals but
   // cannot be trusted for per-question reasoning, so we drop it entirely.
   if (!question) return null;
@@ -112,7 +112,7 @@ export function readAnswer(raw: unknown): AnswerRecord | null {
 export function readQuestionState(raw: unknown): QuestionState | null {
   if (!isRecord(raw)) return null;
   const questionId = str(raw.questionId);
-  const question = QUESTION_BY_ID.get(questionId);
+  const question = QUESTION_INDEX_BY_ID.get(questionId);
   if (!question) return null;
 
   return {
@@ -226,7 +226,7 @@ export function readPracticeSession(raw: unknown): PracticeSession | null {
   const questions = rawQuestions.flatMap((item) => {
     if (!isRecord(item)) return [];
     const questionId = str(item.questionId);
-    if (!QUESTION_BY_ID.has(questionId)) return [];
+    if (!QUESTION_INDEX_BY_ID.has(questionId)) return [];
     return [
       {
         questionId,
@@ -301,7 +301,7 @@ export function readExamAttempt(raw: unknown): ExamAttempt | null {
   const questions = rawQuestions.flatMap((item) => {
     if (!isRecord(item)) return [];
     const questionId = str(item.questionId);
-    if (!QUESTION_BY_ID.has(questionId)) return [];
+    if (!QUESTION_INDEX_BY_ID.has(questionId)) return [];
     return [
       {
         questionId,

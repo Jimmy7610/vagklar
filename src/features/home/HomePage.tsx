@@ -5,17 +5,8 @@ import { Button, ButtonLink } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { ProgressRing } from '@/ui/components/ProgressRing';
 import { EmptyState, Meter, Pill, SectionHeading, Stat } from '@/ui/components/Primitives';
-import {
-  useActiveExam,
-  useActiveSession,
-  useInsights,
-  useLearner,
-  useLearnerActions,
-  useOutstandingMistakeCount,
-  useReadiness,
-  useRecommendation,
-  useSelectionContext,
-} from '@/app/state/useLearner';
+import { useActiveExam, useActiveSession, useLearner, useLearnerActions, useOutstandingMistakeCount, useReadiness } from '@/app/state/useLearner';
+import { useInsights, useRecommendation, useSelectionContext } from '@/app/state/useContent';
 import { READINESS_BAND_COPY } from '@/domain/readiness/readiness';
 import { buildDailyTen, duePool } from '@/domain/selection/selection';
 import { SESSION } from '@/domain/constants';
@@ -50,7 +41,7 @@ const insightToneIcon: Record<InsightTone, 'check-circle' | 'alert' | 'info'> = 
  * the progress screen; here there is one recommendation, one readiness figure,
  * and four ways in.
  */
-export function HomePage() {
+export default function HomePage() {
   const learner = useLearner();
   const readiness = useReadiness();
   const recommendation = useRecommendation();

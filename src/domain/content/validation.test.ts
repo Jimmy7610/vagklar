@@ -9,6 +9,8 @@ import { LESSONS } from '@/content/lessons';
 import { availableSourceImageAssets } from '@/ui/media/sourceImageAssets';
 import { ROAD_SIGNS } from '@/content/road-signs';
 import { SIGN_GLYPHS } from '@/ui/illustrations/signGlyphs';
+import { ROAD_MARKINGS } from '@/content/road-markings';
+import { MARKING_GLYPHS } from '@/ui/illustrations/markingGlyphs';
 import {
   findDuplicates,
   normalisePrompt,
@@ -34,6 +36,8 @@ function baseInput(questions: readonly Question[]) {
     lessons: LESSONS,
     roadSigns: ROAD_SIGNS,
     availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
+    roadMarkings: ROAD_MARKINGS,
+    availableMarkingGlyphs: new Set(Object.keys(MARKING_GLYPHS)),
   };
 }
 

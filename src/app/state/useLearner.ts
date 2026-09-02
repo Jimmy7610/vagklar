@@ -3,12 +3,9 @@ import { learnerStore } from './learnerStore';
 import type { LearnerStoreState } from './learnerStore';
 import type { LearnerData } from '@/domain/learner/types';
 import { computeReadiness } from '@/domain/readiness/readiness';
+import { outstandingMistakeCount } from '@/domain/insights/mistakeCount';
 import { useMinuteClock } from './clock';
 import type { ReadinessResult } from '@/domain/readiness/readiness';
-import { buildInsights, groupMistakes, outstandingMistakeCount } from '@/domain/insights/insights';
-import type { Insight, MistakeGroup } from '@/domain/insights/insights';
-import { dailySeed, nextBestStep } from '@/domain/selection/selection';
-import type { Recommendation, SelectionContext } from '@/domain/selection/selection';
 
 /**
  * React bindings for the learner store.
@@ -34,8 +31,6 @@ export function useLearnerStore(): typeof learnerStore {
 /* ---- Derived caches ----------------------------------------------------- */
 
 const readinessCache = new WeakMap<LearnerData, ReadinessResult>();
-const insightsCache = new WeakMap<LearnerData, Insight[]>();
-const mistakeCache = new WeakMap<LearnerData, MistakeGroup[]>();
 
 /**
  * Readiness is recomputed at most once per learner-data revision. The `now`
@@ -61,52 +56,9 @@ export function useReadiness(): ReadinessResult {
   }, [data, now]);
 }
 
-export function useInsights(): Insight[] {
-  const data = useLearner();
-  return useMemo(() => {
-    const cached = insightsCache.get(data);
-    if (cached) return cached;
-    const result = buildInsights(data);
-    insightsCache.set(data, result);
-    return result;
-  }, [data]);
-}
-
-export function useMistakeGroups(): MistakeGroup[] {
-  const data = useLearner();
-  return useMemo(() => {
-    const cached = mistakeCache.get(data);
-    if (cached) return cached;
-    const result = groupMistakes(data.answers);
-    mistakeCache.set(data, result);
-    return result;
-  }, [data]);
-}
-
 export function useOutstandingMistakeCount(): number {
   const data = useLearner();
   return useMemo(() => outstandingMistakeCount(data), [data]);
-}
-
-/** A selection context pinned to the current learner state. */
-export function useSelectionContext(seed?: number): SelectionContext {
-  const data = useLearner();
-  const now = useMinuteClock();
-  return useMemo(
-    () => ({
-      mastery: data.mastery,
-      questionStates: data.questionStates,
-      answers: data.answers,
-      now,
-      seed: seed ?? dailySeed(data.profile.id, now),
-    }),
-    [data, seed, now],
-  );
-}
-
-export function useRecommendation(): Recommendation {
-  const context = useSelectionContext();
-  return useMemo(() => nextBestStep(context), [context]);
 }
 
 /** Stable callback bundle for the most common store actions. */

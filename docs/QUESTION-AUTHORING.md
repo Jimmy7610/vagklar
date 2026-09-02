@@ -116,6 +116,28 @@ efter konsekvensen i stället:
 
 Se [ROAD-SIGNS.md](ROAD-SIGNS.md) för hur man lägger till ett märke.
 
+## Markeringsfrågor
+
+`image: marking(id, alt)` ritar en vägmarkering i sitt sammanhang — på asfalt, sedd
+uppifrån, med körriktningen uppåt. Använd `type: 'image-scenario'` när frågan handlar om
+vad markeringen kräver av dig, inte bara vad den heter.
+
+Samma råd som för märken gäller dubbelt här: "Vad betyder den här linjen?" fjorton
+gånger är en dubblett för detektorn, som inte ser bilden. Fråga efter konsekvensen —
+vilken linje som avgör, om du får korsa, vad som skiljer den från grannmarkeringen. Se
+[ROAD-MARKINGS.md](ROAD-MARKINGS.md).
+
+## Efter varje bankändring
+
+```bash
+npm run generate:index
+npm test
+```
+
+Frågeindexet är genererat och används vid start i stället för hela banken. Ett test
+jämför det fält för fält mot banken, så en glömd generering fallerar sviten i stället
+för att tyst avvika. Se [CONTENT-LOADING.md](CONTENT-LOADING.md).
+
 ## Svårighetsbalans
 
 Banken ska ha ungefär 20–30 % lätta frågor. Lätt betyder **en enda kärnregel eller

@@ -7,12 +7,8 @@ import { Icon } from '@/ui/icons/Icon';
 import { Modal } from '@/ui/components/Modal';
 import { Callout, Pill, Stat } from '@/ui/components/Primitives';
 import { ProgressRing } from '@/ui/components/ProgressRing';
-import {
-  useActiveSession,
-  useLearner,
-  useLearnerActions,
-  useRecommendation,
-} from '@/app/state/useLearner';
+import { useActiveSession, useLearner, useLearnerActions } from '@/app/state/useLearner';
+import { useRecommendation } from '@/app/state/useContent';
 import { getQuestion } from '@/domain/content/bank';
 import { getSubcategoryName } from '@/content/taxonomy';
 import type { SessionSummary } from '@/domain/learner/types';

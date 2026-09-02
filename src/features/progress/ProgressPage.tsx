@@ -18,7 +18,8 @@ import { CATEGORIES } from '@/content/taxonomy';
 import { QUESTIONS_BY_CATEGORY, QUESTIONS_BY_SUBCATEGORY } from '@/domain/content/bank';
 import { categoryMastery, masteryLevel, MASTERY_LEVEL_LABEL } from '@/domain/mastery/mastery';
 import { READINESS_BAND_COPY } from '@/domain/readiness/readiness';
-import { useInsights, useLearner, useReadiness } from '@/app/state/useLearner';
+import { useLearner, useReadiness } from '@/app/state/useLearner';
+import { useInsights } from '@/app/state/useContent';
 import { ACHIEVEMENTS } from '@/domain/achievements/achievements';
 
 type Tab = 'karta' | 'insikter' | 'historik';

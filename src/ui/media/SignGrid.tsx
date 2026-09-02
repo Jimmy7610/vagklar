@@ -1,7 +1,9 @@
 import { useId, useState } from 'react';
 import styles from './SignGrid.module.css';
 import { RoadSign } from '@/ui/illustrations/RoadSign';
+import { RoadMarking } from '@/ui/illustrations/RoadMarking';
 import { getRoadSign } from '@/content/road-signs';
+import { getRoadMarking } from '@/content/road-markings';
 
 /**
  * A group of road signs, shown as a grid.
@@ -87,6 +89,94 @@ export function SignCompare({ title, leftId, rightId, note }: SignCompareProps) 
             <RoadSign name={sign.id} size={72} />
             <span className={styles.pairName}>{sign.name}</span>
             <span className={styles.pairMeaning}>{sign.shortMeaning}</span>
+          </div>
+        ))}
+      </div>
+      <p className={styles.compareNote}>{note}</p>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Road markings                                                       */
+/* ------------------------------------------------------------------ */
+
+export interface MarkingGridProps {
+  markingIds: string[];
+  title?: string;
+}
+
+/**
+ * The same disclosure pattern as the sign grid, for markings.
+ *
+ * Markings need a second line the signs do not: what the marking *is* and what
+ * it *requires of you* are different things, because a line's meaning depends
+ * on which side of it you are driving.
+ */
+export function MarkingGrid({ markingIds, title }: MarkingGridProps) {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const panelId = useId();
+
+  const markings = markingIds.map((id) => getRoadMarking(id)).filter((m) => m !== undefined);
+  if (markings.length === 0) return null;
+
+  return (
+    <section className={styles.wrap}>
+      {title && <h3 className={styles.title}>{title}</h3>}
+      <ul className={styles.grid}>
+        {markings.map((marking) => {
+          const open = openId === marking.id;
+          return (
+            <li key={marking.id} className={styles.cell}>
+              <button
+                type="button"
+                className={[styles.card, open ? styles.cardOpen : ''].filter(Boolean).join(' ')}
+                aria-expanded={open}
+                aria-controls={open ? `${panelId}-${marking.id}` : undefined}
+                onClick={() => setOpenId(open ? null : marking.id)}
+              >
+                <span className={styles.artPlain}>
+                  <RoadMarking name={marking.id} size={64} decorative />
+                </span>
+                <span className={styles.name}>{marking.name}</span>
+                <span className={styles.code}>{marking.code}</span>
+              </button>
+              {open && (
+                <div className={styles.detail} id={`${panelId}-${marking.id}`}>
+                  <p className={styles.short}>{marking.meaning}</p>
+                  <p className={styles.long}>{marking.forDriver}</p>
+                  <p className={styles.alt}>{marking.altText}</p>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+export interface MarkingCompareProps {
+  title: string;
+  leftId: string;
+  rightId: string;
+  note: string;
+}
+
+export function MarkingCompare({ title, leftId, rightId, note }: MarkingCompareProps) {
+  const left = getRoadMarking(leftId);
+  const right = getRoadMarking(rightId);
+  if (!left || !right) return null;
+
+  return (
+    <section className={styles.compare}>
+      <h3 className={styles.compareTitle}>{title}</h3>
+      <div className={styles.pair}>
+        {[left, right].map((marking) => (
+          <div key={marking.id} className={styles.pairItemPlain}>
+            <RoadMarking name={marking.id} size={80} />
+            <span className={styles.pairNameLight}>{marking.name}</span>
+            <span className={styles.pairMeaningLight}>{marking.meaning}</span>
           </div>
         ))}
       </div>

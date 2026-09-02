@@ -34,6 +34,7 @@ npm run dev
 | `npm run verify:build` | Kontrollerar att inga källdokument hamnat i `dist/`        |
 | `npm run report:coverage` | Genererar om `docs/CONTENT-COVERAGE.md`                 |
 | `npm run report:content` | Validerar banken och skriver `docs/CONTENT-VALIDATION.md` |
+| `npm run generate:index` | Genererar om `src/content/question-index.ts` efter bankändringar |
 | `python scripts/extract-source-images.py --extract` | Tar ut bildkandidater ur källan (aldrig incheckade) |
 | `python scripts/optimise-source-images.py` | Optimerar de kurerade bilderna till WebP |
 
@@ -70,6 +71,8 @@ Läs vidare:
 - [docs/CONTENT-MODEL.md](docs/CONTENT-MODEL.md) — datamodellen för frågor och innehåll
 - [docs/QUESTION-AUTHORING.md](docs/QUESTION-AUTHORING.md) — så skrivs och granskas nya frågor
 - [docs/QA.md](docs/QA.md) — vad som testats och hur
+- [docs/CONTENT-LOADING.md](docs/CONTENT-LOADING.md) — index kontra bank, chunkar, startbudget
+- [docs/ROAD-MARKINGS.md](docs/ROAD-MARKINGS.md) — registret för vägmarkeringar
 
 ---
 
@@ -166,6 +169,15 @@ Vägmärkesförordningen, och beskrivs i
 vilka märken de brukar förväxlas med. Teoriskolan visar dem som rutnät per kategori
 med jämförelsekort för de par som faktiskt blandas ihop. Se
 [docs/ROAD-SIGNS.md](docs/ROAD-SIGNS.md).
+
+### Vägmarkeringar
+
+15 vägmarkeringar med M-koder ur Vägmärkesförordningen ritas i sitt sammanhang — på en
+vägyta, sedd uppifrån, med körriktningen uppåt. Registret i
+[`src/content/road-markings.ts`](src/content/road-markings.ts) håller isär vad
+markeringen *är* och vad den kräver av dig, eftersom en längsgående linje betyder olika
+saker för de två körriktningarna. Scenariolabbets markeringar är kopplade till samma
+register. Se [docs/ROAD-MARKINGS.md](docs/ROAD-MARKINGS.md).
 
 ### Källbilder
 

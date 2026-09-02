@@ -9,7 +9,8 @@ import { masteryColor } from '@/ui/components/ProgressRing';
 import { EXAM } from '@/domain/constants';
 import { getCategoryName } from '@/content/taxonomy';
 import { getQuestion } from '@/domain/content/bank';
-import { useLearner, useLearnerActions, useSelectionContext } from '@/app/state/useLearner';
+import { useLearner, useLearnerActions } from '@/app/state/useLearner';
+import { useSelectionContext } from '@/app/state/useContent';
 import { buildQuickSession } from '@/domain/selection/selection';
 
 function formatDuration(ms: number): string {

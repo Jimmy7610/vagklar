@@ -91,9 +91,18 @@ Rutterna delas i två familjer:
 
 ## Kodklyvning
 
-Varje rutt utom hem och landningssidan laddas lazy. Frågebanken ligger i en egen chunk (`content`)
-eftersom den är stor, oföränderlig och delas av alla skärmar — den hämtas en gång och
-precachas av service workern.
+Varje rutt utom landningssidan laddas lazy. Landningssidan ligger utanför
+`HydrationGate` och ritas direkt; allt annat väntar på att lagringen lästs.
+
+Frågebanken laddas inte vid start. Skalet klarar sig på ett genererat index — id,
+kategori, delområde, svårighet — medan frågetexterna hämtas genom en dynamisk import i
+`learnerStore.init()`, före hydreringen och därmed före första skärmen som kan behöva
+dem. Chunkarna är namngivna i `vite.config.ts` för att hålla isär de två halvorna, och
+service workern precachar båda, så offline är oförändrat.
+
+Det halverade startpaketet — 246 kB gzip ned till 160 kB — och regeln för vad som får
+ligga var beskrivs i [CONTENT-LOADING.md](CONTENT-LOADING.md). Ett test går igenom den
+verkliga importgrafen och fallerar om banken blir nåbar utan dynamisk import.
 
 ## Felhantering
 

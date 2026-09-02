@@ -1,6 +1,6 @@
 import { MASTERY, RESPONSE_TIME } from '@/domain/constants';
 import type { CategoryId, Difficulty } from '@/domain/content/types';
-import { QUESTIONS_BY_CATEGORY, subcategoryWeight } from '@/domain/content/bank';
+import { SUBCATEGORIES_BY_CATEGORY, subcategoryWeight } from '@/domain/content/indexView';
 import { SUBCATEGORY_BY_ID } from '@/content/taxonomy';
 import type { Confidence, MasteryState } from '@/domain/learner/types';
 
@@ -177,8 +177,7 @@ export function categoryMastery(
   mastery: Readonly<Record<string, MasteryState>>,
   categoryId: CategoryId,
 ): CategoryMastery {
-  const questions = QUESTIONS_BY_CATEGORY.get(categoryId) ?? [];
-  const covered = Array.from(new Set(questions.map((q) => q.subcategory)));
+  const covered = SUBCATEGORIES_BY_CATEGORY.get(categoryId) ?? [];
 
   let weightSum = 0;
   let weighted = 0;

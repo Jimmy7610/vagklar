@@ -209,6 +209,16 @@ interface AssembleOptions {
   size: number;
   /** At most this many questions from any single subcategory. */
   maxPerSubcategory?: number;
+  /** At most this many from any single top-level category. */
+  maxPerCategory?: number;
+  /**
+   * Questions the session already holds.
+   *
+   * Without this the caps reset on every call, so a session assembled from
+   * several pools can take the maximum from the same subject once per pool and
+   * end up one-note anyway.
+   */
+  taken?: readonly Question[];
   seed: number;
 }
 
@@ -231,18 +241,28 @@ export function assemble(candidates: Candidate[], options: AssembleOptions): Que
   });
 
   const cap = options.maxPerSubcategory ?? Math.max(2, Math.ceil(options.size / 3));
+  const categoryCap = options.maxPerCategory ?? Number.POSITIVE_INFINITY;
   const chosen: Question[] = [];
   const used = new Set<string>();
   const perSubcategory = new Map<string, number>();
+  const perCategory = new Map<string, number>();
+
+  // Seed the counts with what the session already holds, so the caps describe
+  // the finished session rather than this one call.
+  for (const question of options.taken ?? []) {
+    perSubcategory.set(question.subcategory, (perSubcategory.get(question.subcategory) ?? 0) + 1);
+    perCategory.set(question.category, (perCategory.get(question.category) ?? 0) + 1);
+  }
 
   for (const candidate of sorted) {
     if (chosen.length >= options.size) break;
     const { question } = candidate;
     if (used.has(question.id)) continue;
-    const count = perSubcategory.get(question.subcategory) ?? 0;
-    if (count >= cap) continue;
+    if ((perSubcategory.get(question.subcategory) ?? 0) >= cap) continue;
+    if ((perCategory.get(question.category) ?? 0) >= categoryCap) continue;
     used.add(question.id);
-    perSubcategory.set(question.subcategory, count + 1);
+    perSubcategory.set(question.subcategory, (perSubcategory.get(question.subcategory) ?? 0) + 1);
+    perCategory.set(question.category, (perCategory.get(question.category) ?? 0) + 1);
     chosen.push(question);
   }
 
@@ -284,6 +304,16 @@ interface MixSlot {
  * "Dagens 10" — a mixed session that is deliberately not all-weak-areas.
  * Targets are back-filled in priority order when a pool runs dry.
  */
+/**
+ * No more than this many of the ten from one top-level area.
+ *
+ * Without it a brand-new learner — who has no weak areas, no due repetitions
+ * and no mistakes — gets a session drawn almost entirely from whichever area
+ * happens to hold the most unseen questions. Four leaves room for a genuine
+ * focus without letting one subject take the session.
+ */
+const DAILY_TEN_MAX_PER_CATEGORY = 4;
+
 export function buildDailyTen(ctx: SelectionContext): Question[] {
   const slots: MixSlot[] = [
     { pool: weakPool(ctx), take: DAILY_TEN_MIX.weakConcepts },
@@ -299,7 +329,13 @@ export function buildDailyTen(ctx: SelectionContext): Question[] {
   for (const slot of slots) {
     const picks = assemble(
       slot.pool.filter((c) => !used.has(c.question.id)),
-      { size: slot.take, seed: ctx.seed, maxPerSubcategory: 2 },
+      {
+        size: slot.take,
+        seed: ctx.seed,
+        maxPerSubcategory: 2,
+        maxPerCategory: DAILY_TEN_MAX_PER_CATEGORY,
+        taken: chosen,
+      },
     );
     for (const question of picks) {
       used.add(question.id);
@@ -319,6 +355,8 @@ export function buildDailyTen(ctx: SelectionContext): Question[] {
       size: SESSION.dailyTenSize - chosen.length,
       seed: ctx.seed + 1,
       maxPerSubcategory: 3,
+      maxPerCategory: DAILY_TEN_MAX_PER_CATEGORY,
+      taken: chosen,
     })) {
       used.add(question.id);
       chosen.push(question);

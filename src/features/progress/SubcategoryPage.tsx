@@ -17,7 +17,8 @@ import { QUESTIONS_BY_SUBCATEGORY } from '@/domain/content/bank';
 import { MASTERY_LEVEL_LABEL, masteryLevel } from '@/domain/mastery/mastery';
 import { groupMistakes } from '@/domain/insights/insights';
 import { buildQuickSession } from '@/domain/selection/selection';
-import { useLearner, useLearnerActions, useSelectionContext } from '@/app/state/useLearner';
+import { useLearner, useLearnerActions } from '@/app/state/useLearner';
+import { useSelectionContext } from '@/app/state/useContent';
 import { LESSONS } from '@/content/lessons';
 
 /**

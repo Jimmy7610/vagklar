@@ -25,36 +25,36 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Huvudområden | 6 |
 | Kapitel | 39 |
 | Begrepp | 179 |
-| Begrepp med tillräckligt (≥ 3 frågor) | 154 (86 %) |
-| Begrepp med för få (1–2 frågor) | 25 |
+| Begrepp med tillräckligt (≥ 3 frågor) | 168 (94 %) |
+| Begrepp med för få (1–2 frågor) | 11 |
 | Begrepp helt utan frågor | 0 |
 | Begrepp utan plats i taxonomin | 0 |
-| Frågor i banken | 343 |
-| Frågor kopplade till ett begrepp | 343 |
+| Frågor i banken | 397 |
+| Frågor kopplade till ett begrepp | 397 |
 | Frågor utan koppling | 0 |
-| Lektioner | 14 |
+| Lektioner | 15 |
 | Scenarier | 11 |
-| Luckor | 25 |
+| Luckor | 11 |
 
 ## Per huvudområde
 
 | Område | Kapitel | Begrepp | Täckta | Andel täckta | Frågor |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Trafikregler | 12 | 79 | 72 | 91 % | 193 |
-| Människan | 7 | 38 | 25 | 66 % | 45 |
-| Fordon | 15 | 48 | 43 | 90 % | 87 |
+| Trafikregler | 12 | 79 | 73 | 92 % | 201 |
+| Människan | 7 | 38 | 38 | 100 % | 85 |
+| Fordon | 15 | 48 | 43 | 90 % | 89 |
 | Miljö | 3 | 5 | 5 | 100 % | 28 |
-| Vägmärken | 1 | 8 | 8 | 100 % | 55 |
+| Vägmärken | 1 | 8 | 8 | 100 % | 66 |
 | Rättsfall | 1 | 1 | 1 | 100 % | 3 |
 
 ## Per kapitel
 
 | Kapitel | Område | Sidor | Begrepp | Täckta | Frågor | Status |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| Inledning | Trafikregler | 6–13 | 9 | 7 | 21 | Täckt |
-| Körfält | Trafikregler | 14–21 | 7 | 7 | 20 | Stark |
+| Inledning | Trafikregler | 6–13 | 9 | 8 | 26 | Täckt |
+| Körfält | Trafikregler | 14–21 | 7 | 7 | 22 | Stark |
 | Väjningsregler | Trafikregler | 22–45 | 13 | 10 | 21 | Täckt |
-| Passager | Trafikregler | 46–57 | 6 | 6 | 23 | Stark |
+| Passager | Trafikregler | 46–57 | 6 | 6 | 24 | Stark |
 | Cirkulationsplats | Trafikregler | 58–67 | 5 | 5 | 16 | Stark |
 | Stanna & parkera | Trafikregler | 68–77 | 6 | 6 | 12 | Stark |
 | Landsväg | Trafikregler | 78–89 | 7 | 7 | 7 | Stark |
@@ -63,15 +63,15 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Järnvägskorsningar | Trafikregler | 108–115 | 5 | 5 | 19 | Stark |
 | Speciella gator | Trafikregler | 116–123 | 5 | 5 | 23 | Stark |
 | Vinter | Trafikregler | 124–131 | 6 | 6 | 7 | Stark |
-| Inlärning & mognad | Människan | 132–139 | 6 | 0 | 6 | Saknas |
-| Alkohol | Människan | 140–147 | 7 | 5 | 9 | Täckt |
-| Trötthet | Människan | 148–153 | 3 | 3 | 5 | Stark |
-| Synen | Människan | 154–161 | 5 | 5 | 10 | Stark |
+| Inlärning & mognad | Människan | 132–139 | 6 | 6 | 19 | Stark |
+| Alkohol | Människan | 140–147 | 7 | 7 | 19 | Stark |
+| Trötthet | Människan | 148–153 | 3 | 3 | 9 | Stark |
+| Synen | Människan | 154–161 | 5 | 5 | 12 | Stark |
 | Nedsatt förmåga | Människan | 162–167 | 4 | 4 | 7 | Stark |
-| Barn | Människan | 168–173 | 4 | 0 | 2 | Saknas |
-| Trafikolyckor | Människan | 174–187 | 9 | 8 | 6 | Täckt |
+| Barn | Människan | 168–173 | 4 | 4 | 7 | Stark |
+| Trafikolyckor | Människan | 174–187 | 9 | 9 | 12 | Stark |
 | Indelning av fordon | Fordon | 188–195 | 4 | 4 | 9 | Stark |
-| Sträckor | Fordon | 196–203 | 3 | 3 | 10 | Stark |
+| Sträckor | Fordon | 196–203 | 3 | 3 | 12 | Stark |
 | Däck | Fordon | 204–213 | 6 | 6 | 9 | Stark |
 | Styrning | Fordon | 214–223 | 4 | 3 | 5 | Täckt |
 | Bromsar | Fordon | 224–231 | 6 | 6 | 5 | Stark |
@@ -88,7 +88,7 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Miljö | Miljö | 304–311 | 3 | 3 | 6 | Stark |
 | Sparsam körning | Miljö | 312–317 | 1 | 1 | 12 | Stark |
 | Drivmedel | Miljö | 318–323 | 1 | 1 | 10 | Stark |
-| Vägmärken | Vägmärken | 324–361 | 8 | 8 | 55 | Stark |
+| Vägmärken | Vägmärken | 324–361 | 8 | 8 | 66 | Stark |
 | Rättsfall | Rättsfall | 362–367 | 1 | 1 | 3 | Stark |
 
 ## Luckor
@@ -100,7 +100,7 @@ Prioritet 3 = stödjande eller perifera begrepp utan material.
 
 Inga.
 
-### Prioritet 2 — 20 st
+### Prioritet 2 — 9 st
 
 | Begrepp | Kapitel | Sidor | Frågor | Varför |
 | --- | --- | --- | ---: | --- |
@@ -109,29 +109,15 @@ Inga.
 | Möte | Omkörningar | 101 | 1 | Endast 1 fråga — behöver fler för variation. |
 | Rangordning av anvisningar | Inledning | 8 | 1 | Endast 1 fråga — behöver fler för variation. |
 | Avbländning vid möte och omkörning | Belysning | 266, 267 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Barns sinnen är inte färdigutvecklade | Barn | 169 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Defensiv körning | Inledning | 7 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Droger och narkotika i trafiken | Alkohol | 142 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Grupptryck | Inlärning & mognad | 135 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Huvudled | Väjningsregler | 25 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Läkemedel och mediciner i trafiken | Alkohol | 141 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Olika grader av mognad | Inlärning & mognad | 132 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Skolbussar och skolskjuts | Barn | 169 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Stress | Inlärning & mognad | 134 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Svårigheter med barn i trafiken | Barn | 168 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Unga bilförare | Inlärning & mognad | 133 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Utfartsregeln | Väjningsregler | 35, 36, 37 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Varselljus | Belysning | 264 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Vattenplaning | Styrning | 219, 220 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Viltolyckor och anmälningsplikt | Trafikolyckor | 177, 178 | 2 | Endast 2 frågor — behöver fler för variation. |
 
-### Prioritet 3 — 5 st
+### Prioritet 3 — 2 st
 
 | Begrepp | Kapitel | Sidor | Frågor | Varför |
 | --- | --- | --- | ---: | --- |
-| Olika typer av inlärning | Inlärning & mognad | 132 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Sannolikhetsinlärning | Inlärning & mognad | 134 | 2 | Endast 2 frågor — behöver fler för variation. |
-| Skolpatrull | Barn | 170 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Vanlig signal med pil | Väjningsregler | 41 | 2 | Endast 2 frågor — behöver fler för variation. |
 | Övrig belysning och lyktor | Belysning | 266, 267 | 2 | Endast 2 frågor — behöver fler för variation. |
 
@@ -153,6 +139,7 @@ Inga.
 | Passager | Passager |
 | Cirkulationsplats | Cirkulationsplats |
 | Vägmärken | Vägmärken |
+| Vägmarkeringar | Vägmärken, Körfält |
 
 ## Visuellt stöd
 
@@ -164,7 +151,7 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 | Godkända källbilder | 44 |
 | Kapitel med visuellt stöd | 12 av 39 |
 | Bildbaserade frågor | 34 |
-| Lektioner med bild | 8 av 14 |
+| Lektioner med bild | 9 av 15 |
 
 | Kapitel | Bilder |
 | --- | ---: |

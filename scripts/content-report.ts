@@ -19,6 +19,8 @@ import { LESSONS } from '../src/content/lessons';
 import { availableSourceImageAssets } from '../src/ui/media/sourceImageAssets';
 import { ROAD_SIGNS } from '../src/content/road-signs';
 import { SIGN_GLYPHS } from '../src/ui/illustrations/signGlyphs';
+import { ROAD_MARKINGS } from '../src/content/road-markings';
+import { MARKING_GLYPHS } from '../src/ui/illustrations/markingGlyphs';
 import { findDuplicates, validateContent } from '../src/domain/content/validation';
 
 const report = validateContent({
@@ -33,6 +35,8 @@ const report = validateContent({
   lessons: LESSONS,
   roadSigns: ROAD_SIGNS,
   availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
+  roadMarkings: ROAD_MARKINGS,
+  availableMarkingGlyphs: new Set(Object.keys(MARKING_GLYPHS)),
 });
 
 const duplicates = findDuplicates(ALL_QUESTIONS, { threshold: 0.7 });

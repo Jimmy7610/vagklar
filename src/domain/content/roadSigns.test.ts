@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ROAD_SIGNS, SIGN_BY_ID, SIGNS_BY_CATEGORY, getRoadSign } from '@/content/road-signs';
 import { SIGN_GLYPHS } from '@/ui/illustrations/signGlyphs';
+import { MARKING_GLYPHS } from '@/ui/illustrations/markingGlyphs';
 import { SUBCATEGORIES } from '@/content/taxonomy';
 import { ALL_QUESTIONS } from '@/content/questions';
 import { LESSONS } from '@/content/lessons';
@@ -90,11 +91,14 @@ describe('road sign registry', () => {
 });
 
 describe('sign-backed content', () => {
-  it('only renders vector signs that exist', () => {
+  it('only renders vector art that exists', () => {
+    // An illustration id may resolve against either registry — the renderer
+    // picks by id, so a sign and a marking are authored identically.
+    const drawable = new Set([...glyphIds, ...Object.keys(MARKING_GLYPHS)]);
     for (const q of ALL_QUESTIONS) {
       const illustration = q.image?.illustration;
       if (!illustration) continue;
-      expect(glyphIds.has(illustration), `${q.id} -> ${illustration}`).toBe(true);
+      expect(drawable.has(illustration), `${q.id} -> ${illustration}`).toBe(true);
     }
   });
 

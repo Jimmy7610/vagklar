@@ -49,9 +49,10 @@ export const QUESTIONS_BY_RULE: ReadonlyMap<string, Question[]> = groupBy(
  * taxonomy — otherwise a learner could never reach a high score simply because
  * the content library has not been filled out yet.
  */
-export const COVERED_SUBCATEGORY_IDS: readonly string[] = Array.from(
-  QUESTIONS_BY_SUBCATEGORY.keys(),
-).sort();
+// Re-exported from the index view so the bank and the startup-cheap view can
+// never disagree about which subjects exist.
+export { COVERED_SUBCATEGORY_IDS, subcategoryWeight } from './indexView';
+import { COVERED_SUBCATEGORY_IDS } from './indexView';
 
 export const COVERED_CATEGORY_IDS: readonly CategoryId[] = CATEGORIES.filter((c) =>
   QUESTIONS_BY_CATEGORY.has(c.id),
@@ -96,10 +97,6 @@ export function siblingQuestions(question: Question): Question[] {
 }
 
 /** The weight of a subcategory inside the overall taxonomy. */
-export function subcategoryWeight(subcategoryId: string): number {
-  return SUBCATEGORY_BY_ID.get(subcategoryId)?.weight ?? 1;
-}
-
 export interface BankStats {
   total: number;
   byCategory: Array<{ categoryId: CategoryId; count: number }>;

@@ -156,6 +156,9 @@ från appens egen inställning, där användarens val vinner.
 | `sc-pafart-1` | Motorvägspåfart och döda vinkeln | Risk | – |
 | `sc-halka-1` | Var vägen är halast | Risk | – |
 | `sc-risk-stadsgata` | Parkerade bilar på bostadsgata | Risk | – |
+| `sc-risk-barn-buss` | Barn vid stannad buss | Risk | – |
+| `sc-risk-blandning` | Bländning av mötande helljus | Risk | – |
+| `sc-risk-trotthet` | Trötthetens första tecken | Risk | – |
 
 ### Layouten `railway-crossing`
 

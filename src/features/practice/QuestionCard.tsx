@@ -3,6 +3,7 @@ import styles from './QuestionCard.module.css';
 import { Button } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { RoadSign, hasRoadSign } from '@/ui/illustrations/RoadSign';
+import { RoadMarking, hasRoadMarking } from '@/ui/illustrations/RoadMarking';
 import { getCategoryName, getSubcategoryName } from '@/content/taxonomy';
 import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
 import type { Question } from '@/domain/content/types';
@@ -165,6 +166,11 @@ export function QuestionCard({
         </div>
       )}
 
+      {illustration && hasRoadMarking(illustration) && (
+        <div className={styles.signWrap}>
+          <RoadMarking name={illustration} size={132} alt={question.image?.alt ?? ''} />
+        </div>
+      )}
       {illustration && hasRoadSign(illustration) && (
         <figure className={styles.figure}>
           <RoadSign name={illustration} size={116} alt={question.image?.alt ?? ''} />

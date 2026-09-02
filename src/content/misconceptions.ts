@@ -9,6 +9,429 @@ import type { Misconception } from '@/domain/content/types';
  */
 export const MISCONCEPTIONS: Misconception[] = [
   {
+    id: 'linjetyper',
+    label: 'Linjetyperna skiljs inte åt',
+    description:
+      'Mittlinje och varningslinje uppfattas som samma markering.',
+    correction:
+      'Mittlinje har korta streck och långa mellanrum. Varningslinje har långa streck och korta mellanrum.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'varningslinje-forbud',
+    label: 'Varningslinjen läses som ett förbud',
+    description:
+      'De långa strecken tolkas som omkörningsförbud.',
+    correction:
+      'Varningslinjen får korsas. Den varnar för att sikten eller utrymmet är begränsat.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'kombinerad-linje-sida',
+    label: 'Fel sida av den kombinerade linjen läses',
+    description:
+      'Man tittar på linjekombinationen som helhet i stället för på linjen närmast sig.',
+    correction:
+      'Linjen på din sida avgör. Är den heldragen får du inte korsa, även om den mötande får.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'sparromrade',
+    label: 'Spärrområdet antas vara körbart',
+    description:
+      'Den snedstreckade ytan tas för ett extra körfält eller en ficka.',
+    correction:
+      'Spärrområdet ska hållas fritt. Det skiljer trafikströmmar åt.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'stopplinje-vs-vajningslinje',
+    label: 'Stopplinje förväxlas med väjningslinje',
+    description:
+      'Trianglarna antas kräva stopp, eller den breda linjen antas räcka med att sakta ner.',
+    correction:
+      'Bred obruten linje: stanna helt. Trianglar: väjningsplikt, du får rulla vidare om vägen är fri.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'overgang-vs-cykelruta',
+    label: 'Bandmarkering förväxlas med rutmarkering',
+    description:
+      'Övergångsställets band och cykelpassagens rutor uppfattas som samma sak.',
+    correction:
+      'Band betyder gående, rutor betyder cyklande — och skyldigheterna skiljer sig.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'markering-vs-marke',
+    label: 'Rangordningen mellan märke och markering',
+    description:
+      'Man vet inte vilken som gäller när de säger olika saker.',
+    correction:
+      'Vägmärket står över vägmarkeringen i rangordningen.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'ledlinje',
+    label: 'Ledlinjen misstolkas',
+    description:
+      'De täta korta strecken läses som väjningsplikt eller som att körfältet tar slut.',
+    correction:
+      'Ledlinjen visar var körfältet fortsätter genom en korsning.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'alkohol-variation',
+    label: 'Promillehalten antas följa mängden',
+    description:
+      'Man tror att samma mängd alkohol alltid ger samma promillehalt.',
+    correction:
+      'Vikt, kön, hälsa, drickhastighet och matintag påverkar. Egna tumregler går inte att lita på.',
+    subcategory: 'alkohol-effekter',
+  },
+  {
+    id: 'overinlarning',
+    label: 'Nyttan med överinlärning missförstås',
+    description:
+      'Automatiserat handhavande antas handla om att kunna köra fortare eller klara provet.',
+    correction:
+      'Överinlärning frigör uppmärksamhet så att den kan läggas på trafiken i stället för på bilen.',
+    subcategory: 'korstrategi',
+  },
+  {
+    id: 'ytinlarning',
+    label: 'Ytinlärning antas räcka',
+    description:
+      'Man lär sig utantill inför provet utan att förstå sammanhangen.',
+    correction:
+      'Ytinlärning glöms snabbt och hjälper inte i situationer som inte liknar frågorna.',
+    subcategory: 'korstrategi',
+  },
+  {
+    id: 'sannolikhetsinlarning',
+    label: 'Erfarenhet tas för garanti',
+    description:
+      'Att något sällan händer på en plats tolkas som att det inte kan hända.',
+    correction:
+      'Sannolikhetsinlärning kan göra dig mer uppmärksam eller mindre. Erfarenhet är en hypotes, inte ett facit.',
+    subcategory: 'korstrategi',
+  },
+  {
+    id: 'imitationsinlarning',
+    label: 'Imitation antas vara neutral',
+    description:
+      'Man tar efter en van förare utan att värdera vad som kopieras.',
+    correction:
+      'Imitation kopierar både goda och dåliga vanor. Vem du tar efter avgör.',
+    subcategory: 'korstrategi',
+  },
+  {
+    id: 'mognadsgrader',
+    label: 'Regelföljsamhet tas för mognad',
+    description:
+      'Att följa reglerna antas vara samma sak som att köra moget.',
+    correction:
+      'Den mogna föraren hanterar även det reglerna inte täcker, lugnt och utan att hävda sin rätt.',
+    subcategory: 'attityd-och-grupptryck',
+  },
+  {
+    id: 'unga-forare-risk',
+    label: 'Risken antas sjunka direkt med erfarenhet',
+    description:
+      'Man tror att risktagandet minskar stadigt efter körkortet.',
+    correction:
+      'Risktagandet ökar ofta efter några år, när självsäkerheten växer snabbare än erfarenheten.',
+    subcategory: 'attityd-och-grupptryck',
+  },
+  {
+    id: 'grupptryck',
+    label: 'Grupptryckets verkan underskattas',
+    description:
+      'Man tror att passagerarnas oro inte påverkar den egna körningen.',
+    correction:
+      'Tidspress i gruppen översätts till fart och krympta marginaler utan att någon ber om det.',
+    subcategory: 'attityd-och-grupptryck',
+  },
+  {
+    id: 'passagerarrollen',
+    label: 'Passageraren antas böra vara tyst',
+    description:
+      'Man tror att en invändning stressar föraren och gör körningen sämre.',
+    correction:
+      'Att säga ifrån lugnt minskar oftast pressen. Att skoja om farten kan tvärtom uppfattas som en uppmaning.',
+    subcategory: 'attityd-och-grupptryck',
+  },
+  {
+    id: 'fragan-regler',
+    label: 'Att frångå reglerna missförstås',
+    description:
+      'Antingen antas reglerna aldrig få frångås, eller så tas det som ett fritt val.',
+    correction:
+      'Det kan vara gott omdöme — men bara när helheten tjänar på det, alla förstår, och du är den som ger.',
+    subcategory: 'korstrategi',
+  },
+  {
+    id: 'stressniva',
+    label: 'Sambandet mellan stress och prestation',
+    description:
+      'Man tror att noll stress eller mycket stress ger bäst körning.',
+    correction:
+      'Måttlig stress höjer prestationen. Hög stress är farligast.',
+    subcategory: 'stress-och-kanslor',
+  },
+  {
+    id: 'hog-stress-foljder',
+    label: 'Följderna av hög stress underskattas',
+    description:
+      'Hög stress antas ge skärpa i stället för försämrat omdöme.',
+    correction:
+      'Hög stress kan ge panik, blackout, uppgivenhet, stirrighet eller tanketröghet.',
+    subcategory: 'stress-och-kanslor',
+  },
+  {
+    id: 'minska-stress',
+    label: 'Fel åtgärd mot stress',
+    description:
+      'Man försöker lösa tidspress med fart i stället för med marginal.',
+    correction:
+      'Gott om tid, utvilad förare och defensiv körning tar bort orsaken.',
+    subcategory: 'stress-och-kanslor',
+  },
+  {
+    id: 'kanslor-korning',
+    label: 'Känslornas påverkan förnekas',
+    description:
+      'Man tror att starka känslor inte påverkar körförmågan.',
+    correction:
+      'Starka känslor tar uppmärksamhet och sänker tröskeln för impulsiva beslut.',
+    subcategory: 'stress-och-kanslor',
+  },
+  {
+    id: 'alkohol-tidig-effekt',
+    label: 'Tidig alkoholpåverkan underskattas',
+    description:
+      'Man tror att påverkan börjar först när berusningen känns.',
+    correction:
+      'Redan vid 0,1-0,4 promille släpper spärrar, förmågan överskattas och reaktionstiden försämras.',
+    subcategory: 'alkohol-effekter',
+  },
+  {
+    id: 'alkohol-myter',
+    label: 'Myter om att nyktra till',
+    description:
+      'Kaffe, dusch eller bastu antas påskynda nedbrytningen.',
+    correction:
+      'Förbränningen går inte att påverka. Bara tiden nyktrar till.',
+    subcategory: 'alkohol-effekter',
+  },
+  {
+    id: 'dagen-efter',
+    label: 'Noll promille tas för återställd',
+    description:
+      'Man antar att man är opåverkad så snart alkoholen lämnat blodet.',
+    correction:
+      'Trötthet och sämre koncentration finns ofta kvar dagen efter, utan att synas i ett utandningsprov.',
+    subcategory: 'alkohol-effekter',
+  },
+  {
+    id: 'medhjalp-rattfylleri',
+    label: 'Ansvaret antas ligga bara på föraren',
+    description:
+      'Man tror att den som lånar ut bilen eller bjuder på alkohol står utanför.',
+    correction:
+      'Att låna ut bilen till någon du vet är påverkad kan vara straffbar medhjälp.',
+    subcategory: 'alkohol-gransvarden',
+  },
+  {
+    id: 'rattfylleri-plats',
+    label: 'Rattfyllerilagens räckvidd begränsas',
+    description:
+      'Lagen antas gälla bara på allmän väg.',
+    correction:
+      'Den gäller överallt, även på privat mark och inom inhägnat område, och för alla motordrivna fordon.',
+    subcategory: 'alkohol-gransvarden',
+  },
+  {
+    id: 'lakemedel-ansvar',
+    label: 'Receptet antas fria från ansvar',
+    description:
+      'Man tror att utskriven medicin gör körningen tillåten oavsett påverkan.',
+    correction:
+      'Det är ditt ansvar att bedöma om läkemedlet gör dig trafikfarlig. Receptet ändrar inte det.',
+    subcategory: 'droger-lakemedel',
+  },
+  {
+    id: 'narkotika-grans',
+    label: 'Gränsen för narkotika i trafiken',
+    description:
+      'Man antar att det finns ett gränsvärde som för alkohol.',
+    correction:
+      'Nolltolerans gäller. Undantaget är narkotikaklassade läkemedel som läkare skrivit ut.',
+    subcategory: 'droger-lakemedel',
+  },
+  {
+    id: 'vakenhetshojande',
+    label: 'Vakenhetshöjande droger antas motverka trötthet',
+    description:
+      'Man tror att tröttheten försvinner i stället för att förträngas.',
+    correction:
+      'Tröttheten finns kvar under ytan och föraren kan somna utan förvarning.',
+    subcategory: 'droger-lakemedel',
+  },
+  {
+    id: 'kombination-alkohol-lakemedel',
+    label: 'Kombinationseffekter underskattas',
+    description:
+      'Man tror att små mängder alkohol och medicin tar ut varandra eller kan räknas var för sig.',
+    correction:
+      'Effekterna kan förstärka varandra så att påverkan blir större än summan av delarna.',
+    subcategory: 'droger-lakemedel',
+  },
+  {
+    id: 'somnbrist-alkohol',
+    label: 'Sömnbristens effekt underskattas',
+    description:
+      'Man jämför inte sömnbrist med alkoholpåverkan.',
+    correction:
+      'En natt utan sömn ger en reaktionstid i klass med en rattfull förare.',
+    subcategory: 'trotthet',
+  },
+  {
+    id: 'monotoni',
+    label: 'Monotoni som trötthetsorsak missas',
+    description:
+      'Den lättaste vägtypen antas vara den minst tröttande.',
+    correction:
+      'Breda, långa och raka vägar utan avbrott ökar risken för trötthet mest.',
+    subcategory: 'trotthet',
+  },
+  {
+    id: 'trotthetssignaler',
+    label: 'Trötthetssignaler känns inte igen',
+    description:
+      'Man väntar på att bli sömnig i stället för att läsa de tidiga tecknen.',
+    correction:
+      'Ojämn hastighet, suddig blick, gäspningar, torr mun och frusenhet kommer före mikrosömnen.',
+    subcategory: 'trotthet',
+  },
+  {
+    id: 'mikrosomn',
+    label: 'Mikrosömn tolkas som ouppmärksamhet',
+    description:
+      'Minneshålet efteråt uppfattas inte som sömn.',
+    correction:
+      'Mikrosömn är sekunder av bortkoppling. I 110 km/h är fem sekunder över 150 meter utan förare.',
+    subcategory: 'trotthet',
+  },
+  {
+    id: 'barns-sinnen',
+    label: 'Barns sinnen antas fungera som vuxnas',
+    description:
+      'Man förväntar sig vuxen reaktionstid och ljudlokalisering.',
+    correction:
+      'Barn växlar långsammare mellan när- och fjärrseende och har svårare att avgöra varifrån ett ljud kommer.',
+    subcategory: 'barn-och-oskyddade',
+  },
+  {
+    id: 'barns-riskbedomning',
+    label: 'Barns förmåga att bedöma fart överskattas',
+    description:
+      'Man tror att ett barn uppfattar skillnaden mellan en snabb och en långsam bil.',
+    correction:
+      'Ett barn bedömer en långsam och en snabb bil ungefär likadant.',
+    subcategory: 'barn-och-oskyddade',
+  },
+  {
+    id: 'barn-skymd',
+    label: 'Barn bakom parkerade fordon',
+    description:
+      'Man utgår från att en gående syns över eller bredvid en parkerad bil.',
+    correction:
+      'Ett barn kan döljas helt, så det finns ingen förvarning innan det står i gatan.',
+    subcategory: 'barn-och-oskyddade',
+  },
+  {
+    id: 'barn-buss',
+    label: 'Risken vid en stillastående buss placeras fel',
+    description:
+      'Man tittar bakom bussen i stället för framför den.',
+    correction:
+      'Framför bussen är sikten sämst åt båda håll, och det är där någon kliver ut.',
+    subcategory: 'barn-och-oskyddade',
+  },
+  {
+    id: 'vilt-tidpunkt',
+    label: 'Viltrisken tidsbestäms fel',
+    description:
+      'Man tror att risken är jämn över dygnet.',
+    correction:
+      'Gryning och skymning är värst, liksom maj-juni och september-oktober.',
+    subcategory: 'djur-pa-vagen',
+  },
+  {
+    id: 'alg-undanmanover',
+    label: 'Fel undanmanöver vid älg',
+    description:
+      'Man styr framför älgen i tron att den vänder tillbaka.',
+    correction:
+      'En älg som börjat gå över fortsätter oftast över. Sikta bakom den.',
+    subcategory: 'djur-pa-vagen',
+  },
+  {
+    id: 'viltolycka-atgard',
+    label: 'Skyldigheterna efter en viltolycka',
+    description:
+      'Man tror att ett djur som sprang i väg inte behöver anmälas.',
+    correction:
+      'Märk ut platsen och kontakta polisen, så att jägare kan spåra det skadade djuret.',
+    subcategory: 'djur-pa-vagen',
+  },
+  {
+    id: 'riskkompensation',
+    label: 'Säkerhetsvinsten antas bli kvar',
+    description:
+      'Bättre däck och system antas ge motsvarande större marginal.',
+    correction:
+      'Vinsten äts ofta upp av högre fart. Den blir verklig först om körsättet är oförändrat.',
+    subcategory: 'riskbedomning',
+  },
+  {
+    id: 'utfall-vs-beslut',
+    label: 'Utfallet tas som bevis för beslutet',
+    description:
+      'Att det gick bra tolkas som att marginalen var tillräcklig.',
+    correction:
+      'Ett bra utfall bevisar inte ett bra beslut. Ibland avgjorde turen.',
+    subcategory: 'riskbedomning',
+  },
+  {
+    id: 'rutin-uppmarksamhet',
+    label: 'Rutin antas göra körningen säkrare',
+    description:
+      'Man tror att en välkänd sträcka kräver mindre uppmärksamhet.',
+    correction:
+      'Förväntan styr vad vi ser. På en känd sträcka missas det ovanliga lättare.',
+    subcategory: 'riskbedomning',
+  },
+  {
+    id: 'handsfree',
+    label: 'Handsfree antas ta bort risken',
+    description:
+      'Risken antas sitta i handen snarare än i uppmärksamheten.',
+    correction:
+      'Samtalet tar kognitiv kapacitet. Blicken kan vara riktad framåt utan att informationen bearbetas.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
+    id: 'blicktid-strackan',
+    label: 'Blicktid räknas inte om till sträcka',
+    description:
+      'Några sekunders blick nedåt uppfattas som en kort stund.',
+    correction:
+      'Räkna om: 90 km/h är 25 meter i sekunden, så två sekunder är femtio meter blint.',
+    subcategory: 'reaktion-och-sinnen',
+  },
+  {
     id: 'utryckning-reaktion',
     label: 'Fel reaktion på utryckningsfordon',
     description:

@@ -179,6 +179,28 @@ kan validera utan React.
 Lektioner visar märken med blocken `signGrid` och `signCompare`; frågor renderar ett
 märke med `image: sign(id, alt)`. Se [ROAD-SIGNS.md](ROAD-SIGNS.md).
 
+## Vägmarkeringar
+
+[`src/content/road-markings.ts`](../src/content/road-markings.ts) är samma sorts register
+för markeringar i vägbanan, med M-koder ur Vägmärkesförordningen. Två fält i stället för
+ett meningsfält: `meaning` säger vad markeringen är, `forDriver` vad den kräver av dig.
+De hålls isär för att en längsgående linje betyder olika saker för de två
+körriktningarna — en kombinerad linje är heldragen för den ena föraren och streckad för
+den andra samtidigt.
+
+Lektioner använder `markingGrid` och `markingCompare`; frågor pekar ut en markering med
+`image: marking(id, alt)`. Renderaren väljer register på id, så en fråga författas
+likadant oavsett om bilden är ett märke eller en markering. Se
+[ROAD-MARKINGS.md](ROAD-MARKINGS.md).
+
+## Frågeindexet
+
+[`src/content/question-index.ts`](../src/content/question-index.ts) är en **genererad**
+sammanfattning av banken — id, kategori, delområde, svårighet, status, regel — som
+hydreringen och behärskningsmodellen använder i stället för hela frågor. Kör
+`npm run generate:index` efter varje bankändring; ett test jämför den mot banken. Se
+[CONTENT-LOADING.md](CONTENT-LOADING.md).
+
 ## Källbilder
 
 Fotografier ur den licensierade källan beskrivs i

@@ -1,4 +1,6 @@
 import type { Question } from '@/domain/content/types';
+import { vagmarkeringarQuestions } from './vagmarkeringar';
+import { manniskan2Questions } from './manniskan2';
 import { grunderQuestions } from './grunder';
 import { bildfragor2Questions } from './bildfragor2';
 import { vagmarkesskyltarQuestions } from './vagmarkesskyltar';
@@ -65,4 +67,6 @@ export const ALL_QUESTIONS: Question[] = [
   ...vagmarkesskyltarQuestions,
   ...bildfragor2Questions,
   ...grunderQuestions,
+  ...manniskan2Questions,
+  ...vagmarkeringarQuestions,
 ];

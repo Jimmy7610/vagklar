@@ -5,7 +5,8 @@ import { Icon } from '@/ui/icons/Icon';
 import type { IconName } from '@/ui/icons/Icon';
 import { SectionHeading, SegmentedControl, Pill } from '@/ui/components/Primitives';
 import { masteryColor } from '@/ui/components/ProgressRing';
-import { useLearner, useLearnerActions, useSelectionContext } from '@/app/state/useLearner';
+import { useLearner, useLearnerActions } from '@/app/state/useLearner';
+import { useSelectionContext } from '@/app/state/useContent';
 import {
   buildDailyTen,
   buildQuickSession,

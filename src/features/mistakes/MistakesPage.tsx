@@ -8,7 +8,8 @@ import { Modal } from '@/ui/components/Modal';
 import { getSubcategoryName } from '@/content/taxonomy';
 import { getQuestion, siblingQuestions } from '@/domain/content/bank';
 import type { MistakeGroup } from '@/domain/insights/insights';
-import { useLearner, useLearnerActions, useMistakeGroups, useSelectionContext } from '@/app/state/useLearner';
+import { useLearner, useLearnerActions } from '@/app/state/useLearner';
+import { useMistakeGroups, useSelectionContext } from '@/app/state/useContent';
 import { buildQuickSession, mistakePool, assemble } from '@/domain/selection/selection';
 
 type Sort = 'frequency' | 'recent';

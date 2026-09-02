@@ -7,7 +7,7 @@ import { Icon } from '@/ui/icons/Icon';
 import { Callout, SectionHeading } from '@/ui/components/Primitives';
 import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
 import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
-import { SignGrid, SignCompare } from '@/ui/media/SignGrid';
+import { SignGrid, SignCompare, MarkingGrid, MarkingCompare } from '@/ui/media/SignGrid';
 import { LESSONS, getLesson } from '@/content/lessons';
 import { SCENARIOS } from '@/content/scenarios';
 import { getQuestions } from '@/domain/content/bank';
@@ -75,6 +75,19 @@ function Block({ block }: { block: LessonBlock }) {
     case 'signCompare':
       return (
         <SignCompare
+          title={block.title}
+          leftId={block.leftId}
+          rightId={block.rightId}
+          note={block.note}
+        />
+      );
+    case 'markingGrid':
+      return (
+        <MarkingGrid markingIds={block.markingIds} {...(block.title ? { title: block.title } : {})} />
+      );
+    case 'markingCompare':
+      return (
+        <MarkingCompare
           title={block.title}
           leftId={block.leftId}
           rightId={block.rightId}

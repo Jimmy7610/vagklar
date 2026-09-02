@@ -4,7 +4,8 @@ import styles from './OnboardingPage.module.css';
 import { Button } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
 import { Wordmark } from '@/ui/brand/Logo';
-import { useLearnerActions, useSelectionContext } from '@/app/state/useLearner';
+import { useLearnerActions } from '@/app/state/useLearner';
+import { useSelectionContext } from '@/app/state/useContent';
 import { buildLevelTest, buildQuickSession } from '@/domain/selection/selection';
 import { SESSION } from '@/domain/constants';
 

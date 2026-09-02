@@ -793,6 +793,87 @@ export const LESSONS: Lesson[] = [
     curriculumChapterIds: ['vagmarken'],
     checkQuestionIds: ['vmk-001', 'vmk-004', 'vmk-009', 'vmk-013'],
   },
+  {
+    id: 'les-vagmarkeringar',
+    categoryId: 'vagmarken',
+    subcategoryIds: ['vagmarkeringar', 'korfalt-och-sving'],
+    title: 'Vägmarkeringar',
+    summary: 'Linjen närmast dig är den som gäller för dig.',
+    estimatedMinutes: 6,
+    order: 15,
+    blocks: [
+      {
+        kind: 'paragraph',
+        text: 'Vägmärken sitter vid sidan av vägen och gäller alla. Vägmarkeringar ligger i vägbanan och gäller ofta bara den ena körriktningen. Det är därför en och samma markering kan säga olika saker till dig och till den som möter dig.',
+      },
+      {
+        kind: 'rule',
+        title: 'Läs linjen närmast dig',
+        text: 'Vid en kombinerad linje — heldragen på ena sidan, streckad på den andra — är det linjen på din sida som avgör. Är den heldragen får du inte korsa den, även om den mötande föraren får korsa sin.',
+      },
+      {
+        kind: 'markingGrid',
+        title: 'Längsgående markeringar',
+        markingIds: [
+          'mittlinje',
+          'varningslinje',
+          'heldragen-linje',
+          'kombinerad-linje',
+          'kantlinje',
+          'ledlinje',
+          'sparromrade',
+        ],
+      },
+      {
+        kind: 'markingCompare',
+        title: 'Lätt att blanda ihop',
+        leftId: 'mittlinje',
+        rightId: 'varningslinje',
+        note: 'Titta på förhållandet mellan streck och mellanrum. Mittlinjen har korta streck och långa mellanrum. Varningslinjen har långa streck och korta mellanrum, och varnar för att sikten eller utrymmet är begränsat. Båda får korsas — men den ena ber dig tänka efter först.',
+      },
+      {
+        kind: 'markingGrid',
+        title: 'Tvärgående markeringar',
+        markingIds: ['stopplinje', 'vajningslinje', 'overgangsstalle-m15', 'cykelpassage-m16'],
+      },
+      {
+        kind: 'markingCompare',
+        title: 'Lätt att blanda ihop',
+        leftId: 'stopplinje',
+        rightId: 'vajningslinje',
+        note: 'Stopplinjen är en bred obruten linje: här ska fordonet stå helt stilla. Väjningslinjen är en rad trianglar: här gäller väjningsplikt, och du får rulla vidare om vägen är fri. Formen på markeringen talar alltså om ifall du måste stanna eller bara lämna företräde.',
+      },
+      {
+        kind: 'markingCompare',
+        title: 'Lätt att blanda ihop',
+        leftId: 'overgangsstalle-m15',
+        rightId: 'cykelpassage-m16',
+        note: 'Övergångsstället är breda band längs körriktningen. Cykelpassagen är två rader rutor. Rutorna ensamma betyder att du ska anpassa hastigheten — först när det också finns ett vägmärke och en väjningslinje är det en cykelöverfart med full väjningsplikt.',
+      },
+      {
+        kind: 'markingGrid',
+        title: 'Symboler i körbanan',
+        markingIds: ['korfaltspilar', 'markering-cykel', 'markering-buss', 'markering-hastighet'],
+      },
+      {
+        kind: 'warning',
+        text: 'Körfältspilar ersätter inte blinkersen. Mötande och korsande trafikanter ser inte pilarna i vägbanan — de ser bara din blinkers.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'landsvag-kantlinjer',
+        prompt: 'Vilka linjer ser du?',
+        caption:
+          'Heldragna kantlinjer på båda sidor och en streckad mittlinje. Kantlinjen visar var körbanan slutar.',
+      },
+      {
+        kind: 'memory',
+        text: 'Korta streck: kör om. Långa streck: tänk efter. Heldragen på din sida: stanna i ditt körfält.',
+      },
+    ],
+    curriculumChapterIds: ['vagmarken', 'korfalt'],
+    checkQuestionIds: ['mrk-001', 'mrk-004', 'mrk-007', 'mrk-009'],
+  },
 ];
 
 export const LESSON_BY_ID: ReadonlyMap<string, Lesson> = new Map(LESSONS.map((l) => [l.id, l]));

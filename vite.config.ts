@@ -84,6 +84,31 @@ export default defineConfig({
           // is only read when a photograph is actually rendered, which happens
           // on lazily loaded routes.
           if (id.includes('/src/content/source-images')) return undefined;
+          // The question bodies are the single heaviest thing in the app and
+          // nothing on the landing page needs them. Leaving them out of the
+          // eager 'content' chunk lets them follow the dynamic import in
+          // learnerStore into their own chunk, which Workbox still precaches.
+          // The generated question-index stays behind, because hydration and
+          // the mastery model do need it at startup.
+          // Startup-critical engine modules. They read the generated index,
+          // never a question body, and the app shell needs them to hydrate.
+          // Naming them keeps Rollup from folding them into the questions
+          // chunk, which would make the entry import it statically again.
+          if (id.includes('/src/domain/content/indexView')) return 'content';
+          if (id.includes('/src/domain/mastery/')) return 'content';
+          if (id.includes('/src/domain/repetition/')) return 'content';
+          if (id.includes('/src/domain/insights/mistakeCount')) return 'content';
+          if (id.includes('/src/content/questions/')) return 'questions';
+          // The bank and the modules that read it whole go with the questions.
+          // Eight lazily loaded routes import them, and without this Rollup
+          // hoists that shared code into the entry chunk — which drags the
+          // question bodies back into the eagerly preloaded startup payload.
+          // The startup path reaches the bank only through the dynamic import
+          // in learnerStore, so nothing here is needed to paint the landing
+          // page. Workbox still precaches the chunk, so offline is unaffected.
+          if (id.includes('/src/domain/content/bank')) return 'questions';
+          if (id.includes('/src/domain/selection/')) return 'questions';
+          if (id.includes('/src/domain/insights/insights')) return 'questions';
           // The rest — questions, taxonomy, sources, misconceptions — is
           // reached synchronously from the learner store, so it is startup
           // critical whatever we do with it.

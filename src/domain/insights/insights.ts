@@ -84,15 +84,7 @@ export function groupMistakes(
 }
 
 /** Mistakes that are still standing — not yet answered correctly twice since. */
-export function outstandingMistakeCount(data: LearnerData): number {
-  const wrong = new Set(data.answers.filter((a) => !a.correct).map((a) => a.questionId));
-  let count = 0;
-  for (const questionId of wrong) {
-    const state = data.questionStates[questionId];
-    if (!state || state.streak < 2) count += 1;
-  }
-  return count;
-}
+export { outstandingMistakeCount } from './mistakeCount';
 
 /* ------------------------------------------------------------------ */
 /* Personal insights                                                   */

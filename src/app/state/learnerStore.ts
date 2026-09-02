@@ -1,6 +1,6 @@
 import { EXAM } from '@/domain/constants';
 import type { CategoryId, Question } from '@/domain/content/types';
-import { getQuestion, getQuestions } from '@/domain/content/bank';
+import type { getQuestion as GetQuestion, getQuestions as GetQuestions } from '@/domain/content/bank';
 import type {
   Confidence,
   ExamAttempt,
@@ -14,14 +14,7 @@ import type {
 import { applyAnswer, snapshotMastery } from '@/domain/learner/applyAnswer';
 import { readinessFromLearner, isoDate } from '@/domain/readiness/readiness';
 import { evaluateAchievements } from '@/domain/achievements/achievements';
-import {
-  answerExamQuestion,
-  createExamAttempt,
-  goToExamQuestion,
-  isExpired,
-  submitExam,
-  toggleExamMark,
-} from '@/domain/exam/exam';
+import type * as ExamModule from '@/domain/exam/exam';
 import { learnerRepository } from '@/storage/repository';
 import { createEmptyLearnerData, createId } from '@/storage/defaults';
 import type { StorageMode } from '@/storage/repository';
@@ -56,6 +49,48 @@ type Listener = () => void;
  * the source of truth for the running session; IndexedDB is the durable
  * mirror. A failed write never blocks or breaks the UI.
  */
+/**
+ * The question bank, loaded on demand.
+ *
+ * The bank is ~470 kB of JSON — answers, explanations and source references —
+ * and none of it is needed to paint the landing page. Importing it statically
+ * here put all of it in the startup bundle, because this store is part of the
+ * app shell.
+ *
+ * So it is imported dynamically in `init()`, which already awaits IndexedDB and
+ * whose completion already gates every app route through `HydrationGate`. By
+ * the time any screen renders, the bank is in memory and every consumer below
+ * stays synchronous — the module boundary moved, the programming model did not.
+ *
+ * Vite emits it as its own chunk and Workbox precaches every chunk, so the bank
+ * is still available offline exactly as before.
+ */
+let bank: { getQuestion: typeof GetQuestion; getQuestions: typeof GetQuestions } | null = null;
+let exam: typeof ExamModule | null = null;
+
+async function loadContentModules(): Promise<void> {
+  if (bank && exam) return;
+  // Both in parallel: the exam module reaches the bank anyway, so loading them
+  // together costs one round trip rather than two.
+  const [bankModule, examModule] = await Promise.all([
+    import('@/domain/content/bank'),
+    import('@/domain/exam/exam'),
+  ]);
+  bank = { getQuestion: bankModule.getQuestion, getQuestions: bankModule.getQuestions };
+  exam = examModule;
+}
+
+/** Throws only if called before `init()` — which HydrationGate prevents. */
+function questionBank(): { getQuestion: typeof GetQuestion; getQuestions: typeof GetQuestions } {
+  if (!bank) throw new Error('Frågebanken är inte laddad än.');
+  return bank;
+}
+
+function examOps(): typeof ExamModule {
+  if (!exam) throw new Error('Provmodulen är inte laddad än.');
+  return exam;
+}
+
 export class LearnerStore {
   private state: LearnerStoreState;
   private listeners = new Set<Listener>();
@@ -91,6 +126,9 @@ export class LearnerStore {
   /* ---- Lifecycle ----------------------------------------------------- */
 
   async init(now = Date.now()): Promise<void> {
+    // Before the repository, because sanitising a saved session resolves
+    // question ids, and every screen below assumes the bank is present.
+    await loadContentModules();
     const result = await learnerRepository.load(now);
 
     let data = result.data;
@@ -98,8 +136,8 @@ export class LearnerStore {
     // An exam whose deadline passed while the app was closed is finalised on
     // load, so the timer can never be extended by closing the tab.
     const activeExam = data.exams.find((e) => e.id === data.activeExamId);
-    if (activeExam && isExpired(activeExam, now)) {
-      const finalised = submitExam(activeExam, now, 'expired');
+    if (activeExam && examOps().isExpired(activeExam, now)) {
+      const finalised = examOps().submitExam(activeExam, now, 'expired');
       data = {
         ...data,
         exams: data.exams.map((e) => (e.id === finalised.id ? finalised : e)),
@@ -162,7 +200,7 @@ export class LearnerStore {
   /* ---- Practice sessions --------------------------------------------- */
 
   startSession(spec: StartSessionSpec, now = Date.now()): PracticeSession | null {
-    const questions = getQuestions(spec.questionIds);
+    const questions = questionBank().getQuestions(spec.questionIds);
     if (questions.length === 0) return null;
 
     const masteryBefore: Record<string, number> = {};
@@ -206,7 +244,7 @@ export class LearnerStore {
     now = Date.now(),
   ): { correct: boolean; question: Question } | null {
     const session = this.state.data.activeSession;
-    const question = getQuestion(questionId);
+    const question = questionBank().getQuestion(questionId);
     if (!session || !question) return null;
 
     const index = session.questions.findIndex((q) => q.questionId === questionId);
@@ -295,7 +333,7 @@ export class LearnerStore {
     const touched = Array.from(
       new Set(
         session.questionIds.flatMap((id) => {
-          const question = getQuestion(id);
+          const question = questionBank().getQuestion(id);
           return question ? [question.subcategory] : [];
         }),
       ),
@@ -358,7 +396,7 @@ export class LearnerStore {
   }
 
   toggleSaved(questionId: string): void {
-    const question = getQuestion(questionId);
+    const question = questionBank().getQuestion(questionId);
     if (!question) return;
     const existing = this.state.data.questionStates[questionId];
     const base = existing ?? {
@@ -391,7 +429,7 @@ export class LearnerStore {
 
   startExam(now = Date.now()): ExamAttempt {
     const seed = (now ^ Math.floor(Math.random() * 0xffffffff)) >>> 0;
-    const attempt = createExamAttempt(seed, now, createId('exam-'));
+    const attempt = examOps().createExamAttempt(seed, now, createId('exam-'));
 
     const profile = {
       ...this.state.data.profile,
@@ -433,20 +471,20 @@ export class LearnerStore {
 
   answerExam(index: number, answerId: string, responseMs: number, now = Date.now()): void {
     const attempt = this.getActiveExam();
-    if (!attempt || isExpired(attempt, now)) return;
-    this.updateExam(answerExamQuestion(attempt, index, answerId, now, responseMs));
+    if (!attempt || examOps().isExpired(attempt, now)) return;
+    this.updateExam(examOps().answerExamQuestion(attempt, index, answerId, now, responseMs));
   }
 
   markExamQuestion(index: number, now = Date.now()): void {
     const attempt = this.getActiveExam();
     if (!attempt) return;
-    this.updateExam(toggleExamMark(attempt, index, now));
+    this.updateExam(examOps().toggleExamMark(attempt, index, now));
   }
 
   goToExamIndex(index: number, now = Date.now()): void {
     const attempt = this.getActiveExam();
     if (!attempt) return;
-    this.updateExam(goToExamQuestion(attempt, index, now));
+    this.updateExam(examOps().goToExamQuestion(attempt, index, now));
   }
 
   /**
@@ -458,12 +496,12 @@ export class LearnerStore {
     const attempt = this.getActiveExam();
     if (!attempt) return null;
 
-    const finalised = submitExam(attempt, now, reason);
+    const finalised = examOps().submitExam(attempt, now, reason);
     let data = { ...this.state.data };
 
     for (const state of finalised.questions) {
       if (state.selectedAnswerId === null) continue;
-      const question = getQuestion(state.questionId);
+      const question = questionBank().getQuestion(state.questionId);
       if (!question) continue;
       const outcome = applyAnswer(data, {
         question,
@@ -532,7 +570,7 @@ export class LearnerStore {
   enforceExamDeadline(now = Date.now()): ExamAttempt | null {
     const attempt = this.getActiveExam();
     if (!attempt) return null;
-    if (!isExpired(attempt, now)) return null;
+    if (!examOps().isExpired(attempt, now)) return null;
     return this.finishExam(now, 'expired');
   }
 

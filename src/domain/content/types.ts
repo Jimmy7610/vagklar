@@ -183,6 +183,16 @@ export type LessonBlock =
   | { kind: 'signGrid'; title?: string; signIds: string[] }
   /** Two signs side by side that are genuinely confused with each other. */
   | { kind: 'signCompare'; title: string; leftId: string; rightId: string; note: string }
+  /** A group of road markings from the marking registry. */
+  | { kind: 'markingGrid'; title?: string; markingIds: string[] }
+  /** Two markings side by side that are genuinely confused with each other. */
+  | {
+      kind: 'markingCompare';
+      title: string;
+      leftId: string;
+      rightId: string;
+      note: string;
+    }
   | { kind: 'rule'; title: string; text: string }
   | { kind: 'list'; title?: string; items: string[] }
   | { kind: 'memory'; text: string }

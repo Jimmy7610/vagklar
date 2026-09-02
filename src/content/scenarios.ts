@@ -1,4 +1,5 @@
 import type { Scenario } from '@/domain/content/types';
+import { LANDING_SCENARIO } from './landing-scenario';
 
 /**
  * Scenario Lab content.
@@ -25,145 +26,7 @@ const TRF = (reference: string) => ({
 
 export const SCENARIOS: Scenario[] = [
   /* ================================================================== */
-  {
-    id: 'sc-hogerregeln-1',
-    title: 'Vem kör först?',
-    categoryId: 'korsningar',
-    subcategory: 'hogerregeln',
-    difficulty: 2,
-    kind: 'order-of-passage',
-    prompt:
-      'En korsning utan vägmärken. Tryck på fordonen i den ordning de kan köra — först den som kör först.',
-    layout: 'crossroads',
-    vehicles: [
-      {
-        id: 'a',
-        label: 'A',
-        description: 'Din bil. Kommer söderifrån och ska rakt fram.',
-        role: 'car',
-        x: 56,
-        y: 84,
-        heading: 0,
-        intent: 'straight',
-        isEgo: true,
-        path: [
-          { x: 56, y: 84 },
-          { x: 56, y: 8 },
-        ],
-      },
-      {
-        id: 'b',
-        label: 'B',
-        description: 'Bil som kommer från öster, till höger om dig, och ska rakt fram.',
-        role: 'car',
-        x: 84,
-        y: 44,
-        heading: 270,
-        intent: 'straight',
-        path: [
-          { x: 84, y: 44 },
-          { x: 8, y: 44 },
-        ],
-      },
-      {
-        id: 'c',
-        label: 'C',
-        description: 'Bil som kommer från väster, till vänster om dig, och ska svänga vänster.',
-        role: 'car',
-        x: 16,
-        y: 56,
-        heading: 90,
-        intent: 'left',
-        path: [
-          // A left turn ends in the northbound lane (x ≈ 56), not the oncoming
-          // southbound one — the scene has to model correct lane discipline.
-          { x: 16, y: 56 },
-          { x: 48, y: 56 },
-          { x: 56, y: 44 },
-          { x: 56, y: 8 },
-        ],
-      },
-    ],
-    correctOrder: ['b', 'a', 'c'],
-    ruleTested: 'Högerregeln',
-    explanation:
-      'Utan vägmärken gäller högerregeln. B kommer från höger sett från dig och kör först. Sedan kör du, eftersom C har väjningsplikt mot dig. C kör sist — dels har C dig på sin högra sida, dels ska C svänga vänster och måste lämna företräde åt mötande.',
-    stepExplanations: [
-      'B kör först. B kommer från höger sett från din bil, och du har väjningsplikt mot fordon från höger.',
-      'Du (A) kör som nummer två. C har dig på sin högra sida och ska dessutom svänga vänster — C måste vänta.',
-      'C kör sist. C svänger vänster och lämnar företräde både åt B som möter och åt dig.',
-    ],
-    overlays: [
-      { kind: 'yield', id: 'o1', from: 'a', to: 'b', label: 'A väjer för B (högerregeln)' },
-      { kind: 'yield', id: 'o2', from: 'c', to: 'a', label: 'C väjer för A (högerregeln)' },
-      { kind: 'yield', id: 'o3', from: 'c', to: 'b', label: 'C väjer för B (vänstersväng mot mötande)' },
-      { kind: 'conflict', id: 'o4', x: 56, y: 44, label: 'A och B korsar varandra här' },
-      { kind: 'conflict', id: 'o5', x: 56, y: 56, label: 'A och C korsar varandra här' },
-    ],
-    accessibilityText:
-      'En fyrvägskorsning utan vägmärken, sedd rakt uppifrån. Bil A är din bil; den står söder om korsningen och ska rakt fram norrut. Bil B kommer från öster, alltså från höger sett från din bil, och ska rakt fram västerut. Bil C kommer från väster, alltså från vänster sett från din bil, och ska svänga vänster upp mot norr.',
-    variants: [
-      {
-        id: 'vajningsplikt',
-        label: 'Om du får väjningsplikt',
-        question: 'Vad förändras om din väg får väjningsplikt mot den korsande vägen?',
-        patch: {
-          prompt:
-            'Samma korsning, men nu har din väg väjningsplikt mot den korsande vägen. I vilken ordning kan fordonen köra?',
-          correctOrder: ['b', 'c', 'a'],
-          ruleTested: 'Väjningsplikt',
-          explanation:
-            'Med väjningsplikt gäller inte högerregeln för dig längre — du lämnar företräde åt alla på den korsande vägen. B kör först, C kör som nummer två efter att ha väntat in mötande B, och du kör sist.',
-          stepExplanations: [
-            'B kör först. B har företräde mot dig, och möts inte av något hinder.',
-            'C kör som nummer två. C ska svänga vänster och väntar in mötande B — men har företräde mot dig.',
-            'Du (A) kör sist. Väjningspliktsmärket gäller mot all trafik på den korsande vägen.',
-          ],
-          signs: [
-            { id: 's1', sign: 'vajningsplikt', x: 68, y: 72, label: 'Väjningsplikt för din väg' },
-          ],
-          markings: [
-            { id: 'm1', kind: 'yield-line', x: 56, y: 66, rotation: 0, length: 13 },
-          ],
-          overlays: [
-            { kind: 'yield', id: 'v1', from: 'a', to: 'b', label: 'A väjer för B (skyltad väjningsplikt)' },
-            { kind: 'yield', id: 'v2', from: 'a', to: 'c', label: 'A väjer för C (skyltad väjningsplikt)' },
-            { kind: 'yield', id: 'v3', from: 'c', to: 'b', label: 'C väjer för B (vänstersväng mot mötande)' },
-          ],
-          accessibilityText:
-            'Samma fyrvägskorsning, men nu står ett väjningspliktsmärke vid din tillfart söderifrån och en väjningslinje är målad i vägbanan. Bil A är din bil och ska rakt fram. Bil B kommer från öster och ska rakt fram. Bil C kommer från väster och ska svänga vänster.',
-        },
-      },
-      {
-        id: 'huvudled',
-        label: 'Om din väg blir huvudled',
-        question: 'Vad förändras om din väg blir huvudled?',
-        patch: {
-          prompt:
-            'Samma korsning, men nu är din väg huvudled. I vilken ordning kan fordonen köra?',
-          correctOrder: ['a', 'b', 'c'],
-          ruleTested: 'Huvudled',
-          explanation:
-            'På huvudled har du företräde mot korsande trafik. Du kör först. B kör som nummer två, och C sist eftersom C både har väjningsplikt mot huvudleden och ska svänga vänster mot mötande B.',
-          stepExplanations: [
-            'Du (A) kör först. Du kör på huvudled och korsande trafik har väjningsplikt mot dig.',
-            'B kör som nummer två, efter att ha lämnat företräde åt huvudleden.',
-            'C kör sist. C väjer både för huvudleden och för mötande B.',
-          ],
-          signs: [{ id: 's1', sign: 'huvudled', x: 68, y: 72, label: 'Huvudled' }],
-          overlays: [
-            { kind: 'yield', id: 'h1', from: 'b', to: 'a', label: 'B väjer för A (huvudled)' },
-            { kind: 'yield', id: 'h2', from: 'c', to: 'a', label: 'C väjer för A (huvudled)' },
-            { kind: 'yield', id: 'h3', from: 'c', to: 'b', label: 'C väjer för B (vänstersväng mot mötande)' },
-          ],
-          accessibilityText:
-            'Samma fyrvägskorsning, men nu står ett huvudledsmärke vid din tillfart söderifrån. Bil A är din bil på huvudleden och ska rakt fram. Bil B kommer från öster och ska rakt fram. Bil C kommer från väster och ska svänga vänster.',
-        },
-      },
-    ],
-    sourceReferences: [TRF('3 kap. 18 §')],
-    status: 'reviewed',
-  },
+  LANDING_SCENARIO,
 
   /* ================================================================== */
   {
@@ -1017,6 +880,243 @@ export const SCENARIOS: Scenario[] = [
         sourcePages: [124],
       },
     ],
+    status: 'reviewed',
+  },
+  /* ------------------------------------------------------------------ */
+  /* Människan: barn vid stannad buss                                    */
+  /* ------------------------------------------------------------------ */
+  {
+    id: 'sc-risk-barn-buss',
+    title: 'Var kommer barnet ifrån?',
+    categoryId: 'manniskan',
+    subcategory: 'nedsatt-formaga',
+    difficulty: 2,
+    kind: 'risk-spotting',
+    prompt:
+      'En buss har stannat vid hållplatsen och släpper av passagerare. Tryck där risken är störst.',
+    layout: 'street-scene',
+    vehicles: [
+      {
+        id: 'a',
+        label: 'A',
+        description: 'Din bil. Kör österut på gatan, bakom bussen.',
+        role: 'car',
+        x: 16,
+        y: 56,
+        heading: 90,
+        intent: 'straight',
+        isEgo: true,
+      },
+      {
+        id: 'buss',
+        label: 'B',
+        description: 'Buss som står stilla vid hållplatsen på gatans norra sida.',
+        role: 'bus',
+        x: 52,
+        y: 42,
+        heading: 90,
+        intent: 'stop',
+      },
+      {
+        id: 'm',
+        label: 'M',
+        description: 'Mötande bil längre fram på gatan.',
+        role: 'car',
+        x: 88,
+        y: 42,
+        heading: 270,
+        intent: 'straight',
+      },
+    ],
+    hotspots: [
+      {
+        id: 'framfor-bussen',
+        label: 'Framför bussen',
+        x: 70,
+        y: 50,
+        radius: 9,
+        isRisk: true,
+        explanation:
+          'Barn som klivit av springer oftast rakt över gatan framför bussen, där de varken ser dig eller syns. Bussens front döljer dem tills de är ute i din körbana.',
+      },
+      {
+        id: 'bakom-bussen',
+        label: 'Bakom bussen',
+        x: 34,
+        y: 50,
+        radius: 8,
+        isRisk: false,
+        explanation:
+          'Bakom bussen är sikten också skymd, men du närmar dig därifrån och har längre tid på dig. Det är framför bussen som mötet blir plötsligt.',
+      },
+      {
+        id: 'motande',
+        label: 'Den mötande bilen',
+        x: 88,
+        y: 42,
+        radius: 8,
+        isRisk: false,
+        explanation:
+          'Den mötande bilen ligger i sitt eget körfält och är förutsägbar. Risken kommer från det du inte ser, inte från det du ser.',
+      },
+    ],
+    ruleTested: 'Barns beteende vid hållplats',
+    explanation:
+      'Barn bedömer avstånd och hastighet sämre än vuxna och rör sig efter sitt mål, inte efter trafiken. En stannad buss är en signal att sänka farten och vara beredd att stanna — inte att köra om.',
+    accessibilityText:
+      'En stadsgata sedd uppifrån. Din bil A kör österut. Längre fram står en buss B stilla vid en hållplats på gatans norra sida och släpper av passagerare. Bortom bussen kommer en mötande bil M västerut. Ytan framför bussen är skymd från din plats.',
+    sourceReferences: [{ name: 'Riskutbildning: barn i trafiken', verifiedAt: null }],
+    status: 'reviewed',
+  },
+  /* ------------------------------------------------------------------ */
+  /* Människan: bländning i mörker                                       */
+  /* ------------------------------------------------------------------ */
+  {
+    id: 'sc-risk-blandning',
+    title: 'Vad döljer helljuset?',
+    categoryId: 'manniskan',
+    subcategory: 'reaktion-och-sinnen',
+    difficulty: 3,
+    kind: 'risk-spotting',
+    prompt:
+      'Du kör i mörker och möter en bil som glömt växla ner till halvljus. Tryck där risken är störst.',
+    layout: 'street-scene',
+    vehicles: [
+      {
+        id: 'a',
+        label: 'A',
+        description: 'Din bil. Kör österut i mörker med halvljus.',
+        role: 'car',
+        x: 18,
+        y: 56,
+        heading: 90,
+        intent: 'straight',
+        isEgo: true,
+      },
+      {
+        id: 'm',
+        label: 'M',
+        description: 'Mötande bil med helljus tänt, på väg västerut.',
+        role: 'car',
+        x: 74,
+        y: 42,
+        heading: 270,
+        intent: 'straight',
+      },
+    ],
+    hotspots: [
+      {
+        id: 'hoger-om-ljuskaglan',
+        label: 'Vägrenen strax till höger om ljuset',
+        x: 62,
+        y: 62,
+        radius: 9,
+        isRisk: true,
+        explanation:
+          'Ögat ställer om sig långsamt efter ljus. Mörkret intill den mötande strålkastaren är den zon du ser sämst i just nu — och det är där en gående eller cyklist skulle befinna sig.',
+      },
+      {
+        id: 'motande-bilen',
+        label: 'Den mötande bilen själv',
+        x: 74,
+        y: 42,
+        radius: 8,
+        isRisk: false,
+        explanation:
+          'Bilen syns tydligt — det är det enda du ser väl. Att titta rakt in i ljuset förlänger dessutom tiden innan mörkerseendet kommer tillbaka.',
+      },
+      {
+        id: 'bakom-dig',
+        label: 'Vägen bakom dig',
+        x: 22,
+        y: 42,
+        radius: 8,
+        isRisk: false,
+        explanation: 'Bakom dig finns inget du behöver hantera i det här mötet.',
+      },
+    ],
+    ruleTested: 'Bländning och mörkerseende',
+    explanation:
+      'Rikta blicken mot den högra kantlinjen i stället för mot ljuset, och sänk farten så att stoppsträckan ryms inom det du faktiskt ser. Ögat behöver flera sekunder på sig efter en bländning.',
+    accessibilityText:
+      'En mörk landsväg sedd uppifrån. Din bil A kör österut med halvljus. En mötande bil M kommer västerut med helljus tänt. Ljuset från M lyser upp mitten av vägen, medan vägrenen till höger om ljuskäglan ligger i mörker.',
+    sourceReferences: [{ name: 'Riskutbildning: mörkerkörning', verifiedAt: null }],
+    status: 'reviewed',
+  },
+  /* ------------------------------------------------------------------ */
+  /* Människan: trötthet på monoton väg                                  */
+  /* ------------------------------------------------------------------ */
+  {
+    id: 'sc-risk-trotthet',
+    title: 'Vilket tecken ska du ta på allvar?',
+    categoryId: 'manniskan',
+    subcategory: 'nedsatt-formaga',
+    difficulty: 2,
+    kind: 'risk-spotting',
+    prompt:
+      'Du har kört två timmar på en rak, monoton väg. Tryck på det som är den viktigaste varningssignalen.',
+    layout: 'street-scene',
+    vehicles: [
+      {
+        id: 'a',
+        label: 'A',
+        description: 'Din bil. Kör österut och ligger närmare den högra kantlinjen än nyss.',
+        role: 'car',
+        x: 40,
+        y: 60,
+        heading: 92,
+        intent: 'straight',
+        isEgo: true,
+      },
+      {
+        id: 'm',
+        label: 'M',
+        description: 'Mötande bil långt fram på vägen.',
+        role: 'car',
+        x: 90,
+        y: 42,
+        heading: 270,
+        intent: 'straight',
+      },
+    ],
+    hotspots: [
+      {
+        id: 'egen-drift',
+        label: 'Din egen placering mot kantlinjen',
+        x: 40,
+        y: 64,
+        radius: 9,
+        isRisk: true,
+        explanation:
+          'Att bilen glider mot kanten utan att du märkte det betyder att uppmärksamheten redan slutat räcka till. Det är den signal som kommer före mikrosömnen — och den enda som ger dig tid att stanna.',
+      },
+      {
+        id: 'rak-vag',
+        label: 'Den raka vägen framför',
+        x: 68,
+        y: 56,
+        radius: 8,
+        isRisk: false,
+        explanation:
+          'Den raka vägen känns ofarlig, och det är just därför den är monoton. Men den kräver inget av dig och varnar dig inte heller.',
+      },
+      {
+        id: 'motet',
+        label: 'Den mötande bilen',
+        x: 90,
+        y: 42,
+        radius: 8,
+        isRisk: false,
+        explanation:
+          'Mötet i sig är rutin. Problemet är att en trött förare hanterar rutin bra ända tills det oväntade inträffar.',
+      },
+    ],
+    ruleTested: 'Trötthet och mikrosömn',
+    explanation:
+      'Trötthet märks först på körningen, inte på känslan: sidopositionen vandrar, farten varierar och du minns inte de senaste kilometrarna. Det går inte att viljemässigt vakna till — det som hjälper är att stanna och sova en stund.',
+    accessibilityText:
+      'En rak landsväg sedd uppifrån efter två timmars körning. Din bil A kör österut men ligger närmare den högra kantlinjen än den gjorde tidigare. Långt fram kommer en mötande bil M västerut. Vägen är i övrigt tom och likformig.',
+    sourceReferences: [{ name: 'Riskutbildning: trötthet', verifiedAt: null }],
     status: 'reviewed',
   },
 ];

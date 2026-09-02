@@ -11,9 +11,9 @@ import { masteryColor } from '@/ui/components/ProgressRing';
 import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
 import { APP_VERSION, EXAM } from '@/domain/constants';
 import { RIGHTS } from '@/content/sources';
-import { bankStats } from '@/domain/content/bank';
+import { BANK_TOTALS } from '@/content/question-index';
 import { CATEGORIES } from '@/content/taxonomy';
-import { SCENARIOS } from '@/content/scenarios';
+import { LANDING_SCENARIO } from '@/content/landing-scenario';
 import { useHasProgress } from '@/app/state/useLearner';
 import { useThemeToggle } from '@/features/landing/useThemeToggle';
 
@@ -137,8 +137,8 @@ export function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
   const hasProgress = useHasProgress();
   const { resolved, toggle } = useThemeToggle();
-  const stats = bankStats();
-  const scenario = SCENARIOS[0];
+  const stats = BANK_TOTALS;
+  const scenario = LANDING_SCENARIO;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -468,7 +468,7 @@ export function LandingPage() {
 
               <Reveal delay={80}>
                 <div className={styles.scenarioFrame}>
-                  {scenario && <ScenarioStage scenario={scenario} revealed />}
+                  <ScenarioStage scenario={scenario} revealed />
                   <p className={styles.scenarioCaption}>
                     Oskyltad korsning — högerregeln avgör ordningen.
                   </p>

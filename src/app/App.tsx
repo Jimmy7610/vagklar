@@ -9,7 +9,6 @@ import { Toaster } from '@/ui/components/Toaster';
 import { ErrorBoundary } from '@/ui/components/ErrorBoundary';
 import { RouteFallback } from '@/ui/components/RouteFallback';
 import { LandingPage } from '@/features/landing/LandingPage';
-import { HomePage } from '@/features/home/HomePage';
 import { useServiceWorker } from './useServiceWorker';
 
 /*
@@ -22,6 +21,10 @@ import { useServiceWorker } from './useServiceWorker';
  * project subpath. See docs/ARCHITECTURE.md.
  */
 
+// Every route below the shell is lazy, Home included: it reads the question
+// bank through useContent, so keeping it eager pulled all question bodies
+// into the startup bundle. It sits behind HydrationGate either way.
+const HomePage = lazy(() => import('@/features/home/HomePage'));
 const PracticePage = lazy(() => import('@/features/practice/PracticePage'));
 const SessionPage = lazy(() => import('@/features/practice/SessionPage'));
 const ExamPage = lazy(() => import('@/features/exam/ExamPage'));
