@@ -2,6 +2,7 @@ import type { Question } from './types';
 import type { CurriculumConcept } from '@/content/curriculum/curriculum';
 import type { SourceEntry } from '@/content/sources';
 import type { SourceImage } from '@/content/source-images';
+import type { OriginalVisual } from '@/content/original-visuals';
 import type { RoadSign } from '@/content/road-signs';
 import type { RoadMarking } from '@/content/road-markings';
 import type { Lesson } from './types';
@@ -59,6 +60,10 @@ export interface ValidationInput {
   roadMarkings?: readonly RoadMarking[];
   /** Marking ids that actually have a drawing. */
   availableMarkingGlyphs?: ReadonlySet<string>;
+  /** The Vägklar-original visual registry. */
+  originalVisuals?: readonly OriginalVisual[];
+  /** Renderer ids that actually have a drawing. */
+  availableVisualGlyphs?: ReadonlySet<string>;
 }
 
 export interface ValidationReport {
@@ -639,6 +644,159 @@ export function validateContent(input: ValidationInput): ValidationReport {
           'unapproved-source-image',
           where,
           `Källbilden "${image.id}" har status "${image.status}".`,
+        );
+      }
+    }
+  }
+
+  /* ---- Vägklar-original visuals ----------------------------------------
+     The registry is separate from the licensed one so that provenance can
+     never blur, and these checks exist to keep it that way: an original that
+     borrowed a licensed image's id, or a question that reached into the wrong
+     registry, would undo the whole point of the split. */
+  const visualById = new Map((input.originalVisuals ?? []).map((v) => [v.id, v]));
+  const seenVisualIds = new Set<string>();
+  const seenRenderers = new Map<string, string>();
+
+  for (const visual of input.originalVisuals ?? []) {
+    const where = `ritning:${visual.id}`;
+
+    if (seenVisualIds.has(visual.id)) {
+      add('error', 'duplicate-visual-id', where, `Ritnings-id ${visual.id} används mer än en gång.`);
+    }
+    seenVisualIds.add(visual.id);
+
+    // The two registries are addressed by id from content, so an id in both is
+    // a genuine ambiguity about which picture — and whose — is meant.
+    if (imageById.has(visual.id)) {
+      add(
+        'error',
+        'visual-id-collides-with-source-image',
+        where,
+        `Id:t finns även i källbildsregistret. En egen ritning och en licensierad bild får inte dela id.`,
+      );
+    }
+
+    if (visual.status !== 'retired') {
+      const owner = seenRenderers.get(visual.rendererId);
+      if (owner) {
+        add(
+          'error',
+          'duplicate-visual-renderer',
+          where,
+          `Samma ritning som "${owner}". En figur ska ha en registerpost.`,
+        );
+      } else {
+        seenRenderers.set(visual.rendererId, visual.id);
+      }
+    }
+
+    if (visual.altText.trim().length === 0) {
+      add('error', 'visual-without-alt', where, 'Ritningen saknar alt-text.');
+    }
+    if (visual.longDescription.trim().length < 80) {
+      add(
+        'error',
+        'visual-description-too-thin',
+        where,
+        'Beskrivningen är för kort för att ersätta ritningen.',
+      );
+    }
+
+    // Text drawn as vector paths reaches no screen reader. Whatever is printed
+    // inside the drawing has to survive as words. Case is not part of that
+    // promise — a label capitalised as a heading reads the same mid-sentence —
+    // so the comparison ignores it rather than forcing prose into odd shapes.
+    const described = visual.longDescription.toLocaleLowerCase('sv');
+    for (const printed of visual.labelText) {
+      if (!described.includes(printed.toLocaleLowerCase('sv'))) {
+        add(
+          'error',
+          'visual-label-not-described',
+          where,
+          `Texten "${printed}" står i ritningen men inte i beskrivningen.`,
+        );
+      }
+    }
+
+    if (visual.createdBy !== 'Vägklar') {
+      add(
+        'error',
+        'visual-not-attributed-to-vagklar',
+        where,
+        `createdBy är "${visual.createdBy}". Registret är till för Vägklars egna ritningar.`,
+      );
+    }
+    if (!visual.copyright.includes('Jimmy Eliasson')) {
+      add('error', 'visual-without-copyright', where, 'Ritningen saknar Vägklars upphovsrättsrad.');
+    }
+    // A drawing that credits the book's rights holder is either misfiled or
+    // mislabelled, and both are worse than a missing credit.
+    if (/Hagberg|Körkortonline/i.test(visual.copyright + visual.createdBy)) {
+      add(
+        'error',
+        'visual-claims-licensed-source',
+        where,
+        'Ritningen tillskrivs källans rättighetshavare men ligger i registret för egna ritningar.',
+      );
+    }
+
+    if (!input.subcategoryIds.has(visual.subcategory)) {
+      add('error', 'visual-unknown-subcategory', where, `Okänt delområde "${visual.subcategory}".`);
+    }
+
+    if (input.availableVisualGlyphs && !input.availableVisualGlyphs.has(visual.rendererId)) {
+      add(
+        'error',
+        'visual-renderer-missing',
+        where,
+        `Det finns ingen ritning med rendererId "${visual.rendererId}".`,
+      );
+    }
+
+    if (!Number.isInteger(visual.width) || !Number.isInteger(visual.height) ||
+        visual.width <= 0 || visual.height <= 0) {
+      add('error', 'visual-bad-dimensions', where, 'Ritningens viewBox-mått är orimliga.');
+    }
+  }
+
+  /* ---- Content that points at an original visual ------------------------ */
+  for (const q of input.questions) {
+    if (!q.originalVisualId) continue;
+    const where = q.id;
+    const visual = visualById.get(q.originalVisualId);
+    if (!visual) {
+      // The most likely mistake is reaching for the wrong registry, so say so.
+      const message = imageById.has(q.originalVisualId)
+        ? `"${q.originalVisualId}" är en licensierad källbild — använd sourceImageId.`
+        : `Okänd egen ritning "${q.originalVisualId}".`;
+      add('error', 'unknown-original-visual', where, message);
+    } else if (visual.status !== 'approved') {
+      add(
+        'error',
+        'unapproved-original-visual',
+        where,
+        `Ritningen "${visual.id}" har status "${visual.status}".`,
+      );
+    }
+  }
+
+  for (const lesson of input.lessons ?? []) {
+    for (const block of lesson.blocks) {
+      if (block.kind !== 'originalVisual') continue;
+      const where = `lektion:${lesson.id}`;
+      const visual = visualById.get(block.visualId);
+      if (!visual) {
+        const message = imageById.has(block.visualId)
+          ? `"${block.visualId}" är en licensierad källbild — använd blocket sourceImage.`
+          : `Okänd egen ritning "${block.visualId}".`;
+        add('error', 'unknown-original-visual', where, message);
+      } else if (visual.status !== 'approved') {
+        add(
+          'error',
+          'unapproved-original-visual',
+          where,
+          `Ritningen "${visual.id}" har status "${visual.status}".`,
         );
       }
     }

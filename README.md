@@ -146,7 +146,8 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 | Lektioner                      | 15                                     |
 | Scenarier                      | 14 (med varianter)                     |
 | Namngivna missuppfattningar    | 253                                    |
-| Källbilder (används med tillstånd) | 62 (51 foton, 11 ritningar)        |
+| Källbilder (används med tillstånd) | 63 (52 foton, 11 ritningar)        |
+| Vägklars egna ritningar           | 15                                 |
 | Ritade vägmärken               | 58                                     |
 | Ritade vägmarkeringar          | 15                                     |
 | Kursplanetäckning              | 179 av 179 begrepp i 39 kapitel        |
@@ -207,8 +208,22 @@ långbeskrivning och rättighetsdata i
 
 Bilderna tillhör Hagberg Media AB och används med tillstånd. Varje bild visas med
 kreditering. Se [docs/SOURCE-IMAGES.md](docs/SOURCE-IMAGES.md) för hela arbetsflödet och
-[docs/SOURCE-DIAGRAMS.md](docs/SOURCE-DIAGRAMS.md) för ritningarna, som lyder under
+[docs/SOURCE-DIAGRAMS.md](docs/SOURCE-DIAGRAMS.md) för bokens figurer, som lyder under
 egna regler: de bär mått, och måtten måste finnas som text också.
+
+### Egna ritningar
+
+Där källan inte har någon bild som lär ut saken ritar Vägklar själv. Mönsterdjup,
+lufttryck, vattenplaning, krockvåld och bältets väg över kroppen är sådana fall:
+kapitlen är fulla av text om dem och nästan tomma på bilder, och ett par millimeter
+mönsterdjup går inte att fotografera begripligt.
+
+De 15 ritningarna ligger i ett eget register,
+[`src/content/original-visuals.ts`](src/content/original-visuals.ts), skilt från det
+licensierade — så att en egen ritning aldrig kan krediteras källans rättighetshavare
+och tvärtom. De krediteras `Illustration: Vägklar · © 2026 Jimmy Eliasson`, är
+vektorer i kod och fungerar därför offline utan att först ha visats.
+Se [docs/ORIGINAL-VISUALS.md](docs/ORIGINAL-VISUALS.md).
 
 ---
 

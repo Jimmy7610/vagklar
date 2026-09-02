@@ -33,11 +33,22 @@ hitta det som saknas, inte för att se färdig ut.
 
 ## Källbilder
 
-- [x] **62 godkända bilder** — 51 fotografier och 11 ritningar ur källan — och
-      samtliga används av en lektion eller en fråga
+- [x] **63 godkända källbilder** — 52 fotografier och 11 ritningar ur källan —
+      plus **15 egna ritningar**, och samtliga används av en lektion eller fråga
       (`npm run report:images` → [IMAGE-COVERAGE.md](IMAGE-COVERAGE.md))
-- [x] 23 av 39 kapitel har bildstöd; rapporten redovisar foto och ritning i
-      skilda kolumner, så det syns vilket slag ett kapitel faktiskt fått
+- [x] 25 av 39 kapitel har bildstöd; rapporten redovisar foto, bokritning och
+      egen ritning i skilda kolumner, så det syns vilket slag ett kapitel fått
+- [x] Egna ritningar ligger i ett eget register och kan inte förväxlas med
+      licensierat material: samma id i båda registren, eller en egen ritning
+      tillskriven källans rättighetshavare, är ett valideringsfel
+- [x] Varje egen ritning bär alt-text, långbeskrivning och avskriven bildtext,
+      och används av en lektion eller fråga — inga oanvända
+- [x] Frågor använder bara ritningar utan facit i bilden; lektionsversionen av
+      samma figur är spärrad från frågor av ett test
+- [x] Alla fyra bildsorterna renderas av **en** komponent, som varje frågeyta
+      går genom. Ett test underkänner en yta som börjar rita på egen hand
+- [x] De egna ritningarna fungerar offline direkt, utan tidigare visning —
+      kontrollerat med servern avstängd
 - [x] Ritningarna bär mått som text i `labelText`, upprepade i långbeskrivningen
       — kontrollerat av test, så en måttfråga är lösbar utan att se figuren
 - [x] Registrets `width`/`height` stämmer med filerna, läst ur WebP-huvudet.
@@ -65,12 +76,10 @@ hitta det som saknas, inte för att se färdig ut.
       kontrollerat med servern avstängd
 - [x] Elva bredder × tio bildbärande lektioner utan överflöd, uppskalning eller
       trasiga filer, i båda teman
-- [ ] **16 av 39 kapitel saknar fortfarande bildstöd.** Flera behöver inget —
-      ett kapitel om registreringsbevis blir inte tydligare av ett foto — men
-      Däck och Trafikolyckor skulle bli det. Genomgången av fordonskapitlen
-      visade att källan har färre äkta scheman än väntat: mycket av det som ser
-      ut som figurer är formelrutor och textstycken satta som grafik, och de hör
-      inte hemma i Vägklar, som skriver sin egen text.
+- [ ] **14 av 39 kapitel saknar fortfarande bildstöd.** Flera behöver inget —
+      ett kapitel om registreringsbevis blir inte tydligare av ett foto. Däck
+      och Trafikolyckor, som stod kvar som luckor, är nu fyllda med egna
+      ritningar eftersom källan saknar användbara figurer för dem.
 - [x] Inga godkända bilder ligger oanvända. Fyra som dubblerade undervisning en
       bättre bild redan skötte är satta till `retired` med skäl och borttagna
       ur bygget.
@@ -223,8 +232,8 @@ Inget av nedanstående hindrar en beta, men allt är känt:
 4. Skärmläsargranskning
 5. 320 px kombinerat med 200 % text
 6. Utred den ostabila provtesten
-7. Däck och Trafikolyckor saknar bildstöd; källan verkar inte ha en ritning som
-   löser det, så det kräver antingen ett foto eller egen vektorgrafik
+7. Delområdet vägmarkeringar har nu ett verkligt fotografi (väjningslinje), men
+   bara ett. Fler markeringar skulle tjäna på samma vektor-plus-foto-par
 
 ## Omdöme
 

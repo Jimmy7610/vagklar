@@ -2,10 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './QuestionCard.module.css';
 import { Button } from '@/ui/components/Button';
 import { Icon } from '@/ui/icons/Icon';
-import { RoadSign, hasRoadSign } from '@/ui/illustrations/RoadSign';
-import { RoadMarking, hasRoadMarking } from '@/ui/illustrations/RoadMarking';
 import { getCategoryName, getSubcategoryName } from '@/content/taxonomy';
-import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
+import { QuestionIllustration } from '@/ui/media/QuestionIllustration';
 import type { Question } from '@/domain/content/types';
 import type { Confidence, ConfidencePrompt } from '@/domain/learner/types';
 
@@ -132,7 +130,6 @@ export function QuestionCard({
   }, [answered, confidencePrompt, isCorrect, responseMs, question.estimatedTimeSec, showFeedback]);
 
   const progress = total > 0 ? ((index + (answered ? 1 : 0)) / total) * 100 : 0;
-  const illustration = question.image?.illustration;
 
   return (
     <div className={styles.wrap}>
@@ -155,31 +152,7 @@ export function QuestionCard({
 
       <h1 className={styles.prompt}>{question.prompt}</h1>
 
-      {question.sourceImageId && (
-        <div className={styles.sourceImage}>
-          <SourceImageFigure
-            imageId={question.sourceImageId}
-            variant="question"
-            sizes="(min-width: 1024px) 620px, 100vw"
-            priority
-            showCaption={false}
-          />
-        </div>
-      )}
-
-      {illustration && hasRoadMarking(illustration) && (
-        <div className={styles.signWrap}>
-          <RoadMarking name={illustration} size={132} alt={question.image?.alt ?? ''} />
-        </div>
-      )}
-      {illustration && hasRoadSign(illustration) && (
-        <figure className={styles.figure}>
-          <RoadSign name={illustration} size={116} alt={question.image?.alt ?? ''} />
-          {question.accessibilityText && (
-            <figcaption className={styles.figureCaption}>{question.accessibilityText}</figcaption>
-          )}
-        </figure>
-      )}
+      <QuestionIllustration question={question} priority />
 
       <div className={styles.answers} role="group" aria-label="Svarsalternativ">
         {question.answers.map((answer, position) => {

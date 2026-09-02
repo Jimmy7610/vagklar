@@ -924,3 +924,78 @@ aldrig öppnat degraderar till text — och gör det läsbart.
 - Sju bilder ligger utanför sitt kapitels sidintervall i
   `docs/SOURCE-PAGE-AUDIT.md`. Samtliga är foton vars *ämne* hör till ett annat
   kapitel än sidan de trycktes på — förväntat, och redovisat i rapporten.
+
+## Egna ritningar för däck och trafikolyckor (2026-09-02)
+
+Femton ritningar gjorda för Vägklar togs in där källan inte har någon bild som
+lär ut saken. Genomgången kördes mot ett riktigt bygge (`npm run preview`).
+
+### Vad som kontrollerades
+
+| Yta | Resultat |
+| --- | --- |
+| Lektionen *Däcken* — 5 ritningar | Alla renderar |
+| Lektionen *När det går fel* — 3 ritningar | Alla renderar |
+| Lektionen *Krockskydd i bilen* — 3 ritningar + 3 källbilder | Alla renderar |
+| Kontrollfrågorna | Ritningen visas, bildtexten döljs — inget svar läcker |
+| Provsimuleringen | Ett prov innehöll en ritningsfråga (nr 41); den renderade med rätt kreditering |
+| Kreditering | `Illustration: Vägklar · © 2026 Jimmy Eliasson`, aldrig källans rättighetshavare |
+| Mörkt och ljust läge | Ritningen ligger på fast ljus platta; grönt/rött behåller sin betydelse |
+| 320, 360, 375, 412 px | Ingen horisontell scroll, inga figurer bredare än sidan |
+| Textöverflöd | 20 figurrenderingar granskade automatiskt, 0 klippta etiketter |
+
+### Textöverflöd — mätt, inte ögonmätt
+
+SVG bryter inte text. En etikett som är bredare än sin `viewBox` klipps rätt av,
+tyst, och syns bara om man råkar titta på just den figuren. Genomgången kör
+därför en mätning i webbläsaren: varje `<text>` i varje renderad figur jämförs
+med figurens `viewBox`.
+
+Första körningen hittade **fem** klippta etiketter som inte hade upptäckts vid
+en vanlig genomläsning:
+
+1. `monsterdjup` — två rader brödtext bredare än figuren, och måttet `1,6 mm`
+   utanför högerkanten
+2. `krockvald-hastighet` — `4×` utanför kanten, och en förklarande mening 21
+   enheter för bred åt båda hållen
+3. `nackskydd-position` — ordet `påkörd` delvis utanför kanten
+4. `dackslitage-fraga` — `ursprunglig höjd` klippt i vänsterkanten
+
+Samtliga rättade. Efter rättning: 0 av 20 figurrenderingar med överflöd.
+
+### Två ritningar gjordes om efter att ha setts i appen
+
+**`dackslitage-fraga`** var först ritad uppifrån. Slitna och hela partier blev då
+två snarlika gråtoner, och bilden gick inte att läsa utan att först få veta vad
+man såg. Ritad i genomskärning i stället är slitaget en *höjd*, och skillnaden
+syns direkt.
+
+**`tre-kollisioner`** hade bilen ritad en bit ifrån hindret, vilket läste som en
+bil parkerad nära en vägg snarare än en som kört in i den. Nosen ligger nu mot
+ett streckat hinder, och den åkande är ritad som en egen figur ovanpå bilen.
+
+### Offline — servern verkligen avstängd
+
+Servern stoppades och sidan laddades om. **Samtliga 11 lektionsritningar
+renderade**, i alla tre lektionerna.
+
+Det är en verklig skillnad mot de licensierade bilderna, som inte precachas: en
+lektion man aldrig besökt visar dem som text. Ritningarna är vektorer i en
+JavaScript-chunk som Workbox precachar, så de finns där från första
+installationen — det syntes tydligt i *Krockskydd i bilen*, där de egna
+ritningarna ritades ut medan det licensierade fotografiet föll tillbaka på sin
+beskrivning.
+
+### Prestanda
+
+Ritningarna får inte kosta något vid start. Registret hamnade först i den
+eagerly laddade `content`-chunken och drev upp startpaketet med 5 kB gzip;
+`vite.config.ts` håller nu både registret och ritningarna utanför den.
+
+| | Före | Efter |
+| --- | ---: | ---: |
+| Startpaket (gzip) | 163 581 B | 164 307 B |
+| Precache | 53 poster / 1 335 KiB | 55 poster / 1 383 KiB |
+
+De 726 byte som återstår är de fem nya frågorna i det genererade frågeindexet,
+inte ritningarna.

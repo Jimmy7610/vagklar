@@ -117,9 +117,20 @@ skärmläsare — och olöslig för alla den dagen bilden inte hunnit ned i cach
 
 ## Skyltfrågor
 
-Två sorter med olika syfte: **ritade märken** (`image: sign(id, alt)`,
-`type: 'road-sign'`) för igenkänning, och **fotografier** (`sourceImageId`) för
-sammanhang.
+Tre sorter med olika syfte: **ritade märken** (`image: sign(id, alt)`,
+`type: 'road-sign'`) för igenkänning, **fotografier** (`sourceImageId`) för
+sammanhang, och **Vägklars egna ritningar** (`originalVisualId`) för det som
+varken går att fotografera eller finns avbildat i källan.
+
+### Frågor på en egen ritning
+
+`egnaritningar.ts` ställer avläsningsfrågor: bilden visar ett tillstånd, och frågan
+handlar om vad det beror på eller vad det kräver. Ett däck nedslitet vid kanterna,
+ett bälte över magen, ett nackskydd i nackhöjd.
+
+Använd alltid en ritning med `usage: 'question-image'`. Lektionsversionen av samma
+sak sätter ut sitt eget facit — den säger "För lågt tryck" i klartext — och vore
+ett svar. Ett test underkänner en fråga som pekar på en lektionsritning.
 
 Undvik att ställa samma fråga om och om igen. "Vad betyder det här märket?" i elva
 frågor är både tråkigt och en exakt dubblett för detektorn, som inte ser bilden. Fråga

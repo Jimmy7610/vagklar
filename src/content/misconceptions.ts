@@ -2298,6 +2298,51 @@ export const MISCONCEPTIONS: Misconception[] = [
       'Markeringen finns för korsande trafik och gående, inte för förarna. Är avståndet över två meter ska linan märkas ut.',
     subcategory: 'slapvagn',
   },
+  {
+    id: 'dackslitage-tryck',
+    label: 'Slitagemönstret antas bara betyda ålder',
+    description:
+      'Ett slitet däck uppfattas som ett gammalt däck, så var på däcket slitaget sitter känns som en detalj utan betydelse.',
+    correction:
+      'Var slitaget sitter är en avläsning av lufttrycket. Slitna kanter betyder för lågt tryck, sliten mitt betyder för högt.',
+    subcategory: 'dack-och-bromsar',
+  },
+  {
+    id: 'dackskada-monsterdjup',
+    label: 'Mönsterdjupet antas avgöra om däcket duger',
+    description:
+      'Kontrollen av däck uppfattas som en mätning av mönsterdjup, så ett däck med mönster kvar antas vara godkänt.',
+    correction:
+      'Mönsterdjupet är ett av flera krav. En blåsa eller en skärskada in i stommen gör däcket odugligt oavsett hur mycket mönster som finns kvar.',
+    subcategory: 'dack-och-bromsar',
+  },
+  {
+    id: 'vattenplaning-atgard',
+    label: 'Vattenplaning antas gå att styra eller bromsa ur',
+    description:
+      'Situationen uppfattas som halka, där man kan rätta till något med ratten eller bromsen.',
+    correction:
+      'Vid vattenplaning rör hjulet inte vägen alls, så varken ratt eller broms har något att verka mot. Släpp gasen, håll ratten stilla och vänta ut farten.',
+    subcategory: 'vattenplaning',
+  },
+  {
+    id: 'nackskydd-hojd',
+    label: 'Nackskyddet uppfattas som ett stöd för nacken',
+    description:
+      'Namnet leder tanken rätt fel: skyddet antas vara en kudde att vila nacken mot, och höjden blir en bekvämlighetsfråga.',
+    correction:
+      'Det är ett stopp för huvudet vid påkörning bakifrån. Överkanten ska nå upp i höjd med hjässan, annars passerar huvudet ovanför det.',
+    subcategory: 'krocksakerhet',
+  },
+  {
+    id: 'baltets-lage',
+    label: 'Bältet antas fungera var det än ligger',
+    description:
+      'Så länge bältet är fastspänt uppfattas det som att det gör sitt jobb, oavsett var det ligger över kroppen.',
+    correction:
+      'Höftbältet ska ligga lågt över bäckenet, som tål belastningen, och axelbandet över axeln. Över magen eller under armen belastar det fel delar av kroppen.',
+    subcategory: 'krocksakerhet',
+  },
 ];
 
 export const MISCONCEPTION_BY_ID: ReadonlyMap<string, Misconception> = new Map(

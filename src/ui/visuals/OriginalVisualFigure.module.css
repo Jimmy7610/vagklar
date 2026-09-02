@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Vägklar-original teaching diagram
+   --------------------------------------------------------------------------
+   Styled to sit beside the licensed figures without drawing attention to the
+   difference: same reading column, same caption rhythm, same light plate. The
+   credit line is where the two visibly part company.
+
+   The plate is a fixed light grey in both themes, exactly as for the licensed
+   diagrams and for the same reason. These drawings carry meaning in colour —
+   green for the tread that is still touching the road, red for the belt that
+   is in the wrong place — and a diagram that inverts with the interface is a
+   different diagram. A fixed plate guarantees the palette always has the
+   contrast it was drawn against.
+   ========================================================================== */
+
+.figure {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin: 0;
+  min-width: 0;
+}
+
+.prompt {
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.plate {
+  width: 100%;
+  max-width: 560px;
+  margin-inline: auto;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background-color: #f2f3f5;
+  border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+}
+
+/* The viewBox owns the aspect ratio, so the drawing never needs a reserved
+   box the way a downloaded image does — it is already here. */
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.caption {
+  display: grid;
+  gap: 2px;
+  font-size: var(--text-caption);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.captionText {
+  color: var(--color-text);
+}
+
+.credit {
+  color: var(--color-text-tertiary);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

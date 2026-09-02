@@ -7,6 +7,7 @@ import { Icon } from '@/ui/icons/Icon';
 import { Callout, SectionHeading } from '@/ui/components/Primitives';
 import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
 import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
+import { OriginalVisualFigure } from '@/ui/visuals/OriginalVisualFigure';
 import { SignGrid, SignCompare, MarkingGrid, MarkingCompare } from '@/ui/media/SignGrid';
 import { LESSONS, getLesson } from '@/content/lessons';
 import { SCENARIOS } from '@/content/scenarios';
@@ -101,6 +102,14 @@ function Block({ block }: { block: LessonBlock }) {
           {...(block.prompt ? { prompt: block.prompt } : {})}
           {...(block.caption ? { caption: block.caption } : {})}
           sizes="(min-width: 1024px) 640px, 100vw"
+        />
+      );
+    case 'originalVisual':
+      return (
+        <OriginalVisualFigure
+          visualId={block.visualId}
+          {...(block.prompt ? { prompt: block.prompt } : {})}
+          {...(block.caption ? { caption: block.caption } : {})}
         />
       );
     default:

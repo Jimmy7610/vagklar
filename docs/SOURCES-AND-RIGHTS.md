@@ -52,7 +52,23 @@ Tillståndet omfattar både texten och bilderna i källan.
   rättighetshavare eller tillståndsmarkering.
 
 Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för hela bildkedjan och
-[SOURCE-DIAGRAMS.md](SOURCE-DIAGRAMS.md) för ritningarna.
+[SOURCE-DIAGRAMS.md](SOURCE-DIAGRAMS.md) för bokens figurer.
+
+## Vägklars eget material
+
+Vägklars kod, design, frågetexter, förklaringar, scenarier, vektorritade vägmärken
+och vägmarkeringar samt de 15 egna undervisningsritningarna är Vägklars eget verk.
+Upphovsrätt © 2026 Jimmy Eliasson.
+
+De egna ritningarna ligger i ett **eget register** skilt från det licensierade,
+och krediteras `Illustration: Vägklar · © 2026 Jimmy Eliasson` i appen. Skiljelinjen
+upprätthålls av validatorn, inte av vaksamhet: samma id får inte finnas i båda
+registren, och en post i det egna registret som tillskrivs Hagberg Media AB eller
+Körkortonline.se är ett byggfel.
+
+En egen ritning kan mycket väl lära ut en regel som *hänvisas* till källan eller
+till lagtext — frågans källhänvisning och bildens ursprung är två skilda saker och
+hålls isär.
 
 Rättigheterna till boken tillhör Hagberg Media AB. Inget i det här projektet gör
 anspråk på dem, och Jimmy Eliasson äger inte det materialet.

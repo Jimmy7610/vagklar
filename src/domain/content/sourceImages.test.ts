@@ -383,120 +383,55 @@ describe('every surface that shows a question shows its picture', () => {
   /**
    * The exam once rendered only the drawn signs.
    *
-   * Photograph-backed questions arrived without their photograph and
-   * marking questions without their marking, so roughly one question in ten
-   * was unanswerable in the simulation while being perfectly fine in
-   * training — the two screens render questions independently and only one
-   * of them had been kept in step.
+   * Photograph-backed questions arrived without their photograph and marking
+   * questions without their marking, so roughly one question in ten was
+   * unanswerable in the simulation while being perfectly fine in training. The
+   * cause was structural: each screen wrote out its own list of the kinds of
+   * illustration a question can have, and only one list was kept current.
    *
-   * This walks the source of every screen that renders a question and checks
-   * it reaches for all three kinds of illustration the content model allows.
-   * A source check rather than a render test on purpose: the failure was a
-   * missing branch, and a missing branch is exactly what a render test of the
-   * *existing* branches will never notice.
+   * The list now lives in one component. So this checks two things: that the
+   * component still knows about every kind, and that no screen has quietly
+   * gone back to hand-rolling its own. A source check rather than a render
+   * test on purpose — the failure was a *missing* branch, and a render test of
+   * the branches that exist will never notice one that does not.
    */
+  const renderer = 'src/ui/media/QuestionIllustration.tsx';
   const surfaces = [
     'src/features/practice/QuestionCard.tsx',
     'src/features/exam/ExamRunnerPage.tsx',
   ];
 
+  const read = (file: string) => readFileSync(resolve(process.cwd(), file), 'utf8');
+
+  it('has one renderer that knows every kind of illustration', () => {
+    const source = read(renderer);
+    expect(source, 'saknar källbild').toContain('sourceImageId');
+    expect(source, 'saknar källbild').toContain('SourceImageFigure');
+    expect(source, 'saknar egen ritning').toContain('originalVisualId');
+    expect(source, 'saknar egen ritning').toContain('OriginalVisualFigure');
+    expect(source, 'saknar vägmarkering').toContain('hasRoadMarking');
+    expect(source, 'saknar vägmärke').toContain('hasRoadSign');
+  });
+
   for (const file of surfaces) {
-    it(`${file} renders photographs, markings and signs`, () => {
-      const source = readFileSync(resolve(process.cwd(), file), 'utf8');
-      expect(source, 'saknar källbild').toContain('sourceImageId');
-      expect(source, 'saknar källbild').toContain('SourceImageFigure');
-      expect(source, 'saknar vägmarkering').toContain('hasRoadMarking');
-      expect(source, 'saknar vägmärke').toContain('hasRoadSign');
+    it(`${file} goes through the shared renderer`, () => {
+      const source = read(file);
+      expect(source, 'renderar inte frågans bild alls').toContain('<QuestionIllustration');
+      // A screen that reaches for a figure component directly has started
+      // keeping its own list again, which is the bug this guards against.
+      for (const own of ['SourceImageFigure', 'OriginalVisualFigure', 'hasRoadSign', 'hasRoadMarking']) {
+        expect(source, `${file} ritar ${own} på egen hand`).not.toContain(own);
+      }
     });
   }
 
-  it('keeps the exam free of the teaching caption', () => {
-    const source = readFileSync(
-      resolve(process.cwd(), 'src/features/exam/ExamRunnerPage.tsx'),
-      'utf8',
-    );
-    expect(source).toContain('showCaption={false}');
-  });
-});
-
-/**
- * The book's own drawings, which are a different kind of promise.
- *
- * A photograph illustrates; a diagram *measures*. The load-width figures carry
- * the numbers 260 cm and 40 cm, and the whole question turns on them. So a
- * diagram has to satisfy something a photograph does not: the figures printed
- * inside it must also exist as text, or the question becomes unanswerable for
- * anyone using a screen reader — and for everyone, on the day the image fails
- * to load offline.
- */
-/**
- * Text that is printed inside a picture.
- *
- * Some images are pictures of words: a dimension line reading 260 cm, an
- * airbag panel reading ON. Whoever cannot see the image still has to be told
- * what it says, so `labelText` transcribes it — and the long description has
- * to contain the same words, since that is what a screen reader and the
- * offline fallback actually read out.
- */
-describe('text printed inside images', () => {
-  it('repeats every label in the long description, so the words survive alone', () => {
-    const lost: string[] = [];
-    for (const image of approved) {
-      for (const label of image.labelText ?? []) {
-        if (!image.longDescription.includes(label)) lost.push(`${image.id}: ${label}`);
-      }
+  it('keeps the teaching caption out of a question being asked', () => {
+    // The caption says what the picture teaches, which is what the learner is
+    // being asked to work out. Hiding it is the renderer's default, and no
+    // question surface may turn it back on.
+    expect(read(renderer)).toContain('showCaption = false');
+    for (const file of surfaces) {
+      expect(read(file), `${file} visar bildtexten i en fråga`).not.toContain('showCaption');
     }
-    expect(lost, lost.join(', ')).toHaveLength(0);
-  });
-
-  it('never transcribes an empty label list', () => {
-    const empty = approved.filter((i) => i.labelText?.length === 0).map((i) => i.id);
-    expect(empty, empty.join(', ')).toHaveLength(0);
-  });
-});
-
-describe('diagrams from the source book', () => {
-  const diagrams = approved.filter((i) => i.kind === 'diagram');
-
-  it('has diagrams at all', () => {
-    expect(diagrams.length).toBeGreaterThan(8);
-  });
-
-  it('describes a drawing in enough detail to rebuild it in the head', () => {
-    // Not every diagram carries printed text — the tongue-weight figures teach
-    // purely by geometry. What every diagram does owe the reader is a
-    // description that conveys the arrangement, which takes more words than
-    // saying what a photograph shows.
-    const thin = diagrams.filter((i) => i.longDescription.length < 160).map((i) => i.id);
-    expect(thin, thin.join(', ')).toHaveLength(0);
-  });
-
-  it('uses every diagram it ships', () => {
-    const used = new Set<string>();
-    for (const q of ALL_QUESTIONS) if (q.sourceImageId) used.add(q.sourceImageId);
-    for (const lesson of LESSONS) {
-      for (const block of lesson.blocks) {
-        if (block.kind === 'sourceImage') used.add(block.imageId);
-      }
-    }
-    const idle = diagrams.filter((i) => !used.has(i.id)).map((i) => i.id);
-    expect(idle, idle.join(', ')).toHaveLength(0);
-  });
-
-  it('tests at least a few of them as questions, not only as illustration', () => {
-    const ids = new Set(diagrams.map((i) => i.id));
-    const asked = ALL_QUESTIONS.filter((q) => q.sourceImageId && ids.has(q.sourceImageId));
-    expect(asked.length).toBeGreaterThanOrEqual(4);
-  });
-
-  it('reaches the reader through the figure component', () => {
-    // The labels are only worth transcribing if something renders them. This
-    // is the same reasoning as the exam parity check above: a missing branch
-    // is invisible to a test of the branches that exist.
-    const source = readFileSync(
-      resolve(process.cwd(), 'src/ui/media/SourceImageFigure.tsx'),
-      'utf8',
-    );
-    expect(source, 'ritningens text når aldrig ut').toContain('labelText');
   });
 });

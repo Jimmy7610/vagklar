@@ -962,6 +962,22 @@ export const LESSONS: Lesson[] = [
         text: 'Körfältspilar ersätter inte blinkersen. Mötande och korsande trafikanter ser inte pilarna i vägbanan — de ser bara din blinkers.',
       },
       {
+        kind: 'markingGrid',
+        title: 'Så ritas väjningslinjen',
+        markingIds: ['vajningslinje'],
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'vajningslinje-utfart',
+        prompt: 'Och så ser den ut på vägen.',
+        caption:
+          'Samma markering, fotograferad från förarplatsen. Färgen är sliten, linjen ses snett och krönet döljer en del av den — men kravet är detsamma: väjningsplikt, utan skyldighet att stanna om vägen är fri.',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Det är värt att titta på båda. I katalogen är markeringen skarp, vit och sedd rakt uppifrån. På vägen är den nött, grå och sedd i perspektiv — och det är den versionen du ska känna igen i farten.',
+      },
+      {
         kind: 'sourceImage',
         imageId: 'landsvag-kantlinjer',
         prompt: 'Vilka linjer ser du?',
@@ -1024,6 +1040,16 @@ export const LESSONS: Lesson[] = [
       {
         kind: 'warning',
         text: 'Ingen omständighet gör undantag från det: inte barnets ålder, inte ISOFIX-fästen, inte att sätet är skjutet långt bak. Antingen är kudden urkopplad, eller så sitter stolen i baksättet.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'baltets-vag',
+        prompt: 'Och bältet under kudden?',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'nackskydd-position',
+        prompt: 'Det skydd som är lättast att ställa in fel',
       },
       {
         kind: 'list',
@@ -1133,6 +1159,161 @@ export const LESSONS: Lesson[] = [
         prompt: 'Och vid bogsering',
         caption:
           'Är avståndet mellan bilarna över två meter ska linan märkas ut. Bogsering sker i högst 30 km/h, och på motorväg bara fram till närmaste avfart.',
+      },
+    ],
+  },
+  {
+    id: 'les-dack',
+    categoryId: 'fordonet',
+    subcategoryIds: ['dack-och-bromsar', 'vinterkorning'],
+    title: 'Däcken',
+    summary: 'Fyra ytor stora som varsin handflata — och allt bilen gör går genom dem.',
+    estimatedMinutes: 7,
+    order: 18,
+    curriculumChapterIds: ['dack', 'styrning'],
+    checkQuestionIds: ['egr-001', 'egr-002', 'egr-003'],
+    blocks: [
+      {
+        kind: 'paragraph',
+        text: 'Allt en bil gör — styra, bromsa, accelerera — sker genom fyra ytor mot vägen som tillsammans är ungefär lika stora som fyra handflator. Ingen krockkudde, inget bromssystem och ingen stabilitetskontroll kan skapa grepp som inte finns i den ytan.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'monsterdjup',
+        prompt: 'Titta på däcket — var mäts djupet?',
+      },
+      {
+        kind: 'rule',
+        title: 'Kraven på mönsterdjup',
+        text: 'Minst 1,6 mm gäller alltid. Vid vinterväglag mellan 1 december och 31 mars ska däcken dessutom vara vinterdäck med minst 3 mm mönsterdjup. Kravet mäts i huvudspårets botten.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'dacktryck',
+        prompt: 'Vad ska du lägga märke till?',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Lufttrycket syns inte, men dess spår gör det. Ett däck slitet på båda kanterna har rullat med för lite luft; ett slitet i mitten med för mycket. Är slitaget ojämnt bara på ena sidan sitter felet i stället oftast i hjulinställningen.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'dackskador',
+        prompt: 'Vanlig fälla',
+      },
+      {
+        kind: 'warning',
+        text: 'Ett däck kan ha gott om mönster kvar och ändå vara odugligt. En blåsa betyder att stommen inne i däcket har gått av, och den syns ofta först dagar efter smällen mot kantstenen som orsakade den.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'sommar-vinterdack',
+        prompt: 'Vad är det egentligen som skiljer?',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Skillnaden mellan sommar- och vinterdäck är inte att det ena har mer gummi. Det är antalet kanter. Varje skåra i en vinterdäcksklack är en kant till som kan hugga tag i snö, och gummiblandningen håller sig mjuk i kyla i stället för att hårdna.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'vattenplaning',
+        prompt: 'Så påverkar det körningen',
+      },
+      {
+        kind: 'rule',
+        title: 'Vid vattenplaning gör du ingenting',
+        text: 'Hjulet rör inte vägen, så ratten och bromsen har inget att verka mot. Släpp gasen, håll ratten stilla och låt farten sjunka. Att bromsa eller styra gör skada när greppet kommer tillbaka.',
+      },
+      {
+        kind: 'list',
+        title: 'Vanliga missuppfattningar',
+        items: [
+          'Att mönsterdjup är samma sak som hur mycket gummi som syns — det mäts i spåret',
+          'Att slitage bara betyder ålder — var det sitter avslöjar lufttrycket',
+          'Att vattenplaning går att bromsa eller styra ur',
+          'Att vinterdäck bara handlar om mönstret — det handlar lika mycket om gummits kyltålighet',
+          'Att ett däck med bra mönster alltid är godkänt',
+        ],
+      },
+      {
+        kind: 'memory',
+        text: 'Kontakten med vägen är fyra handflator stor. Allt annat i bilen förhandlar om vad de fyra ytorna klarar.',
+      },
+    ],
+  },
+  {
+    id: 'les-trafikolyckor',
+    categoryId: 'manniskan',
+    subcategoryIds: ['riskbedomning'],
+    title: 'När det går fel',
+    summary: 'Vad farten gör med krockvåldet, vad som händer inne i bilen, och vad du gör på plats.',
+    estimatedMinutes: 6,
+    order: 19,
+    curriculumChapterIds: ['trafikolyckor'],
+    checkQuestionIds: ['ris-008', 'ris-003', 'ris-001'],
+    blocks: [
+      {
+        kind: 'paragraph',
+        text: 'En olycka är sällan ett enda misstag. Den är en kedja: något oväntat, för lite marginal, för sen reaktion. Det mesta i den kedjan går att påverka innan den börjar — och det som påverkar mest är farten.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'krockvald-hastighet',
+        prompt: 'Före olyckan — vad gör farten?',
+      },
+      {
+        kind: 'rule',
+        title: 'Energin växer med kvadraten på farten',
+        text: 'Dubbla farten ger fyra gånger rörelseenergin. Det är därför en påkörning i 60 km/h inte är dubbelt så allvarlig som en i 30, och därför en sänkning med några få km/h betyder mer än den känns.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'tre-kollisioner',
+        prompt: 'Under kollisionen — vad händer, i vilken ordning?',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Bilen stannar på några hundradels sekunder. Den som sitter i den gör det inte av sig själv, utan fortsätter framåt i den fart bilen hade tills något tar emot. Det är bältets hela uppgift — och den tredje kollisionen, inuti kroppen, är skälet till att även låga farter räknas.',
+      },
+      {
+        kind: 'example',
+        title: 'Vad 50 km/h motsvarar',
+        text: 'En krock i 50 km/h utan bälte motsvarar ungefär ett fall från tredje våningen. Kroppen väger då tillfälligt tiotals gånger sin egen vikt, och det finns inget sätt att ta emot med armarna.',
+      },
+      {
+        kind: 'originalVisual',
+        visualId: 'varningstriangel',
+        prompt: 'Efteråt — var ställer du triangeln?',
+      },
+      {
+        kind: 'list',
+        title: 'På en olycksplats, i den här ordningen',
+        items: [
+          'Varna — varningsblinkers, och varningstriangel så långt bak att trafiken hinner reagera',
+          'Rädda — men flytta bara den som är i omedelbar fara',
+          'Larma 112 och säg var du är innan du säger något annat',
+          'Ge första hjälpen: fria luftvägar, andning, stoppa stora blödningar',
+          'Stanna kvar tills du inte behövs — att köra från platsen är brottsligt',
+        ],
+      },
+      {
+        kind: 'warning',
+        text: 'Vilt är en egen regel. Har du kört på älg, hjort, rådjur, vildsvin, björn, varg, järv, lo, utter, örn eller mufflonfår ska det anmälas till polisen även om djuret springer vidare och även om bilen är oskadd.',
+      },
+      {
+        kind: 'list',
+        title: 'Vanliga missuppfattningar',
+        items: [
+          'Att dubbla farten ger dubbelt krockvåld — den ger fyra gånger',
+          'Att bältet behövs först i högre farter',
+          'Att varningstriangeln ska stå strax bakom bilen',
+          'Att man får lämna platsen om ingen verkar skadad',
+          'Att en viltolycka bara behöver anmälas om djuret dör',
+        ],
+      },
+      {
+        kind: 'memory',
+        text: 'Farten avgör hur mycket energi som ska tas upp. Bältet avgör vem som tar upp den.',
       },
     ],
   },

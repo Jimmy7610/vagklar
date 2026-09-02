@@ -118,6 +118,8 @@ export interface AuthoredQuestion {
   image?: QuestionImage;
   /** Id in the source-image registry, for photograph-backed questions. */
   sourceImageId?: string;
+  /** Id in the original-visual registry, for questions on a Vägklar drawing. */
+  originalVisualId?: string;
   tags?: string[];
   estimatedTimeSec?: number;
   accessibilityText?: string;
@@ -214,6 +216,7 @@ export function buildQuestion(seed: AuthoredQuestion): Question {
   if (seed.scenarioType) question.scenarioType = seed.scenarioType;
   if (seed.image) question.image = seed.image;
   if (seed.sourceImageId) question.sourceImageId = seed.sourceImageId;
+  if (seed.originalVisualId) question.originalVisualId = seed.originalVisualId;
   if (seed.tags) question.tags = seed.tags;
   if (seed.accessibilityText) question.accessibilityText = seed.accessibilityText;
   if (seed.related) question.relatedQuestionIds = seed.related;

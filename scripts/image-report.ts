@@ -18,6 +18,7 @@
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ALL_QUESTIONS } from '../src/content/questions';
+import { ORIGINAL_VISUALS } from '../src/content/original-visuals';
 import { LESSONS } from '../src/content/lessons';
 import { SOURCE_IMAGES } from '../src/content/source-images';
 import { SCENARIOS } from '../src/content/scenarios';
@@ -106,6 +107,41 @@ for (const usage of ['theory-lesson', 'question-image', 'supporting-reference'] 
 }
 lines.push('');
 
+/* Vägklars egna ritningar räknas separat och redovisas separat. De fyller
+   luckor där källan inte har någon figur alls, så att slå ihop dem med de
+   licenserade bilderna skulle dölja exakt den sak rapporten finns för att
+   visa: vilka kapitel som saknar bildstöd i källan. */
+const originals = ORIGINAL_VISUALS.filter((v) => v.status === 'approved');
+const originalsPerChapter = new Map<string, number>();
+for (const v of originals) {
+  originalsPerChapter.set(v.chapter, (originalsPerChapter.get(v.chapter) ?? 0) + 1);
+}
+
+lines.push('## Vägklars egna ritningar');
+lines.push('');
+lines.push('Ritade för Vägklar, inte hämtade ur källan. De finns där boken inte har någon');
+lines.push('figur som lär ut saken — mönsterdjup, lufttryck, krockvåld — eller har en som');
+lines.push('gör det sämre än en ritning gjord för ändamålet. Upphovsrätt © 2026 Jimmy');
+lines.push('Eliasson, och de krediteras "Illustration: Vägklar" i appen.');
+lines.push('');
+lines.push('| | Antal |');
+lines.push('| --- | ---: |');
+lines.push(`| Godkända ritningar | ${originals.length} |`);
+lines.push(`| Lektionsritningar | ${originals.filter((v) => v.usage === 'theory-lesson').length} |`);
+lines.push(
+  `| Frågevarianter (utan facit i bilden) | ${originals.filter((v) => v.usage === 'question-image').length} |`,
+);
+lines.push('');
+lines.push('| Ritning | Kapitel | Delområde | Användning |');
+lines.push('| --- | --- | --- | --- |');
+for (const v of originals) {
+  const chapter = CURRICULUM_CHAPTERS.find((c) => c.id === v.chapter);
+  lines.push(
+    `| \`${v.id}\` | ${chapter?.title ?? v.chapter} | ${getSubcategoryName(v.subcategory)} | ${v.usage} |`,
+  );
+}
+lines.push('');
+
 lines.push('## Kapitel med bildstöd');
 lines.push('');
 lines.push('Foto och ritning gör olika saker. Ett fotografi visar hur en situation faktiskt');
@@ -113,15 +149,16 @@ lines.push('ser ut genom vindrutan; en ritning visar ett mått eller ett förhå
 lines.push('går att fotografera. Ett kapitel om last behöver det senare, ett om sikt det');
 lines.push('förra, och kolumnerna hålls isär så att den skillnaden syns.');
 lines.push('');
-lines.push('| Kapitel | Sidor | Foto | Ritning |');
-lines.push('| --- | --- | ---: | ---: |');
+lines.push('| Kapitel | Sidor | Foto | Bokritning | Egen ritning |');
+lines.push('| --- | --- | ---: | ---: | ---: |');
 for (const chapter of CURRICULUM_CHAPTERS) {
   const inChapter = approved.filter((i) => i.chapter === chapter.id);
-  if (inChapter.length === 0) continue;
+  const own = originalsPerChapter.get(chapter.id) ?? 0;
+  if (inChapter.length === 0 && own === 0) continue;
   const diagrams = inChapter.filter((i) => i.kind === 'diagram').length;
   lines.push(
     `| ${chapter.title} | ${chapter.startPage}–${chapter.endPage} | ` +
-      `${inChapter.length - diagrams} | ${diagrams} |`,
+      `${inChapter.length - diagrams} | ${diagrams} | ${own} |`,
   );
 }
 lines.push('');
@@ -135,6 +172,7 @@ lines.push('| Kapitel | Sidor |');
 lines.push('| --- | --- |');
 for (const chapter of CURRICULUM_CHAPTERS) {
   if ((imagesPerChapter.get(chapter.id) ?? 0) > 0) continue;
+  if ((originalsPerChapter.get(chapter.id) ?? 0) > 0) continue;
   lines.push(`| ${chapter.title} | ${chapter.startPage}–${chapter.endPage} |`);
 }
 lines.push('');
@@ -193,5 +231,6 @@ writeFileSync(resolve(process.cwd(), 'docs/IMAGE-COVERAGE.md'), lines.join('\n')
 console.log(
   `docs/IMAGE-COVERAGE.md skriven — ${approved.length} godkända bilder, ` +
     `${usedIds.size} använda, ${unused.length} oanvända, ` +
-    `${imagesPerChapter.size}/${CURRICULUM_CHAPTERS.length} kapitel med bildstöd.`,
+    `${new Set([...imagesPerChapter.keys(), ...originalsPerChapter.keys()]).size}/${CURRICULUM_CHAPTERS.length} kapitel med bildstöd, ` +
+    `${originals.length} egna ritningar.`,
 );

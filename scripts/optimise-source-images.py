@@ -54,6 +54,12 @@ DIAGRAM_QUALITY = 92
 
 # (extracted file, topic folder, output slug)
 CURATED = [
+    # --- Omgång 5: vägmarkering i verkligheten -----------------------------
+    # Delområdet vägmarkeringar hade noll fotografier: varje markering lärdes
+    # ut som ren vektor, i idealform. På vägen är färgen sliten, sedd i
+    # perspektiv och inbäddad i en korsning. Den här är vald för att
+    # väjningslinjen är bildens motiv och inte en detalj i kanten.
+    ('p025-0.jpeg', 'vagmarkeringar', 'vajningslinje-utfart'),
     # --- Omgång 4: fordonets säkerhet --------------------------------------
     # Närbilder på komponenter och reglage, för kapitel som saknat all visuell
     # hjälp. Det som lärs ut är en etikett eller ett läge, inte en trafikmiljö.

@@ -5,6 +5,8 @@ import { MISCONCEPTIONS } from '@/content/misconceptions';
 import { SOURCES } from '@/content/sources';
 import { SUBCATEGORIES } from '@/content/taxonomy';
 import { SOURCE_IMAGES } from '@/content/source-images';
+import { ORIGINAL_VISUALS } from '@/content/original-visuals';
+import { ORIGINAL_VISUAL_GLYPHS } from '@/ui/visuals/originalVisualGlyphs';
 import { LESSONS } from '@/content/lessons';
 import { availableSourceImageAssets } from '@/ui/media/sourceImageAssets';
 import { ROAD_SIGNS } from '@/content/road-signs';
@@ -37,6 +39,8 @@ function baseInput(questions: readonly Question[]) {
     roadSigns: ROAD_SIGNS,
     availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
     roadMarkings: ROAD_MARKINGS,
+    originalVisuals: ORIGINAL_VISUALS,
+    availableVisualGlyphs: new Set(Object.keys(ORIGINAL_VISUAL_GLYPHS)),
     availableMarkingGlyphs: new Set(Object.keys(MARKING_GLYPHS)),
   };
 }

@@ -29,10 +29,10 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Begrepp med för få (1–2 frågor) | 0 |
 | Begrepp helt utan frågor | 0 |
 | Begrepp utan plats i taxonomin | 0 |
-| Frågor i banken | 437 |
-| Frågor kopplade till ett begrepp | 437 |
+| Frågor i banken | 442 |
+| Frågor kopplade till ett begrepp | 442 |
 | Frågor utan koppling | 0 |
-| Lektioner | 17 |
+| Lektioner | 19 |
 | Scenarier | 14 |
 | Luckor | 0 |
 
@@ -42,7 +42,7 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Trafikregler | 12 | 79 | 79 | 100 % | 220 |
 | Människan | 7 | 38 | 38 | 100 % | 86 |
-| Fordon | 15 | 48 | 48 | 100 % | 114 |
+| Fordon | 15 | 48 | 48 | 100 % | 121 |
 | Miljö | 3 | 5 | 5 | 100 % | 28 |
 | Vägmärken | 1 | 8 | 8 | 100 % | 66 |
 | Rättsfall | 1 | 1 | 1 | 100 % | 3 |
@@ -72,10 +72,10 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Trafikolyckor | Människan | 174–187 | 9 | 9 | 12 | Stark |
 | Indelning av fordon | Fordon | 188–195 | 4 | 4 | 11 | Stark |
 | Sträckor | Fordon | 196–203 | 3 | 3 | 12 | Stark |
-| Däck | Fordon | 204–213 | 6 | 6 | 10 | Stark |
-| Styrning | Fordon | 214–223 | 4 | 4 | 8 | Stark |
-| Bromsar | Fordon | 224–231 | 6 | 6 | 5 | Stark |
-| Krocksäkerhet | Fordon | 232–237 | 3 | 3 | 9 | Stark |
+| Däck | Fordon | 204–213 | 6 | 6 | 12 | Stark |
+| Styrning | Fordon | 214–223 | 4 | 4 | 9 | Stark |
+| Bromsar | Fordon | 224–231 | 6 | 6 | 7 | Stark |
+| Krocksäkerhet | Fordon | 232–237 | 3 | 3 | 11 | Stark |
 | Bilbarnstolar | Fordon | 238–243 | 1 | 1 | 4 | Stark |
 | Längd & bredd | Fordon | 244–251 | 1 | 1 | 4 | Stark |
 | Last | Fordon | 252–261 | 3 | 3 | 9 | Stark |
@@ -129,6 +129,8 @@ Inga.
 | Vägmarkeringar | Vägmärken, Körfält |
 | Krockskydd i bilen | Krocksäkerhet, Bilbarnstolar, Bromsar |
 | Last och släp | Last, Längd & bredd |
+| Däcken | Däck, Styrning |
+| När det går fel | Trafikolyckor |
 
 ## Visuellt stöd
 
@@ -137,16 +139,16 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 
 | Mått | Antal |
 | --- | ---: |
-| Godkända källbilder | 62 |
+| Godkända källbilder | 63 |
 | Kapitel med visuellt stöd | 23 av 39 |
 | Bildbaserade frågor | 48 |
-| Lektioner med bild | 15 av 17 |
+| Lektioner med bild | 15 av 19 |
 
 | Kapitel | Bilder |
 | --- | ---: |
 | Inledning | 3 |
 | Körfält | 2 |
-| Väjningsregler | 5 |
+| Väjningsregler | 6 |
 | Passager | 6 |
 | Cirkulationsplats | 2 |
 | Stanna & parkera | 3 |

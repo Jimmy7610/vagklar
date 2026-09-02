@@ -138,6 +138,13 @@ export interface Question {
    * and the accessible description come from the registry, never from here.
    */
   sourceImageId?: string;
+  /**
+   * Id in the original-visual registry (src/content/original-visuals.ts).
+   * A Vägklar-drawn diagram rather than licensed material — kept in its own
+   * field so the two can never be confused for one another, in the renderer or
+   * in the credit line.
+   */
+  originalVisualId?: string;
   relatedQuestionIds?: string[];
   tags?: string[];
   /** Seconds a well-prepared learner is expected to need. */
@@ -233,6 +240,15 @@ export type LessonBlock =
       /** "Vad ska du lägga märke till?" — asked before the learner looks. */
       prompt?: string;
       /** Overrides the registry caption when the lesson needs a sharper point. */
+      caption?: string;
+    }
+  | {
+      kind: 'originalVisual';
+      /** Id in the original-visual registry. */
+      visualId: string;
+      /** Asked before the learner looks at the drawing. */
+      prompt?: string;
+      /** Overrides the registry caption. */
       caption?: string;
     }
   | { kind: 'warning'; text: string };

@@ -128,6 +128,11 @@ export default defineConfig({
           // is only read when a photograph is actually rendered, which happens
           // on lazily loaded routes.
           if (id.includes('/src/content/source-images')) return undefined;
+          // Same for Vägklar's own drawings: the registry is long prose and the
+          // drawings themselves are a big block of JSX, and neither is touched
+          // until a lesson or a question actually renders one.
+          if (id.includes('/src/content/original-visuals')) return undefined;
+          if (id.includes('/src/ui/visuals/')) return undefined;
           // The question bodies are the single heaviest thing in the app and
           // nothing on the landing page needs them. Leaving them out of the
           // eager 'content' chunk lets them follow the dynamic import in

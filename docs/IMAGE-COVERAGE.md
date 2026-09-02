@@ -9,22 +9,53 @@ Ett foto som ingen lektion tolkar är dekoration oavsett hur rätt det är.
 
 | | Antal |
 | --- | ---: |
-| Godkända källbilder | 62 |
-| Använda av lektion eller fråga | 62 |
+| Godkända källbilder | 63 |
+| Använda av lektion eller fråga | 63 |
 | Oanvända | 0 |
-| Lektioner med källbild | 15 av 17 |
-| Frågor med källbild | 48 av 437 |
+| Lektioner med källbild | 15 av 19 |
+| Frågor med källbild | 48 av 442 |
 | Kapitel med minst en bild | 23 av 39 |
-| Begrepp vars delområde har foto | 85 av 179 |
+| Begrepp vars delområde har foto | 87 av 179 |
 | Scenarier (interaktiva, ej foto) | 14 |
 
 ## Per användning
 
 | Användning | Antal |
 | --- | ---: |
-| `theory-lesson` | 22 |
+| `theory-lesson` | 23 |
 | `question-image` | 40 |
 | `supporting-reference` | 0 |
+
+## Vägklars egna ritningar
+
+Ritade för Vägklar, inte hämtade ur källan. De finns där boken inte har någon
+figur som lär ut saken — mönsterdjup, lufttryck, krockvåld — eller har en som
+gör det sämre än en ritning gjord för ändamålet. Upphovsrätt © 2026 Jimmy
+Eliasson, och de krediteras "Illustration: Vägklar" i appen.
+
+| | Antal |
+| --- | ---: |
+| Godkända ritningar | 15 |
+| Lektionsritningar | 10 |
+| Frågevarianter (utan facit i bilden) | 5 |
+
+| Ritning | Kapitel | Delområde | Användning |
+| --- | --- | --- | --- |
+| `monsterdjup` | Däck | Däck och bromsar | theory-lesson |
+| `sommar-vinterdack` | Däck | Vinterkörning | theory-lesson |
+| `vattenplaning` | Styrning | Regn och vattenplaning | theory-lesson |
+| `dacktryck` | Däck | Däck och bromsar | theory-lesson |
+| `dackskador` | Däck | Däck och bromsar | theory-lesson |
+| `krockvald-hastighet` | Trafikolyckor | Riskbedömning | theory-lesson |
+| `tre-kollisioner` | Trafikolyckor | Riskbedömning | theory-lesson |
+| `varningstriangel` | Trafikolyckor | Riskbedömning | theory-lesson |
+| `nackskydd-position` | Krocksäkerhet | Krocksäkerhet | theory-lesson |
+| `baltets-vag` | Krocksäkerhet | Krocksäkerhet | theory-lesson |
+| `dackslitage-fraga` | Däck | Däck och bromsar | question-image |
+| `nackskydd-fraga` | Krocksäkerhet | Krocksäkerhet | question-image |
+| `balte-fraga` | Krocksäkerhet | Krocksäkerhet | question-image |
+| `vattenplaning-fraga` | Styrning | Regn och vattenplaning | question-image |
+| `dackskada-fraga` | Däck | Däck och bromsar | question-image |
 
 ## Kapitel med bildstöd
 
@@ -33,31 +64,33 @@ ser ut genom vindrutan; en ritning visar ett mått eller ett förhållande som i
 går att fotografera. Ett kapitel om last behöver det senare, ett om sikt det
 förra, och kolumnerna hålls isär så att den skillnaden syns.
 
-| Kapitel | Sidor | Foto | Ritning |
-| --- | --- | ---: | ---: |
-| Inledning | 6–13 | 3 | 0 |
-| Körfält | 14–21 | 2 | 0 |
-| Väjningsregler | 22–45 | 5 | 0 |
-| Passager | 46–57 | 6 | 0 |
-| Cirkulationsplats | 58–67 | 2 | 0 |
-| Stanna & parkera | 68–77 | 3 | 0 |
-| Landsväg | 78–89 | 4 | 0 |
-| Motorväg & motortrafikled | 90–97 | 3 | 0 |
-| Omkörningar | 98–107 | 3 | 0 |
-| Järnvägskorsningar | 108–115 | 2 | 0 |
-| Speciella gator | 116–123 | 1 | 0 |
-| Vinter | 124–131 | 2 | 0 |
-| Synen | 154–161 | 1 | 0 |
-| Barn | 168–173 | 1 | 0 |
-| Trafikolyckor | 174–187 | 1 | 0 |
-| Sträckor | 196–203 | 1 | 0 |
-| Bromsar | 224–231 | 1 | 0 |
-| Krocksäkerhet | 232–237 | 1 | 1 |
-| Bilbarnstolar | 238–243 | 1 | 0 |
-| Längd & bredd | 244–251 | 0 | 4 |
-| Last | 252–261 | 1 | 2 |
-| Belysning | 262–271 | 1 | 4 |
-| Vägmärken | 324–361 | 6 | 0 |
+| Kapitel | Sidor | Foto | Bokritning | Egen ritning |
+| --- | --- | ---: | ---: | ---: |
+| Inledning | 6–13 | 3 | 0 | 0 |
+| Körfält | 14–21 | 2 | 0 | 0 |
+| Väjningsregler | 22–45 | 6 | 0 | 0 |
+| Passager | 46–57 | 6 | 0 | 0 |
+| Cirkulationsplats | 58–67 | 2 | 0 | 0 |
+| Stanna & parkera | 68–77 | 3 | 0 | 0 |
+| Landsväg | 78–89 | 4 | 0 | 0 |
+| Motorväg & motortrafikled | 90–97 | 3 | 0 | 0 |
+| Omkörningar | 98–107 | 3 | 0 | 0 |
+| Järnvägskorsningar | 108–115 | 2 | 0 | 0 |
+| Speciella gator | 116–123 | 1 | 0 | 0 |
+| Vinter | 124–131 | 2 | 0 | 0 |
+| Synen | 154–161 | 1 | 0 | 0 |
+| Barn | 168–173 | 1 | 0 | 0 |
+| Trafikolyckor | 174–187 | 1 | 0 | 3 |
+| Sträckor | 196–203 | 1 | 0 | 0 |
+| Däck | 204–213 | 0 | 0 | 6 |
+| Styrning | 214–223 | 0 | 0 | 2 |
+| Bromsar | 224–231 | 1 | 0 | 0 |
+| Krocksäkerhet | 232–237 | 1 | 1 | 4 |
+| Bilbarnstolar | 238–243 | 1 | 0 | 0 |
+| Längd & bredd | 244–251 | 0 | 4 | 0 |
+| Last | 252–261 | 1 | 2 | 0 |
+| Belysning | 262–271 | 1 | 4 | 0 |
+| Vägmärken | 324–361 | 6 | 0 | 0 |
 
 ## Kapitel utan bildstöd
 
@@ -71,8 +104,6 @@ av ett fotografi; ett om sikt, väglag eller samspel blir det nästan alltid.
 | Trötthet | 148–153 |
 | Nedsatt förmåga | 162–167 |
 | Indelning av fordon | 188–195 |
-| Däck | 204–213 |
-| Styrning | 214–223 |
 | Säkerhetskontroller | 272–277 |
 | Besiktning | 278–283 |
 | Service | 284–289 |
@@ -87,6 +118,7 @@ av ett fotografi; ett om sikt, väglag eller samspel blir det nästan alltid.
 
 | Bild | Slag | Delområde | Sida | Lektioner | Frågor |
 | --- | --- | --- | ---: | --- | --- |
+| `vajningslinje-utfart` | foto | Vägmarkeringar | 25 | les-vagmarkeringar | — |
 | `deformationszoner` | ritning | Krocksäkerhet | 232 | les-krockskydd | — |
 | `lastbredd-tillaten` | ritning | Lastning och lastsäkring | 244 | les-last-och-slap | — |
 | `lastbredd-otillaten` | ritning | Lastning och lastsäkring | 245 | les-last-och-slap | bl4-001 |
@@ -159,4 +191,4 @@ Inga. Varje godkänd bild används av minst en lektion eller fråga.
 Varje godkänd bild ska finnas i bredderna 640 och 960 px.
 Saknas någon avbryter innehållsvalideringen.
 
-Ofullständiga: bromsskiva, spannband
+Ofullständiga: vajningslinje-utfart, bromsskiva, spannband

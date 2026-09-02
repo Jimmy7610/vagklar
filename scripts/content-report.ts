@@ -23,6 +23,8 @@ import {
 } from '../src/ui/media/sourceImageAssets';
 import { ROAD_SIGNS } from '../src/content/road-signs';
 import { SIGN_GLYPHS } from '../src/ui/illustrations/signGlyphs';
+import { ORIGINAL_VISUALS } from '../src/content/original-visuals';
+import { ORIGINAL_VISUAL_GLYPHS } from '../src/ui/visuals/originalVisualGlyphs';
 import { ROAD_MARKINGS } from '../src/content/road-markings';
 import { MARKING_GLYPHS } from '../src/ui/illustrations/markingGlyphs';
 import { findDuplicates, validateContent } from '../src/domain/content/validation';
@@ -42,6 +44,8 @@ const report = validateContent({
   roadSigns: ROAD_SIGNS,
   availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
   roadMarkings: ROAD_MARKINGS,
+  originalVisuals: ORIGINAL_VISUALS,
+  availableVisualGlyphs: new Set(Object.keys(ORIGINAL_VISUAL_GLYPHS)),
   availableMarkingGlyphs: new Set(Object.keys(MARKING_GLYPHS)),
 });
 

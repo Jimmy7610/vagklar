@@ -8,18 +8,18 @@ sidan verkligen handlar om det frågan prövar.
 
 | | Antal |
 | --- | ---: |
-| Frågor med sidhänvisning | 288 |
-| Sidhänvisningar granskade | 299 |
-| Bekräftat stöd | 251 |
+| Frågor med sidhänvisning | 293 |
+| Sidhänvisningar granskade | 304 |
+| Bekräftat stöd | 255 |
 | Fel | 0 |
-| Varningar | 46 |
+| Varningar | 47 |
 | Granskade undantag | 2 |
 
 ## Fel — 0 st
 
 Inga.
 
-## Varningar — 46 st
+## Varningar — 47 st
 
 | Fråga | Sida | Kod | Vad |
 | --- | ---: | --- | --- |
@@ -61,6 +61,7 @@ Inga.
 | `bl2-015` | 169 | page-outside-chapter | Sidan ligger utanför kapitlen för "skymd-sikt" (6–13). |
 | `bl2-018` | 80 | page-weak-support | Svag överlappning (vägens) och inget ord ur "Kantlinjens betydelse". |
 | `bl3-006` | 155 | page-outside-chapter | Sidan ligger utanför kapitlen för "skymd-sikt" (6–13). |
+| `egr-002` | 207 | page-weak-support | Svag överlappning (däcket, håller) och inget ord ur "Blåsa på däcksidan". |
 | `grd-004` | 232 | page-outside-chapter | Sidan ligger utanför kapitlen för "grundregler" (6–13). |
 | `grd-008` | 39 | page-outside-chapter | Sidan ligger utanför kapitlen för "vagens-anvandning" (6–13). |
 | `grd-013` | 334 | page-is-plate | Bildplansch som inte namnger "Parkeringsmärket". |
@@ -70,7 +71,7 @@ Inga.
 | `mns-040` | 103 | page-outside-chapter | Sidan ligger utanför kapitlen för "reaktion-och-sinnen" (78–89, 140–147, 154–161, 196–203). |
 | `mrk-013` | 8 | page-outside-chapter | Sidan ligger utanför kapitlen för "vagmarkeringar" (324–361). |
 
-## Bildernas sidhänvisningar — 62 st
+## Bildernas sidhänvisningar — 63 st
 
 Varje godkänd källbild anger sidan den är hämtad från. Kontrollen är enklare än
 för frågorna — en figursida bär etiketter, inte meningar — men den fångar det som
@@ -84,7 +85,7 @@ ur motorvägskapitlet. Vad varningen fångar är sidnummer som hamnat helt fel.
 
 | | Antal |
 | --- | ---: |
-| Bekräftade | 55 |
+| Bekräftade | 56 |
 | Fel | 0 |
 | Varningar | 7 |
 

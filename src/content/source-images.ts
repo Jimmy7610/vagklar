@@ -106,6 +106,25 @@ function img(entry: Omit<SourceImage, 'sourceId' | 'rightsHolder' | 'usedWithPer
 }
 
 export const SOURCE_IMAGES: SourceImage[] = [
+  img({
+    id: 'vajningslinje-utfart',
+    sourcePage: 25,
+    title: 'Väjningslinje vid en utfart',
+    topic: 'vagmarkeringar',
+    subcategory: 'vagmarkeringar',
+    chapter: 'vajningsregler',
+    altText:
+      'Vy från förarplatsen mot en utfart som ansluter till en större väg. Tvärs över utfartens mynning löper en rad vita block, och längs vägen syns en streckad körfältslinje och en heldragen kantlinje.',
+    longDescription:
+      'Vägen fortsätter rakt fram och en mindre utfart ansluter från höger. Tvärs över utfartens mynning ligger en väjningslinje som en rad korta vita block med mellanrum emellan — samma markering som ritas som en rad trianglar i märkeskatalogen, men här sedd i perspektiv och nedsliten av trafik. Längs den större vägen löper en streckad linje som skiljer körfälten åt, och ytterst en heldragen kantlinje som visar var körbanan slutar. Färgen är grå snarare än vit och delvis bortnött, och delar av linjen döljs av vägens krön.',
+    caption:
+      'Samma väjningslinje som i katalogen, fast verklig: sliten, sedd snett och delvis dold av krönet.',
+    usage: 'theory-lesson',
+    asset: 'vagmarkeringar/vajningslinje-utfart',
+    width: 618,
+    height: 347,
+    status: 'approved',
+  }),
   /* ---- Fordonets säkerhet: ritade figurer (omgång 4) ------------------- */
   img({
     id: 'deformationszoner',

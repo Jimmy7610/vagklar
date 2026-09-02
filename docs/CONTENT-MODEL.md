@@ -268,7 +268,41 @@ En fråga kopplas med `sourceImageId`, en lektion med blocket
 `{ kind: 'sourceImage', imageId, prompt?, caption? }`. Bara `approved` renderas.
 
 Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för extrahering, urval och optimering, och
-[SOURCE-DIAGRAMS.md](SOURCE-DIAGRAMS.md) för ritningarna.
+[SOURCE-DIAGRAMS.md](SOURCE-DIAGRAMS.md) för bokens figurer.
+
+### Egna ritningar
+
+Vägklars egna undervisningsritningar ligger i ett **eget register**,
+`src/content/original-visuals.ts`, inte som en flagga i källbildsregistret. De två
+bär olika löften — en licensierad bild måste bevisa rättighetshavare, sida och
+tillstånd; en egen ritning måste bevisa att den lär ut något — och att blanda dem
+skulle göra båda otydliga.
+
+```ts
+interface OriginalVisual {
+  id: string;
+  kind: 'comparison' | 'sequence' | 'diagram';
+  subcategory: string;     // Vägklars taxonomi
+  chapter: string;         // kursplanens kapitel
+  altText: string;
+  longDescription: string; // så uppgiften går att lösa utan att se ritningen
+  labelText: string[];     // text tryckt i figuren, ordagrant
+  caption: string;
+  rendererId: string;      // nyckel in i ORIGINAL_VISUAL_GLYPHS
+  width: number; height: number;   // ritningens viewBox
+  usage: 'theory-lesson' | 'question-image' | 'supporting-reference';
+  status: 'approved' | 'draft' | 'retired';
+  createdBy: string;       // alltid 'Vägklar'
+  copyright: string;       // © 2026 Jimmy Eliasson
+}
+```
+
+En fråga kopplas med `originalVisualId`, en lektion med blocket
+`{ kind: 'originalVisual', visualId, prompt?, caption? }`. Validatorn avvisar samma
+id i båda registren, en ritning som tillskrivs källans rättighetshavare, och en
+fråga som pekar med fel fält — med ett meddelande som säger vilket fält som avsågs.
+
+Se [ORIGINAL-VISUALS.md](ORIGINAL-VISUALS.md).
 
 ## Validering
 
