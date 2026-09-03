@@ -13,9 +13,9 @@ Ett foto som ingen lektion tolkar är dekoration oavsett hur rätt det är.
 | Använda av lektion eller fråga | 66 |
 | Oanvända | 0 |
 | Lektioner med källbild | 15 av 19 |
-| Frågor med källbild | 48 av 454 |
+| Frågor med källbild | 48 av 458 |
 | Kapitel med minst en bild | 23 av 39 |
-| Begrepp vars delområde har foto | 87 av 179 |
+| Begrepp vars delområde har foto | 86 av 179 |
 | Scenarier (interaktiva, ej foto) | 14 |
 
 ## Per användning
@@ -36,8 +36,8 @@ boken trycker en bild per kod. Bokens C31 visar 30 — den kan inte illustrera
 
 | | Antal |
 | --- | ---: |
-| Märken i registret | 99 |
-| Med licensierad bokbild | 89 |
+| Märken i registret | 115 |
+| Med licensierad bokbild | 105 |
 | Kvar på Vägklars ritning | 10 |
 
 | Märke | Kod | Varför ritning |
@@ -179,27 +179,27 @@ av ett fotografi; ett om sikt, väglag eller samspel blir det nästan alltid.
 | `stopplikt-buss` | foto | Stopplikt | 24 | — | bld-003 |
 | `oskyltad-korsning` | foto | Högerregeln | 31 | les-hogerregeln | bld-004 |
 | `lastbil-korsar` | foto | Väjningsplikt | 34 | — | bld-005 |
-| `stop-flervagsstopp` | foto | Stopplikt | 21 | — | bld-002 |
+| `stop-flervagsstopp` | foto | Stopplikt | 21 | les-hogerregeln | bld-002 |
 | `obevakat-overgangsstalle` | foto | Gående och cyklister | 47 | — | bld-006 |
 | `overgangsstalle-cykelpassage` | foto | Cykelpassage och cykelöverfart | 52 | — | bld-009 |
 | `cykelbana-korsning` | foto | Cykelpassage och cykelöverfart | 54 | — | bld-008 |
 | `cykeloverfart` | foto | Cykelpassage och cykelöverfart | 55 | les-passager | bld-007 |
 | `gangbana-utfart` | foto | Gående och cyklister | 49 | les-utfartsregeln | — |
-| `cirkulation-med-trafik` | foto | Cirkulationsplats | 65 | — | bld-010 |
+| `cirkulation-med-trafik` | foto | Cirkulationsplats | 65 | les-cirkulation | bld-010 |
 | `rund-korsning-utan-skylt` | foto | Cirkulationsplats | 63 | les-cirkulation | bld-011 |
 | `p-skylt-avgift-boende` | foto | Parkeringsregler | 67 | les-parkering, les-vagmarken, les-vagmarken | bld-012 |
 | `p-skylt-tidsbegransning` | foto | Parkeringsregler | 75 | — | bld-013 |
-| `forbud-att-stanna` | foto | Förbud att stanna | 70 | les-parkering | — |
+| `forbud-att-parkera-overgangsstalle` | foto | Förbud att parkera | 70 | les-parkering, les-parkering | — |
 | `traktor-vintervag` | foto | Omkörningsregler | 100 | les-omkorning | bld-016, bl2-012 |
-| `plankorsning-bommar` | foto | Märken och signaler | 107 | les-plankorsning | bld-014, bl2-004, bl2-005 |
+| `plankorsning-bommar` | foto | Märken och signaler | 107 | les-plankorsning, les-plankorsning | bld-014, bl2-004, bl2-005 |
 | `plankorsning-ljussignal` | foto | Märken och signaler | 108 | les-plankorsning | — |
 | `gangfartsomrade` | foto | Anvisningsmärken | 119 | — | bld-015 |
 | `vintervag-hjulspar` | foto | Vinterkörning | 124 | les-halka | — |
 | `motorvag-portal-vagvisare` | foto | Anvisningsmärken | 89 | — | bl2-003 |
 | `korfaltsvagvisare-korsning` | foto | Anvisningsmärken | 84 | — | bl2-008 |
-| `hastighet-100-ledsnummer` | foto | Hastighetsgränser | 95 | — | bl2-001 |
+| `hastighet-100-ledsnummer` | foto | Hastighetsgränser | 95 | les-hastighet | bl2-001 |
 | `avfart-hastighet-50` | foto | Påfart och avfart | 92 | — | bl2-002 |
-| `gagata-skyltad` | foto | Anvisningsmärken | 119 | — | bl2-006 |
+| `gagata-skyltad` | foto | Anvisningsmärken | 119 | les-vagmarken | bl2-006 |
 | `pabjuden-korriktning-parkering` | foto | Påbudsmärken | 131 | — | bl2-007 |
 | `motorvag-bro-korfalt` | foto | Regler på motorväg | 90 | — | bl2-016 |
 | `motorvag-stillastaende-fordon` | foto | Regler på motorväg | 92 | — | bl2-009 |

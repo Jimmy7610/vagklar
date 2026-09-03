@@ -100,6 +100,15 @@ hitta det som saknas, inte för att se färdig ut.
       bättre bild redan skötte är satta till `retired` med skäl och borttagna
       ur bygget.
 
+- [x] **Alla 115 märken har visualTraits**, avlästa ur märkets egen bild, och ett
+      test jämför beskrivningen mot dem. Grinden testar dessutom sin egen
+      ordmatchning — tre buggar i den fick rättas innan den var värd att lita på
+- [x] **10 märken har ett fotografi av sig själva i verklig trafik.** Varje par
+      är kontrollerat genom att förstora märket i fotot, aldrig genom att läsa
+      kapitelrubriken
+- [x] Fotosvep av 263 kandidater efter synliga märken. Det hittade ett verkligt
+      fel: fotot som lärde ut stannandeförbud visar ett parkeringsförbud
+
 ## Vägmärken och vägmarkeringar
 
 - [x] Alla **58 märken** granskade förstorade i 220–420 px

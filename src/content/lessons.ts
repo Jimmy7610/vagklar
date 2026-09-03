@@ -117,6 +117,13 @@ export const LESSONS: Lesson[] = [
         text: 'Räkna aldrig med att den andra föraren kan regeln. Kör in i korsningen med en fart som gör att du hinner stanna.',
       },
       { kind: 'memory', text: 'Ingen skylt? Titta höger.' },
+      {
+        kind: 'signInContext',
+        signId: 'stopp',
+        imageId: 'stop-flervagsstopp',
+        notice:
+          'Under stoppmärket sitter en röd tavla med texten Flervägs-stopp. Den säger att alla tillfarter har stopplikt — så den som står still på tvären väntar inte på dig, utan har stannat av samma skäl.',
+      },
     ],
     curriculumChapterIds: ['vajningsregler', 'cirkulationsplats'],
     checkQuestionIds: ['kor-001', 'kor-009', 'kor-014'],
@@ -205,6 +212,13 @@ export const LESSONS: Lesson[] = [
         text: 'Reaktionssträckan växer linjärt med hastigheten, men bromssträckan växer med hastigheten i kvadrat. Dubbel fart ger dubbel reaktionssträcka och fyrdubbel bromssträcka. Därför blir "bara lite för fort" ingen liten avvikelse.',
       },
       { kind: 'memory', text: 'Skylten är taket, väglaget är verkligheten.' },
+      {
+        kind: 'signInContext',
+        signId: 'hastighet-110',
+        imageId: 'hastighet-100-ledsnummer',
+        notice:
+          'Märket på bilden visar 100, inte 110 — siffran är det enda som skiljer dem åt, och den är det du ska läsa. Under den sitter dessutom vägnummerskyltar, som inte har med hastigheten att göra.',
+      },
     ],
     curriculumChapterIds: ['inledning', 'speciella-gator', 'landsvag'],
     checkQuestionIds: ['has-001', 'has-002', 'has-003', 'has-006'],
@@ -276,10 +290,10 @@ export const LESSONS: Lesson[] = [
       },
       {
         kind: 'sourceImage',
-        imageId: 'forbud-att-stanna',
-        prompt: 'Från var gäller förbudet?',
+        imageId: 'forbud-att-parkera-overgangsstalle',
+        prompt: 'Ett streck eller ett kryss — vilket är det?',
         caption:
-          'Märket gäller framåt i din färdriktning, från stolpen och tills något upphäver det. Bakom stolpen gäller det inte — och tio meter före övergångsstället gäller förbudet ändå, med eller utan märke.',
+          'Ett snedstreck betyder parkeringsförbud, ett kryss betyder förbud att stanna. Här är det ett streck, så du får stanna men inte parkera. Märket gäller framåt i färdriktningen från stolpen — och de tio metrarna före övergångsstället gäller ändå, med eller utan märke.',
       },
       {
         kind: 'sourceImage',
@@ -300,6 +314,13 @@ export const LESSONS: Lesson[] = [
       {
         kind: 'memory',
         text: 'Ett rött streck på skylten: du får stanna. Två streck som bildar ett kryss: du får ingetdera.',
+      },
+      {
+        kind: 'signInContext',
+        signId: 'forbud-parkera',
+        imageId: 'forbud-att-parkera-overgangsstalle',
+        notice:
+          'Ett snedstreck, inte ett kryss. Det är parkering som är förbjuden här — att stanna för av- och påstigning är alltså tillåtet, så länge du inte gör det på övergångsstället.',
       },
     ],
     curriculumChapterIds: ['stanna-parkera'],
@@ -594,6 +615,13 @@ export const LESSONS: Lesson[] = [
         kind: 'memory',
         text: 'Sikten bestämmer farten. Lampan bestämmer när. Kön bestämmer om.',
       },
+      {
+        kind: 'signInContext',
+        signId: 'kryssmarke',
+        imageId: 'plankorsning-bommar',
+        notice:
+          'Kryssmärket sitter vid själva korsningen, inte i förväg. Ser du det är du framme — och under det hänger ljussignalerna som avgör om du får köra.',
+      },
     ],
     curriculumChapterIds: ['jarnvagskorsningar'],
     checkQuestionIds: ['jvg-001', 'jvg-005', 'jvg-007', 'jvg-013'],
@@ -727,6 +755,13 @@ export const LESSONS: Lesson[] = [
         text: 'Är cirkulationsplatsen tom när du kommer fram får du köra in direkt. Men en rund korsning utan märket för cirkulationsplats är ingen cirkulationsplats — där gäller högerregeln.',
       },
       { kind: 'memory', text: 'Alla som redan snurrar går före. Ut ur cirkulationen: höger blinkers.' },
+      {
+        kind: 'signInContext',
+        signId: 'vajningsplikt',
+        imageId: 'cirkulation-med-trafik',
+        notice:
+          'Två märken på samma stolpe: väjningsplikten överst och cirkulationsmärket under. Det är den ordningen som gäller — du väjer först, sedan gäller cirkulationens regler.',
+      },
     ],
     curriculumChapterIds: ['cirkulationsplats'],
     checkQuestionIds: ['cir-001', 'cir-003', 'cir-008', 'cir-012'],
@@ -983,12 +1018,53 @@ export const LESSONS: Lesson[] = [
         text: 'Märket säger vad. Tavlan säger när, var eller för vem. Läs uppifrån och ned, och läs klart innan du bestämmer dig.',
       },
       {
+        kind: 'paragraph',
+        text: 'Ett av de vanligaste sätten att begränsa "för vem" är att rita fordonet. En symboltavla bär en fordonssymbol, och regeln ovanför gäller då bara det fordonsslaget.',
+      },
+      {
+        kind: 'signGrid',
+        title: 'Fordonssymboler du möter på en tilläggstavla',
+        signIds: [
+          'symbol-personbil',
+          'symbol-tung-lastbil',
+          'symbol-buss',
+          'symbol-motorcykel',
+          'symbol-slapkarra',
+          'symbol-personbil-klass-2',
+        ],
+      },
+      {
+        kind: 'example',
+        title: 'Samma märke, olika innebörd',
+        text: 'Ett parkeringsförbud med lastbilssymbol under gäller bara tung lastbil — du får parkera personbilen. Med släpkärresymbol gäller det ekipaget, inte bilen ensam. Symbolen är alltså inte dekoration utan hela avgränsningen.',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Vägvisningen är en egen familj märken. Den förbjuder och påbjuder ingenting — den talar bara om vart vägarna leder — men den avgör vilket körfält du behöver ligga i, och den ska läsas långt innan korsningen.',
+      },
+      {
+        kind: 'signGrid',
+        title: 'Vägvisning',
+        signIds: ['vagvisare', 'tabellvagvisare', 'avfartsvisare', 'korfaltsvagvisare'],
+      },
+      {
+        kind: 'warning',
+        text: 'På en tabellvägvisare gäller pilen på *din* rad, inte den översta. Att följa fel rad är ett av de vanligaste sätten att hamna i fel körfält före en trafikplats.',
+      },
+      {
         kind: 'signCatalogue',
         title: 'Slå upp vilket märke som helst',
       },
       {
         kind: 'memory',
         text: 'Gul triangel varnar. Röd ring förbjuder. Blå rund påbjuder. Blå fyrkant upplyser.',
+      },
+      {
+        kind: 'signInContext',
+        signId: 'gagata',
+        imageId: 'gagata-skyltad',
+        notice:
+          'Märket sitter i gatans mynning och är lätt att missa bland butiksskyltarna. Det är ändå det som ändrar reglerna: gågata betyder gångfart, väjningsplikt mot gående och parkeringsförbud.',
       },
     ],
     curriculumChapterIds: ['vagmarken'],

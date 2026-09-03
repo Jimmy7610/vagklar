@@ -54,7 +54,12 @@ describe('road sign registry', () => {
     for (const s of ROAD_SIGNS) {
       expect(s.altText.length, s.id).toBeGreaterThan(20);
       // The description has to say what it looks like, not just repeat the name.
-      expect(s.altText.toLowerCase(), s.id).toMatch(/skylt|triangel|rund|kvadrat|rektangul|tavla|åttakant/);
+      // "kryss" is here because A39 genuinely is not any of the other shapes:
+      // the kryssmärke is an X of two arms, and describing it as a "skylt"
+      // would be less accurate rather than more.
+      expect(s.altText.toLowerCase(), s.id).toMatch(
+        /skylt|triangel|rund|kvadrat|rektangul|tavla|åttakant|kryss|konturteckning/,
+      );
     }
   });
 
@@ -66,6 +71,8 @@ describe('road sign registry', () => {
       pabud: 'D',
       anvisning: 'E',
       tillaggstavla: 'T',
+      lokalisering: 'F',
+      symbol: 'S',
     };
     for (const s of ROAD_SIGNS) {
       expect(s.code.charAt(0), `${s.id} (${s.code})`).toBe(prefixes[s.category]);

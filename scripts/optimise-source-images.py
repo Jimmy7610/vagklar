@@ -112,7 +112,7 @@ CURATED = [
     # --- Parkering ---------------------------------------------------------
     ('p067-0.jpeg', 'parkering', 'p-skylt-avgift-boende'),
     ('p075-0.jpeg', 'parkering', 'p-skylt-tidsbegransning'),
-    ('p070-0.jpeg', 'parkering', 'forbud-att-stanna'),
+    ('p070-0.jpeg', 'parkering', 'forbud-att-parkera-overgangsstalle'),
     # --- Omkörning ---------------------------------------------------------
     ('p100-0.jpeg', 'omkorning', 'traktor-vintervag'),
     # --- Järnvägskorsningar ------------------------------------------------

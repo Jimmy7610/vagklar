@@ -23,7 +23,14 @@ export type SignCategory =
   | 'forbud'
   | 'pabud'
   | 'anvisning'
-  | 'tillaggstavla';
+  | 'tillaggstavla'
+  /** F-serien: vägvisning och lokalisering. */
+  | 'lokalisering'
+  /**
+   * S-serien: fordonssymboler. De sitter inte på egen stolpe utan är det som
+   * ritas på en symboltavla för att peka ut vilket fordonsslag en regel gäller.
+   */
+  | 'symbol';
 
 /**
  * What a supplementary plate does to the sign above it.
@@ -139,6 +146,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   /* ================= Varningsmärken (A) ================= */
   sign({
     id: 'varning-kurva',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A1',
     name: 'Varning för farlig kurva',
     category: 'varning',
@@ -152,6 +160,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-flera-kurvor',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A2',
     name: 'Varning för flera farliga kurvor',
     category: 'varning',
@@ -165,6 +174,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-slirig-vag',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A10',
     name: 'Varning för slirig väg',
     category: 'varning',
@@ -178,6 +188,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-overgangsstalle',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A13',
     name: 'Varning för övergångsställe',
     category: 'varning',
@@ -191,6 +202,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-barn',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A15',
     name: 'Varning för barn',
     category: 'varning',
@@ -204,6 +216,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-cyklande',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A16',
     name: 'Varning för cyklande och mopedförare',
     category: 'varning',
@@ -217,6 +230,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-vagarbete',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A20',
     name: 'Varning för vägarbete',
     category: 'varning',
@@ -230,6 +244,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-vagkorsning',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A28',
     name: 'Varning för vägkorsning',
     category: 'varning',
@@ -243,6 +258,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-cirkulationsplats',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A30',
     name: 'Varning för cirkulationsplats',
     category: 'varning',
@@ -256,6 +272,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-motande-trafik',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A25',
     name: 'Varning för mötande trafik',
     category: 'varning',
@@ -270,6 +287,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-jarnvag-bommar',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A35',
     name: 'Varning för järnvägskorsning med bommar',
     category: 'varning',
@@ -283,6 +301,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-jarnvag-utan-bommar',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A36',
     name: 'Varning för järnvägskorsning utan bommar',
     category: 'varning',
@@ -297,6 +316,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'varning-djur',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'A19',
     name: 'Varning för djur',
     category: 'varning',
@@ -312,6 +332,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   /* ================= Väjningspliktsmärken (B) ================= */
   sign({
     id: 'vajningsplikt',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'B1',
     name: 'Väjningsplikt',
     category: 'vajningsplikt',
@@ -325,6 +346,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'stopp',
+    visualTraits: { background: 'red' },
     code: 'B2',
     name: 'Stopplikt',
     category: 'vajningsplikt',
@@ -338,6 +360,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'huvudled',
+    visualTraits: { background: 'yellow' },
     code: 'B4',
     name: 'Huvudled',
     category: 'vajningsplikt',
@@ -351,6 +374,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'huvudled-upphor',
+    visualTraits: { background: 'yellow', border: 'white' },
     code: 'B5',
     name: 'Huvudled upphör',
     category: 'vajningsplikt',
@@ -364,6 +388,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'overgangsstalle-b3',
+    visualTraits: { background: 'blue' },
     code: 'B3',
     name: 'Övergångsställe',
     category: 'vajningsplikt',
@@ -377,6 +402,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'cykeloverfart',
+    visualTraits: { background: 'blue' },
     code: 'B8',
     name: 'Cykelöverfart',
     category: 'vajningsplikt',
@@ -390,6 +416,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'vajningsplikt-motande',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'B6',
     name: 'Väjningsplikt mot mötande trafik',
     category: 'vajningsplikt',
@@ -404,6 +431,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'motande-har-vajningsplikt',
+    visualTraits: { background: 'blue' },
     code: 'B7',
     name: 'Mötande trafik har väjningsplikt',
     category: 'vajningsplikt',
@@ -420,6 +448,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   /* ================= Förbudsmärken (C) ================= */
   sign({
     id: 'forbud-infart',
+    visualTraits: { background: 'red' },
     code: 'C1',
     name: 'Förbud mot infart med fordon',
     category: 'forbud',
@@ -433,6 +462,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'forbud-trafik-fordon',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'C2',
     name: 'Förbud mot trafik med fordon',
     category: 'forbud',
@@ -446,6 +476,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'forbud-omkorning',
+    visualTraits: { background: 'yellow', border: 'red' },
     code: 'C27',
     name: 'Förbud mot omkörning',
     category: 'forbud',
@@ -459,6 +490,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'forbud-omkorning-upphor',
+    visualTraits: { background: 'yellow' },
     code: 'C28',
     name: 'Slut på förbud mot omkörning',
     category: 'forbud',
@@ -473,6 +505,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-30',
+    visualTraits: { background: 'yellow', border: 'red', numericValue: 30 },
     variant: { key: 'speed-30', numericValue: 30 },
     code: 'C31',
     name: 'Hastighetsbegränsning 30',
@@ -487,6 +520,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-50',
+    visualTraits: { background: 'yellow', border: 'red', numericValue: 50 },
     variant: { key: 'speed-50', numericValue: 50 },
     code: 'C31',
     name: 'Hastighetsbegränsning 50',
@@ -501,6 +535,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-70',
+    visualTraits: { background: 'yellow', border: 'red', numericValue: 70 },
     variant: { key: 'speed-70', numericValue: 70 },
     code: 'C31',
     name: 'Hastighetsbegränsning 70',
@@ -515,6 +550,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-90',
+    visualTraits: { background: 'yellow', border: 'red', numericValue: 90 },
     variant: { key: 'speed-90', numericValue: 90 },
     code: 'C31',
     name: 'Hastighetsbegränsning 90',
@@ -529,6 +565,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-110',
+    visualTraits: { background: 'yellow', border: 'red', numericValue: 110 },
     variant: { key: 'speed-110', numericValue: 110 },
     code: 'C31',
     name: 'Hastighetsbegränsning 110',
@@ -543,6 +580,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'forbud-parkera',
+    visualTraits: { background: 'blue', border: 'red' },
     code: 'C35',
     name: 'Förbud mot att parkera fordon',
     category: 'forbud',
@@ -556,6 +594,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'forbud-stanna',
+    visualTraits: { background: 'blue', border: 'red' },
     code: 'C39',
     name: 'Förbud mot att stanna och parkera fordon',
     category: 'forbud',
@@ -571,6 +610,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   /* ================= Påbudsmärken (D) ================= */
   sign({
     id: 'pabud-rakt',
+    visualTraits: { background: 'blue', arrowDirection: 'up' },
     variant: { key: 'direction-up', arrowDirection: 'up' },
     code: 'D1',
     name: 'Påbjuden körriktning, rakt fram',
@@ -585,6 +625,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'pabud-hoger',
+    visualTraits: { background: 'blue', arrowDirection: 'right' },
     variant: { key: 'direction-right', arrowDirection: 'right' },
     code: 'D1',
     name: 'Påbjuden körriktning, höger',
@@ -599,6 +640,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'cirkulationsplats',
+    visualTraits: { background: 'blue' },
     code: 'D3',
     name: 'Cirkulationsplats',
     category: 'pabud',
@@ -612,6 +654,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'pabud-cykelbana',
+    visualTraits: { background: 'blue' },
     code: 'D4',
     name: 'Påbjuden cykelbana',
     category: 'pabud',
@@ -625,6 +668,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'pabud-gangbana',
+    visualTraits: { background: 'blue' },
     code: 'D5',
     name: 'Påbjuden gångbana',
     category: 'pabud',
@@ -638,6 +682,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'pabud-gang-cykelbana',
+    visualTraits: { background: 'blue' },
     code: 'D7',
     name: 'Påbjudna gång- och cykelbanor',
     category: 'pabud',
@@ -651,6 +696,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'pabud-kollektivkorfalt',
+    visualTraits: { background: 'blue' },
     code: 'D10',
     name: 'Påbjudet körfält för fordon i linjetrafik',
     category: 'pabud',
@@ -666,6 +712,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   /* ================= Anvisningsmärken (E) ================= */
   sign({
     id: 'motorvag',
+    visualTraits: { background: 'green' },
     code: 'E1',
     name: 'Motorväg',
     category: 'anvisning',
@@ -680,6 +727,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'motorvag-upphor',
+    visualTraits: { background: 'green' },
     code: 'E2',
     name: 'Motorväg upphör',
     category: 'anvisning',
@@ -694,6 +742,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'motortrafikled',
+    visualTraits: { background: 'green' },
     code: 'E3',
     name: 'Motortrafikled',
     category: 'anvisning',
@@ -707,6 +756,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tattbebyggt-omrade',
+    visualTraits: { background: 'white', border: 'black' },
     code: 'E5',
     name: 'Tättbebyggt område',
     category: 'anvisning',
@@ -721,6 +771,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'gagata',
+    visualTraits: { background: 'blue' },
     code: 'E7',
     name: 'Gågata',
     category: 'anvisning',
@@ -734,6 +785,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'gangfartsomrade',
+    visualTraits: { background: 'blue' },
     code: 'E9',
     name: 'Gångfartsområde',
     category: 'anvisning',
@@ -747,6 +799,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'rekommenderad-hastighet-30',
+    visualTraits: { background: 'blue' },
     code: 'E11',
     name: 'Rekommenderad lägre hastighet',
     category: 'anvisning',
@@ -760,6 +813,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'enkelriktad',
+    visualTraits: { background: 'blue' },
     code: 'E16',
     name: 'Enkelriktad trafik',
     category: 'anvisning',
@@ -773,6 +827,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'parkering',
+    visualTraits: { background: 'blue' },
     code: 'E19',
     name: 'Parkering',
     category: 'anvisning',
@@ -788,6 +843,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   /* ================= Tilläggstavlor (T) ================= */
   sign({
     id: 'tavla-tid',
+    visualTraits: { background: 'white', border: 'black', text: '8–18' },
     variant: { key: 'time-weekday' },
     plate: {
       kind: 'time',
@@ -806,6 +862,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-tid-lordag',
+    visualTraits: { background: 'white', border: 'black', text: '(8–14)' },
     variant: { key: 'time-saturday' },
     plate: {
       kind: 'time',
@@ -824,6 +881,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-tid-helgdag',
+    visualTraits: { background: 'white', border: 'black', text: '9–13' },
     variant: { key: 'time-sunday' },
     plate: {
       kind: 'time',
@@ -842,6 +900,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-avstand',
+    visualTraits: { background: 'white' },
     plate: {
       kind: 'distance',
       printedText: '100 m',
@@ -860,6 +919,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-utstrackning',
+    visualTraits: { background: 'white' },
     plate: {
       kind: 'extent',
       combinedPhrase: 'märket gäller på hela den utmärkta sträckan',
@@ -877,6 +937,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-riktning',
+    visualTraits: { background: 'white' },
     plate: {
       kind: 'direction',
       combinedPhrase: 'märket gäller i pilens riktning',
@@ -894,6 +955,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-boende',
+    visualTraits: { background: 'blue' },
     plate: {
       kind: 'condition',
       printedText: 'Boende',
@@ -912,6 +974,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-avgift',
+    visualTraits: { background: 'blue' },
     plate: {
       kind: 'condition',
       printedText: 'Avgift',
@@ -930,6 +993,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-flervagsstopp',
+    visualTraits: { background: 'red' },
     plate: {
       kind: 'information',
       printedText: 'Flervägs-stopp',
@@ -948,6 +1012,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-nedsatt-syn',
+    visualTraits: { background: 'yellow', border: 'red' },
     plate: {
       kind: 'information',
       combinedPhrase: 'personer med nedsatt syn rör sig i området',
@@ -1587,6 +1652,247 @@ export const ROAD_SIGNS: RoadSign[] = [
     similarSignIds: ['huvudled'],
     subcategory: 'huvudled',
   }),
+
+  /* ================= Tillägg: spårväg och plankorsning ================= */
+  sign({
+    id: 'varning-sparvagn',
+    code: 'A37',
+    name: 'Varning för korsning med spårväg',
+    category: 'varning',
+    visualTraits: { background: 'yellow', border: 'red' },
+    shortMeaning: 'En spårvagn kan korsa vägen strax framför dig.',
+    longMeaning:
+      'Spårvagnen kan inte väja och har mycket lång bromssträcka. Räkna med att det är du som ska lämna företräde, och titta åt båda hållen längs spåret innan du kör över.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en svart spårvagn sedd framifrån.',
+    tags: ['sparvagn', 'korsning'],
+    similarSignIds: ['varning-jarnvag-utan-bommar'],
+    subcategory: 'vagens-anvandning',
+  }),
+  sign({
+    id: 'kryssmarke',
+    code: 'A39',
+    name: 'Kryssmärke',
+    category: 'varning',
+    visualTraits: { background: 'yellow', border: 'red' },
+    shortMeaning: 'Här korsar vägen ett järnvägsspår.',
+    longMeaning:
+      'Märket står omedelbart vid själva korsningen, till skillnad från varningsmärkena som står i förväg. Ett kryss betyder ett spår, ett dubbelkryss betyder två eller fler — och med flera spår kan ett tåg dölja ett annat.',
+    altText:
+      'Ett liggande kryss av två armar i rött och gult, format som en X-vinge, monterat vid en järnvägskorsning.',
+    tags: ['jarnvag', 'plankorsning'],
+    similarSignIds: ['varning-jarnvag-bommar', 'varning-jarnvag-utan-bommar'],
+    subcategory: 'plankorsning-marken',
+  }),
+
+  /* ================= Tillägg: förbud mot trafikantslag ================= */
+  sign({
+    id: 'forbud-cykel-moped',
+    code: 'C10',
+    name: 'Förbud mot trafik med cykel och moped klass II',
+    category: 'forbud',
+    visualTraits: { background: 'yellow', border: 'red' },
+    shortMeaning: 'Cykel och moped klass II får inte köras här.',
+    longMeaning:
+      'Förbudet gäller att *köra* fordonet. Att leda cykeln är att gå, och den som går lyder under reglerna för gående.',
+    altText: 'Rund skylt med gul botten och röd ram, en svart cykel och ett rött snedstreck över.',
+    tags: ['cykel', 'moped', 'forbud'],
+    similarSignIds: ['forbud-moped-klass-2', 'pabud-cykelbana'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-moped-klass-2',
+    code: 'C11',
+    name: 'Förbud mot trafik med moped klass II',
+    category: 'forbud',
+    visualTraits: { background: 'yellow', border: 'red' },
+    shortMeaning: 'Moped klass II får inte köras här — cykel får det.',
+    longMeaning:
+      'Skillnaden mot C10 är att cykeln inte är förbjuden. Symbolen visar både en cykel och en moped, men det är mopeden strecket gäller.',
+    altText:
+      'Rund skylt med gul botten och röd ram, en svart cykel bakom en svart moped och ett rött snedstreck över.',
+    tags: ['moped', 'forbud'],
+    similarSignIds: ['forbud-cykel-moped'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-ridning',
+    code: 'C14',
+    name: 'Förbud mot ridning',
+    category: 'forbud',
+    visualTraits: { background: 'yellow', border: 'red' },
+    shortMeaning: 'Ridning är förbjuden här.',
+    longMeaning:
+      'Ryttare räknas som trafikanter och har egna regler. Där ridning är förbjuden är hästen ofta hänvisad till en egen led vid sidan av vägen.',
+    altText: 'Rund skylt med gul botten och röd ram, en svart häst med ryttare och ett rött snedstreck över.',
+    tags: ['ridning', 'forbud'],
+    similarSignIds: ['varning-ridande'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-gangtrafik',
+    code: 'C15',
+    name: 'Förbud mot gångtrafik',
+    category: 'forbud',
+    visualTraits: { background: 'yellow', border: 'red' },
+    shortMeaning: 'Gående får inte gå här.',
+    longMeaning:
+      'Sätts där det saknas utrymme att gå säkert, till exempel på en bro eller i en tunnel. Den som leder en cykel räknas som gående och omfattas därför också.',
+    altText: 'Rund skylt med gul botten och röd ram, en svart gående figur och ett rött snedstreck över.',
+    tags: ['gaende', 'forbud'],
+    similarSignIds: ['pabud-gangbana'],
+    subcategory: 'forbudsmarken',
+  }),
+
+  /* ================= Lokaliseringsmärken (F) ================= */
+  sign({
+    id: 'vagvisare',
+    code: 'F5',
+    name: 'Vägvisare',
+    category: 'lokalisering',
+    visualTraits: { background: 'blue', border: 'white', text: 'NYKÖPING 23' },
+    shortMeaning: 'Åt det hållet ligger orten, och så långt är det.',
+    longMeaning:
+      'Pilformen pekar åt det håll du ska svänga. Siffran är avståndet i kilometer. Blå botten betyder att vägen inte är motorväg eller motortrafikled — de har grön respektive blå vägvisning på annat sätt.',
+    altText: 'Blå pilformad skylt med vit ram och texten NYKÖPING 23 i vitt.',
+    tags: ['vagvisning', 'lokalisering'],
+    similarSignIds: ['tabellvagvisare', 'avfartsvisare'],
+    subcategory: 'anvisningsmarken',
+  }),
+  sign({
+    id: 'tabellvagvisare',
+    code: 'F6',
+    name: 'Tabellvägvisare',
+    category: 'lokalisering',
+    visualTraits: { background: 'blue', border: 'white' },
+    shortMeaning: 'Flera mål samtidigt, med en pil och ett vägnummer för varje.',
+    longMeaning:
+      'Sätts före korsningar där du behöver välja tidigt. Läs raden för ditt mål och följ pilen på just den raden — inte den översta.',
+    altText:
+      'Blå fyrkantig skylt med vit ram och tre rader, var och en med en vit pil, ett vägnummer i en ruta och ett ortnamn.',
+    tags: ['vagvisning', 'korsning'],
+    similarSignIds: ['vagvisare', 'korfaltsvagvisare'],
+    subcategory: 'anvisningsmarken',
+  }),
+  sign({
+    id: 'avfartsvisare',
+    code: 'F7',
+    name: 'Avfartsvisare',
+    category: 'lokalisering',
+    visualTraits: { background: 'blue', border: 'white' },
+    shortMeaning: 'Här är avfarten, och dit leder den.',
+    longMeaning:
+      'Den snedställda pilen visar att du lämnar den väg du kör på. Sitter i själva avfarten, efter att förberedande vägvisning redan talat om att den kommer.',
+    altText:
+      'Blå skylt med vit ram, ett vägnummer i ruta, två ortnamn och en vit pil som pekar snett uppåt höger.',
+    tags: ['vagvisning', 'avfart', 'motorvag'],
+    similarSignIds: ['vagvisare', 'korfaltsvagvisare'],
+    subcategory: 'pafart-avfart',
+  }),
+  sign({
+    id: 'korfaltsvagvisare',
+    code: 'F8',
+    name: 'Körfältsvägvisare',
+    category: 'lokalisering',
+    visualTraits: { background: 'blue', border: 'white', arrowDirection: 'up' },
+    shortMeaning: 'Det här körfältet leder dit.',
+    longMeaning:
+      'Sitter oftast över körbanan, ett märke per körfält. Pilen pekar rakt upp för det fält den hänger över — byt fält i god tid, inte i korsningen.',
+    altText:
+      'Blå skylt med vit ram, en vit pil rakt uppåt, ett vägnummer i ruta och ett ortnamn.',
+    tags: ['vagvisning', 'korfalt'],
+    similarSignIds: ['tabellvagvisare', 'avfartsvisare'],
+    subcategory: 'placering',
+  }),
+
+  /* ================= Fordonssymboler (S) =================
+     Symbolerna sitter inte på egen stolpe. De ritas på en symboltavla (T8)
+     under ett märke, och talar om vilket fordonsslag regeln gäller. Därför är
+     de registrerade som egen kategori och inte som märken. */
+  sign({
+    id: 'symbol-tung-lastbil',
+    code: 'S1',
+    name: 'Tung lastbil',
+    category: 'symbol',
+    visualTraits: { background: 'white', border: 'black' },
+    shortMeaning: 'Symbolen för tung lastbil på en tilläggstavla.',
+    longMeaning:
+      'Står symbolen under ett märke gäller märket bara tung lastbil — alltså lastbil med totalvikt över 3,5 ton.',
+    altText: 'Svart konturteckning av en lastbil med skåp, sedd från sidan, i en tunn svart ram.',
+    tags: ['fordonsslag', 'symbol'],
+    similarSignIds: ['symbol-personbil', 'symbol-buss'],
+    subcategory: 'fordonsslag',
+  }),
+  sign({
+    id: 'symbol-personbil',
+    code: 'S3',
+    name: 'Personbil',
+    category: 'symbol',
+    visualTraits: { background: 'white', border: 'black' },
+    shortMeaning: 'Symbolen för personbil på en tilläggstavla.',
+    longMeaning:
+      'Under ett märke betyder den att regeln gäller personbil. Det är det fordonsslag ett B-körkort i första hand ger rätt att köra.',
+    altText: 'Svart konturteckning av en personbil sedd från sidan, i en tunn svart ram.',
+    tags: ['fordonsslag', 'symbol'],
+    similarSignIds: ['symbol-tung-lastbil', 'symbol-personbil-klass-2'],
+    subcategory: 'fordonsslag',
+  }),
+  sign({
+    id: 'symbol-buss',
+    code: 'S5',
+    name: 'Buss',
+    category: 'symbol',
+    visualTraits: { background: 'white', border: 'black' },
+    shortMeaning: 'Symbolen för buss på en tilläggstavla.',
+    longMeaning:
+      'Används bland annat för att peka ut att ett körfält eller en uppställningsplats är till för buss.',
+    altText: 'Svart konturteckning av en buss med fönsterrad, sedd från sidan, i en tunn svart ram.',
+    tags: ['fordonsslag', 'symbol'],
+    similarSignIds: ['symbol-tung-lastbil', 'pabud-kollektivkorfalt'],
+    subcategory: 'fordonsslag',
+  }),
+  sign({
+    id: 'symbol-motorcykel',
+    code: 'S7',
+    name: 'Motorcykel',
+    category: 'symbol',
+    visualTraits: { background: 'white', border: 'black' },
+    shortMeaning: 'Symbolen för motorcykel på en tilläggstavla.',
+    longMeaning:
+      'Avgränsar regeln till motorcykel. En moped är inte en motorcykel och omfattas alltså inte av en tavla med den här symbolen.',
+    altText: 'Svart konturteckning av en motorcykel sedd från sidan, i en tunn svart ram.',
+    tags: ['fordonsslag', 'symbol'],
+    similarSignIds: ['symbol-personbil'],
+    subcategory: 'fordonsslag',
+  }),
+  sign({
+    id: 'symbol-slapkarra',
+    code: 'S9',
+    name: 'Släpkärra',
+    category: 'symbol',
+    visualTraits: { background: 'white', border: 'black' },
+    shortMeaning: 'Symbolen för släpkärra på en tilläggstavla.',
+    longMeaning:
+      'Pekar ut att regeln gäller fordon med släp. Ett parkeringsförbud med den här symbolen gäller alltså ekipaget, inte bilen ensam.',
+    altText: 'Svart konturteckning av en liten släpkärra med ett hjul, sedd från sidan, i en tunn svart ram.',
+    tags: ['fordonsslag', 'slapvagn', 'symbol'],
+    similarSignIds: ['symbol-personbil'],
+    subcategory: 'fordonsslag',
+  }),
+  sign({
+    id: 'symbol-personbil-klass-2',
+    code: 'S12',
+    name: 'Personbil klass II',
+    category: 'symbol',
+    visualTraits: { background: 'white', border: 'black' },
+    shortMeaning: 'Symbolen för husbil på en tilläggstavla.',
+    longMeaning:
+      'Personbil klass II är den formella beteckningen på en husbil. Symbolen används där reglerna för husbil skiljer sig från reglerna för en vanlig personbil.',
+    altText:
+      'Svart konturteckning av en husbil med hytt och boddel, sedd från sidan, i en tunn svart ram.',
+    tags: ['fordonsslag', 'symbol'],
+    similarSignIds: ['symbol-personbil'],
+    subcategory: 'fordonsslag',
+  }),
 ];
 
 export const SIGN_BY_ID: ReadonlyMap<string, RoadSign> = new Map(ROAD_SIGNS.map((s) => [s.id, s]));
@@ -1608,6 +1914,8 @@ export const SIGN_CATEGORY_LABELS: Record<SignCategory, string> = {
   pabud: 'Påbudsmärken',
   anvisning: 'Anvisningsmärken',
   tillaggstavla: 'Tilläggstavlor',
+  lokalisering: 'Vägvisning',
+  symbol: 'Fordonssymboler',
 };
 
 /* ------------------------------------------------------------------ */

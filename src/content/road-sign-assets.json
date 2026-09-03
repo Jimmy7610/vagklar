@@ -1155,5 +1155,213 @@
   ],
   "width": 446,
   "height": 446
+ },
+ {
+  "id": "varning-sparvagn",
+  "code": "A37",
+  "page": 327,
+  "crop": [
+   0.15398,
+   0.09105,
+   0.29507,
+   0.18032
+  ],
+  "width": 504,
+  "height": 451
+ },
+ {
+  "id": "kryssmarke",
+  "code": "A39",
+  "page": 327,
+  "crop": [
+   0.6355,
+   0.09165,
+   0.71473,
+   0.17736
+  ],
+  "width": 283,
+  "height": 433
+ },
+ {
+  "id": "forbud-cykel-moped",
+  "code": "C10",
+  "page": 329,
+  "crop": [
+   0.16209,
+   0.73911,
+   0.28695,
+   0.8274
+  ],
+  "width": 446,
+  "height": 446
+ },
+ {
+  "id": "forbud-moped-klass-2",
+  "code": "C11",
+  "page": 329,
+  "crop": [
+   0.41209,
+   0.73911,
+   0.53695,
+   0.8274
+  ],
+  "width": 446,
+  "height": 446
+ },
+ {
+  "id": "forbud-ridning",
+  "code": "C14",
+  "page": 330,
+  "crop": [
+   0.41209,
+   0.09303,
+   0.53695,
+   0.18151
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "forbud-gangtrafik",
+  "code": "C15",
+  "page": 330,
+  "crop": [
+   0.66209,
+   0.09303,
+   0.78695,
+   0.18151
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "vagvisare",
+  "code": "F5",
+  "page": 337,
+  "crop": [
+   0.36142,
+   0.42676,
+   0.58735,
+   0.46358
+  ],
+  "width": 640,
+  "height": 148
+ },
+ {
+  "id": "tabellvagvisare",
+  "code": "F6",
+  "page": 337,
+  "crop": [
+   0.6117,
+   0.37114,
+   0.83735,
+   0.46358
+  ],
+  "width": 640,
+  "height": 371
+ },
+ {
+  "id": "avfartsvisare",
+  "code": "F7",
+  "page": 337,
+  "crop": [
+   0.11226,
+   0.56849,
+   0.33651,
+   0.63302
+  ],
+  "width": 640,
+  "height": 260
+ },
+ {
+  "id": "korfaltsvagvisare",
+  "code": "F8",
+  "page": 337,
+  "crop": [
+   0.46249,
+   0.6061,
+   0.58063,
+   0.63084
+  ],
+  "width": 422,
+  "height": 125
+ },
+ {
+  "id": "symbol-tung-lastbil",
+  "code": "S1",
+  "page": 345,
+  "crop": [
+   0.14054,
+   0.14648,
+   0.30823,
+   0.2213
+  ],
+  "width": 599,
+  "height": 378
+ },
+ {
+  "id": "symbol-personbil",
+  "code": "S3",
+  "page": 345,
+  "crop": [
+   0.64054,
+   0.14648,
+   0.80823,
+   0.2213
+  ],
+  "width": 599,
+  "height": 378
+ },
+ {
+  "id": "symbol-buss",
+  "code": "S5",
+  "page": 345,
+  "crop": [
+   0.39054,
+   0.30107,
+   0.55823,
+   0.37589
+  ],
+  "width": 599,
+  "height": 378
+ },
+ {
+  "id": "symbol-motorcykel",
+  "code": "S7",
+  "page": 345,
+  "crop": [
+   0.14054,
+   0.45566,
+   0.30823,
+   0.53048
+  ],
+  "width": 599,
+  "height": 378
+ },
+ {
+  "id": "symbol-slapkarra",
+  "code": "S9",
+  "page": 345,
+  "crop": [
+   0.64054,
+   0.45566,
+   0.80823,
+   0.53048
+  ],
+  "width": 599,
+  "height": 378
+ },
+ {
+  "id": "symbol-personbil-klass-2",
+  "code": "S12",
+  "page": 345,
+  "crop": [
+   0.64054,
+   0.61025,
+   0.80851,
+   0.68508
+  ],
+  "width": 600,
+  "height": 378
  }
 ]

@@ -20,7 +20,8 @@
     "audit:pages": "vite-node scripts/audit-source-pages.ts",
     "report:verification": "vite-node scripts/verification-report.ts",
     "report:visuals": "vite-node scripts/visual-qa-sheet.ts",
-    "report:images": "vite-node scripts/image-report.ts"
+    "report:images": "vite-node scripts/image-report.ts",
+    "report:signs": "vite-node scripts/sign-report.ts"
   },
   "dependencies": {
     "react": "^19.2.0",

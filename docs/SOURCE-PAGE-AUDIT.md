@@ -8,9 +8,9 @@ sidan verkligen handlar om det frågan prövar.
 
 | | Antal |
 | --- | ---: |
-| Frågor med sidhänvisning | 296 |
-| Sidhänvisningar granskade | 307 |
-| Bekräftat stöd | 258 |
+| Frågor med sidhänvisning | 299 |
+| Sidhänvisningar granskade | 310 |
+| Bekräftat stöd | 261 |
 | Fel | 0 |
 | Varningar | 47 |
 | Granskade undantag | 2 |

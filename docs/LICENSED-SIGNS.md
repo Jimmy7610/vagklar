@@ -1,6 +1,6 @@
 # Vägmärken från källan
 
-Vägklar visar bokens egna vägmärkesbilder. **89 av registrets 99 märken** ritas
+Vägklar visar bokens egna vägmärkesbilder. **105 av registrets 115 märken** ritas
 med licensierat material; 10 står kvar på Vägklars vektorritning, och det är ett
 val snarare än en lucka.
 
@@ -92,16 +92,16 @@ kodning lägger ringningar runt de svarta symbolerna, vilket är precis den deta
 eleven ska läsa. Kvantisering till 32 färger och lossless kodning är både mindre
 och skarpare: 212 kB mot 864 kB för samma 48 märken.
 
-Alla 89 märken som skeppas väger tillsammans **397 kB**.
+Alla 105 märken som skeppas väger tillsammans **481 kB**.
 
 ## Offline
 
 Märkena **precachas**; fotografierna gör det inte.
 
-Uppdelningen är mätt, och mättes om när registret växte. De 89 märkesbilderna
-är tillsammans 397 kB mot ungefär 6,6 MB för fotografierna. Förhandscachen går
-från 1 382 KiB till 1 921 KiB — knappt 40 % större installation, och fortfarande
-under två megabyte.
+Uppdelningen är mätt, och mäts om varje gång registret växer. De 105
+märkesbilderna är tillsammans 481 kB mot ungefär 6,6 MB för fotografierna.
+Förhandscachen står på 2 029 KiB. Gränsen där avvägningen skulle behöva tas om
+ligger kring ett par megabyte märkesbilder — vi är långt under den.
 
 Vad det köper är att provet fungerar offline: ungefär var tionde provfråga visar
 ett märke, och en märkesfråga utan sitt märke är inte en svårare fråga utan en

@@ -63,6 +63,7 @@ export interface ValidationInput {
   roadMarkings?: readonly RoadMarking[];
   /** Marking ids that actually have a drawing. */
   availableMarkingGlyphs?: ReadonlySet<string>;
+  /** Sign ids that ship the licensed artwork rather than a drawing. */
   /** The Vägklar-original visual registry. */
   originalVisuals?: readonly OriginalVisual[];
   /** Renderer ids that actually have a drawing. */
@@ -432,6 +433,12 @@ export function validateContent(input: ValidationInput): ValidationReport {
     'pabud',
     'anvisning',
     'tillaggstavla',
+    // F-serien, vägvisning, och S-serien, fordonssymboler. Symbolerna sitter
+    // aldrig på egen stolpe — de ritas på en symboltavla under ett märke — men
+    // de har officiella koder och beskrivs på samma sätt, så de bor i samma
+    // register.
+    'lokalisering',
+    'symbol',
   ]);
   for (const roadSign of input.roadSigns ?? []) {
     const where = `skylt:${roadSign.id}`;
@@ -496,7 +503,10 @@ export function validateContent(input: ValidationInput): ValidationReport {
       if (!illustration) continue;
       const drawable =
         (input.availableSignGlyphs?.has(illustration) ?? false) ||
-        (input.availableMarkingGlyphs?.has(illustration) ?? false);
+        (input.availableMarkingGlyphs?.has(illustration) ?? false) ||
+        // A sign with the book's own artwork needs no vector, and most no
+        // longer have one. RoadSign reaches for the licensed asset first.
+        (input.licensedSignIds?.has(illustration) ?? false);
       if (!drawable) {
         add('error', 'unknown-sign-illustration', q.id, `Okänd ritning "${illustration}".`);
       }

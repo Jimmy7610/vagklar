@@ -2424,6 +2424,33 @@ export const MISCONCEPTIONS: Misconception[] = [
       'Innebörden kommer från tilläggstavlan. Saknas den vet du bara att något ovanligt finns längre fram.',
     subcategory: 'varningsmarken',
   },
+  {
+    id: 'symboltavla-avgransning',
+    label: 'Fordonssymbolen uppfattas som en upplysning',
+    description:
+      'Symbolen under märket läses som en illustration av vad som brukar köra där, i stället för som en avgränsning av vilka regeln gäller.',
+    correction:
+      'Symbolen är hela avgränsningen. Märket ovanför gäller bara det avbildade fordonsslaget — de andra berörs inte alls.',
+    subcategory: 'vagmarkeringar',
+  },
+  {
+    id: 'vagvisning-rad',
+    label: 'Tabellvägvisarens rader uppfattas som en enda anvisning',
+    description:
+      'Skylten läses som ett besked med flera exempel, så den mest framträdande pilen antas gälla allt som står på den.',
+    correction:
+      'Varje rad är ett eget besked: ett mål, ett vägnummer och en pil som hör ihop. Följ pilen på raden där ditt mål står.',
+    subcategory: 'anvisningsmarken',
+  },
+  {
+    id: 'vagvisning-reglerar',
+    label: 'Vägvisning antas ge rättigheter',
+    description:
+      'Eftersom skylten pekar ut en väg uppfattas den som att den också säger något om företräde eller hastighet dit.',
+    correction:
+      'Lokaliseringsmärken upplyser bara om vart vägen leder. Hastighet, väjningsplikt och förbud står på andra märken.',
+    subcategory: 'anvisningsmarken',
+  },
 ];
 
 export const MISCONCEPTION_BY_ID: ReadonlyMap<string, Misconception> = new Map(

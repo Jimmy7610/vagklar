@@ -1371,3 +1371,99 @@ Provet kontrollerat: en kombinationsfråga beskrevs som *"Väjningspliktsmärke:
 gul triangel med röd ram och spetsen nedåt. Under märket: Gul rektangulär
 tilläggstavla med röd ram och texten STOPP 200 m."* — utseende, inte innebörd —
 och den sammansatta meningen renderades inte alls.
+
+
+## Fotosvep, märkeskontext och visualTraits (2026-09-03)
+
+### Fotosvepet
+
+263 av källans fotokandidater genomsöktes maskinellt efter synliga vägmärken.
+Svenska märken är mättat röda, gula och blå mot en omvärld som mest inte är det,
+och en märkesyta är kompakt och ungefär lika bred som hög — samma signal som
+användes för att hitta märkena i bilagan. 114 foton hade minst en sådan yta;
+varje kandidat klipptes ut och förstorades.
+
+Att titta är hela poängen. Identiteten får inte komma från kapitelrubriken —
+tidigare i det här arbetet märktes ett omkörningsfoto som ett möte just så.
+
+Bland de 55 redan godkända fotona bekräftades märken i tjugo, och sex nya par
+byggdes av dem. Där utsnittet inte avgjorde vilket märke det var gjordes inget
+par: `korfaltsvagvisare-korsning` och `smal-viadukt-skymd-utfart` hade
+märkesliknande ytor som vid förstoring visade träd respektive undersidan av en
+viadukt.
+
+### Ett verkligt fel som svepet hittade
+
+Fotot som låg registrerat som `forbud-att-stanna` visar **C35, förbud mot att
+parkera** — ett snedstreck, inte ett kryss. Beskrivningen sa ordagrant "ett
+blått runt märke med rött kryss", och lektionens bildtext lärde ut ett
+stannandeförbud.
+
+Ett streck och ett kors är två olika regler: med ett kors får du inte ens
+stanna, med ett streck får du stanna men inte parkera. Posten heter nu
+`forbud-att-parkera-overgangsstalle`, beskrivningen säger vad bilden visar, och
+lektionen lär ut skillnaden i stället för fel regel.
+
+### visualTraits — från 41 till 115
+
+Färgerna läses ur märkets egen bild av `scripts/derive-sign-traits.py`. Att
+härleda dem ur alt-texten hade gjort testet cirkulärt, och det var fel alt-text
+som startade hela det här arbetet.
+
+Två enklare metoder prövades först och båda var fel på ett sätt som ser rimligt
+ut tills man kontrollerar:
+
+1. **Mitten och kanten.** En triangels mitt landar på den svarta symbolen och
+   hörnen av dess utsnitt är vit sida, inte röd ram. Slutsats: varje
+   varningsmärke är svart med vit ram.
+2. **Störst yta vinner.** På ett A-märke täcker den röda ramen mer av utsnittet
+   än det gula fältet. Slutsats: varningsmärkena är röda.
+
+Det som fungerar är att respektera formen: sidan flood-fylls bort, märket
+eroderas, och den färg som fyller kärnan är fältet. Kontrollerat mot nio kända
+märken innan något skrevs.
+
+Fyra fick ändå rättas för hand efteråt — B3 och B8 har en vit triangel som
+fyller kärnan, B5 en bred vit ram — och det står i skriptets kommentar som en
+känd begränsning snarare än som en lösning.
+
+### Alt-mot-bild som permanent grind
+
+Testet jämför nu strukturerade traits mot prosan. Tre buggar i grinden själv
+fick rättas innan den var värd att lita på:
+
+- `\b` i JavaScript är ASCII-baserat, så `\bblå\b` matchar **aldrig**. Det slog
+  tyst av kontrollen för alla blå märken — tjugoåtta rapporterades sakna färg i
+  sin beskrivning fast alla säger "Blå".
+- Färgen närmast formordet vinner. "Vit skylt med en röd symbol" rapporterades
+  som ett rött märke, alltså motsatsen till vad meningen säger.
+- Tryckt text jämförs med mellanslag borttagna: skylten läser "10%", prosan
+  skriver "10 %", och det är typografi, inte oenighet.
+
+Grinden testar numera sig själv på alla tre.
+
+### Registret
+
+99 → 115 märken. A37 spårvägskorsning och A39 kryssmärke behövdes för par;
+C10, C11, C14 och C15 var namngivna luckor; fyra F-märken och sex
+S-fordonssymboler kom in med egen plats i vägmärkeslektionen — symbolerna hör
+ihop med symboltavlan, vägvisningen med körfältsvalet.
+
+| | Före | Efter |
+| --- | ---: | ---: |
+| Märken | 99 | 115 |
+| Med bokens bild | 89 | 105 |
+| visualTraits | 41 | 115 |
+| Märken med trafikfoto | 4 | 10 |
+| Märkesbilder på disk | 397 kB | 481 kB |
+| Startpaket | 164 675 B | 165 891 B |
+| Förhandscache | 1 921 KiB | 2 029 KiB |
+
+### Reflow
+
+| Läge | Resultat |
+| --- | --- |
+| 320, 375, 390, 1440 px normal text | Ingen horisontell scroll |
+| 320 px @ 200 %, 10 rutter | Ingen |
+| 375 px @ 200 % | Ingen |
+| 390 px @ 200 % | Ingen |

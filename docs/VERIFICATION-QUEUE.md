@@ -13,17 +13,17 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 
 | Status | Antal | Betyder |
 | --- | ---: | --- |
-| `reviewed` | 454 | Läst och godkänd internt. Inget påstående om expertgranskning. |
+| `reviewed` | 458 | Läst och godkänd internt. Inget påstående om expertgranskning. |
 | `verified` | 0 | Kontrollerad mot namngiven källa av namngiven person. |
 
 ## Kön
 
 | Prioritet | Antal | Vad som står på spel |
 | --- | ---: | --- |
-| P1 | 137 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
+| P1 | 139 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
 | P2 | 64 | Undantag, villkorade regler och beräkningar. |
-| P3 | 253 | Förklarande kunskap utan rättsligt tal. |
-| **Totalt** | **454** | |
+| P3 | 255 | Förklarande kunskap utan rättsligt tal. |
+| **Totalt** | **458** | |
 
 ## P1 efter typ
 
@@ -32,20 +32,20 @@ vad slags kontroll den kräver.
 
 | Typ | Antal | Betyder |
 | --- | ---: | --- |
-| `P1-NUMERIC` | 92 | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
-| `P1-VOLATILE` | 62 | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| `P1-NUMERIC` | 94 | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
+| `P1-VOLATILE` | 64 | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | `P1-ADMIN` | 34 | Administrativ regel — besiktning, registrering, försäkring, körkort. |
-| `P1-LAW` | 72 | Bygger på en författningstext som går att slå upp ordagrant. |
+| `P1-LAW` | 74 | Bygger på en författningstext som går att slå upp ordagrant. |
 | `P1-SAFETY` | 32 | Fel här kan leda till skada, inte bara till ett felaktigt svar. |
-| `P1-EXCEPTION` | 30 | Ett rättsligt tal som dessutom har undantag; både talet och undantaget måste stämma. |
+| `P1-EXCEPTION` | 31 | Ett rättsligt tal som dessutom har undantag; både talet och undantaget måste stämma. |
 
 ## Var arbetet ligger
 
 | Kapitel | P1 |
 | --- | ---: |
 | Alkohol | 14 |
-| Stanna & parkera | 12 |
-| Indelning av fordon | 11 |
+| Stanna & parkera | 13 |
+| Indelning av fordon | 12 |
 | Inledning | 11 |
 | Däck | 7 |
 | Speciella gator | 7 |
@@ -58,8 +58,8 @@ vad slags kontroll den kräver.
 
 | Grupp som kräver extra omsorg | Antal |
 | --- | ---: |
-| Bär tre eller fler P1-typer | 56 |
-| Rättsligt tal med undantag | 30 |
+| Bär tre eller fler P1-typer | 58 |
+| Rättsligt tal med undantag | 31 |
 | Bildburna P1 (foto eller ritning) | 13 |
 | Beräkningar i P1 | 11 |
 | Utan hänvisning till författning | 65 |
@@ -80,8 +80,8 @@ rör tal som står i författning och går att slå upp direkt.
 | 01 — Alkohol, droger och läkemedel | 14 |
 | 02 — Hastigheter | 8 |
 | 03 — Däck, väglag och vinter | 8 |
-| 04 — Last, släp och vikter | 9 |
-| 05 — Stanna, parkera och tidsregler | 12 |
+| 04 — Last, släp och vikter | 10 |
+| 05 — Stanna, parkera och tidsregler | 13 |
 | 06 — Belysning och mörker | 4 |
 | 07 — Väjning, stopp och korsningar | 2 |
 | 08 — Oskyddade trafikanter och passager | 3 |
@@ -638,7 +638,7 @@ Vilket är det minsta tillåtna mönsterdjupet på ett sommardäck?
 | Missuppfattning | Mönsterdjup blandas ihop |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `95228b42` |
 
-### Omgång 04 — Last, släp och vikter · 9 frågor
+### Omgång 04 — Last, släp och vikter · 10 frågor
 
 #### `las-001` · B-behörighet och släp
 
@@ -802,7 +802,25 @@ Avståndet mellan bilarna på bilden är fyra meter. Vad krävs?
 | Missuppfattning | Bogserlinan antas synas av sig själv |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `0b097983` |
 
-### Omgång 05 — Stanna, parkera och tidsregler · 12 frågor
+#### `sym-002` · Symboltavla med släpkärra
+
+Du kör personbil med tillkopplad släpkärra. Under ett förbudsmärke sitter en tavla med den här symbolen. Vad betyder det?
+
+**Rätt svar:** Förbudet gäller dig, eftersom du kör med släp.
+
+**Förklaring:** Symbolen pekar ut fordonskombinationen. Kör du med släp är det ekipaget som omfattas, inte bilen ensam.
+
+| | |
+| --- | --- |
+| Typ | P1-NUMERIC, P1-VOLATILE, P1-LAW |
+| Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
+| Kapitel · delområde | Indelning av fordon · Släpvagn |
+| Källa och exakt hänvisning | Vägmärkesförordningen (2007:90) T8 · Teoribok — Körkortsboken 2026 för B-körkort Tilläggstavlor s. 346 |
+| Status | `reviewed` |
+| Missuppfattning | Fordonssymbolen uppfattas som en upplysning |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `83ebf75d` |
+
+### Omgång 05 — Stanna, parkera och tidsregler · 13 frågor
 
 #### `par-001` · Skillnad stannande och parkering
 
@@ -1019,6 +1037,24 @@ Vem får parkera på platsen?
 | Status | `reviewed` |
 | Missuppfattning | Reserverad plats antas vara ledig för alla |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `0c69bf7d` |
+
+#### `sym-001` · Fordonssymbol som avgränsar ett förbud
+
+Under ett parkeringsförbud sitter en symboltavla med en lastbil. Du kör personbil. Vad gäller för dig?
+
+**Rätt svar:** Du får parkera — förbudet gäller bara tung lastbil.
+
+**Förklaring:** En symboltavla begränsar märket ovanför till det fordonsslag som är avbildat. Är symbolen en lastbil gäller förbudet lastbilar.
+
+| | |
+| --- | --- |
+| Typ | P1-NUMERIC, P1-VOLATILE, P1-LAW, P1-EXCEPTION |
+| Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
+| Kapitel · delområde | Stanna & parkera · Förbud att parkera |
+| Källa och exakt hänvisning | Vägmärkesförordningen (2007:90) T8 · Trafikförordningen (1998:1276) 3 kap. 54 § |
+| Status | `reviewed` |
+| Missuppfattning | Fordonssymbolen uppfattas som en upplysning |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `5f36597c` |
 
 ### Omgång 06 — Belysning och mörker · 4 frågor
 
@@ -2655,7 +2691,7 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `mrk-011` | Körfält och sväng | Körfältspilar (M19) |
 | `mrk-012` | Körfältsbyte | Bussymbol i körfältet (M28) |
 
-## P3 — 253 frågor
+## P3 — 255 frågor
 
 | Fråga | Delområde | Regel |
 | --- | --- | --- |
@@ -2912,3 +2948,5 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `mrk-010` | Vägmarkeringar | Övergångsställe kontra cykelpassage |
 | `mrk-013` | Vägmarkeringar | Markering kontra vägmärke |
 | `mrk-014` | Vägmarkeringar | Ledlinje (M4) |
+| `sym-003` | Anvisningsmärken | Att läsa en tabellvägvisare |
+| `sym-004` | Anvisningsmärken | Vad ett lokaliseringsmärke inte gör |

@@ -45,6 +45,7 @@ const report = validateContent({
   roadSigns: ROAD_SIGNS,
   availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
   licensedSignIds: new Set(signAssets.map((a) => a.id)),
+  licensedSignIds: new Set(signAssets.map((a) => a.id)),
   roadMarkings: ROAD_MARKINGS,
   originalVisuals: ORIGINAL_VISUALS,
   availableVisualGlyphs: new Set(Object.keys(ORIGINAL_VISUAL_GLYPHS)),

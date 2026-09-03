@@ -35,6 +35,7 @@ import { riskerQuestions } from './risker';
 import { trafikreglerQuestions } from './trafikregler';
 import { trotthetQuestions } from './trotthet';
 import { vagmarkenQuestions } from './vagmarken';
+import { fordonssymbolerQuestions } from './fordonssymboler';
 
 /**
  * The complete seed question bank.
@@ -81,4 +82,5 @@ export const ALL_QUESTIONS: Question[] = [
   ...grunderQuestions,
   ...manniskan2Questions,
   ...vagmarkeringarQuestions,
+  ...fordonssymbolerQuestions,
 ];

@@ -1010,19 +1010,20 @@ export const SOURCE_IMAGES: SourceImage[] = [
     status: 'approved',
   }),
   img({
-    id: 'forbud-att-stanna',
+    id: 'forbud-att-parkera-overgangsstalle',
     sourcePage: 70,
-    title: 'Förbud att stanna vid övergångsställe',
+    title: 'Parkeringsförbud vid övergångsställe',
     topic: 'parkering',
-    subcategory: 'stannande-forbud',
+    subcategory: 'parkeringsforbud',
     chapter: 'stanna-parkera',
     altText:
-      'Ett märke om förbud att stanna och parkera står strax efter ett övergångsställe på en stadsgata.',
+      'Ett blått runt märke med röd ram och ett rött snedstreck sitter under ett övergångsställesmärke på en stadsgata.',
     longDescription:
-      'En gata sedd framåt från förarplatsen. Tvärs över vägbanan löper ett målat övergångsställe. På en stolpe till höger sitter märket för övergångsställe och under det ett blått runt märke med rött kryss, som betyder förbud att stanna och parkera.',
-    caption: 'Ett stannandeförbud gäller från märket och i färdriktningen.',
+      'En gata sedd framåt från förarplatsen. Tvärs över vägbanan löper ett målat övergångsställe, och till höger om körbanan går en cykelbana med cykelsymboler målade i asfalten. På en stolpe till höger sitter överst det blå fyrkantiga märket för övergångsställe, och under det ett blått runt märke med röd ram och ett enda rött snedstreck. Ett snedstreck betyder parkeringsförbud; två streck i kors hade betytt förbud att stanna.',
+    caption:
+      'Ett snedstreck, inte ett kryss: här är det parkering som är förbjuden. Du får alltså stanna, men inte ställa bilen.',
     usage: 'theory-lesson',
-    asset: 'parkering/forbud-att-stanna',
+    asset: 'parkering/forbud-att-parkera-overgangsstalle',
     width: 960,
     height: 540,
     status: 'approved',

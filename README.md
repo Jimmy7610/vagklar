@@ -36,6 +36,7 @@ npm run dev
 | `npm run report:content` | Validerar banken och skriver `docs/CONTENT-VALIDATION.md` |
 | `npm run generate:index` | Genererar om `src/content/question-index.ts` efter bankändringar |
 | `npm run report:verification` | Bygger verifieringskön och det lokala granskningsverktyget |
+| `npm run report:signs` | Skriver docs/SIGN-LIBRARY.md — serier, bildkällor, varianter, trafikfoton |
 | `npm run report:images` | Skriver `docs/IMAGE-COVERAGE.md` — var källbilderna sitter och var de saknas |
 | `python scripts/review-source-images.py` | Kontaktkarta över bildkandidaterna, att välja ur |
 | `npm run report:visuals` | Ritar alla märken och markeringar förstorade för visuell granskning |
@@ -47,6 +48,8 @@ npm run dev
 | `npm run report:verification` | Bygger granskningskön och det lokala granskningsverktyget |
 | `python scripts/extract-book-signs.py` | Klipper ut vägmärkena ur källans märkesbilaga |
 | `python scripts/optimise-book-signs.py` | Optimerar märkena till WebP |
+| `python scripts/derive-sign-traits.py` | Läser varje märkes färger ur dess egen bild |
+| `python scripts/audit-signs-in-photos.py` | Letar synliga vägmärken i källans fotografier |
 | `python scripts/audit-book-visuals.py` | Katalogiserar källans alla figurer |
 
 Ikoner och Open Graph-bilden genereras från kod:
