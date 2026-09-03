@@ -121,3 +121,33 @@ betyder.
 Paren väljs bara när märket verkligen går att identifiera i bilden. Att gissa
 från kapitelrubriken är hur man får en bildtext som beskriver möte när
 fotografiet visar en omkörning, vilket har hänt här förut.
+
+Sexton par finns. `src/domain/content/contextPairs.test.ts` kontrollerar dem som
+påståenden: fotots beskrivning måste nämna märkets egen fältfärg, och `notice`
+får inte innehålla märkets betydelse. Den kontrollen hittade två fel första
+gången den kördes — ett kryssmärke beskrivet som rött och vitt när A39 är rött
+och gult, och ett foto vars bommar sades sträcka sig över vägbanan när de står
+uppfällda i bilden.
+
+## Detaljvyn
+
+Katalogkortet rymmer namn, kod och en rad. `SignDetail` öppnar resten i en
+`<dialog>`: den långa betydelsen, bildbeskrivningen, varianterna under samma kod
+och två till tre märken som märket verkligen förväxlas med.
+
+En dialog och inte en egen route. Katalogen är en sökning man är mitt uppe i —
+ett filter, en vald kategori, en scrollposition — och att navigera bort slänger
+allt det. Native `<dialog>` med `showModal()` ger fokusfällan, den inerta
+bakgrunden och Escape gratis. Fokusåtergången är vår egen, och sker *efter* att
+dialogen stängts: `close()` kör webbläsarens egen fokusåterställning som en del
+av stängningen, så en `focus()` innan dess skrivs över en stund senare.
+
+Tillståndet är det som öppnar och stänger dialogen — inte elementets eget
+`close`-event. Att låta eventet mata tillbaka tillståndet gör att ett uteblivet
+event lämnar komponenten i tron att en stängd dialog är öppen, och nästa klick
+på samma kort sätter det tillstånd som redan gäller och öppnar därför ingenting.
+
+`confusableSigns()` läser `similarSignIds` åt båda hållen. Fyrtioåtta av
+relationerna i registret är skrivna åt ett håll, och en förväxling som bara går
+att hitta från det ena märket är halva nyttan. 111 av 115 märken har minst en;
+de fyra som saknar delar inget bildspråk med något annat i registret.

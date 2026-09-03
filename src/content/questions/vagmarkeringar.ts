@@ -314,6 +314,80 @@ const seeds: AuthoredQuestion[] = [
     sources: [vmf('3 kap. M4'), teori('Vägmarkeringar', 350)],
     tags: ['vagmarkering', 'korsning'],
   },
+  {
+    id: 'mrk-015',
+    category: 'vagmarken',
+    subcategory: 'vagmarkeringar',
+    difficulty: 2,
+    ruleTested: 'Tillfälliga markeringar vid vägarbete',
+    prompt:
+      'Vid vägarbetet på bilden är gula linjer målade i körbanan tillsammans med de vita. Vilka följer du?',
+    sourceImageId: 'gula-tillfalliga-markeringar',
+    type: 'image-scenario',
+    answers: [
+      ok('De gula — de gäller så länge de finns kvar, och de vita gäller inte under tiden.'),
+      no('De vita, eftersom de är de permanenta markeringarna.', 'tillfalliga-anvisningar'),
+      no('Båda samtidigt, och du väljer den som passar bäst.', 'tillfalliga-anvisningar'),
+      no('De gula bara om det står personal på platsen.', 'tillfalliga-anvisningar'),
+    ],
+    short:
+      'Gult går före vitt. Tillfälliga markeringar gäller före de ordinarie, och de vita under dem gäller inte medan arbetet pågår.',
+    deep:
+      'Det känns fel att köra över en heldragen vit linje, och det är just den känslan omledningen kräver att du går emot. Ordningen är densamma som för märken: det tillfälliga slår det permanenta, eftersom det tillfälliga är det som känner till hålet i vägen.',
+    memory: 'Gult ovanpå vitt: glöm det vita.',
+    sources: [vmf('3 kap.'), trf('1 kap. 4 §'), teori('Vägmarkeringar', 5)],
+    tags: ['vagmarkering', 'vagarbete', 'bild'],
+    related: ['mrk-005'],
+  },
+  {
+    id: 'mrk-016',
+    category: 'trafikregler',
+    subcategory: 'cykelpassage-overfart',
+    difficulty: 3,
+    ruleTested: 'Skilja övergångsställe från cykelpassage i verkligheten',
+    prompt:
+      'På bilden ligger två tvärgående markeringar bredvid varandra. Vad krävs av dig vid den som består av rutor?',
+    sourceImageId: 'overgangsstalle-och-cykelpassage',
+    type: 'image-scenario',
+    answers: [
+      ok('Du ska anpassa hastigheten så att du inte utgör en fara för cyklande som är ute på passagen.'),
+      no('Du har väjningsplikt mot alla cyklande som närmar sig.', 'cykelpassage-vajning'),
+      no('Cyklande har väjningsplikt mot dig, så du kan hålla farten.', 'cykelpassage-vajning'),
+      no('Samma regel gäller som vid banden intill — de är två delar av samma markering.', 'cykelpassage-vajning'),
+    ],
+    short:
+      'Rutorna ensamma är en cykelpassage: anpassa hastigheten. Full väjningsplikt kräver dessutom vägmärket och en väjningslinje — det är en cykelöverfart, och den ser annorlunda ut.',
+    deep:
+      'Att de två markeringarna ligger några meter isär i samma korsning är hela svårigheten. Vid banden har den gående företräde när hen gått ut. Vid rutorna finns ingen sådan regel — men det finns människor på cykel som rör sig fortare än en gående och kommer in i bilden senare. Skillnaden i regel är alltså inte en skillnad i hur mycket du behöver titta.',
+    memory: 'Band: gående har företräde. Rutor: sänk farten, men ingen väjningsplikt.',
+    sources: [trf('3 kap. 61 §'), vmf('3 kap. M16'), teori('Cykelpassage och cykelöverfart', 45)],
+    tags: ['vagmarkering', 'cykel', 'bild'],
+    related: ['mrk-010'],
+  },
+  {
+    id: 'mrk-017',
+    category: 'vagmarken',
+    subcategory: 'vagmarkeringar',
+    difficulty: 2,
+    ruleTested: 'Vad en målad hastighetssiffra gör',
+    prompt: 'Siffran 30 är målad i körbanan framför dig. Vad betyder det för hastighetsgränsen?',
+    sourceImageId: 'malad-skola-30',
+    type: 'image-scenario',
+    answers: [
+      ok('Den upprepar den gräns som redan gäller — gränsen sätts av vägmärket eller av föreskriften.'),
+      no('Den sänker gränsen till 30 från och med markeringen.', 'markering-vs-marke'),
+      no('Den gäller bara i det körfält där den är målad.', 'markering-vs-marke'),
+      no('Den är en rekommendation som du får överskrida om vägen är fri.', 'markering-vs-marke'),
+    ],
+    short:
+      'En hastighetssiffra i körbanan påminner om gränsen. Den ersätter inte märket, och den skapar ingen egen gräns.',
+    deep:
+      'Markeringen målas där någon har bedömt att gränsen behöver upprepas — utanför en skola, före en passage, i en långsträckt kurva. Att den finns är alltså i sig en upplysning: någon har räknat med att förare glömmer bort sig just här. Ordet som är målat bredvid siffran säger varför.',
+    memory: 'Målad siffra: en påminnelse, inte en ny gräns.',
+    sources: [vmf('3 kap. M29'), teori('Vägmarkeringar', 167)],
+    tags: ['vagmarkering', 'hastighet', 'bild'],
+    related: ['mrk-013'],
+  },
 ];
 
 export const vagmarkeringarQuestions = buildQuestions(seeds);

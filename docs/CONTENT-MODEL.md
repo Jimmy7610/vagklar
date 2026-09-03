@@ -267,6 +267,29 @@ verkliga måtten ur WebP-huvudet och jämför.
 En fråga kopplas med `sourceImageId`, en lektion med blocket
 `{ kind: 'sourceImage', imageId, prompt?, caption? }`. Bara `approved` renderas.
 
+Två block till bär ett fotografi, och de gör det som par: `signInContext` sätter
+bokens märkesbild bredvid ett foto där samma märke syns, `markingInContext` gör
+detsamma för en markering och dess ritning. Båda tar ett `notice` — vad man ska
+leta efter i fotot, aldrig vad märket eller markeringen betyder.
+
+```ts
+{ kind: 'signInContext',    signId,    imageId, notice }
+{ kind: 'markingInContext', markingId, imageId, notice }
+```
+
+Paret är en påstådd koppling och kontrolleras som en sådan i
+`src/domain/content/contextPairs.test.ts`: fotots beskrivning måste nämna
+märkets egen fältfärg. Det låter enkelt och fångar just den sortens fel som
+faktiskt inträffat — ett foto registrerat som stannandeförbud visade ett
+parkeringsförbud, och lektionen lärde ut fel regel ur rätt bild.
+
+`quizSafeAltText` och `quizSafeDescription` på en källbild är den text som läses
+upp så länge en fråga på bilden är obesvarad. De finns bara där den ordagranna
+beskrivningen skulle säga för mycket — och måttet är likvärdighet, inte tystnad:
+texten får säga allt en seende ser, och ingenting en seende hade behövt räkna
+ut. `src/domain/content/quizSafeText.test.ts` letar efter ordagranna fraser ur
+det rätta svaret i det som läses upp.
+
 Se [SOURCE-IMAGES.md](SOURCE-IMAGES.md) för extrahering, urval och optimering, och
 [SOURCE-DIAGRAMS.md](SOURCE-DIAGRAMS.md) för bokens figurer.
 

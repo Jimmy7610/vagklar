@@ -14,8 +14,9 @@ från Vägklars egna ritningar där koden täcker flera varianter. Se
 | Utan bild alls | 0 |
 | Tilläggstavlor | 17 |
 | Med visualTraits | 115 av 115 |
-| Med foto i verklig trafik | 9 |
-| Använda i en lektion | 71 |
+| Med foto i verklig trafik | 13 |
+| Märke–foto-par | 16 |
+| Använda i en lektion | 72 |
 | Använda i en fråga | 53 |
 | Bildmaterial på disk | 481 kB |
 
@@ -52,15 +53,42 @@ kapitelrubriken. Där utsnittet inte avgjorde vilket märke det var gjordes inge
 
 | Märke | Kod | Fotografi |
 | --- | --- | --- |
+| `forbud-omkorning` | C27 | `omkorningsforbud-landsvag` |
 | `forbud-parkera` | C35 | `forbud-att-parkera-overgangsstalle` |
+| `forbud-stanna` | C39 | `forbud-stanna-gata` |
 | `gagata` | E7 | `gagata-skyltad` |
 | `hastighet-110` | C31 | `hastighet-100-ledsnummer` |
+| `hastighet-50` | C31 | `hastighetsskylt-snotackt` |
 | `kryssmarke` | A39 | `plankorsning-bommar` |
 | `parkering` | E19 | `p-skylt-avgift-boende` |
-| `stopp` | B2 | `stop-flervagsstopp` |
-| `vajningsplikt` | B1 | `korfaltspilar-cirkulation` |
+| `stopp` | B2 | `stop-flervagsstopp`, `stopp-vid-signal` |
+| `tavla-rorelsehindrade` | T7 | `p-skylt-rorelsehindrad-tid` |
+| `vajningsplikt` | B1 | `cirkulation-med-trafik`, `korfaltspilar-cirkulation` |
 | `varning-djur` | A19 | `viltvarning-med-tillaggstavla` |
-| `varning-vagkorsning` | A28 | `varning-vagkorsning-i-kurva` |
+| `varning-vagkorsning` | A28 | `varning-vagkorsning-stad`, `varning-vagkorsning-i-kurva` |
+
+## Lätt att blanda ihop
+
+Relationen läses åt båda hållen: skriver en post att den förväxlas med en
+annan syns förväxlingen från båda märkena. Fyrtioåtta av kanterna i registret
+är skrivna åt ett håll, och innan detaljvyn fanns nådde ingen av dem en läsare
+över huvud taget.
+
+| | Antal |
+| --- | ---: |
+| Märken med minst en förväxling | 111 av 115 |
+| Skrivna på märket självt | 109 |
+| Tillkommer genom att läsa relationen åt andra hållet | 2 |
+
+Utan förväxling — och det är ett svar, inte en lucka. De här märkena har
+inget bildspråk gemensamt med något annat i registret.
+
+| Märke | Kod | Bild |
+| --- | --- | --- |
+| `varning-slirig-vag` | A10 | Varningsmärke: gul triangel med röd ram och en bil med slirspår bakom hjulen. |
+| `varning-vagarbete` | A20 | Varningsmärke: gul triangel med röd ram och en figur som arbetar med en spade. |
+| `varning-sidvind` | A24 | Varningsmärke: gul triangel med röd ram och en vindstrut som blåser åt sidan. |
+| `varning-annan-fara` | A40 | Varningsmärke: gul triangel med röd ram och ett brett svart utropstecken utan punkt. |
 
 ## Tilläggstavlor
 

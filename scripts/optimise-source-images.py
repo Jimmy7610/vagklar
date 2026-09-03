@@ -54,6 +54,24 @@ DIAGRAM_QUALITY = 92
 
 # (extracted file, topic folder, output slug)
 CURATED = [
+    # --- Omgång 7: vägmarkeringar i verkligheten ---------------------------
+    # Ur svepet i scripts/audit-markings-in-photos.py. Delområdet hade tre
+    # fotografier och femton markeringar; de fyra här täcker sådant ingen
+    # vektorritning visar: målad text, tillfällig gul färg ovanpå ordinarie
+    # vit, och två markeringar bredvid varandra som är lätta att förväxla.
+    ('p167-0.jpeg', 'vagmarkeringar', 'malad-skola-30'),
+    ('p005-0.jpeg', 'vagmarkeringar', 'gula-tillfalliga-markeringar'),
+    ('p045-0.jpeg', 'vagmarkeringar', 'overgangsstalle-och-cykelpassage'),
+    ('p042-1.jpeg', 'vagmarkeringar', 'korfaltslinjer-signalkorsning'),
+    # --- Omgång 7: märken i verklig trafik ---------------------------------
+    # Ur den uttömmande genomgången av alla 263 fotokandidater. Varje märke är
+    # identifierat genom att förstora det i fotot, aldrig utifrån kapitlet.
+    ('p323-0.jpeg', 'parkering', 'forbud-stanna-gata'),
+    ('p161-0.jpeg', 'parkering', 'p-skylt-rorelsehindrad-tid'),
+    ('p032-0.jpeg', 'vajningsregler', 'varning-vagkorsning-stad'),
+    ('p097-0.jpeg', 'omkorning', 'omkorningsforbud-landsvag'),
+    ('p008-0.jpeg', 'vajningsregler', 'stopp-vid-signal'),
+    ('p303-0.jpeg', 'vinter', 'hastighetsskylt-snotackt'),
     # --- Omgång 7: vägmärke i verkligheten ---------------------------------
     # Ett varningsmärke för vägkorsning som står i en kurva, där korsningen
     # ännu inte syns. Just det är poängen: märket kommer innan platsen gör det.

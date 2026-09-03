@@ -11,6 +11,7 @@ import { OriginalVisualFigure } from '@/ui/visuals/OriginalVisualFigure';
 import { RoadSignAssembly } from '@/ui/illustrations/RoadSignAssembly';
 import { SignCatalogue } from '@/ui/media/SignCatalogue';
 import { SignInContext } from '@/ui/media/SignInContext';
+import { MarkingInContext } from '@/ui/media/MarkingInContext';
 import { SignGrid, SignCompare, MarkingGrid, MarkingCompare } from '@/ui/media/SignGrid';
 import { LESSONS, getLesson } from '@/content/lessons';
 import { SCENARIOS } from '@/content/scenarios';
@@ -110,6 +111,14 @@ function Block({ block }: { block: LessonBlock }) {
     case 'signInContext':
       return (
         <SignInContext signId={block.signId} imageId={block.imageId} notice={block.notice} />
+      );
+    case 'markingInContext':
+      return (
+        <MarkingInContext
+          markingId={block.markingId}
+          imageId={block.imageId}
+          notice={block.notice}
+        />
       );
     case 'signCatalogue':
       return (

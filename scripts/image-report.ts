@@ -47,9 +47,18 @@ for (const q of ALL_QUESTIONS) {
 const lessonUse = new Map<string, string[]>();
 for (const lesson of LESSONS) {
   for (const block of lesson.blocks) {
-    // A photograph can be used two ways now: on its own, or paired with the
-    // book's own artwork of a sign that is visible in it.
-    if (block.kind !== 'sourceImage' && block.kind !== 'signInContext') continue;
+    // A photograph can be used three ways now: on its own, paired with the
+    // book's own artwork of a sign that is visible in it, or paired with the
+    // drawing of a marking that is painted in it. Missing a kind here does not
+    // break anything — it quietly reports a photograph as unused and invites
+    // somebody to retire one that is on screen.
+    if (
+      block.kind !== 'sourceImage' &&
+      block.kind !== 'signInContext' &&
+      block.kind !== 'markingInContext'
+    ) {
+      continue;
+    }
     const list = lessonUse.get(block.imageId);
     if (list) list.push(lesson.id);
     else lessonUse.set(block.imageId, [lesson.id]);
@@ -58,7 +67,14 @@ for (const lesson of LESSONS) {
 
 const usedIds = new Set([...questionUse.keys(), ...lessonUse.keys()]);
 const imageBackedLessons = new Set(
-  LESSONS.filter((l) => l.blocks.some((b) => b.kind === 'sourceImage')).map((l) => l.id),
+  LESSONS.filter((l) =>
+    l.blocks.some(
+      (b) =>
+        b.kind === 'sourceImage' ||
+        b.kind === 'signInContext' ||
+        b.kind === 'markingInContext',
+    ),
+  ).map((l) => l.id),
 );
 const imageBackedQuestions = ALL_QUESTIONS.filter((q) => q.sourceImageId);
 
@@ -210,6 +226,37 @@ for (const chapter of CURRICULUM_CHAPTERS) {
   lines.push(`| ${chapter.title} | ${chapter.startPage}–${chapter.endPage} |`);
 }
 lines.push('');
+
+/* ---- What a question reads out before it is answered ----------------- */
+lines.push('## Frågesäker text');
+lines.push('');
+lines.push('En bild i en obesvarad fråga läser upp sin alt-text och sin långa');
+lines.push('beskrivning för den som inte ser den, *innan* svaret väljs. Måttet är');
+lines.push('likvärdighet: texten får säga allt en seende ser, och ingenting en seende');
+lines.push('hade behövt räkna ut. Där den vanliga texten inte klarar det finns en');
+lines.push('frågesäker variant som används just medan frågan är öppen.');
+lines.push('');
+lines.push('Kontrolleras av `src/domain/content/quizSafeText.test.ts`, som jämför');
+lines.push('ordagranna fraser ur det rätta svaret mot det som läses upp.');
+lines.push('');
+
+const quizImages = approved.filter((i) => questionUse.has(i.id));
+const withQuizSafe = quizImages.filter((i) => i.quizSafeAltText || i.quizSafeDescription);
+lines.push('| | Antal |');
+lines.push('| --- | ---: |');
+lines.push(`| Bilder som en fråga använder | ${quizImages.length} |`);
+lines.push(`| Med egen frågesäker text | ${withQuizSafe.length} |`);
+lines.push(`| Klarar sig på den ordagranna beskrivningen | ${quizImages.length - withQuizSafe.length} |`);
+lines.push('');
+
+if (withQuizSafe.length > 0) {
+  lines.push('| Bild | Varför den behöver en egen text |');
+  lines.push('| --- | --- |');
+  for (const image of withQuizSafe) {
+    lines.push(`| \`${image.id}\` | ${image.quizSafeDescription ? 'alt-text och beskrivning' : 'alt-text'} |`);
+  }
+  lines.push('');
+}
 
 lines.push('## Bilder och var de används');
 lines.push('');

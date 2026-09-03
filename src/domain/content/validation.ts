@@ -582,6 +582,11 @@ export function validateContent(input: ValidationInput): ValidationReport {
           }
         }
       }
+      if (block.kind === 'markingInContext') {
+        if (markingIds.size > 0 && !markingIds.has(block.markingId)) {
+          add('error', 'unknown-marking', where, `Okänd markering "${block.markingId}".`);
+        }
+      }
     }
   }
 
@@ -702,7 +707,16 @@ export function validateContent(input: ValidationInput): ValidationReport {
   /* ---- Lesson image blocks --------------------------------------------- */
   for (const lesson of input.lessons ?? []) {
     for (const block of lesson.blocks) {
-      if (block.kind !== 'sourceImage') continue;
+      // Three block kinds carry a photograph, and until all three were checked
+      // a context pair could point at an id that no longer existed and simply
+      // render nothing — the half of the pair that teaches recognition.
+      if (
+        block.kind !== 'sourceImage' &&
+        block.kind !== 'signInContext' &&
+        block.kind !== 'markingInContext'
+      ) {
+        continue;
+      }
       const where = `lektion:${lesson.id}`;
       const image = imageById.get(block.imageId);
       if (!image) {

@@ -9,20 +9,20 @@ Ett foto som ingen lektion tolkar är dekoration oavsett hur rätt det är.
 
 | | Antal |
 | --- | ---: |
-| Godkända källbilder | 66 |
-| Använda av lektion eller fråga | 66 |
+| Godkända källbilder | 76 |
+| Använda av lektion eller fråga | 76 |
 | Oanvända | 0 |
-| Lektioner med källbild | 15 av 19 |
-| Frågor med källbild | 48 av 458 |
+| Lektioner med källbild | 16 av 19 |
+| Frågor med källbild | 51 av 461 |
 | Kapitel med minst en bild | 23 av 39 |
-| Begrepp vars delområde har foto | 86 av 179 |
+| Begrepp vars delområde har foto | 91 av 179 |
 | Scenarier (interaktiva, ej foto) | 14 |
 
 ## Per användning
 
 | Användning | Antal |
 | --- | ---: |
-| `theory-lesson` | 26 |
+| `theory-lesson` | 36 |
 | `question-image` | 40 |
 | `supporting-reference` | 0 |
 
@@ -94,17 +94,17 @@ förra, och kolumnerna hålls isär så att den skillnaden syns.
 | Kapitel | Sidor | Foto | Bokritning | Egen ritning |
 | --- | --- | ---: | ---: | ---: |
 | Inledning | 6–13 | 3 | 0 | 0 |
-| Körfält | 14–21 | 2 | 0 | 0 |
-| Väjningsregler | 22–45 | 7 | 0 | 0 |
-| Passager | 46–57 | 7 | 0 | 0 |
+| Körfält | 14–21 | 3 | 0 | 0 |
+| Väjningsregler | 22–45 | 9 | 0 | 0 |
+| Passager | 46–57 | 8 | 0 | 0 |
 | Cirkulationsplats | 58–67 | 2 | 0 | 0 |
-| Stanna & parkera | 68–77 | 3 | 0 | 0 |
+| Stanna & parkera | 68–77 | 5 | 0 | 0 |
 | Landsväg | 78–89 | 4 | 0 | 0 |
 | Motorväg & motortrafikled | 90–97 | 3 | 0 | 0 |
-| Omkörningar | 98–107 | 3 | 0 | 0 |
+| Omkörningar | 98–107 | 4 | 0 | 0 |
 | Järnvägskorsningar | 108–115 | 2 | 0 | 0 |
 | Speciella gator | 116–123 | 1 | 0 | 0 |
-| Vinter | 124–131 | 2 | 0 | 0 |
+| Vinter | 124–131 | 3 | 0 | 0 |
 | Synen | 154–161 | 1 | 0 | 0 |
 | Barn | 168–173 | 1 | 0 | 0 |
 | Trafikolyckor | 174–187 | 2 | 0 | 3 |
@@ -117,7 +117,7 @@ förra, och kolumnerna hålls isär så att den skillnaden syns.
 | Längd & bredd | 244–251 | 0 | 4 | 0 |
 | Last | 252–261 | 1 | 2 | 0 |
 | Belysning | 262–271 | 1 | 4 | 0 |
-| Vägmärken | 324–361 | 6 | 0 | 0 |
+| Vägmärken | 324–361 | 8 | 0 | 0 |
 
 ## Kapitel utan bildstöd
 
@@ -141,10 +141,41 @@ av ett fotografi; ett om sikt, väglag eller samspel blir det nästan alltid.
 | Drivmedel | 318–323 |
 | Rättsfall | 362–367 |
 
+## Frågesäker text
+
+En bild i en obesvarad fråga läser upp sin alt-text och sin långa
+beskrivning för den som inte ser den, *innan* svaret väljs. Måttet är
+likvärdighet: texten får säga allt en seende ser, och ingenting en seende
+hade behövt räkna ut. Där den vanliga texten inte klarar det finns en
+frågesäker variant som används just medan frågan är öppen.
+
+Kontrolleras av `src/domain/content/quizSafeText.test.ts`, som jämför
+ordagranna fraser ur det rätta svaret mot det som läses upp.
+
+| | Antal |
+| --- | ---: |
+| Bilder som en fråga använder | 48 |
+| Med egen frågesäker text | 1 |
+| Klarar sig på den ordagranna beskrivningen | 47 |
+
+| Bild | Varför den behöver en egen text |
+| --- | --- |
+| `cykeloverfart` | alt-text och beskrivning |
+
 ## Bilder och var de används
 
 | Bild | Slag | Delområde | Sida | Lektioner | Frågor |
 | --- | --- | --- | ---: | --- | --- |
+| `malad-skola-30` | foto | Vägmarkeringar | 167 | les-vagmarkeringar | mrk-017 |
+| `gula-tillfalliga-markeringar` | foto | Vägmarkeringar | 5 | les-vagmarkeringar | mrk-015 |
+| `overgangsstalle-och-cykelpassage` | foto | Cykelpassage och cykelöverfart | 45 | les-vagmarkeringar | mrk-016 |
+| `korfaltslinjer-signalkorsning` | foto | Körfält och sväng | 42 | les-vagmarkeringar | — |
+| `forbud-stanna-gata` | foto | Förbud att stanna | 323 | les-parkering | — |
+| `p-skylt-rorelsehindrad-tid` | foto | Parkeringsregler | 161 | les-parkering | — |
+| `varning-vagkorsning-stad` | foto | Högerregeln | 32 | les-hogerregeln | — |
+| `omkorningsforbud-landsvag` | foto | Omkörningsregler | 97 | les-omkorning | — |
+| `stopp-vid-signal` | foto | Stopplikt | 8 | les-vagmarken | — |
+| `hastighetsskylt-snotackt` | foto | Vinterkörning | 303 | les-halka | — |
 | `varning-vagkorsning-i-kurva` | foto | Skymd sikt | 180 | les-vagmarken | — |
 | `korfaltspilar-cirkulation` | foto | Vägmarkeringar | 23 | les-vagmarken, les-vagmarkeringar | — |
 | `bevakat-overgangsstalle` | foto | Gående och cyklister | 42 | les-passager | — |

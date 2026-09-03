@@ -100,7 +100,13 @@ Märkena **precachas**; fotografierna gör det inte.
 
 Uppdelningen är mätt, och mäts om varje gång registret växer. De 105
 märkesbilderna är tillsammans 481 kB mot ungefär 6,6 MB för fotografierna.
-Förhandscachen står på 2 029 KiB. Gränsen där avvägningen skulle behöva tas om
+Förhandscachen står på 2 060 KiB — hela den, alla 169 poster okomprimerade på
+disk, inte bara bildmaterialet. Märkesbilderna är 481 KiB av dem; resten är
+appens egen JavaScript och CSS.
+
+Mät på en tom `dist/`. Ett bygge ovanpå ett tidigare kan lämna kvar chunkar med
+gamla hashar, och då räknar Workbox in dem — en mätning mitt i det här passet
+läste 3 194 KiB av just det skälet, vilket är ungefär 55 % för mycket. Gränsen där avvägningen skulle behöva tas om
 ligger kring ett par megabyte märkesbilder — vi är långt under den.
 
 Vad det köper är att provet fungerar offline: ungefär var tionde provfråga visar

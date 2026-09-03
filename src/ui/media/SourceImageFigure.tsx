@@ -120,6 +120,22 @@ export function SourceImageFigure({
 
   const kind = image.kind ?? 'photo';
 
+  /**
+   * The caption is hidden exactly while a question is open, so the same flag
+   * decides whether the accessible text has to hold back too. Falling through
+   * to the literal text is right: most descriptions give nothing away, and a
+   * missing quiz-safe variant should degrade to a full description rather than
+   * to silence.
+   */
+  const quizSafe = !showCaption;
+  const altText = quizSafe ? (image.quizSafeAltText ?? image.altText) : image.altText;
+  const description = quizSafe
+    ? (image.quizSafeDescription ?? image.quizSafeAltText ?? image.longDescription)
+    : image.longDescription;
+  // Words printed inside a diagram are its content, but in a question they can
+  // also be the answer. Held back under the same flag.
+  const labels = quizSafe && image.quizSafeAltText ? undefined : image.labelText;
+
   const resolved = resolveSourceImage(image.asset);
   const source = getSource(image.sourceId);
   const descriptionId = `${reactId}-desc`;
@@ -140,10 +156,8 @@ export function SourceImageFigure({
       <figure className={styles.figure}>
         {prompt && <p className={styles.prompt}>{prompt}</p>}
         <p className={styles.fallback}>
-          {image.longDescription}
-          {image.labelText && image.labelText.length > 0
-            ? ` Text i bilden: ${image.labelText.join(', ')}.`
-            : ''}
+          {description}
+          {labels && labels.length > 0 ? ` Text i bilden: ${labels.join(', ')}.` : ''}
         </p>
         <figcaption className={styles.caption}>
           {showCaption && <span className={styles.captionText}>{caption ?? image.caption}</span>}
@@ -161,7 +175,7 @@ export function SourceImageFigure({
       sizes={sizes}
       width={image.width}
       height={image.height}
-      alt={image.altText}
+      alt={altText}
       aria-describedby={descriptionId}
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
@@ -209,13 +223,11 @@ export function SourceImageFigure({
       {kind === 'diagram' ? <div className={styles.expandRow}>{expandButton}</div> : null}
 
       <p id={descriptionId} className={styles.srOnly}>
-        {image.longDescription}
+        {description}
         {/* The numbers drawn inside a diagram are its content. Rendered as
             pixels they reach nobody using a screen reader, so they are read
             out here as well. */}
-        {image.labelText && image.labelText.length > 0
-          ? ` Text i bilden: ${image.labelText.join(', ')}.`
-          : ''}
+        {labels && labels.length > 0 ? ` Text i bilden: ${labels.join(', ')}.` : ''}
       </p>
 
       <figcaption className={styles.caption}>
@@ -231,7 +243,7 @@ export function SourceImageFigure({
               src={resolved.src}
               srcSet={resolved.srcSet}
               sizes="100vw"
-              alt={image.altText}
+              alt={altText}
               decoding="async"
             />
             <p className={styles.overlayCredit}>{credit}</p>

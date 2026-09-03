@@ -1209,7 +1209,9 @@ export const ROAD_SIGNS: RoadSign[] = [
     altText: 'Varningsmärke: gul triangel med röd ram och tre bilar tätt bakom varandra.',
     visualTraits: { background: 'yellow', border: 'red' },
     tags: ['avstand', 'motorvag'],
-    similarSignIds: [],
+    // Samma bildspråk som omkörningsförbudet: svarta bilar sedda bakifrån på
+    // gul botten. Det som skiljer dem är formen och antalet, inte motivet.
+    similarSignIds: ['forbud-omkorning'],
     subcategory: 'varningsmarken',
   }),
   sign({
@@ -1952,4 +1954,40 @@ export function interpretSignAssembly(mainSignId: string, plateIds: readonly str
     .filter((p): p is string => Boolean(p));
   if (phrases.length === 0) return main.shortMeaning;
   return `${main.shortMeaning.replace(/\.$/, '')} — ${phrases.join(', ')}.`;
+}
+
+/**
+ * Signs genuinely confused with this one, read from both directions.
+ *
+ * `similarSignIds` is authored one entry at a time, and an author writing the
+ * B2 entry naturally lists the plate that sits under it while the author of the
+ * plate lists B2 back — or does not. Forty-eight of the relations in the
+ * registry ran one way only, which meant the confusion existed in the data but
+ * could be discovered from one side and not the other.
+ *
+ * Rather than duplicate every edge by hand and then have to keep the two copies
+ * agreeing, the relation is read as a graph: A is confusable with B if either
+ * entry says so. Authors keep writing it once, from whichever side it occurred
+ * to them, and a learner meets it from both.
+ *
+ * Capped, because a detail view that lists eight lookalikes has stopped
+ * distinguishing anything. Entries the sign itself names come first — that is
+ * the author's own ordering.
+ */
+export function confusableSigns(signId: string, limit = 3): RoadSign[] {
+  const own = getRoadSign(signId);
+  if (!own) return [];
+
+  const ordered: string[] = [...own.similarSignIds];
+  for (const other of ROAD_SIGNS) {
+    if (other.id === signId) continue;
+    if (other.similarSignIds.includes(signId) && !ordered.includes(other.id)) {
+      ordered.push(other.id);
+    }
+  }
+
+  return ordered
+    .map((id) => getRoadSign(id))
+    .filter((s): s is RoadSign => s !== undefined)
+    .slice(0, limit);
 }

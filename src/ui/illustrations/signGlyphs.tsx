@@ -105,6 +105,45 @@ function PlateFrame({ children, fill = white }: { children?: ReactNode; fill?: s
   );
 }
 
+/**
+ * The plate's own bounds inside the 100×100 drawing area.
+ *
+ * x from 4 to 96 and y from 20 to 80: the rect above plus half its 4-unit
+ * stroke on each side.
+ */
+const PLATE_VIEW_BOX = '4 20 92 60';
+
+/**
+ * Glyphs whose drawing is not square, and the box that actually contains them.
+ *
+ * Every other vector sign is a circle or a triangle inscribed in the square, so
+ * rendering the SVG at size × size shows it at its true proportions. A
+ * supplementary plate is not: it is a wide rectangle occupying the middle 60 %
+ * of the height, so a square element left roughly 30 % of its height empty
+ * above and below. On a post that is the gap between the sign and the plate —
+ * the gap that says the plate belongs to *that* sign — and it was three times
+ * wider under a T6 than under any of the fourteen plates that have the book's
+ * own artwork and are sized from their real pixels.
+ *
+ * Cropping the viewBox to the drawing rather than rescaling it means nothing is
+ * stretched; the plate is simply no longer padded with empty space.
+ */
+export const GLYPH_VIEW_BOX: Record<string, string> = {
+  'tavla-tid': PLATE_VIEW_BOX,
+  'tavla-tid-lordag': PLATE_VIEW_BOX,
+  'tavla-tid-helgdag': PLATE_VIEW_BOX,
+};
+
+/** Height-to-width of a glyph's drawing, 1 for the square majority. */
+export function glyphAspect(name: string): number {
+  const box = GLYPH_VIEW_BOX[name];
+  if (!box) return 1;
+  const parts = box.split(' ').map(Number);
+  const width = parts[2] ?? 100;
+  const height = parts[3] ?? 100;
+  return height / width;
+}
+
 /** A cancellation bar: the diagonal that turns a sign into its "upphör" form. */
 function EndBar({ colour = black }: { colour?: string }) {
   return <line x1="16" y1="84" x2="84" y2="16" stroke={colour} strokeWidth="6" strokeLinecap="round" />;

@@ -478,6 +478,9 @@ const ROWS: ReadonlyArray<readonly [string, string, string, number, string, stri
   ['mrk-012', 'trafikregler', 'korfaltsbyte', 2, 'reviewed', "Bussymbol i körfältet (M28)"],
   ['mrk-013', 'vagmarken', 'vagmarkeringar', 3, 'reviewed', "Markering kontra vägmärke"],
   ['mrk-014', 'vagmarken', 'vagmarkeringar', 2, 'reviewed', "Ledlinje (M4)"],
+  ['mrk-015', 'vagmarken', 'vagmarkeringar', 2, 'reviewed', "Tillfälliga markeringar vid vägarbete"],
+  ['mrk-016', 'trafikregler', 'cykelpassage-overfart', 3, 'reviewed', "Skilja övergångsställe från cykelpassage i verkligheten"],
+  ['mrk-017', 'vagmarken', 'vagmarkeringar', 2, 'reviewed', "Vad en målad hastighetssiffra gör"],
   ['sym-001', 'parkering', 'parkeringsforbud', 2, 'reviewed', "Fordonssymbol som avgränsar ett förbud"],
   ['sym-002', 'last', 'slapvagn', 3, 'reviewed', "Symboltavla med släpkärra"],
   ['sym-003', 'vagmarken', 'anvisningsmarken', 2, 'reviewed', "Att läsa en tabellvägvisare"],
@@ -503,8 +506,8 @@ export const ACTIVE_QUESTION_INDEX: readonly QuestionIndexEntry[] =
 
 /** Bank statistics, so the landing page needs no question bodies. */
 export const BANK_TOTALS = {
-  total: 458,
+  total: 461,
   easy: 84,
-  medium: 258,
-  hard: 116,
+  medium: 260,
+  hard: 117,
 } as const;

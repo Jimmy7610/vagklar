@@ -1,4 +1,4 @@
-import { SIGN_GLYPHS } from './signGlyphs';
+import { GLYPH_VIEW_BOX, SIGN_GLYPHS, glyphAspect } from './signGlyphs';
 import { licensedSignAsset } from './roadSignAssets';
 
 /**
@@ -70,11 +70,13 @@ export function RoadSign({ name, size = 96, alt, decorative = false }: RoadSignP
   const glyph = SIGN_GLYPHS[name];
   if (!glyph) return null;
 
+  // `size` is the width in both branches, so a vector sign and a photographed
+  // one line up on the same post. The height follows the drawing.
   return (
     <svg
       width={size}
-      height={size}
-      viewBox="0 0 100 100"
+      height={size * glyphAspect(name)}
+      viewBox={GLYPH_VIEW_BOX[name] ?? '0 0 100 100'}
       role={decorative ? 'presentation' : 'img'}
       aria-label={decorative ? undefined : label}
       aria-hidden={decorative || undefined}

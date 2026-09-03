@@ -41,7 +41,7 @@ Tillståndet omfattar både texten och bilderna i källan.
 **Bilderna** används däremot direkt, i ett kurerat urval:
 
 - 65 bilder ur källan visas i lektioner och frågor: 54 fotografier och 11 ritningar.
-- 89 av de 99 vägmärkena ritas med källans egen märkesbild, hämtad ur
+- 105 av de 115 vägmärkena ritas med källans egen märkesbild, hämtad ur
   märkesbilagan s. 324–361. Även märkenas namn är bokens egna, lästa ur
   bildtexterna. Se [LICENSED-SIGNS.md](LICENSED-SIGNS.md).
 - De tio återstående ritas av Vägklar och är © 2026 Jimmy Eliasson. De är

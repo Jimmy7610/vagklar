@@ -50,6 +50,7 @@ npm run dev
 | `python scripts/optimise-book-signs.py` | Optimerar märkena till WebP |
 | `python scripts/derive-sign-traits.py` | Läser varje märkes färger ur dess egen bild |
 | `python scripts/audit-signs-in-photos.py` | Letar synliga vägmärken i källans fotografier |
+| `python scripts/audit-markings-in-photos.py` | Letar målade vägmarkeringar i källans fotografier |
 | `python scripts/audit-book-visuals.py` | Katalogiserar källans alla figurer |
 
 Ikoner och Open Graph-bilden genereras från kod:
@@ -147,22 +148,24 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 
 | Sak                            | Antal                                  |
 | ------------------------------ | -------------------------------------- |
-| Frågor                         | 431 (84 lätta, 240 medel, 107 svåra)   |
+| Frågor                         | 461 (84 lätta, 260 medel, 117 svåra)   |
 | Kunskapsområden                | 17                                     |
 | Delområden                     | 71                                     |
-| Lektioner                      | 15                                     |
+| Lektioner                      | 19                                     |
 | Scenarier                      | 14 (med varianter)                     |
-| Namngivna missuppfattningar    | 253                                    |
-| Källbilder (används med tillstånd) | 66 (55 foton, 11 ritningar)        |
-| Vägmärken i registret             | 99, varav 17 tilläggstavlor        |
-| Med bokens egen märkesbild        | 89 av 99                           |
+| Namngivna missuppfattningar    | 275                                    |
+| Källbilder (används med tillstånd) | 76 (65 foton, 11 ritningar)        |
+| Vägmärken i registret             | 115, varav 17 tilläggstavlor       |
+| Med bokens egen märkesbild        | 105 av 115                         |
 | Vägklars egna ritningar           | 15                                 |
-| Ritade vägmärken               | 58                                     |
-| Ritade vägmarkeringar          | 15                                     |
+| Vägklar-ritade vägmärken       | 10 (koder med flera varianter)         |
+| Vägmarkeringar                 | 15                                     |
+| Märke bredvid foto av samma märke | 16 par                              |
+| Markering bredvid foto av samma markering | 5 par                       |
 | Kursplanetäckning              | 179 av 179 begrepp i 39 kapitel        |
 
 Allt innehåll är original, skrivet för Vägklar. Varje fråga bär källhänvisningar och en
-granskningsstatus. Samtliga 423 frågor har status `reviewed` — internt granskat, inte
+granskningsstatus. Samtliga 461 frågor har status `reviewed` — internt granskat, inte
 signerat av en sakkunnig. **Ingen fråga är verifierad**, och det är avsiktligt: statusen
 `verified` kräver namn, datum och vilka källor som kontrollerades, och sätts bara av en
 människa. Kön över vad som bör kontrolleras först finns i

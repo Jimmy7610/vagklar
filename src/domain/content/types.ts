@@ -274,6 +274,14 @@ export type LessonBlock =
       notice: string;
     }
   | {
+      kind: 'markingInContext';
+      markingId: string;
+      /** A licensed photograph in which that marking is genuinely visible. */
+      imageId: string;
+      /** What to look for. Never states what the marking means. */
+      notice: string;
+    }
+  | {
       kind: 'signAssembly';
       mainSignId: string;
       plateIds: string[];

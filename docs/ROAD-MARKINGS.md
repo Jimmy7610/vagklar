@@ -134,6 +134,33 @@ registret.
 Kontrollerna är testade mot planterade fel, inte bara mot det riktiga registret — ett
 test som bara körs på korrekt data bevisar inte att det upptäcker något.
 
+## Markeringen i verkligheten
+
+`MarkingInContext` ställer Vägklars ritning bredvid ett av källans fotografier
+där samma markering är målad:
+
+```ts
+{ kind: 'markingInContext', markingId: 'mittlinje',
+  imageId: 'korfaltslinjer-signalkorsning',
+  notice: 'Tre körfält, två linjer emellan dem. Räkna längden på strecken…' }
+```
+
+Motsvarigheten till `signInContext`, och behövd av ett skarpare skäl. Ett märke
+liknar åtminstone sin katalogbild: samma färger, samma form, bara mindre och
+snett. En vägmarkering gör inte det. Ritningen visar den rakt uppifrån, i full
+kontrast, ensam. På vägen ser du den i perspektiv, hoptryckt till en strimma,
+nednött till asfalten, blöt, och med tre andra markeringar tvärs över sig.
+
+Fem par finns, och delområdet har sju fotografier — SKOLA och en 30:a målade i
+körbanan, gula tillfälliga linjer tvärs över de vita vid ett vägarbete, ett
+övergångsställe och en cykelpassage bredvid varandra i samma korsning,
+körfältslinjer före en signal, körfältspilar, en väjningslinje och ett bevakat
+övergångsställe. Kandidaterna letas fram av
+`scripts/audit-markings-in-photos.py`, som rangordnar foton efter hur mycket
+målad yta som ligger i körbanan och klipper ut dem för en människa att titta på.
+Skriptet väljer ingenting: en vit skåpbil i solljus ser för den sortens tröskel
+ut precis som ett övergångsställe.
+
 ## Lägga till en markering
 
 1. Lägg posten i `road-markings.ts` med M-kod, `meaning`, `forDriver` och alt-text

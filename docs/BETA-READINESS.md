@@ -27,15 +27,15 @@ hitta det som saknas, inte för att se färdig ut.
 - [x] 27 felaktiga sidhänvisningar hittade och rättade i den här omgången
 - [x] Höga risktal kontrollerade mot källan: promillegränser, mönsterdjup,
       bashastigheter, släpvikter, fordonsslagens hastigheter, bogsering, moped
-- [ ] **Ingen fråga är expertverifierad.** Alla 431 har status `reviewed`.
+- [ ] **Ingen fråga är expertverifierad.** Alla 461 har status `reviewed`.
       Kön finns i [VERIFICATION-QUEUE.md](VERIFICATION-QUEUE.md). Se
       [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md).
 
 ## Källbilder
 
-- [x] **65 godkända källbilder** — 54 fotografier och 11 ritningar ur källan —
+- [x] **76 godkända källbilder** — 65 fotografier och 11 ritningar ur källan —
       plus **15 egna ritningar**, och samtliga används av en lektion eller fråga
-- [x] **89 av 99 vägmärken ritas med källans egen bild**, och märkenas namn är
+- [x] **105 av 115 vägmärken ritas med källans egen bild**, och märkenas namn är
       bokens egna. De tio som står kvar på vektor gör det för att koden täcker
       flera varianter i verkligheten — bokens C31 visar 30 och kan inte
       illustrera `hastighet-90`. Sammansättning ur bokens delar prövades och
@@ -43,8 +43,11 @@ hitta det som saknas, inte för att se färdig ut.
 - [x] **Tilläggstavlor är komponerbara objekt.** En tavla vet vilken dimension
       den begränsar, en stolpe renderas som en figur med en beskrivning, och
       den sammanlagda innebörden hålls tillbaka så länge frågan är obesvarad
-- [x] Fyra par av bokens märkesbild bredvid ett fotografi där samma märke syns
-- [x] Sökbar katalog över alla 99 märken, med filter och annonserat träffantal
+- [x] Sexton par av bokens märkesbild bredvid ett fotografi där samma märke syns,
+      och fem par av en markerings ritning bredvid ett foto av samma markering
+- [x] Sökbar katalog över alla 115 märken, med filter och annonserat träffantal.
+      Ett kort öppnar en detaljvy med lång betydelse, bildbeskrivning, varianter
+      under samma kod och de märken det förväxlas med
 - [x] Bytet avslöjade tolv fel i märkesbeskrivningarna, bland annat att
       motorvägsmärkena beskrevs som blå när de är gröna. Alla rättade
 - [x] En verklig svarsläcka rättad: `vag-011` frågade vilken form och färg
@@ -111,9 +114,9 @@ hitta det som saknas, inte för att se färdig ut.
 
 ## Vägmärken och vägmarkeringar
 
-- [x] Alla **58 märken** granskade förstorade i 220–420 px
+- [x] Alla märken granskade förstorade i 220–420 px
       (`npm run report:visuals` → `review/visual-qa.html`)
-- [x] Alla **58 märkeskoder kontrollerade mot källans planscher** — samtliga rätt
+- [x] Alla **märkeskoder kontrollerade mot källans planscher** — samtliga rätt
 - [x] Alla **15 vägmarkeringar** granskade förstorade; linjetyper, riktning,
       stopp- och väjningslinjer, pilar och passager stämmer med sin text
 - [x] 2 ritfel hittade och rättade: A36 ritades som ett kryss (det är A39

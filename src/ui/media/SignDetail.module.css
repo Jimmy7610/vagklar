@@ -1,0 +1,264 @@
+/* ==========================================================================
+   Sign detail dialog
+   --------------------------------------------------------------------------
+   Mobile first, and on a phone that means a sheet: full width, anchored to the
+   bottom, capped at most of the viewport height so the page behind stays
+   visible as context. From tablet up it becomes a centred card, because a
+   full-width sheet on a desktop is a line of text a metre long.
+
+   Everything scrolls inside .inner rather than on the dialog itself, so the
+   close button and the sign face cannot be scrolled to somewhere unreachable.
+   ========================================================================== */
+
+.dialog {
+  /* The UA stylesheet centres a dialog with auto margins; on a phone we want
+     it flush to the bottom edge instead. */
+  margin: auto auto 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 88dvh;
+  border: none;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  overflow: hidden;
+}
+
+.dialog::backdrop {
+  background-color: rgb(0 0 0 / 55%);
+}
+
+@media (min-width: 640px) {
+  .dialog {
+    margin: auto;
+    width: min(560px, calc(100vw - 2 * var(--space-5)));
+    max-height: 84dvh;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+  }
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-5);
+  max-height: inherit;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* ---- Head --------------------------------------------------------------- */
+
+/* Flex rather than a two-column grid, so that at 200 % text — where the name
+   column is left with fewer characters than the name has — the text drops
+   below the sign instead of hyphenating "Kryssmärke" across two lines. The
+   basis is in ch, so it follows the text size rather than the viewport. */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  min-width: 0;
+}
+
+.art {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  padding: var(--space-2);
+  background-color: #fff;
+  border-radius: var(--radius-sm);
+}
+
+.headText {
+  flex: 1 1 12ch;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-size: var(--text-subsection);
+  font-weight: var(--weight-semibold);
+  line-height: 1.25;
+  min-width: 0;
+  /* Only `anywhere` shrinks min-content, which is what keeps a long compound
+     sign name from forcing the dialog wider than a 320 px viewport. */
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--text-caption);
+  min-width: 0;
+}
+
+.code {
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-secondary);
+}
+
+.category {
+  color: var(--color-text-tertiary);
+}
+
+/* ---- Meaning ------------------------------------------------------------ */
+
+.short {
+  margin: 0;
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.long {
+  margin: 0;
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Labelled groups ---------------------------------------------------- */
+
+.group {
+  display: grid;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  min-width: 0;
+}
+
+.groupLabel {
+  margin: 0;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.alt {
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Variants ----------------------------------------------------------- */
+
+.variants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.variant {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  width: 84px;
+  min-width: 0;
+}
+
+.variantName {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-align: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Confusable --------------------------------------------------------- */
+
+.confusable {
+  display: grid;
+  /* One per row on a phone: these cards carry a sentence each, and two columns
+     at 320 px turns every sentence into a stack of single words. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.confusableCard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'art name'
+    'art code'
+    'art meaning';
+  column-gap: var(--space-3);
+  row-gap: 2px;
+  align-items: start;
+  padding: var(--space-3);
+  background-color: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  min-width: 0;
+}
+
+.confusableCard > :global(svg) {
+  grid-area: art;
+  align-self: center;
+}
+
+.confusableName {
+  grid-area: name;
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.confusableCode {
+  grid-area: code;
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.confusableMeaning {
+  grid-area: meaning;
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Close -------------------------------------------------------------- */
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  justify-self: stretch;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  font: inherit;
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: normal;
+}
+
+.close:hover {
+  background-color: var(--color-surface-sunken);
+}

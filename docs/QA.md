@@ -1467,3 +1467,173 @@ ihop med symboltavlan, vägvisningen med körfältsvalet.
 | 320 px @ 200 %, 10 rutter | Ingen |
 | 375 px @ 200 % | Ingen |
 | 390 px @ 200 % | Ingen |
+
+
+## Uttömmande fotogenomgång, vägmarkeringar och märkesdetaljvy (2026-09-03)
+
+Passet är städning, inte utbyggnad. Det förra passet lämnade en halvfärdig
+fotogenomgång, ett delområde med tre bilder mot femton markeringar och ett
+märkesregister vars förväxlingar aldrig nådde en läsare. Allt tre är avslutat
+här, och genomgången hittade fyra verkliga fel på vägen.
+
+### Fotogenomgången är klar
+
+Alla 61 återstående märkesbärande kandidater ur `audit-signs-in-photos.py`
+granskades förstorade, åtta per ark. Sex godkändes:
+
+| Foto | Sida | Märke som syns |
+| --- | ---: | --- |
+| `forbud-stanna-gata` | 323 | C39, förbud mot att stanna och parkera |
+| `p-skylt-rorelsehindrad-tid` | 161 | E19 med T7 och T6 |
+| `varning-vagkorsning-stad` | 32 | A28 |
+| `omkorningsforbud-landsvag` | 97 | C27 |
+| `stopp-vid-signal` | 8 | B2 bredvid en grön signal |
+| `hastighetsskylt-snotackt` | 303 | C31 50 med snö över, D2 under |
+
+Resten avvisades med angiven grund: dubblett av ett redan kurerat motiv,
+märkesytan för liten för att identifieras vid förstoring, fel motiv (träd,
+undersidan av en viadukt, en bils baklykta), eller ren dekor.
+
+**Att förstora lönade sig två gånger under själva registreringen.** Snön på
+50-märket ligger över märkets *övre* kant, inte den nedre — beskrivningen var
+redan skriven åt andra hållet. Och stoppmärket i `stopp-vid-signal` hänger på en
+arm ut från signalstolpen, vänt åt samma håll som signalen, alltså mot vår egen
+tillfart. Den första gissningen var att det var vänt mot den korsande vägen, och
+den gissningen hade blivit en bildtext som lärde ut fel sak.
+
+### Vägmarkeringar: från tre foton till sju
+
+`scripts/audit-markings-in-photos.py` är nytt och letar efter den enda signal en
+markering pålitligt har: ljus, omättad yta på mörk asfalt, i bildens nedre del,
+utdragen. 26 kandidater av rätt storlek föll ut, fyra godkändes.
+
+Första körningen slösade halva granskningen. Boken trycker samma foto både stort
+och som liten inforuta, och miniatyrerna är 362 × 204 — för små för att någonsin
+bli en 960 px bred bild i appen. Skriptet hoppar nu över allt under 700 px
+brett, vilket tog listan från 87 kandidater till 26 verkliga.
+
+De fyra täcker sådant ingen vektorritning kan visa: målad text (`SKOLA` och en
+30:a i körbanan), gula tillfälliga linjer tvärs över de vita vid ett vägarbete,
+ett övergångsställe och en cykelpassage bredvid varandra i samma korsning, och
+körfältslinjer på en bred signalreglerad tillfart.
+
+Ett nytt block, `markingInContext`, ställer ritningen bredvid fotot. Skälet är
+skarpare än för märken: ett märke liknar åtminstone sin katalogbild, en
+markering gör det inte. Ritningen visar den rakt uppifrån, i full kontrast,
+ensam; på vägen ser du den i perspektiv, nednött och korsad av tre andra.
+
+Tre nya frågor bygger på fotona, och ingen av dem frågar vad linjen heter.
+
+### Fyra fel som kontrollerna hittade
+
+**`plankorsning-bommar` beskrev kryssmärket som röd-vitt.** A39 är rött och
+gult. Beskrivningen sa dessutom att bommarna sträcker sig ut över vägbanan; på
+fotot står de uppfällda. Båda gick att se genom att titta på bilden.
+
+**`snotackt-skogsvag` läste upp svaret.** Beskrivningen slutade med "det går
+inte att se var körbanan slutar och vägkanten börjar" — en slutsats, inte en
+iakttagelse, och ordagrant det rätta svaret på `bl2-017`. Den lästes upp för den
+som inte ser bilden *innan* frågan var besvarad. Slutsatsen står nu i
+bildtexten, där den hör hemma.
+
+**`korfaltspilar-cirkulation` nämnde inte triangelns färg.** Paret med B1 gick
+inte att kontrollera eftersom beskrivningen sa "väjningspliktstriangel" utan att
+säga gul.
+
+**Detaljvyn gick inte att öppna två gånger.** Stängningen anropade
+`dialog.close()` och väntade på elementets eget `close`-event för att mata
+tillbaka tillståndet. Uteblir eventet tror komponenten att en stängd dialog är
+öppen, och nästa klick på samma kort sätter det tillstånd som redan gäller.
+Tillståndet styr numera dialogen; eventet rapporterar bara Escape.
+
+### Frågesäker text
+
+Måttet är likvärdighet, inte tystnad: texten som läses upp får säga allt en
+seende ser, och ingenting en seende hade behövt räkna ut. Det är inte samma sak
+som "nämner inte svaret" — ett foto av packad snö får beskrivas som packad snö
+även när svaret är att greppet är dåligt.
+
+Kontrollen letar därför efter *ordagranna fraser* ur det rätta svaret i det som
+läses upp, och undantar det som redan står i frågans egen text. Fyra träffar,
+varav en verklig läcka (`bl2-017` ovan). De andra tre står i en undantagslista
+med skälet skrivet, och ett test kontrollerar att varje undantag fortfarande
+överlappar — annars är det bara en kommentar ingen läser.
+
+`cykeloverfart` fick en egen frågesäker text. Dess vanliga alt-text räknade upp
+"eget vägmärke, målade rutor och en väjningslinje", vilket är precis de två
+saker frågan ber läsaren peka ut. Den seende får leta i hela bilden; den frågan
+läste upp en färdig kortlista.
+
+### Detaljvyn för märken
+
+Katalogkortet rymmer namn, kod och en rad. Resten — lång betydelse,
+bildbeskrivning, varianter under samma kod, och två till tre märken som märket
+verkligen förväxlas med — ligger i en `<dialog>`.
+
+En dialog och inte en route: katalogen är en sökning man är mitt uppe i, och att
+navigera bort slänger filtret, kategorin och scrollpositionen.
+
+`confusableSigns()` läser relationen åt båda hållen. Fyrtioåtta av kanterna i
+registret är skrivna åt ett håll, och innan detaljvyn fanns nådde ingen av dem
+en läsare över huvud taget. 111 av 115 märken har nu minst en förväxling; de
+fyra som saknar — slirig väg, vägarbete, sidvind, annan fara — delar inget
+bildspråk med något annat i registret, och det är ett svar snarare än en lucka.
+
+### T6-tavlornas proportioner
+
+De tre tidtavlorna är de enda vektormärken som inte är runda. De ritades i en
+kvadratisk ruta på 100 × 100 där själva tavlan upptar den mittersta 60 % av
+höjden, och SVG:n renderades kvadratiskt — så på en stolpe låg ungefär 30 % tom
+yta över och under tavlan. Glappet mellan märke och tavla är det som säger att
+tavlan hör till *det* märket, och under en T6 var det tre gånger så brett som
+under de fjorton tavlor som har bokens egen bild och måttsätts ur sina verkliga
+pixlar.
+
+Ritytan beskärs nu till tavlan i stället för att skalas om. Ingenting sträcks;
+den tomma ytan är bara borta.
+
+### Siffror
+
+| | Före | Efter |
+| --- | ---: | ---: |
+| Godkända källbilder | 66 | 76 |
+| Foton med vägmarkering | 3 | 7 |
+| Märke–foto-par | 10 | 16 |
+| Markering–foto-par | 0 | 5 |
+| Märken med minst en förväxling som når en läsare | 0 | 111 av 115 |
+| Frågor | 458 | 461 |
+| Oanvända godkända bilder | 2 | 0 |
+| Startpaket (gzip) | — | 166 067 B av 185 000 |
+| Förhandscache | — | 2 060 KiB, 169 poster |
+
+### Reflow och 200 % text
+
+| Läge | Resultat |
+| --- | --- |
+| 320, 360, 375, 390, 412, 768, 1024, 1440 px | Ingen horisontell scroll |
+| 320, 375, 390 px @ 200 % text | Ingen |
+| Detaljvyn 320 px @ 200 % text | Ryms; rullar internt |
+
+En rättning kom ur 200 %-läget: dialogens huvud var ett tvåkolumnsrutnät, och
+vid 200 % text blev namnkolumnen smalare än ordet "Kryssmärke", som då bröts
+mitt itu. Huvudet är nu flex med en `ch`-baserad bas, så texten faller under
+märkesbilden i stället.
+
+### En mätning som var fel
+
+Förhandscachen lästes först som 3 194 KiB och sedan som 3 638 KiB, båda gånger
+växande utan att något stort lagts till. Orsaken var `dist/`: byggena i passet
+lade sig ovanpå varandra, och Workbox räknade in chunkar med gamla hashar som
+inte längre hör till appen. På en tom `dist/` är siffran 2 060 KiB i 169 poster,
+och två byggen i rad ger samma tal.
+
+Värt att notera för nästa gång någon läser en storlekssiffra ur ett bygge: mät
+på tomt underlag, annars mäter man historien också.
+
+### Vad som inte gjordes
+
+Fyra varningsmärken står kvar utan förväxlingspar, och det är avsiktligt —
+ingen av dem liknar något annat i registret tillräckligt för att påståendet
+skulle vara sant.
+
+Ingen fråga har markerats som verifierad. Alla 461 har status `reviewed`.

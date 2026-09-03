@@ -124,6 +124,13 @@ export const LESSONS: Lesson[] = [
         notice:
           'Under stoppmärket sitter en röd tavla med texten Flervägs-stopp. Den säger att alla tillfarter har stopplikt — så den som står still på tvären väntar inte på dig, utan har stannat av samma skäl.',
       },
+      {
+        kind: 'signInContext',
+        signId: 'varning-vagkorsning',
+        imageId: 'varning-vagkorsning-stad',
+        notice:
+          'Det står ett märke i korsningen, men jämför det med listan ovanför: det är varken väjningsplikt, stopplikt eller huvudled. Ett likadant märke syns dessutom längre bort på andra sidan.',
+      },
     ],
     curriculumChapterIds: ['vajningsregler', 'cirkulationsplats'],
     checkQuestionIds: ['kor-001', 'kor-009', 'kor-014'],
@@ -322,6 +329,20 @@ export const LESSONS: Lesson[] = [
         notice:
           'Ett snedstreck, inte ett kryss. Det är parkering som är förbjuden här — att stanna för av- och påstigning är alltså tillåtet, så länge du inte gör det på övergångsstället.',
       },
+      {
+        kind: 'signInContext',
+        signId: 'forbud-stanna',
+        imageId: 'forbud-stanna-gata',
+        notice:
+          'Samma blå botten och samma röda ring som märket ovanför — räkna strecken. Här är de två och de korsar varandra.',
+      },
+      {
+        kind: 'signInContext',
+        signId: 'tavla-rorelsehindrade',
+        imageId: 'p-skylt-rorelsehindrad-tid',
+        notice:
+          'Tavlan med rullstolssymbolen sitter mellan P-skylten och tidtavlan. Läs vad som står ovanför den och vad som står under innan du avgör vad stolpen säger.',
+      },
     ],
     curriculumChapterIds: ['stanna-parkera'],
     checkQuestionIds: ['par-001', 'par-002', 'par-004', 'par-006'],
@@ -449,6 +470,13 @@ export const LESSONS: Lesson[] = [
         text: 'Släpp gasen, håll ratten stilla och undvik att bromsa tills däcken får kontakt igen. Varje kraftig manöver får effekt först när greppet återvänder — och blir då plötslig.',
       },
       { kind: 'memory', text: 'Broar fryser först. Släpp gasen, håll rakt, gör ingenting.' },
+      {
+        kind: 'signInContext',
+        signId: 'hastighet-50',
+        imageId: 'hastighetsskylt-snotackt',
+        notice:
+          'Snön ligger över märkets övre kant och tar med sig en del av den röda ringen. Siffran går att läsa — ringen får du veta att den finns där.',
+      },
     ],
     curriculumChapterIds: ['vinter', 'dack'],
     checkQuestionIds: ['hal-001', 'hal-004', 'hal-005', 'for-001'],
@@ -500,6 +528,13 @@ export const LESSONS: Lesson[] = [
         text: 'Sikten fram till ett backkrön säger ingenting. Det är sikten bortom krönet som avgör.',
       },
       { kind: 'memory', text: 'Kort fartskillnad, lång omkörning.' },
+      {
+        kind: 'signInContext',
+        signId: 'forbud-omkorning',
+        imageId: 'omkorningsforbud-landsvag',
+        notice:
+          'Titta på mittlinjen samtidigt som du tittar på märket. Linjen är streckad, och märket står ändå där.',
+      },
     ],
     curriculumChapterIds: ['omkorningar', 'motorvag'],
     checkQuestionIds: ['omk-001', 'omk-002', 'omk-003', 'omk-008'],
@@ -957,6 +992,13 @@ export const LESSONS: Lesson[] = [
       },
       {
         kind: 'signInContext',
+        signId: 'stopp',
+        imageId: 'stopp-vid-signal',
+        notice:
+          'Märket hänger på en arm ut från signalstolpen och är vänt åt samma håll som signalen — båda gäller alltså din tillfart. Signalen lyser grönt just nu.',
+      },
+      {
+        kind: 'signInContext',
         signId: 'vajningsplikt',
         imageId: 'korfaltspilar-cirkulation',
         notice:
@@ -1102,6 +1144,13 @@ export const LESSONS: Lesson[] = [
         ],
       },
       {
+        kind: 'markingInContext',
+        markingId: 'mittlinje',
+        imageId: 'korfaltslinjer-signalkorsning',
+        notice:
+          'Tre körfält, två linjer emellan dem. Räkna längden på strecken mot längden på mellanrummen — det är det förhållandet som skiljer den här linjen från nästa.',
+      },
+      {
         kind: 'markingCompare',
         title: 'Lätt att blanda ihop',
         leftId: 'mittlinje',
@@ -1128,36 +1177,45 @@ export const LESSONS: Lesson[] = [
         note: 'Övergångsstället är breda band längs körriktningen. Cykelpassagen är två rader rutor. Rutorna ensamma betyder att du ska anpassa hastigheten — först när det också finns ett vägmärke och en väjningslinje är det en cykelöverfart med full väjningsplikt.',
       },
       {
+        kind: 'markingInContext',
+        markingId: 'cykelpassage-m16',
+        imageId: 'overgangsstalle-och-cykelpassage',
+        notice:
+          'Här ligger båda markeringarna i samma korsning, med några meters mellanrum. Leta upp banden och leta upp rutorna, och lägg märke till att de två märkena på stolpen till höger också sitter över varandra.',
+      },
+      {
         kind: 'markingGrid',
         title: 'Symboler i körbanan',
         markingIds: ['korfaltspilar', 'markering-cykel', 'markering-buss', 'markering-hastighet'],
       },
       {
-        kind: 'sourceImage',
+        kind: 'paragraph',
+        text: 'Det är värt att titta på båda versionerna av varje markering. I katalogen är den skarp, vit och sedd rakt uppifrån. På vägen är den nött, grå och sedd i perspektiv — och det är den versionen du ska känna igen i farten.',
+      },
+      {
+        kind: 'markingInContext',
+        markingId: 'korfaltspilar',
         imageId: 'korfaltspilar-cirkulation',
-        prompt: 'Så ser en körfältspil ut på riktigt.',
-        caption:
-          'Pilen är målad långt före korsningen och sedd i skarp vinkel — inte rakt uppifrån som i katalogen. Det är den vyn du ska känna igen i farten.',
+        notice:
+          'Pilen är målad långt före korsningen och ses i skarp vinkel, inte rakt uppifrån. Följ den med blicken hela vägen till där den pekar.',
+      },
+      {
+        kind: 'markingInContext',
+        markingId: 'markering-hastighet',
+        imageId: 'malad-skola-30',
+        notice:
+          'Siffran ligger i din egen körbana och är slitet målad. Läs vad som står ovanför den, och lägg märke till skyltarna längs gatan.',
       },
       {
         kind: 'warning',
         text: 'Körfältspilar ersätter inte blinkersen. Mötande och korsande trafikanter ser inte pilarna i vägbanan — de ser bara din blinkers.',
       },
       {
-        kind: 'markingGrid',
-        title: 'Så ritas väjningslinjen',
-        markingIds: ['vajningslinje'],
-      },
-      {
-        kind: 'sourceImage',
+        kind: 'markingInContext',
+        markingId: 'vajningslinje',
         imageId: 'vajningslinje-utfart',
-        prompt: 'Och så ser den ut på vägen.',
-        caption:
-          'Samma markering, fotograferad från förarplatsen. Färgen är sliten, linjen ses snett och krönet döljer en del av den — men kravet är detsamma: väjningsplikt, utan skyldighet att stanna om vägen är fri.',
-      },
-      {
-        kind: 'paragraph',
-        text: 'Det är värt att titta på båda. I katalogen är markeringen skarp, vit och sedd rakt uppifrån. På vägen är den nött, grå och sedd i perspektiv — och det är den versionen du ska känna igen i farten.',
+        notice:
+          'Färgen är sliten, linjen ses snett och krönet döljer en del av den. Titta på formen på det som är kvar — det är formen som säger vilken av de tvärgående markeringarna det är.',
       },
       {
         kind: 'sourceImage',
@@ -1167,8 +1225,20 @@ export const LESSONS: Lesson[] = [
           'Heldragna kantlinjer på båda sidor och en streckad mittlinje. Kantlinjen visar var körbanan slutar.',
       },
       {
+        kind: 'rule',
+        title: 'Gult går före vitt',
+        text: 'Vid vägarbete målas tillfälliga markeringar i gult. Så länge de finns kvar är det de som gäller, och de vita linjerna under dem gäller inte — även när de gula leder dig över en heldragen vit linje.',
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'gula-tillfalliga-markeringar',
+        prompt: 'Vilken linje ska du följa?',
+        caption:
+          'De gula linjerna korsar de vita och leder körfälten åt vänster förbi arbetsplatsen. Att följa den vita linjen här vore att köra rakt in i avstängningen.',
+      },
+      {
         kind: 'memory',
-        text: 'Korta streck: kör om. Långa streck: tänk efter. Heldragen på din sida: stanna i ditt körfält.',
+        text: 'Korta streck: kör om. Långa streck: tänk efter. Heldragen på din sida: stanna i ditt körfält. Gult ovanpå: glöm det vita.',
       },
     ],
     curriculumChapterIds: ['vagmarken', 'korfalt'],

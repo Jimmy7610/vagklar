@@ -13,7 +13,7 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 
 | Status | Antal | Betyder |
 | --- | ---: | --- |
-| `reviewed` | 458 | Läst och godkänd internt. Inget påstående om expertgranskning. |
+| `reviewed` | 461 | Läst och godkänd internt. Inget påstående om expertgranskning. |
 | `verified` | 0 | Kontrollerad mot namngiven källa av namngiven person. |
 
 ## Kön
@@ -21,9 +21,9 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 | Prioritet | Antal | Vad som står på spel |
 | --- | ---: | --- |
 | P1 | 139 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
-| P2 | 64 | Undantag, villkorade regler och beräkningar. |
-| P3 | 255 | Förklarande kunskap utan rättsligt tal. |
-| **Totalt** | **458** | |
+| P2 | 65 | Undantag, villkorade regler och beräkningar. |
+| P3 | 257 | Förklarande kunskap utan rättsligt tal. |
+| **Totalt** | **461** | |
 
 ## P1 efter typ
 
@@ -2622,7 +2622,7 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | Missuppfattning | Blicktid räknas inte om till sträcka |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `b90a3b33` |
 
-## P2 — 64 frågor
+## P2 — 65 frågor
 
 | Fråga | Delområde | Regel |
 | --- | --- | --- |
@@ -2690,8 +2690,9 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `mrk-008` | Vägmarkeringar | Väjningslinje (M14) |
 | `mrk-011` | Körfält och sväng | Körfältspilar (M19) |
 | `mrk-012` | Körfältsbyte | Bussymbol i körfältet (M28) |
+| `mrk-015` | Vägmarkeringar | Tillfälliga markeringar vid vägarbete |
 
-## P3 — 255 frågor
+## P3 — 257 frågor
 
 | Fråga | Delområde | Regel |
 | --- | --- | --- |
@@ -2948,5 +2949,7 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `mrk-010` | Vägmarkeringar | Övergångsställe kontra cykelpassage |
 | `mrk-013` | Vägmarkeringar | Markering kontra vägmärke |
 | `mrk-014` | Vägmarkeringar | Ledlinje (M4) |
+| `mrk-016` | Cykelpassage och cykelöverfart | Skilja övergångsställe från cykelpassage i verkligheten |
+| `mrk-017` | Vägmarkeringar | Vad en målad hastighetssiffra gör |
 | `sym-003` | Anvisningsmärken | Att läsa en tabellvägvisare |
 | `sym-004` | Anvisningsmärken | Vad ett lokaliseringsmärke inte gör |

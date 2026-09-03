@@ -72,6 +72,25 @@ export interface SourceImage {
   longDescription: string;
   /** Shown under the image. */
   caption: string;
+  /**
+   * Alt text and description to use while a question on this image is still
+   * open.
+   *
+   * The normal `altText` and `longDescription` are written to be *literal*, and
+   * that is usually enough — a description of shapes and colours rarely gives
+   * an answer away. But not always. "Gula linjer leder trafiken förbi
+   * vägarbetet" is a true description of the paint and simultaneously the
+   * answer to "vilka linjer ska du följa?", and it is read out to a screen
+   * reader before the learner has answered.
+   *
+   * So an image used by a question may carry a second, blunter description
+   * that names the same things without saying what they do. It is used only
+   * while the question is unanswered; lessons and review always get the full
+   * one. Absent means the literal text was already safe.
+   */
+  quizSafeAltText?: string;
+  /** Long description for the same case. Falls back to `quizSafeAltText`. */
+  quizSafeDescription?: string;
   usage: SourceImageUsage;
   /** Photograph or drawn figure. Defaults to a photograph. */
   kind?: SourceImageKind;
@@ -107,6 +126,196 @@ function img(entry: Omit<SourceImage, 'sourceId' | 'rightsHolder' | 'usedWithPer
 
 export const SOURCE_IMAGES: SourceImage[] = [
   img({
+    id: 'malad-skola-30',
+    sourcePage: 167,
+    title: 'SKOLA och 30 målade i körbanan',
+    topic: 'vagmarkeringar',
+    subcategory: 'vagmarkeringar',
+    chapter: 'vagmarken',
+    altText:
+      'Ordet SKOLA och siffran 30 inuti en ring är målade i vitt tvärs över körbanan framför bilen.',
+    longDescription:
+      'En bostadsgata i höstsol, sedd från förarplatsen. Närmast kameran är ordet SKOLA målat i stora vita bokstäver tvärs över körbanan, och under det en vit ring med siffran 30 inuti. Färgen är sliten och asfalten syns igenom på flera ställen. Längre fram finns en streckad mittlinje, en mörk bil kommer emot och en person korsar vägen vid en skolgård med staket. På båda sidor står blå fyrkantiga märken med en gående på övergångsställe, och längre bort en gul varningstriangel och ett runt förbudsmärke.',
+    caption:
+      'Målad text och siffra i körbanan säger samma sak som ett märke gör, fast där du redan tittar. Den upprepar en gräns — den hittar inte på en egen.',
+    usage: 'theory-lesson',
+    asset: 'vagmarkeringar/malad-skola-30',
+    width: 960,
+    height: 961,
+    status: 'approved',
+  }),
+  img({
+    id: 'gula-tillfalliga-markeringar',
+    sourcePage: 5,
+    title: 'Gula tillfälliga markeringar vid vägarbete',
+    topic: 'vagmarkeringar',
+    subcategory: 'vagmarkeringar',
+    chapter: 'vagmarken',
+    altText:
+      'En gata sedd uppifrån där gula linjer är målade snett över de vita och leder trafiken förbi ett vägarbete.',
+    longDescription:
+      'En bred stadsgata fotograferad uppifrån, från en bro eller ett fönster. Genom hela bilden löper gula linjer som skär snett över de vita linjer som redan finns i körbanan, och de gula leder körfälten åt vänster förbi ett avstängt område. Vid avstängningen står röd-vita och orange barriärer, gul-röda koner och en grävmaskin. En vit skåpbil och en svart bil kör i det körfält som de gula linjerna pekar ut. Tvärs över gatan ligger ett övergångsställe och intill det en cykelpassage av små rutor. Till höger löper en spårvägs- eller järnvägsräls innanför räcken, och längre bort syns stadsbebyggelse och ett kyrktorn.',
+    caption:
+      'Gult över vitt betyder att den vita linjen inte gäller just nu. Det är den tillfälliga färgen du ska följa, även när den leder dig dit den vita förbjuder.',
+    usage: 'theory-lesson',
+    asset: 'vagmarkeringar/gula-tillfalliga-markeringar',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+  img({
+    id: 'overgangsstalle-och-cykelpassage',
+    sourcePage: 45,
+    title: 'Övergångsställe och cykelpassage bredvid varandra',
+    topic: 'vagmarkeringar',
+    subcategory: 'cykelpassage-overfart',
+    chapter: 'passager',
+    altText:
+      'Tvärs över körbanan ligger breda vita band, och alldeles intill dem två rader med små vita rutor.',
+    longDescription:
+      'En korsning vid ett resecentrum, sedd från förarplatsen. Tvärs över körbanan närmast kameran ligger breda vita band, och omedelbart till höger om dem två rader med små vita fyrkanter. Längre in i korsningen kör en mörkblå bil åt vänster. På en stolpe till höger sitter två blå fyrkantiga märken över varandra: överst en gående på ett övergångsställe, under den en cyklist på samma slags band. Till vänster på en annan stolpe står en gul väjningspliktstriangel med ett blått cirkulationsmärke under. I bakgrunden cykeltak fulla av cyklar, röda bussar och ett högt bostadshus.',
+    caption:
+      'Banden och rutorna ligger sida vid sida och betyder olika saker. Titta på formen, inte på var de ligger — det är formen som säger vem markeringen är till för.',
+    usage: 'theory-lesson',
+    asset: 'vagmarkeringar/overgangsstalle-och-cykelpassage',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+  img({
+    id: 'korfaltslinjer-signalkorsning',
+    sourcePage: 42,
+    title: 'Körfältslinjer före en signalreglerad korsning',
+    topic: 'vagmarkeringar',
+    subcategory: 'korfalt-och-sving',
+    chapter: 'korfalt',
+    altText:
+      'Tre körfält framför en signalreglerad korsning, åtskilda av korta vita streck med långa mellanrum.',
+    longDescription:
+      'En bred väg framför en korsning med trafiksignaler, sedd lågt från förarplatsen. Körbanan är delad i tre fält av korta vita streck med långa mellanrum mellan sig, och ytterst till höger löper en heldragen kantlinje. En mörk kombi står stilla i fältet framför, och i vänsterfältet står lastbilar och en gul skåpbil i kö. Signalerna hänger dels på en portal över vägen, dels på en stolpe till vänster; den vänstra visar gult och den till höger grönt. Vägbanan har en rödbrun ton och löven ligger i vägrenen.',
+    caption:
+      'Korta streck med långa mellanrum delar körfält. Du får byta fält över dem — men det är kön framför signalen som avgör om det är någon idé.',
+    usage: 'theory-lesson',
+    asset: 'vagmarkeringar/korfaltslinjer-signalkorsning',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'forbud-stanna-gata',
+    sourcePage: 323,
+    title: 'Förbud mot att stanna och parkera på en stadsgata',
+    topic: 'parkering',
+    subcategory: 'stannande-forbud',
+    chapter: 'stanna-parkera',
+    altText:
+      'Ett runt märke med blå botten, röd ram och ett rött kryss sitter på en stolpe längs en smal stadsgata.',
+    longDescription:
+      'En smal gata mellan höga stenhus, sedd framåt. Nära kameran till höger sitter ett stort runt märke på en galvaniserad stolpe: blå botten, bred röd ram och två röda streck som korsar varandra i ett kryss mitt på märket. Längre ned på gatan står och rullar mörka bilar längs vänster sida, och långt bort hänger belysning i vajrar över gatan. Himlen är blå med spridda vita moln.',
+    caption:
+      'Två streck i kors, inte ett. Här är det förbjudet att ens stanna — inte bara att parkera.',
+    usage: 'theory-lesson',
+    asset: 'parkering/forbud-stanna-gata',
+    width: 960,
+    height: 962,
+    status: 'approved',
+  }),
+  img({
+    id: 'p-skylt-rorelsehindrad-tid',
+    sourcePage: 161,
+    title: 'Parkering med rörelsehindradtavla och tidtavla',
+    topic: 'parkering',
+    subcategory: 'parkeringsregler',
+    chapter: 'stanna-parkera',
+    altText:
+      'En stolpe med tre blå skyltar över varandra: ett vitt P, en rullstolssymbol och texten 3 tim, 9–18 och (9–15).',
+    longDescription:
+      'En stolpe med tre blå skyltar monterade tätt över varandra, sedda snett underifrån. Överst en fyrkantig skylt med ett stort vitt P. Under den en fyrkantig tavla med en vit rullstolssymbol. Nederst en tavla med vit text på tre rader: 3 tim, 9–18 och (9–15) inom parentes. Bakom skyltarna rinner en å med trädbevuxna stränder, en träbrygga går längs den närmaste kanten och på andra sidan står ett stort vitt hus med brant tak. Gräs i förgrunden och klarblå himmel.',
+    caption:
+      'Tre skyltar, en regel. Symbolen säger vem, tiderna säger när, och P:et säger vad — läs klart innan du bestämmer dig.',
+    usage: 'theory-lesson',
+    asset: 'parkering/p-skylt-rorelsehindrad-tid',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+  img({
+    id: 'varning-vagkorsning-stad',
+    sourcePage: 32,
+    title: 'Varning för vägkorsning i stadsmiljö',
+    topic: 'vajningsregler',
+    subcategory: 'hogerregeln',
+    chapter: 'vajningsregler',
+    altText:
+      'En gul triangel med röd ram och ett svart kryss står till höger om en stadsgata, och ett likadant märke syns längre bort på andra sidan.',
+    longDescription:
+      'En gata sedd lågt från förarplatsen, med bilens motorhuv i bildens underkant. Till vänster ett stort rött tegelhus, till höger ett gult putsat hus. På en stolpe till höger, nära kameran, sitter en gul triangel med röd ram och ett svart kryss i mitten. Ett likadant men mycket mindre märke syns längre fram på gatans vänstra sida. Framför bilen övergår asfalten i en bred gatstensbelagd yta som löper tvärs över vägen. Längre bort står två spetsiga träd, en blå skylt och ljusare hus. Himlen är gråmulen.',
+    caption:
+      'Krysset varnar för en korsning där ingen väg är huvudled. Då gäller högerregeln, och den står inte på något märke.',
+    usage: 'theory-lesson',
+    asset: 'vajningsregler/varning-vagkorsning-stad',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'omkorningsforbud-landsvag',
+    sourcePage: 97,
+    title: 'Omkörningsförbud på landsväg',
+    topic: 'omkorning',
+    subcategory: 'omkorningsregler',
+    chapter: 'omkorningar',
+    altText:
+      'Ett runt märke med gul botten, röd ram och två bilar bredvid varandra står i vägkanten längs en rak landsväg.',
+    longDescription:
+      'En rak landsväg sedd framåt från förarplatsen. Vägbanan har en streckad mittlinje och en vit kantlinje åt höger som är målad i tätt liggande block. Strax utanför kantlinjen står ett runt märke på en grå stolpe: gul botten, bred röd ram och två bilar sedda bakifrån bredvid varandra, den vänstra röd och den högra svart. Till höger om vägen ligger ett öppet gräsfält, bakom det lövträd och en kyrkspira. Himlen är jämngrå och vägbanan blank av väta.',
+    caption:
+      'Mittlinjen är streckad, alltså tillåter markeringen omkörning. Märket gör det inte — och det är märket som gäller.',
+    usage: 'theory-lesson',
+    asset: 'omkorning/omkorningsforbud-landsvag',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+  img({
+    id: 'stopp-vid-signal',
+    sourcePage: 8,
+    title: 'Stoppmärke och trafiksignal på samma stolpe',
+    topic: 'vajningsregler',
+    subcategory: 'stopplikt',
+    chapter: 'vajningsregler',
+    altText:
+      'En korsning där en trafiksignal lyser grönt och ett rött åttakantigt märke med texten STOP hänger på en arm från samma stolpe.',
+    longDescription:
+      'En korsning sedd från förarplatsen bakom en silverfärgad SUV. Tvärs över körbanan ligger ett övergångsställe av breda vita band. Uppe till höger sitter en trafiksignal som lyser grönt, och på en arm ut från samma stolpe hänger en röd åttakantig skylt med vit text STOP, vänd åt samma håll som signalen. En signal längre till vänster lyser också grönt, och under den sitter ett blått runt märke med en vit pil snett uppåt höger. Vid vänster trottoar står en röd och några vita bilar. Lövträd, blå himmel och vita moln.',
+    caption:
+      'Märket och signalen sitter på samma stolpe och gäller samma tillfart. Signalen står högre i rangordningen — men bara så länge den lyser.',
+    usage: 'theory-lesson',
+    asset: 'vajningsregler/stopp-vid-signal',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'hastighetsskylt-snotackt',
+    sourcePage: 303,
+    title: 'Snötäckt hastighetsmärke',
+    topic: 'vinter',
+    subcategory: 'vinterkorning',
+    chapter: 'vinter',
+    altText:
+      'Ett runt hastighetsmärke som visar 50 har ett lager snö över sin övre kant, så att en del av den röda ramen är dold.',
+    longDescription:
+      'En gata i vinterskymning under en rosafärgad himmel. Till vänster står en stolpe med två runda märken: överst ett med gul botten, röd ram och den svarta siffran 50, där ett lager snö ligger kvar över märkets övre kant och döljer en del av den röda ramen. Under det ett blått märke med en vit pil snett nedåt höger, med snöfläckar på ytan. Vägbanan är mörk och blöt medan vägrenarna ligger under snövallar. Framför kör en vit bil med tända bakljus, och till vänster kommer en vit skåpbil med tänd belysning. I bakgrunden syns en fabriksskorsten med en lång ångplym, kala björkar och gatlyktor.',
+    caption:
+      'Snö och smuts sätter sig på märken innan de sätter sig på vägbanan. Ett märke du inte hinner läsa gäller ändå.',
+    usage: 'theory-lesson',
+    asset: 'vinter/hastighetsskylt-snotackt',
+    width: 960,
+    height: 960,
+    status: 'approved',
+  }),
+  img({
     id: 'varning-vagkorsning-i-kurva',
     sourcePage: 180,
     title: 'Varning för vägkorsning, uppsatt i en kurva',
@@ -135,7 +344,7 @@ export const SOURCE_IMAGES: SourceImage[] = [
     altText:
       'Vy från förarplatsen mot en cirkulationsplats. I körbanan är en vit pil målad som pekar framåt och snett åt höger, och vita linjer böjer in mot cirkulationen.',
     longDescription:
-      'Vägen leder fram mot en cirkulationsplats. På en refug mitt framför står en väjningspliktstriangel med cirkulationsmärket under sig, och ovanför hänger en trafiksignal som är släckt. I själva körbanan är en stor vit pil målad som pekar framåt och böjer av åt höger — en körfältspil som talar om vart det här körfältet leder. Längs körbanan löper heldragna vita linjer som svänger in mot cirkulationen. Till vänster i bild står en bil på den anslutande vägen.',
+      'Vägen leder fram mot en cirkulationsplats. På en refug mitt framför står en gul triangel med röd ram och spetsen nedåt, med det blå cirkulationsmärket under sig, och ovanför hänger en trafiksignal som är släckt. I själva körbanan är en stor vit pil målad som pekar framåt och böjer av åt höger — en körfältspil som talar om vart det här körfältet leder. Längs körbanan löper heldragna vita linjer som svänger in mot cirkulationen. Till vänster i bild står en bil på den anslutande vägen.',
     caption:
       'Pilen i körbanan säger vart körfältet leder. Den syns tidigt, men bara för dig — mötande och korsande trafik ser den inte.',
     usage: 'theory-lesson',
@@ -908,6 +1117,16 @@ export const SOURCE_IMAGES: SourceImage[] = [
       'En cykelöverfart med eget vägmärke, målade rutor i vägbanan och en väjningslinje för biltrafiken.',
     longDescription:
       'Sett framåt från förarplatsen mot en upphöjd passage strax före en cirkulationsplats. Tvärs över vägbanan löper målade rutor, och framför dem finns en väjningslinje av trianglar för biltrafiken. På stolpar till höger sitter märket för cykelöverfart tillsammans med märken för övergångsställe och cirkulationsplats.',
+    // Frågan på den här bilden ber läsaren peka ut vad som gör platsen till en
+    // överfart. Den vanliga alt-texten räknar upp precis de två sakerna och
+    // ingenting annat, alltså en färdig kortlista där den seende får leta i
+    // hela bilden. Den frågesäkra varianten beskriver formerna utan att namnge
+    // dem — att veta att en rad trianglar är en väjningslinje är själva
+    // kunskapen som prövas.
+    quizSafeAltText:
+      'Sett framåt mot en upphöjd passage strax före en cirkulationsplats. Tvärs över vägbanan löper två rader målade rutor, och närmare kameran en rad målade trianglar. På stolpar till höger sitter tre blå märken.',
+    quizSafeDescription:
+      'Sett framåt från förarplatsen mot en upphöjd passage strax före en cirkulationsplats. Vägbanan höjer sig och tvärs över den löper två rader med målade vita rutor. Närmare kameran, framför rutorna, löper en rad vita trianglar med spetsarna mot dig. På stolpar till höger sitter tre blå fyrkantiga märken över varandra, och bortom passagen börjar cirkulationen.',
     caption: 'Vägmärke, rutor och väjningslinje tillsammans: det här är en cykelöverfart.',
     usage: 'question-image',
     asset: 'passager/cykeloverfart',
@@ -1075,11 +1294,17 @@ export const SOURCE_IMAGES: SourceImage[] = [
     topic: 'jarnvag',
     subcategory: 'plankorsning-marken',
     chapter: 'jarnvagskorsningar',
+    // Beskrivningen sa "röd-vita kryssmärken" och att bommarna sträcker sig ut
+    // över vägbanan. Kryssmärket A39 är rött och gult, och på det här fotot står
+    // bommarna uppfällda. Båda gick att se genom att titta på bilden; ingen
+    // gjorde det förrän kontrollen i contextPairs.test.ts jämförde märkets färg
+    // med fotots beskrivning.
     altText:
-      'En järnvägskorsning med röd-vita kryssmärken och bommar tvärs över vägen.',
+      'En järnvägskorsning med röd-gula kryssmärken på höga stolpar och uppfällda bommar på båda sidor av vägen.',
     longDescription:
-      'En järnvägskorsning sedd framåt från förarplatsen. På båda sidor av vägen står höga stolpar med röd-vita kryssmärken och ljussignaler. Bommar sträcker sig ut över vägbanan. Spåret korsar vägen vinkelrätt och ett industriområde syns i bakgrunden.',
-    caption: 'Kryssmärket är plankorsningens kännetecken. Bommarna gör att omkörningsförbudet upphör.',
+      'En järnvägskorsning sedd framåt från förarplatsen. På båda sidor av vägen står höga stolpar med ett kryssmärke av röda och gula armar, en ljussignal under märket och en röd-vit bom som just nu står uppfälld i lodrätt läge. Över vägen hänger gula skyltar med texten LIVSFARLIG LEDNING i kontaktledningarna. Närmast kameran ligger ett målat övergångsställe tvärs över vägen, spåret korsar strax bortom det, och bakom korsningen syns ett ljust hus med torn och en trädrad.',
+    labelText: ['LIVSFARLIG LEDNING'],
+    caption: 'Kryssmärket är plankorsningens kännetecken. Att korsningen har bommar gör att omkörningsförbudet upphör.',
     usage: 'question-image',
     asset: 'jarnvag/plankorsning-bommar',
     width: 960,
@@ -1471,9 +1696,14 @@ export const SOURCE_IMAGES: SourceImage[] = [
     chapter: 'vinter',
     altText:
       'En helt snötäckt smal väg genom granskog, utan synliga vägmarkeringar.',
+    // Beskrivningen slutade tidigare med "och det går inte att se var körbanan
+    // slutar och vägkanten börjar" — en slutsats, inte en iakttagelse, och
+    // ordagrant det rätta svaret på bl2-017. Den lästes upp för den som inte
+    // ser bilden innan frågan var besvarad. Slutsatsen hör hemma i bildtexten.
     longDescription:
-      'Sett framåt från förarplatsen på en smal väg genom snötyngd granskog. Vägbanan är helt snötäckt utan synliga vägmarkeringar eller kantlinjer, och det går inte att se var körbanan slutar och vägkanten börjar.',
-    caption: 'Utan synliga markeringar är vägens bredd en gissning — sänk farten.',
+      'Sett framåt från förarplatsen på en smal väg genom snötyngd granskog. Vägbanan är helt snötäckt utan synliga vägmarkeringar eller kantlinjer, och snön fortsätter obruten från hjulspåren ut mot träden på båda sidor. Grenarna hänger tunga av snö och vägen böjer av längre fram.',
+    caption:
+      'Utan synliga markeringar går det inte att se var körbanan slutar och vägkanten börjar. Vägens bredd är en gissning — sänk farten.',
     usage: 'theory-lesson',
     asset: 'vinter/snotackt-skogsvag',
     width: 960,

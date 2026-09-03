@@ -5,6 +5,7 @@ import {
   ROAD_SIGNS,
   SUPPLEMENTARY_PLATES,
   SIGN_CATEGORY_LABELS,
+  confusableSigns,
   signVariants,
 } from '../src/content/road-signs';
 import { LESSONS } from '../src/content/lessons';
@@ -33,7 +34,7 @@ const root = process.cwd();
 
 /* ---- Where each sign is used ---------------------------------------- */
 const inLessons = new Map<string, string[]>();
-const inContext = new Map<string, string>();
+const inContext = new Map<string, string[]>();
 for (const lesson of LESSONS) {
   for (const block of lesson.blocks) {
     const note = (id: string) =>
@@ -42,7 +43,7 @@ for (const lesson of LESSONS) {
     if (block.kind === 'signCompare') [block.leftId, block.rightId].forEach(note);
     if (block.kind === 'signInContext') {
       note(block.signId);
-      inContext.set(block.signId, block.imageId);
+      inContext.set(block.signId, [...(inContext.get(block.signId) ?? []), block.imageId]);
     }
     if (block.kind === 'signAssembly') {
       note(block.mainSignId);
@@ -93,6 +94,7 @@ md.push(`| Utan bild alls | ${undrawable.length} |`);
 md.push(`| Tilläggstavlor | ${SUPPLEMENTARY_PLATES.length} |`);
 md.push(`| Med visualTraits | ${withTraits.length} av ${ROAD_SIGNS.length} |`);
 md.push(`| Med foto i verklig trafik | ${inContext.size} |`);
+md.push(`| Märke–foto-par | ${[...inContext.values()].reduce((n, v) => n + v.length, 0)} |`);
 md.push(`| Använda i en lektion | ${inLessons.size} |`);
 md.push(`| Använda i en fråga | ${inQuestions.size} |`);
 md.push(`| Bildmaterial på disk | ${Math.round(assetBytes / 1024)} kB |`);
@@ -139,12 +141,43 @@ if (inContext.size === 0) {
   md.push('');
   md.push('| Märke | Kod | Fotografi |');
   md.push('| --- | --- | --- |');
-  for (const [signId, imageId] of [...inContext].sort()) {
+  for (const [signId, imageIds] of [...inContext].sort()) {
     const sign = ROAD_SIGNS.find((s) => s.id === signId);
-    md.push(`| \`${signId}\` | ${sign?.code ?? '?'} | \`${imageId}\` |`);
+    // A sign can have more than one photograph, and does: the same warning
+    // triangle stands in a bend and on a city street, and only having both
+    // makes the point that the sign is not the place.
+    const photos = imageIds.map((id) => `\`${id}\``).join(', ');
+    md.push(`| \`${signId}\` | ${sign?.code ?? '?'} | ${photos} |`);
   }
 }
 md.push('');
+
+md.push('## Lätt att blanda ihop');
+md.push('');
+md.push('Relationen läses åt båda hållen: skriver en post att den förväxlas med en');
+md.push('annan syns förväxlingen från båda märkena. Fyrtioåtta av kanterna i registret');
+md.push('är skrivna åt ett håll, och innan detaljvyn fanns nådde ingen av dem en läsare');
+md.push('över huvud taget.');
+md.push('');
+
+const confusableCount = ROAD_SIGNS.filter((s) => confusableSigns(s.id).length > 0);
+const lonely = ROAD_SIGNS.filter((s) => confusableSigns(s.id).length === 0);
+md.push('| | Antal |');
+md.push('| --- | ---: |');
+md.push(`| Märken med minst en förväxling | ${confusableCount.length} av ${ROAD_SIGNS.length} |`);
+md.push(`| Skrivna på märket självt | ${ROAD_SIGNS.filter((s) => s.similarSignIds.length > 0).length} |`);
+md.push(`| Tillkommer genom att läsa relationen åt andra hållet | ${confusableCount.length - ROAD_SIGNS.filter((s) => s.similarSignIds.length > 0).length} |`);
+md.push('');
+
+if (lonely.length > 0) {
+  md.push('Utan förväxling — och det är ett svar, inte en lucka. De här märkena har');
+  md.push('inget bildspråk gemensamt med något annat i registret.');
+  md.push('');
+  md.push('| Märke | Kod | Bild |');
+  md.push('| --- | --- | --- |');
+  for (const s of lonely) md.push(`| \`${s.id}\` | ${s.code} | ${s.altText} |`);
+  md.push('');
+}
 
 md.push('## Tilläggstavlor');
 md.push('');
