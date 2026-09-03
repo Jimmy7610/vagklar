@@ -47,7 +47,9 @@ for (const q of ALL_QUESTIONS) {
 const lessonUse = new Map<string, string[]>();
 for (const lesson of LESSONS) {
   for (const block of lesson.blocks) {
-    if (block.kind !== 'sourceImage') continue;
+    // A photograph can be used two ways now: on its own, or paired with the
+    // book's own artwork of a sign that is visible in it.
+    if (block.kind !== 'sourceImage' && block.kind !== 'signInContext') continue;
     const list = lessonUse.get(block.imageId);
     if (list) list.push(lesson.id);
     else lessonUse.set(block.imageId, [lesson.id]);

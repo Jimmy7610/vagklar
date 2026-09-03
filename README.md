@@ -150,8 +150,9 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 | Lektioner                      | 15                                     |
 | Scenarier                      | 14 (med varianter)                     |
 | Namngivna missuppfattningar    | 253                                    |
-| Källbilder (används med tillstånd) | 65 (54 foton, 11 ritningar)        |
-| Licensierade vägmärken            | 48 av 58                           |
+| Källbilder (används med tillstånd) | 66 (55 foton, 11 ritningar)        |
+| Vägmärken i registret             | 99, varav 17 tilläggstavlor        |
+| Med bokens egen märkesbild        | 89 av 99                           |
 | Vägklars egna ritningar           | 15                                 |
 | Ritade vägmärken               | 58                                     |
 | Ritade vägmarkeringar          | 15                                     |

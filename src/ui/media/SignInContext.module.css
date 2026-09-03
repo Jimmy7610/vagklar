@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Sign face beside the same sign photographed on the road
+   --------------------------------------------------------------------------
+   One column on a phone, two from tablet up. The sign face is small and fixed;
+   the photograph takes the rest, because the photograph is the half that is
+   hard to read.
+   ========================================================================== */
+
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .pair {
+    grid-template-columns: minmax(0, 150px) minmax(0, 1fr);
+  }
+}
+
+.ideal {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  min-width: 0;
+}
+
+.art {
+  display: grid;
+  place-items: center;
+  padding: var(--space-2);
+  background-color: #fff;
+  border-radius: var(--radius-sm);
+}
+
+.idealCaption {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  text-align: center;
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.code {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.label {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+
+.real {
+  min-width: 0;
+}

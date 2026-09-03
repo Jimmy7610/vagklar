@@ -115,9 +115,21 @@ describe('the renderer prefers the book over the drawing', () => {
     expect(source).toContain('if (!glyph) return null');
   });
 
-  it('takes the accessible name from the registry, not from the file', () => {
-    expect(source).toContain("getRoadSign(name)");
-    expect(source).toContain('alt ?? registryEntry?.altText');
+  it('never renders a sign without a description', () => {
+    // The renderer no longer reaches into the registry for a default. It is
+    // reached from the landing page through the scenario stage, and importing
+    // 99 signs of prose to look up a string the caller already had cost 12 kB
+    // gzip of startup. The description is now the caller's to supply, and the
+    // props type makes forgetting it a compile error rather than a silently
+    // unlabelled image: either `decorative` is set, or `alt` is required.
+    expect(source).toContain('decorative: true; alt?: string');
+    expect(source).toContain("decorative?: false;");
+    expect(source).not.toContain("from '@/content/road-signs'");
+  });
+
+  it('still has somewhere to get the registry wording', () => {
+    const helper = readFileSync(resolve(ROOT, 'src/ui/illustrations/roadSignAlt.ts'), 'utf8');
+    expect(helper).toContain('getRoadSign');
   });
 });
 

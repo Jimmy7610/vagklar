@@ -8,6 +8,9 @@ import { Callout, SectionHeading } from '@/ui/components/Primitives';
 import { ScenarioStage } from '@/ui/illustrations/ScenarioStage';
 import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
 import { OriginalVisualFigure } from '@/ui/visuals/OriginalVisualFigure';
+import { RoadSignAssembly } from '@/ui/illustrations/RoadSignAssembly';
+import { SignCatalogue } from '@/ui/media/SignCatalogue';
+import { SignInContext } from '@/ui/media/SignInContext';
 import { SignGrid, SignCompare, MarkingGrid, MarkingCompare } from '@/ui/media/SignGrid';
 import { LESSONS, getLesson } from '@/content/lessons';
 import { SCENARIOS } from '@/content/scenarios';
@@ -103,6 +106,29 @@ function Block({ block }: { block: LessonBlock }) {
           {...(block.caption ? { caption: block.caption } : {})}
           sizes="(min-width: 1024px) 640px, 100vw"
         />
+      );
+    case 'signInContext':
+      return (
+        <SignInContext signId={block.signId} imageId={block.imageId} notice={block.notice} />
+      );
+    case 'signCatalogue':
+      return (
+        <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+          {block.title && <SectionHeading title={block.title} />}
+          <SignCatalogue />
+        </div>
+      );
+    case 'signAssembly':
+      return (
+        <div style={{ display: 'grid', gap: 'var(--space-3)', justifyItems: 'center' }}>
+          {block.prompt && <SectionHeading title={block.prompt} />}
+          <RoadSignAssembly
+            mainSignId={block.mainSignId}
+            plateIds={block.plateIds}
+            size={140}
+            showMeaning
+          />
+        </div>
       );
     case 'originalVisual':
       return (

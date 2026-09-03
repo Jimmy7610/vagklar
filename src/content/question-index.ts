@@ -398,6 +398,18 @@ const ROWS: ReadonlyArray<readonly [string, string, string, number, string, stri
   ['egr-003', 'halka', 'vattenplaning', 2, 'reviewed', "Att hantera vattenplaning"],
   ['egr-004', 'fordonet', 'krocksakerhet', 2, 'reviewed', "Nackskyddets höjd"],
   ['egr-005', 'fordonet', 'krocksakerhet', 2, 'reviewed', "Bältets placering över kroppen"],
+  ['skk-001', 'vagmarken', 'varningsmarken', 2, 'reviewed', "Avståndstavla under varningsmärke"],
+  ['skk-002', 'parkering', 'parkeringsforbud', 2, 'reviewed', "Utsträckningstavla under förbudsmärke"],
+  ['skk-003', 'parkering', 'parkeringsregler', 3, 'reviewed', "Parkering med tid och avgift"],
+  ['skk-004', 'korsningar', 'vajningsplikt', 3, 'reviewed', "Flervägsväjning"],
+  ['skk-005', 'korsningar', 'stopplikt', 2, 'reviewed', "Förvarning om stopplikt"],
+  ['skk-006', 'parkering', 'parkeringsregler', 2, 'reviewed', "Tavla för rörelsehindrade"],
+  ['skk-007', 'korsningar', 'huvudled', 3, 'reviewed', "Vägars fortsättning i korsning"],
+  ['skk-008', 'omkorning', 'omkorningsforbud', 2, 'reviewed', "Sträckans längd under omkörningsförbud"],
+  ['skk-009', 'vagmarken', 'forbudsmarken', 3, 'reviewed', "Viktbegränsning genom tilläggstavla"],
+  ['skk-010', 'parkering', 'stannande-forbud', 3, 'reviewed', "Riktningstavla under förbudsmärke"],
+  ['skk-011', 'korsningar', 'stopplikt', 2, 'reviewed', "Flervägsstopp"],
+  ['skk-012', 'vagmarken', 'varningsmarken', 2, 'reviewed', "Märke utan tilläggstavla"],
   ['grd-001', 'korsningar', 'hogerregeln', 1, 'reviewed', "Högerregeln"],
   ['grd-002', 'trafikregler', 'trafiksignaler', 1, 'reviewed', "Gult ljus"],
   ['grd-003', 'hastighet', 'hastighetsgranser', 1, 'reviewed', "Bashastighet utanför tätort"],
@@ -487,8 +499,8 @@ export const ACTIVE_QUESTION_INDEX: readonly QuestionIndexEntry[] =
 
 /** Bank statistics, so the landing page needs no question bodies. */
 export const BANK_TOTALS = {
-  total: 442,
+  total: 454,
   easy: 84,
-  medium: 248,
-  hard: 110,
+  medium: 255,
+  hard: 115,
 } as const;

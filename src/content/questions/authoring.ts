@@ -120,6 +120,8 @@ export interface AuthoredQuestion {
   sourceImageId?: string;
   /** Id in the original-visual registry, for questions on a Vägklar drawing. */
   originalVisualId?: string;
+  /** Main sign plus the plates under it, for combination questions. */
+  signAssembly?: { mainSignId: string; plateIds: string[] };
   tags?: string[];
   estimatedTimeSec?: number;
   accessibilityText?: string;
@@ -217,6 +219,7 @@ export function buildQuestion(seed: AuthoredQuestion): Question {
   if (seed.image) question.image = seed.image;
   if (seed.sourceImageId) question.sourceImageId = seed.sourceImageId;
   if (seed.originalVisualId) question.originalVisualId = seed.originalVisualId;
+  if (seed.signAssembly) question.signAssembly = seed.signAssembly;
   if (seed.tags) question.tags = seed.tags;
   if (seed.accessibilityText) question.accessibilityText = seed.accessibilityText;
   if (seed.related) question.relatedQuestionIds = seed.related;

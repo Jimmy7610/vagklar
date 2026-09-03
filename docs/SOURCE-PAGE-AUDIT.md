@@ -8,9 +8,9 @@ sidan verkligen handlar om det frågan prövar.
 
 | | Antal |
 | --- | ---: |
-| Frågor med sidhänvisning | 293 |
-| Sidhänvisningar granskade | 304 |
-| Bekräftat stöd | 255 |
+| Frågor med sidhänvisning | 296 |
+| Sidhänvisningar granskade | 307 |
+| Bekräftat stöd | 258 |
 | Fel | 0 |
 | Varningar | 47 |
 | Granskade undantag | 2 |
@@ -71,7 +71,7 @@ Inga.
 | `mns-040` | 103 | page-outside-chapter | Sidan ligger utanför kapitlen för "reaktion-och-sinnen" (78–89, 140–147, 154–161, 196–203). |
 | `mrk-013` | 8 | page-outside-chapter | Sidan ligger utanför kapitlen för "vagmarkeringar" (324–361). |
 
-## Bildernas sidhänvisningar — 65 st
+## Bildernas sidhänvisningar — 66 st
 
 Varje godkänd källbild anger sidan den är hämtad från. Kontrollen är enklare än
 för frågorna — en figursida bär etiketter, inte meningar — men den fångar det som
@@ -85,7 +85,7 @@ ur motorvägskapitlet. Vad varningen fångar är sidnummer som hamnat helt fel.
 
 | | Antal |
 | --- | ---: |
-| Bekräftade | 57 |
+| Bekräftade | 58 |
 | Fel | 0 |
 | Varningar | 8 |
 

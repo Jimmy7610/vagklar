@@ -2343,6 +2343,87 @@ export const MISCONCEPTIONS: Misconception[] = [
       'Höftbältet ska ligga lågt över bäckenet, som tål belastningen, och axelbandet över axeln. Över magen eller under armen belastar det fel delar av kroppen.',
     subcategory: 'krocksakerhet',
   },
+  {
+    id: 'tavla-avstand-vs-utstrackning',
+    label: 'Avstånd och utsträckning blandas ihop',
+    description:
+      'Båda tavlorna innehåller ett mått, så de uppfattas som samma sorts besked om hur långt något gäller.',
+    correction:
+      'Avståndstavlan säger var regeln börjar. Utsträckningstavlan säger hur långt den gäller när den väl börjat.',
+    subcategory: 'varningsmarken',
+  },
+  {
+    id: 'flera-tavlor',
+    label: 'Flera tavlor läses som undantag från varandra',
+    description:
+      'Två tavlor under samma märke uppfattas som att den nedre mildrar eller upphäver den övre.',
+    correction:
+      'Tavlor staplas som villkor, inte som undantag. Alla ska vara uppfyllda samtidigt, och de läses uppifrån och ned.',
+    subcategory: 'parkeringsregler',
+  },
+  {
+    id: 'flervagsvajning',
+    label: 'Egen väjningsplikt antas betyda att någon annan har företräde',
+    description:
+      'Ett väjningspliktsmärke uppfattas som att den korsande vägen är prioriterad.',
+    correction:
+      'Vid flervägsväjning och flervägsstopp har alla tillfarter samma skyldighet. Då finns ingen prioriterad väg, och högerregeln avgör.',
+    subcategory: 'vajningsplikt',
+  },
+  {
+    id: 'forvarning-stopplikt',
+    label: 'Förvarning om stopplikt uppfattas som stopplikt',
+    description:
+      'Tavlan med ett avstånd till stopplikt läses som att stopplikten gäller redan vid stolpen.',
+    correction:
+      'Förvarningen säger att stopplikten kommer längre fram. Skyldigheten att stanna inträder vid stopplinjen, inte vid förvarningen.',
+    subcategory: 'stopplikt',
+  },
+  {
+    id: 'tavla-rorelsehindrade',
+    label: 'Reserverad plats antas vara ledig för alla',
+    description:
+      'Tavlan uppfattas som en upplysning om vem platsen passar, inte som ett villkor för att få stå där.',
+    correction:
+      'Tavlan reserverar platsen för den som har parkeringstillstånd för rörelsehindrad. Utan tillstånd får du inte parkera där.',
+    subcategory: 'parkeringsregler',
+  },
+  {
+    id: 'huvudled-svanger',
+    label: 'Huvudleden antas fortsätta rakt fram',
+    description:
+      'Företrädet uppfattas som knutet till den egna körriktningen i stället för till vägen.',
+    correction:
+      'Huvudleden kan svänga i korsningen. Tilläggstavlan visar hur den går, och kör du ur den har du väjningsplikt.',
+    subcategory: 'huvudled',
+  },
+  {
+    id: 'tavla-begransar-vem',
+    label: 'Tilläggstavlan antas beskriva vägen i stället för att begränsa märket',
+    description:
+      'En viktangivelse under ett förbud läses som information om vad vägen tål.',
+    correction:
+      'Tavlan avgränsar vilka fordon märket gäller. Fordon under gränsen berörs inte alls av förbudet.',
+    subcategory: 'forbudsmarken',
+  },
+  {
+    id: 'tavla-riktning',
+    label: 'Riktningstavlans pil förbises',
+    description:
+      'Förbudet antas gälla framåt från märket, som om ingen tavla fanns.',
+    correction:
+      'Pilen pekar ut vilken sträcka märket omfattar. Utan att läsa den är det lätt att stanna just där förbudet gäller.',
+    subcategory: 'stannande-forbud',
+  },
+  {
+    id: 'annan-fara',
+    label: 'Märket för annan fara antas ha en bestämd innebörd',
+    description:
+      'Ett varningsmärke utan symbol tolkas som att det gäller en särskild, känd fara.',
+    correction:
+      'Innebörden kommer från tilläggstavlan. Saknas den vet du bara att något ovanligt finns längre fram.',
+    subcategory: 'varningsmarken',
+  },
 ];
 
 export const MISCONCEPTION_BY_ID: ReadonlyMap<string, Misconception> = new Map(

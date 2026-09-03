@@ -35,9 +35,16 @@ hitta det som saknas, inte för att se färdig ut.
 
 - [x] **65 godkända källbilder** — 54 fotografier och 11 ritningar ur källan —
       plus **15 egna ritningar**, och samtliga används av en lektion eller fråga
-- [x] **48 av 58 vägmärken ritas med källans egen bild.** De tio som står kvar
-      på vektor gör det för att koden täcker flera varianter i verkligheten —
-      bokens C31 visar 30 och kan inte illustrera `hastighet-90`
+- [x] **89 av 99 vägmärken ritas med källans egen bild**, och märkenas namn är
+      bokens egna. De tio som står kvar på vektor gör det för att koden täcker
+      flera varianter i verkligheten — bokens C31 visar 30 och kan inte
+      illustrera `hastighet-90`. Sammansättning ur bokens delar prövades och
+      förkastades: boken trycker aldrig siffrorna 4, 6, 7, 8 eller 9
+- [x] **Tilläggstavlor är komponerbara objekt.** En tavla vet vilken dimension
+      den begränsar, en stolpe renderas som en figur med en beskrivning, och
+      den sammanlagda innebörden hålls tillbaka så länge frågan är obesvarad
+- [x] Fyra par av bokens märkesbild bredvid ett fotografi där samma märke syns
+- [x] Sökbar katalog över alla 99 märken, med filter och annonserat träffantal
 - [x] Bytet avslöjade tolv fel i märkesbeskrivningarna, bland annat att
       motorvägsmärkena beskrevs som blå när de är gröna. Alla rättade
 - [x] En verklig svarsläcka rättad: `vag-011` frågade vilken form och färg

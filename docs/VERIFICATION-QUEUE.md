@@ -13,17 +13,17 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 
 | Status | Antal | Betyder |
 | --- | ---: | --- |
-| `reviewed` | 442 | Läst och godkänd internt. Inget påstående om expertgranskning. |
+| `reviewed` | 454 | Läst och godkänd internt. Inget påstående om expertgranskning. |
 | `verified` | 0 | Kontrollerad mot namngiven källa av namngiven person. |
 
 ## Kön
 
 | Prioritet | Antal | Vad som står på spel |
 | --- | ---: | --- |
-| P1 | 131 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
+| P1 | 137 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
 | P2 | 64 | Undantag, villkorade regler och beräkningar. |
-| P3 | 247 | Förklarande kunskap utan rättsligt tal. |
-| **Totalt** | **442** | |
+| P3 | 253 | Förklarande kunskap utan rättsligt tal. |
+| **Totalt** | **454** | |
 
 ## P1 efter typ
 
@@ -32,34 +32,34 @@ vad slags kontroll den kräver.
 
 | Typ | Antal | Betyder |
 | --- | ---: | --- |
-| `P1-NUMERIC` | 89 | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
-| `P1-VOLATILE` | 59 | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
-| `P1-ADMIN` | 33 | Administrativ regel — besiktning, registrering, försäkring, körkort. |
-| `P1-LAW` | 66 | Bygger på en författningstext som går att slå upp ordagrant. |
+| `P1-NUMERIC` | 92 | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
+| `P1-VOLATILE` | 62 | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| `P1-ADMIN` | 34 | Administrativ regel — besiktning, registrering, försäkring, körkort. |
+| `P1-LAW` | 72 | Bygger på en författningstext som går att slå upp ordagrant. |
 | `P1-SAFETY` | 32 | Fel här kan leda till skada, inte bara till ett felaktigt svar. |
-| `P1-EXCEPTION` | 29 | Ett rättsligt tal som dessutom har undantag; både talet och undantaget måste stämma. |
+| `P1-EXCEPTION` | 30 | Ett rättsligt tal som dessutom har undantag; både talet och undantaget måste stämma. |
 
 ## Var arbetet ligger
 
 | Kapitel | P1 |
 | --- | ---: |
 | Alkohol | 14 |
+| Stanna & parkera | 12 |
 | Indelning av fordon | 11 |
 | Inledning | 11 |
-| Stanna & parkera | 9 |
 | Däck | 7 |
 | Speciella gator | 7 |
 | Synen | 7 |
+| Vägmärken | 6 |
 | Motorväg & motortrafikled | 5 |
 | Belysning | 4 |
 | Bilbarnstolar | 4 |
 | Drivmedel | 4 |
-| Försäkring | 4 |
 
 | Grupp som kräver extra omsorg | Antal |
 | --- | ---: |
-| Bär tre eller fler P1-typer | 54 |
-| Rättsligt tal med undantag | 29 |
+| Bär tre eller fler P1-typer | 56 |
+| Rättsligt tal med undantag | 30 |
 | Bildburna P1 (foto eller ritning) | 13 |
 | Beräkningar i P1 | 11 |
 | Utan hänvisning till författning | 65 |
@@ -81,14 +81,14 @@ rör tal som står i författning och går att slå upp direkt.
 | 02 — Hastigheter | 8 |
 | 03 — Däck, väglag och vinter | 8 |
 | 04 — Last, släp och vikter | 9 |
-| 05 — Stanna, parkera och tidsregler | 9 |
+| 05 — Stanna, parkera och tidsregler | 12 |
 | 06 — Belysning och mörker | 4 |
-| 07 — Väjning, stopp och korsningar | 1 |
+| 07 — Väjning, stopp och korsningar | 2 |
 | 08 — Oskyddade trafikanter och passager | 3 |
 | 09 — Motorväg, landsväg och omkörning | 14 |
 | 10 — Järnvägskorsningar | 2 |
 | 11 — Krocksäkerhet och bilbälte | 3 |
-| 12 — Vägmärken och vägmarkeringar | 12 |
+| 12 — Vägmärken och vägmarkeringar | 14 |
 | 13 — Fordon, miljö och administration | 25 |
 | 14 — Risk, trötthet och olyckor | 19 |
 
@@ -802,7 +802,7 @@ Avståndet mellan bilarna på bilden är fyra meter. Vad krävs?
 | Missuppfattning | Bogserlinan antas synas av sig själv |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `0b097983` |
 
-### Omgång 05 — Stanna, parkera och tidsregler · 9 frågor
+### Omgång 05 — Stanna, parkera och tidsregler · 12 frågor
 
 #### `par-001` · Skillnad stannande och parkering
 
@@ -966,6 +966,60 @@ På tavlan står "2 tim 9–18 (9–15)". Vad betyder siffrorna inom parentes?
 | Missuppfattning | Tider inom parentes misstolkas |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `35a5a903` |
 
+#### `skk-002` · Utsträckningstavla under förbudsmärke
+
+Hur långt gäller förbudet på bilden?
+
+**Rätt svar:** På hela den sträcka som tavlan märker ut.
+
+**Förklaring:** Den dubbelriktade pilen betyder utsträckning: förbudet gäller åt båda hållen längs den utmärkta sträckan.
+
+| | |
+| --- | --- |
+| Typ | P1-VOLATILE, P1-LAW |
+| Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| Kapitel · delområde | Stanna & parkera · Förbud att parkera |
+| Källa och exakt hänvisning | Vägmärkesförordningen (2007:90) T11 · Trafikförordningen (1998:1276) 3 kap. 55 § |
+| Status | `reviewed` |
+| Missuppfattning | Avstånd och utsträckning blandas ihop |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `6c7807c5` |
+
+#### `skk-003` · Parkering med tid och avgift
+
+Vad gäller på platsen där den här stolpen står?
+
+**Rätt svar:** Du får parkera under den angivna tiden, och det kostar avgift.
+
+**Förklaring:** Två tavlor läses tillsammans, uppifrån och ned: parkering tillåten, under den tiden, mot avgift.
+
+| | |
+| --- | --- |
+| Typ | P1-VOLATILE, P1-LAW, P1-EXCEPTION |
+| Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| Kapitel · delområde | Stanna & parkera · Parkeringsregler |
+| Källa och exakt hänvisning | Vägmärkesförordningen (2007:90) T6 · Vägmärkesförordningen (2007:90) T16 |
+| Status | `reviewed` |
+| Missuppfattning | Flera tavlor läses som undantag från varandra |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `ce5ba865` |
+
+#### `skk-006` · Tavla för rörelsehindrade
+
+Vem får parkera på platsen?
+
+**Rätt svar:** Bara den som har parkeringstillstånd för rörelsehindrad.
+
+**Förklaring:** Tavlan reserverar platsen. Det är tillståndet som gäller, inte en bedömning av vem som verkar behöva platsen.
+
+| | |
+| --- | --- |
+| Typ | P1-VOLATILE, P1-LAW |
+| Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| Kapitel · delområde | Stanna & parkera · Parkeringsregler |
+| Källa och exakt hänvisning | Vägmärkesförordningen (2007:90) T7 · Trafikförordningen (1998:1276) 13 kap. 8 § |
+| Status | `reviewed` |
+| Missuppfattning | Reserverad plats antas vara ledig för alla |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `0c69bf7d` |
+
 ### Omgång 06 — Belysning och mörker · 4 frågor
 
 #### `bel-006` · Hastighet vid kraftigt nedsatt sikt
@@ -1040,7 +1094,7 @@ Du upptäcker att en av bilens bromslyktor inte fungerar. Vad gäller?
 | Missuppfattning | — |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `1de36d54` |
 
-### Omgång 07 — Väjning, stopp och korsningar · 1 frågor
+### Omgång 07 — Väjning, stopp och korsningar · 2 frågor
 
 #### `kor-008` · Huvudled
 
@@ -1059,6 +1113,24 @@ Vad innebär märket huvudled för dig som kör på leden?
 | Status | `reviewed` |
 | Missuppfattning | Bashastighet blandas ihop med skyltad hastighet; Parkering på huvudled |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `d35172db` |
+
+#### `skk-005` · Förvarning om stopplikt
+
+Vad ska du göra när du ser den här stolpen?
+
+**Rätt svar:** Förbereda dig på att stanna helt om 200 meter.
+
+**Förklaring:** Tavlan förvarnar: stopplikten kommer om 200 meter. Här behöver du inte stanna, men du ska anpassa farten så att du hinner.
+
+| | |
+| --- | --- |
+| Typ | P1-NUMERIC, P1-LAW |
+| Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
+| Kapitel · delområde | Väjningsregler · Stopplikt |
+| Källa och exakt hänvisning | Vägmärkesförordningen (2007:90) T3 · Trafikförordningen (1998:1276) 3 kap. 19 § |
+| Status | `reviewed` |
+| Missuppfattning | Förvarning om stopplikt uppfattas som stopplikt |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `f5e5daab` |
 
 ### Omgång 08 — Oskyddade trafikanter och passager · 3 frågor
 
@@ -1464,7 +1536,7 @@ Vilken gräns avgör om ett barn måste ha särskilt barnskydd i bilen?
 | Missuppfattning | Gränsen för barnskydd antas vara ålder |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `8c49f9e6` |
 
-### Omgång 12 — Vägmärken och vägmarkeringar · 12 frågor
+### Omgång 12 — Vägmärken och vägmarkeringar · 14 frågor
 
 #### `tra-009` · Busshållplats i tätort
 
@@ -1681,6 +1753,42 @@ Du passerar märket för tättbebyggt område utan att se någon hastighetsskylt
 | Status | `reviewed` |
 | Missuppfattning | Bashastighet blandas ihop med skyltad hastighet |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `3e8d0b39` |
+
+#### `skk-001` · Avståndstavla under varningsmärke
+
+Vad betyder skylten med tavlan under?
+
+**Rätt svar:** Att något oväntat finns 100 meter längre fram.
+
+**Förklaring:** Avståndstavlan säger var regeln börjar. Faran finns alltså inte här utan hundra meter längre fram.
+
+| | |
+| --- | --- |
+| Typ | P1-NUMERIC, P1-LAW |
+| Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
+| Kapitel · delområde | Vägmärken · Varningsmärken |
+| Källa och exakt hänvisning | Vägmärkesförordningen (2007:90) T2 · Teoribok — Körkortsboken 2026 för B-körkort Tilläggstavlor s. 346 |
+| Status | `reviewed` |
+| Missuppfattning | Avstånd och utsträckning blandas ihop |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `1e359f85` |
+
+#### `skk-009` · Viktbegränsning genom tilläggstavla
+
+Vem träffas av förbudet på bilden?
+
+**Rätt svar:** Fordon med en totalvikt över 3,5 ton.
+
+**Förklaring:** Tavlan begränsar vem märket gäller. En personbil under gränsen får alltså köra, trots förbudsmärket.
+
+| | |
+| --- | --- |
+| Typ | P1-NUMERIC, P1-ADMIN, P1-LAW |
+| Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
+| Kapitel · delområde | Vägmärken · Förbudsmärken |
+| Källa och exakt hänvisning | Vägmärkesförordningen (2007:90) T5 · Teoribok — Körkortsboken 2026 för B-körkort Tilläggstavlor s. 346 |
+| Status | `reviewed` |
+| Missuppfattning | Tilläggstavlan antas beskriva vägen i stället för att begränsa märket |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `566473ba` |
 
 ### Omgång 13 — Fordon, miljö och administration · 25 frågor
 
@@ -2547,7 +2655,7 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `mrk-011` | Körfält och sväng | Körfältspilar (M19) |
 | `mrk-012` | Körfältsbyte | Bussymbol i körfältet (M28) |
 
-## P3 — 247 frågor
+## P3 — 253 frågor
 
 | Fråga | Delområde | Regel |
 | --- | --- | --- |
@@ -2756,6 +2864,12 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `bl4-004` | Möte i mörker | Avbländning i kurva |
 | `egr-003` | Regn och vattenplaning | Att hantera vattenplaning |
 | `egr-005` | Krocksäkerhet | Bältets placering över kroppen |
+| `skk-004` | Väjningsplikt | Flervägsväjning |
+| `skk-007` | Huvudled | Vägars fortsättning i korsning |
+| `skk-008` | Förbud mot omkörning | Sträckans längd under omkörningsförbud |
+| `skk-010` | Förbud att stanna | Riktningstavla under förbudsmärke |
+| `skk-011` | Stopplikt | Flervägsstopp |
+| `skk-012` | Varningsmärken | Märke utan tilläggstavla |
 | `grd-001` | Högerregeln | Högerregeln |
 | `grd-002` | Trafiksignaler och tecken | Gult ljus |
 | `grd-005` | Vägmarkeringar | Mittlinje och kantlinje |

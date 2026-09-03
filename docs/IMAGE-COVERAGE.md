@@ -9,11 +9,11 @@ Ett foto som ingen lektion tolkar är dekoration oavsett hur rätt det är.
 
 | | Antal |
 | --- | ---: |
-| Godkända källbilder | 65 |
-| Använda av lektion eller fråga | 65 |
+| Godkända källbilder | 66 |
+| Använda av lektion eller fråga | 66 |
 | Oanvända | 0 |
 | Lektioner med källbild | 15 av 19 |
-| Frågor med källbild | 48 av 442 |
+| Frågor med källbild | 48 av 454 |
 | Kapitel med minst en bild | 23 av 39 |
 | Begrepp vars delområde har foto | 87 av 179 |
 | Scenarier (interaktiva, ej foto) | 14 |
@@ -22,7 +22,7 @@ Ett foto som ingen lektion tolkar är dekoration oavsett hur rätt det är.
 
 | Användning | Antal |
 | --- | ---: |
-| `theory-lesson` | 25 |
+| `theory-lesson` | 26 |
 | `question-image` | 40 |
 | `supporting-reference` | 0 |
 
@@ -36,8 +36,8 @@ boken trycker en bild per kod. Bokens C31 visar 30 — den kan inte illustrera
 
 | | Antal |
 | --- | ---: |
-| Märken i registret | 58 |
-| Med licensierad bokbild | 48 |
+| Märken i registret | 99 |
+| Med licensierad bokbild | 89 |
 | Kvar på Vägklars ritning | 10 |
 
 | Märke | Kod | Varför ritning |
@@ -107,7 +107,7 @@ förra, och kolumnerna hålls isär så att den skillnaden syns.
 | Vinter | 124–131 | 2 | 0 | 0 |
 | Synen | 154–161 | 1 | 0 | 0 |
 | Barn | 168–173 | 1 | 0 | 0 |
-| Trafikolyckor | 174–187 | 1 | 0 | 3 |
+| Trafikolyckor | 174–187 | 2 | 0 | 3 |
 | Sträckor | 196–203 | 1 | 0 | 0 |
 | Däck | 204–213 | 0 | 0 | 6 |
 | Styrning | 214–223 | 0 | 0 | 2 |
@@ -145,7 +145,8 @@ av ett fotografi; ett om sikt, väglag eller samspel blir det nästan alltid.
 
 | Bild | Slag | Delområde | Sida | Lektioner | Frågor |
 | --- | --- | --- | ---: | --- | --- |
-| `korfaltspilar-cirkulation` | foto | Vägmarkeringar | 23 | les-vagmarkeringar | — |
+| `varning-vagkorsning-i-kurva` | foto | Skymd sikt | 180 | les-vagmarken | — |
+| `korfaltspilar-cirkulation` | foto | Vägmarkeringar | 23 | les-vagmarken, les-vagmarkeringar | — |
 | `bevakat-overgangsstalle` | foto | Gående och cyklister | 42 | les-passager | — |
 | `vajningslinje-utfart` | foto | Vägmarkeringar | 25 | les-vagmarkeringar | — |
 | `deformationszoner` | ritning | Krocksäkerhet | 232 | les-krockskydd | — |
@@ -170,7 +171,7 @@ av ett fotografi; ett om sikt, väglag eller samspel blir det nästan alltid.
 | `gaende-mellan-parkerade` | foto | Skymd sikt | 155 | — | bl3-006 |
 | `bussar-vid-hallplats` | foto | Barn och oskyddade | 168 | les-risker | bl3-002 |
 | `smal-viadukt-skymd-utfart` | foto | Skymd sikt | 198 | — | bl3-003 |
-| `viltvarning-med-tillaggstavla` | foto | Djur på vägen | 178 | les-vagmarken | — |
+| `viltvarning-med-tillaggstavla` | foto | Djur på vägen | 178 | les-vagmarken, les-vagmarken | — |
 | `isig-landsvag-utan-linjer` | foto | Vinterkörning | 9 | les-halka | bl3-004 |
 | `skymning-belyst-vag` | foto | Mörkerkörning | 262 | les-morker | — |
 | `korfaltsval-motorvag` | foto | Placering i körfält | 16 | — | bld-001 |
@@ -186,7 +187,7 @@ av ett fotografi; ett om sikt, väglag eller samspel blir det nästan alltid.
 | `gangbana-utfart` | foto | Gående och cyklister | 49 | les-utfartsregeln | — |
 | `cirkulation-med-trafik` | foto | Cirkulationsplats | 65 | — | bld-010 |
 | `rund-korsning-utan-skylt` | foto | Cirkulationsplats | 63 | les-cirkulation | bld-011 |
-| `p-skylt-avgift-boende` | foto | Parkeringsregler | 67 | les-parkering, les-vagmarken | bld-012 |
+| `p-skylt-avgift-boende` | foto | Parkeringsregler | 67 | les-parkering, les-vagmarken, les-vagmarken | bld-012 |
 | `p-skylt-tidsbegransning` | foto | Parkeringsregler | 75 | — | bld-013 |
 | `forbud-att-stanna` | foto | Förbud att stanna | 70 | les-parkering | — |
 | `traktor-vintervag` | foto | Omkörningsregler | 100 | les-omkorning | bld-016, bl2-012 |
@@ -220,4 +221,4 @@ Inga. Varje godkänd bild används av minst en lektion eller fråga.
 Varje godkänd bild ska finnas i bredderna 640 och 960 px.
 Saknas någon avbryter innehållsvalideringen.
 
-Ofullständiga: vajningslinje-utfart, bromsskiva, spannband
+Ofullständiga: varning-vagkorsning-i-kurva, vajningslinje-utfart, bromsskiva, spannband

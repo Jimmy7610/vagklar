@@ -1,8 +1,18 @@
 # Vägmärken från källan
 
-Vägklar visar bokens egna vägmärkesbilder. 48 av registrets 58 märken ritas med
-licensierat material; 10 står kvar på Vägklars vektorritning, och det är ett val
-snarare än en lucka.
+Vägklar visar bokens egna vägmärkesbilder. **89 av registrets 99 märken** ritas
+med licensierat material; 10 står kvar på Vägklars vektorritning, och det är ett
+val snarare än en lucka.
+
+Registret växte från 58 till 99 när bilagan blev användbar. Namnen är bokens
+egna: extraktorn läser bildtexten ovanför varje kod, så inget namn är påhittat.
+Att få ut dem krävde två saker som inte var självklara — rader måste klustras på
+y-led, annars flätas två rader ihop bokstav för bokstav i PDF:ens ritordning, och
+mellanslagen måste räknas fram ur glyfernas positioner, eftersom bildtexterna är
+satta utan mellanslagstecken alls.
+
+Tilläggstavlorna är numera egna objekt som kan hängas under ett märke. Se
+[SIGN-ASSEMBLIES.md](SIGN-ASSEMBLIES.md).
 
 ## Varför bytet gjordes
 
@@ -47,6 +57,9 @@ maskningen fanns.
 
 ## Varför tio märken behåller sin ritning
 
+Sammansättning ur bokens egna delar prövades och förkastades på bevis, inte på
+känsla: se avsnittet om varianter i [SIGN-ASSEMBLIES.md](SIGN-ASSEMBLIES.md).
+
 Tre officiella koder täcker var sin familj:
 
 | Kod | Täcker | Boken trycker |
@@ -71,23 +84,30 @@ lossless WebP**. Båda besluten är mätta.
 *En bredd, inte en responsiv uppsättning.* Beskärningarna är omkring 450 px
 breda och visas 110–132 px infällda. Att skala ner dem till 320 px gav en
 *större* fil: platt vektorgrafik har en handfull exakta färger, och omsampling
-uppfinner hundratals mellanliggande som sedan måste kodas. 48 märken kostar
-212 kB i originalupplösning och 227 kB nedskalade.
+uppfinner hundratals mellanliggande som sedan måste kodas. Mätt på de första 48
+märkena: 212 kB i originalupplösning mot 227 kB nedskalade.
 
 *Lossless, inte kvalitet 92.* Ett vägmärke är sex platta färger. Förstörande
 kodning lägger ringningar runt de svarta symbolerna, vilket är precis den detalj
 eleven ska läsa. Kvantisering till 32 färger och lossless kodning är både mindre
-och skarpare: 212 kB mot 864 kB.
+och skarpare: 212 kB mot 864 kB för samma 48 märken.
+
+Alla 89 märken som skeppas väger tillsammans **397 kB**.
 
 ## Offline
 
 Märkena **precachas**; fotografierna gör det inte.
 
-Uppdelningen är mätt. Alla 48 märkesbilder är tillsammans 212 kB mot ungefär
-6 MB för fotografierna, så att lägga märkena i installationen kostar cirka 15 %.
+Uppdelningen är mätt, och mättes om när registret växte. De 89 märkesbilderna
+är tillsammans 397 kB mot ungefär 6,6 MB för fotografierna. Förhandscachen går
+från 1 382 KiB till 1 921 KiB — knappt 40 % större installation, och fortfarande
+under två megabyte.
+
 Vad det köper är att provet fungerar offline: ungefär var tionde provfråga visar
 ett märke, och en märkesfråga utan sitt märke är inte en svårare fråga utan en
-olöslig. Exakt den defekten har funnits här förut.
+olöslig. Exakt den defekten har funnits här förut. Gränsen där avvägningen
+skulle behöva tas om är någonstans kring ett par megabyte märkesbilder — långt
+över var vi står.
 
 Filnamnen bär prefixet `sign-` just för att den skillnaden ska överleva att Vite
 plattar ut alla resurser till `/assets/`. `verify-build` kontrollerar båda
@@ -122,8 +142,13 @@ python scripts/extract-book-signs.py     # klipper ut ur källan, gitignorerat
 python scripts/optimise-book-signs.py    # optimerar de märken registret känner
 ```
 
-Optimeraren tar bara med märken som finns i `road-signs.ts`. Bilagan innehåller
-257 märkesbilder; att skeppa alla vore byte ingen tittar på.
+Optimeraren tar bara med märken som finns i `road-signs.ts`, och hoppar över de
+poster som har en `variant`. Bilagan innehåller 257 märkesbilder; registret
+beskriver 99, och att skeppa resten vore byte ingen tittar på.
+
+Alla 257 har däremot namn ur boken i extraktionsmanifestet, så att lägga till
+fler är en fråga om att skriva innebörd och alt-text — inte om att gissa vad ett
+märke heter.
 
 ## Rättigheter
 

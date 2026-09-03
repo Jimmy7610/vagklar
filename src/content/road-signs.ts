@@ -25,11 +25,97 @@ export type SignCategory =
   | 'anvisning'
   | 'tillaggstavla';
 
+/**
+ * What a supplementary plate does to the sign above it.
+ *
+ * A plate never means anything alone: it narrows the main sign. The kind says
+ * *which* dimension it narrows, which is what lets the app say something useful
+ * about a combination it has never seen before — a distance plate under any
+ * sign means "the rule starts there", whatever the sign is.
+ */
+export type PlateKind =
+  | 'distance'
+  | 'extent'
+  | 'direction'
+  | 'time'
+  | 'vehicle'
+  | 'condition'
+  | 'information';
+
+export interface SupplementaryPlate {
+  /** How the plate narrows the sign above it. */
+  kind: PlateKind;
+  /**
+   * The words printed on this particular plate, if any. Plates are a family:
+   * T2 is "a distance", and the book prints one example of it. This is what
+   * *this* asset actually says, so a description can be accurate about the
+   * picture rather than about the family.
+   */
+  printedText?: string;
+  /** Read out with the main sign, e.g. "gäller om 100 m". */
+  combinedPhrase: string;
+}
+
+/**
+ * Which of several real signs share one official code.
+ *
+ * The regulation gives C31 to every speed limit, D1 to every mandatory
+ * direction and T6 to every time plate. The book prints one picture per code,
+ * so its C31 shows 30. Modelling the variant explicitly is what keeps the app
+ * from claiming that a picture of a 30 sign is a 90 sign — and what lets the
+ * renderer compose the right one from the authentic base.
+ */
+export interface SignVariant {
+  /** Distinguishes siblings under one code, e.g. 'speed-90'. */
+  key: string;
+  /** The number on the face, when the variant is a number. */
+  numericValue?: number;
+  /** The direction the arrow points, when the variant is a direction. */
+  arrowDirection?: 'up' | 'down' | 'left' | 'right';
+  /** Free text on the face, when the variant is words. */
+  text?: string;
+}
+
+/**
+ * Facts about the picture, kept apart from facts about the meaning.
+ *
+ * These exist so a test can check the written description against the artwork
+ * rather than against another description. The previous pass found twelve
+ * descriptions that disagreed with the sign — motorway signs called blue when
+ * they are green — precisely because nothing ever compared the two.
+ */
+export interface SignVisualTraits {
+  background: 'yellow' | 'blue' | 'green' | 'red' | 'white' | 'black';
+  border?: 'red' | 'blue' | 'white' | 'black' | 'none';
+  /** Words printed on the face, verbatim. */
+  text?: string;
+  arrowDirection?: 'up' | 'down' | 'left' | 'right' | 'both';
+  numericValue?: number;
+}
+
 export interface RoadSign {
   /** Stable id, also the glyph key. */
   id: string;
   /** Code from Vägmärkesförordningen, e.g. "B1". */
   code: string;
+  /**
+   * Set when several registry entries share one official code. The code stays
+   * the real one — inventing "C31-90" would be pretending the regulation says
+   * something it does not.
+   */
+  variant?: SignVariant;
+  /** Set on T-series entries. A plate is a different kind of object. */
+  plate?: SupplementaryPlate;
+  /** Facts about the picture, for checking the description against it. */
+  visualTraits?: SignVisualTraits;
+  /**
+   * Appearance only, for use while a question is unanswered.
+   *
+   * `altText` may name what the sign *is* — a lesson needs that. A question
+   * asking what it means cannot say it out loud. Where the two differ, this one
+   * is what a question surface uses.
+   */
+  quizSafeAltText?: string;
   name: string;
   category: SignCategory;
   /** One line: what it means. */
@@ -387,6 +473,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-30',
+    variant: { key: 'speed-30', numericValue: 30 },
     code: 'C31',
     name: 'Hastighetsbegränsning 30',
     category: 'forbud',
@@ -400,6 +487,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-50',
+    variant: { key: 'speed-50', numericValue: 50 },
     code: 'C31',
     name: 'Hastighetsbegränsning 50',
     category: 'forbud',
@@ -413,6 +501,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-70',
+    variant: { key: 'speed-70', numericValue: 70 },
     code: 'C31',
     name: 'Hastighetsbegränsning 70',
     category: 'forbud',
@@ -426,6 +515,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-90',
+    variant: { key: 'speed-90', numericValue: 90 },
     code: 'C31',
     name: 'Hastighetsbegränsning 90',
     category: 'forbud',
@@ -439,6 +529,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'hastighet-110',
+    variant: { key: 'speed-110', numericValue: 110 },
     code: 'C31',
     name: 'Hastighetsbegränsning 110',
     category: 'forbud',
@@ -480,6 +571,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   /* ================= Påbudsmärken (D) ================= */
   sign({
     id: 'pabud-rakt',
+    variant: { key: 'direction-up', arrowDirection: 'up' },
     code: 'D1',
     name: 'Påbjuden körriktning, rakt fram',
     category: 'pabud',
@@ -493,6 +585,7 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'pabud-hoger',
+    variant: { key: 'direction-right', arrowDirection: 'right' },
     code: 'D1',
     name: 'Påbjuden körriktning, höger',
     category: 'pabud',
@@ -695,6 +788,11 @@ export const ROAD_SIGNS: RoadSign[] = [
   /* ================= Tilläggstavlor (T) ================= */
   sign({
     id: 'tavla-tid',
+    variant: { key: 'time-weekday' },
+    plate: {
+      kind: 'time',
+      combinedPhrase: 'gäller under den angivna tiden',
+    },
     code: 'T6',
     name: 'Tidsangivelse, vardag',
     category: 'tillaggstavla',
@@ -708,6 +806,11 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-tid-lordag',
+    variant: { key: 'time-saturday' },
+    plate: {
+      kind: 'time',
+      combinedPhrase: 'gäller lördagar under angiven tid',
+    },
     code: 'T6',
     name: 'Tidsangivelse, lördag',
     category: 'tillaggstavla',
@@ -721,6 +824,11 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-tid-helgdag',
+    variant: { key: 'time-sunday' },
+    plate: {
+      kind: 'time',
+      combinedPhrase: 'gäller söndagar och helgdagar under angiven tid',
+    },
     code: 'T6',
     name: 'Tidsangivelse, sön- och helgdag',
     category: 'tillaggstavla',
@@ -734,6 +842,11 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-avstand',
+    plate: {
+      kind: 'distance',
+      printedText: '100 m',
+      combinedPhrase: 'märket gäller 100 m längre fram',
+    },
     code: 'T2',
     name: 'Avstånd',
     category: 'tillaggstavla',
@@ -747,6 +860,10 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-utstrackning',
+    plate: {
+      kind: 'extent',
+      combinedPhrase: 'märket gäller på hela den utmärkta sträckan',
+    },
     code: 'T11',
     name: 'Utsträckning',
     category: 'tillaggstavla',
@@ -760,6 +877,10 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-riktning',
+    plate: {
+      kind: 'direction',
+      combinedPhrase: 'märket gäller i pilens riktning',
+    },
     code: 'T12',
     name: 'Riktning',
     category: 'tillaggstavla',
@@ -773,6 +894,11 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-boende',
+    plate: {
+      kind: 'condition',
+      printedText: 'Boende',
+      combinedPhrase: 'gäller endast boende med tillstånd',
+    },
     code: 'T19',
     name: 'Boende',
     category: 'tillaggstavla',
@@ -786,6 +912,11 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-avgift',
+    plate: {
+      kind: 'condition',
+      printedText: 'Avgift',
+      combinedPhrase: 'parkeringen är avgiftsbelagd',
+    },
     code: 'T16',
     name: 'Avgift',
     category: 'tillaggstavla',
@@ -799,6 +930,11 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-flervagsstopp',
+    plate: {
+      kind: 'information',
+      printedText: 'Flervägs-stopp',
+      combinedPhrase: 'alla tillfarter i korsningen har stopplikt',
+    },
     code: 'T14',
     name: 'Flervägsstopp',
     category: 'tillaggstavla',
@@ -812,6 +948,10 @@ export const ROAD_SIGNS: RoadSign[] = [
   }),
   sign({
     id: 'tavla-nedsatt-syn',
+    plate: {
+      kind: 'information',
+      combinedPhrase: 'personer med nedsatt syn rör sig i området',
+    },
     code: 'T9',
     name: 'Nedsatt syn',
     category: 'tillaggstavla',
@@ -822,6 +962,630 @@ export const ROAD_SIGNS: RoadSign[] = [
     tags: ['tillaggstavla', 'oskyddade'],
     similarSignIds: ['overgangsstalle-b3'],
     subcategory: 'nedsatt-formaga',
+  }),
+
+  /* ---- Omgång 2: fler varningsmärken ur källan ---- */
+  sign({
+    id: 'varning-nedforslutning',
+    code: 'A3',
+    name: 'Varning för nedförslutning',
+    category: 'varning',
+    shortMeaning: 'Brant nedförsbacke, med lutningen angiven i procent.',
+    longMeaning:
+      'Växla ner före backen i stället för att bromsa hela vägen ner. Håller du farten med motorbromsen slipper du bromsar som blir varma och tappar verkan.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en svart backe som lutar nedåt med lutningen 10 % angiven.',
+    visualTraits: { background: 'yellow', border: 'red', text: '10%' },
+    tags: ['backe', 'landsvag'],
+    similarSignIds: ['varning-stigning'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-stigning',
+    code: 'A4',
+    name: 'Varning för stigning',
+    category: 'varning',
+    shortMeaning: 'Brant uppförsbacke, med lutningen angiven i procent.',
+    longMeaning:
+      'Räkna med långsamma tunga fordon och med att din egen fart sjunker. Lägg om till lägre växel innan farten redan gått förlorad.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en svart backe som lutar uppåt med lutningen 10 % angiven.',
+    visualTraits: { background: 'yellow', border: 'red', text: '10%' },
+    tags: ['backe', 'landsvag'],
+    similarSignIds: ['varning-nedforslutning'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-avsmalnande-vag',
+    code: 'A5',
+    name: 'Varning för avsmalnande väg',
+    category: 'varning',
+    shortMeaning: 'Vägen blir smalare längre fram.',
+    longMeaning:
+      'Två fordon får inte längre plats bredvid varandra på samma sätt. Titta efter mötande innan avsmalningen och var beredd att lämna företräde.',
+    altText: 'Varningsmärke: gul triangel med röd ram och två svarta kanter som buktar in mot varandra.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['mote', 'landsvag'],
+    similarSignIds: ['vajningsplikt-motande'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-ojamn-vag',
+    code: 'A8',
+    name: 'Varning för ojämn väg',
+    category: 'varning',
+    shortMeaning: 'Ojämn vägbana — gropar, spår eller ojämna skarvar.',
+    longMeaning:
+      'Sänk farten. Ojämnheter gör att däcken tidvis lättar från vägbanan, och ett hjul som är i luften varken styr eller bromsar.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en svart vågig linje som visar en ojämn vägbana.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['vaglag'],
+    similarSignIds: ['varning-farthinder'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-farthinder',
+    code: 'A9',
+    name: 'Varning för farthinder',
+    category: 'varning',
+    shortMeaning: 'Ett farthinder i vägbanan, till exempel ett gupp.',
+    longMeaning:
+      'Sänk farten före hindret. Farthinder sitter oftast där gående och cyklister korsar, så det är sällan bara komforten som är skälet.',
+    altText: 'Varningsmärke: gul triangel med röd ram och ett svart gupp i vägbanan sett från sidan.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['tatort'],
+    similarSignIds: ['varning-ojamn-vag'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-stenskott',
+    code: 'A11',
+    name: 'Varning för stenskott',
+    category: 'varning',
+    shortMeaning: 'Löst grus som kan slungas upp av fordon.',
+    longMeaning:
+      'Öka avståndet till fordonet framför. Grus från ett däck i hög fart spräcker rutor, och löst grus ger dessutom sämre grepp vid inbromsning.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en bil med grus som slungas upp bakom hjulen.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['grus', 'avstand'],
+    similarSignIds: ['varning-stenras'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-stenras',
+    code: 'A12',
+    name: 'Varning för stenras',
+    category: 'varning',
+    shortMeaning: 'Sten kan falla ned på vägen från en slänt.',
+    longMeaning:
+      'Titta efter sten som redan ligger i vägbanan, särskilt efter regn och tjällossning. Stanna inte under släntens branta parti.',
+    altText: 'Varningsmärke: gul triangel med röd ram och stenar som faller ned från en brant slänt.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['landsvag'],
+    similarSignIds: ['varning-stenskott'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-gaende',
+    code: 'A14',
+    name: 'Varning för gående',
+    category: 'varning',
+    shortMeaning: 'Gående kan finnas i eller vid körbanan.',
+    longMeaning:
+      'Skillnaden mot märket för övergångsställe är att här finns ingen utmärkt plats där de korsar — de kan komma var som helst längs sträckan.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en vuxen och ett barn som går.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['oskyddade'],
+    similarSignIds: ['varning-overgangsstalle', 'varning-barn'],
+    subcategory: 'oskyddade-trafikanter',
+  }),
+  sign({
+    id: 'varning-ridande',
+    code: 'A18',
+    name: 'Varning för ridande',
+    category: 'varning',
+    shortMeaning: 'Hästar och ryttare kan finnas på vägen.',
+    longMeaning:
+      'Passera långsamt och med stort sidoavstånd, och undvik att gasa eller tuta i närheten. En häst som blir skrämd rör sig i sidled utan förvarning.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en häst med ryttare.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['djur', 'landsvag'],
+    similarSignIds: ['varning-djur'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-flerfargssignal',
+    code: 'A22',
+    name: 'Varning för flerfärgssignal',
+    category: 'varning',
+    shortMeaning: 'En trafiksignal längre fram som är svår att upptäcka i tid.',
+    longMeaning:
+      'Sätts där signalen kommer oväntat — efter ett krön, i en kurva eller på en sträcka med hög hastighet. Var beredd på att den kan slå om.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en trafiksignal med rött, gult och grönt ljus.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['signal'],
+    similarSignIds: ['varning-vagkorsning'],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-sidvind',
+    code: 'A24',
+    name: 'Varning för sidvind',
+    category: 'varning',
+    shortMeaning: 'Kraftig vind i sidled på en utsatt sträcka.',
+    longMeaning:
+      'Håll stadigt i ratten och sänk farten, särskilt på broar och när du kör om eller möter ett stort fordon — vinden försvinner och återkommer plötsligt i lä bakom det.',
+    altText: 'Varningsmärke: gul triangel med röd ram och en vindstrut som blåser åt sidan.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['vader', 'bro'],
+    similarSignIds: [],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-vajningsplikt-korsning',
+    code: 'A29',
+    name: 'Varning för vägkorsning där anslutande väg har väjningsplikt',
+    category: 'varning',
+    shortMeaning: 'En korsning där de som kommer från sidan ska väja för dig.',
+    longMeaning:
+      'Märket säger att du har företräde — inte att du kan sluta titta. Det sitter ofta just där sikten är dålig, och den som ska väja hinner inte alltid se dig.',
+    altText: 'Varningsmärke: gul triangel med röd ram och ett svart kors där den lodräta linjen är bredare än den vågräta.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['korsning', 'vajningsplikt'],
+    similarSignIds: ['varning-vagkorsning', 'huvudled'],
+    subcategory: 'vajningsplikt',
+  }),
+  sign({
+    id: 'varning-ko',
+    code: 'A34',
+    name: 'Varning för kö',
+    category: 'varning',
+    shortMeaning: 'Köbildning kan förekomma på sträckan.',
+    longMeaning:
+      'Öka avståndet framåt och titta långt fram. Upphinnandeolyckor i kö sker nästan alltid för att någon upptäckte den stillastående kön för sent.',
+    altText: 'Varningsmärke: gul triangel med röd ram och tre bilar tätt bakom varandra.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['avstand', 'motorvag'],
+    similarSignIds: [],
+    subcategory: 'varningsmarken',
+  }),
+  sign({
+    id: 'varning-annan-fara',
+    code: 'A40',
+    name: 'Varning för annan fara',
+    category: 'varning',
+    shortMeaning: 'En fara som inget annat varningsmärke täcker.',
+    longMeaning:
+      'Vad faran är framgår nästan alltid av en tilläggstavla under märket. Utan tavla betyder det bara att något ovanligt finns längre fram.',
+    altText: 'Varningsmärke: gul triangel med röd ram och ett brett svart utropstecken utan punkt.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['tillaggstavla'],
+    similarSignIds: [],
+    subcategory: 'varningsmarken',
+  }),
+
+  /* ---- Omgång 2: fler förbudsmärken ---- */
+  sign({
+    id: 'forbud-motordrivet',
+    code: 'C3',
+    name: 'Förbud mot trafik med annat motordrivet fordon än moped klass II',
+    category: 'forbud',
+    shortMeaning: 'Bilar och motorcyklar får inte köra in. Moped klass II får.',
+    longMeaning:
+      'Det breda förbudet mot motortrafik. Cykel och moped klass II omfattas inte, vilket är hela poängen med formuleringen.',
+    altText: 'Rund skylt med gul botten och bred röd ram, en bil och en motorcykel överstrukna med ett rött streck.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['forbud'],
+    similarSignIds: ['forbud-trafik-fordon', 'forbud-infart'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-slap',
+    code: 'C6',
+    name: 'Förbud mot trafik med motordrivet fordon med tillkopplad släpvagn',
+    category: 'forbud',
+    shortMeaning: 'Fordon med släp får inte köra in.',
+    longMeaning:
+      'Sitter där ett ekipage inte får plats eller inte kan vända. Gäller oavsett hur litet släpet är.',
+    altText: 'Rund skylt med gul botten och bred röd ram, en bil med tillkopplat släp, överstrukna med ett rött streck.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['slap', 'forbud'],
+    similarSignIds: ['forbud-tung-lastbil'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-tung-lastbil',
+    code: 'C7',
+    name: 'Förbud mot trafik med tung lastbil',
+    category: 'forbud',
+    shortMeaning: 'Tung lastbil får inte köra in.',
+    longMeaning:
+      'Gäller lastbil över 3,5 ton totalvikt. Personbil och lätt lastbil berörs inte.',
+    altText: 'Rund skylt med gul botten och bred röd ram, en lastbil sedd från sidan, överstruken med ett rött streck.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['forbud', 'tung-trafik'],
+    similarSignIds: ['forbud-slap', 'forbud-omkorning-lastbil'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-farligt-gods',
+    code: 'C9',
+    name: 'Förbud mot trafik med fordon lastat med farligt gods',
+    category: 'forbud',
+    shortMeaning: 'Fordon med farligt gods får inte köra in.',
+    longMeaning:
+      'Sitter typiskt före tunnlar, vattentäkter och tät bebyggelse. Berör dig som B-förare bara om du kör sådant gods.',
+    altText: 'Rund skylt med gul botten och bred röd ram, en lastbil med en orange skylt, överstruken med ett rött streck.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['farligt-gods'],
+    similarSignIds: ['forbud-tung-lastbil'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-bredd',
+    code: 'C16',
+    name: 'Begränsad fordonsbredd',
+    category: 'forbud',
+    shortMeaning: 'Fordon bredare än angivet mått får inte passera.',
+    longMeaning:
+      'Måttet gäller fordonet med last. Det är lasten som oftast fäller ett ekipage här, inte bilen.',
+    altText: 'Rund skylt med gul botten och bred röd ram, måttet 2,2 m mellan två svarta pilspetsar som pekar mot varandra.',
+    visualTraits: { background: 'yellow', border: 'red', text: '2,2 m' },
+    tags: ['matt', 'last'],
+    similarSignIds: ['forbud-hojd', 'forbud-langd'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-hojd',
+    code: 'C17',
+    name: 'Begränsad fordonshöjd',
+    category: 'forbud',
+    shortMeaning: 'Fordon högre än angivet mått får inte passera.',
+    longMeaning:
+      'Sitter före broar, portar och tunnlar. Måttet gäller fordonet med last, och det är takräcket eller lasten som fastnar.',
+    altText: 'Rund skylt med gul botten och bred röd ram, måttet 3,5 m mellan en pilspets uppåt och en nedåt.',
+    visualTraits: { background: 'yellow', border: 'red', text: '3,5 m' },
+    tags: ['matt', 'last'],
+    similarSignIds: ['forbud-bredd', 'forbud-langd'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-langd',
+    code: 'C18',
+    name: 'Begränsad fordonslängd',
+    category: 'forbud',
+    shortMeaning: 'Fordon eller fordonståg längre än angivet mått får inte passera.',
+    longMeaning:
+      'Räknas på hela ekipaget, alltså bil plus släp plus utskjutande last.',
+    altText: 'Rund skylt med gul botten och bred röd ram, en lastbil med måttet 20 m under sig, mellan två pilar.',
+    visualTraits: { background: 'yellow', border: 'red', text: '20 m' },
+    tags: ['matt', 'slap'],
+    similarSignIds: ['forbud-bredd', 'forbud-hojd'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-bruttovikt',
+    code: 'C20',
+    name: 'Begränsad bruttovikt på fordon',
+    category: 'forbud',
+    shortMeaning: 'Fordon som väger mer än angivet får inte passera.',
+    longMeaning:
+      'Bruttovikt är fordonets verkliga vikt just nu, alltså tjänstevikt plus last och passagerare — inte vad det får väga enligt registreringsbeviset.',
+    altText: 'Rund skylt med gul botten och bred röd ram, texten 12 t i svart.',
+    visualTraits: { background: 'yellow', border: 'red', text: '12 t', numericValue: 12 },
+    tags: ['vikt', 'bro'],
+    similarSignIds: ['forbud-langd'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-svang',
+    code: 'C25',
+    name: 'Förbud mot sväng i korsning',
+    category: 'forbud',
+    shortMeaning: 'Du får inte svänga åt det håll pilen visar.',
+    longMeaning:
+      'Gäller den korsning märket står vid. En tilläggstavla kan begränsa förbudet till vissa tider eller fordonsslag.',
+    altText: 'Rund skylt med gul botten och bred röd ram, en svart pil som böjer av åt vänster, överstruken med ett rött streck.',
+    visualTraits: { background: 'yellow', border: 'red', arrowDirection: 'left' },
+    tags: ['korsning', 'sväng'],
+    similarSignIds: ['forbud-u-svang'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-u-svang',
+    code: 'C26',
+    name: 'Förbud mot U-sväng',
+    category: 'forbud',
+    shortMeaning: 'Du får inte vända och köra tillbaka.',
+    longMeaning:
+      'Gäller från märket till nästa korsning. Sitter där en vändning skulle blockera körfältet eller ske i skymd sikt.',
+    altText: 'Rund skylt med gul botten och bred röd ram, en svart pil som vänder tillbaka i en U-form, överstruken med ett rött streck.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['sväng'],
+    similarSignIds: ['forbud-svang'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'forbud-omkorning-lastbil',
+    code: 'C29',
+    name: 'Förbud mot omkörning med tung lastbil',
+    category: 'forbud',
+    shortMeaning: 'Tung lastbil får inte köra om andra motordrivna fordon.',
+    longMeaning:
+      'Berör inte dig som kör personbil — du får fortfarande köra om. Märket finns för att en omkörande lastbil blockerar vägen mycket länge.',
+    altText: 'Rund skylt med gul botten och bred röd ram, en röd lastbil bredvid en grå bil, överstrukna med ett rött streck.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['omkorning', 'tung-trafik'],
+    similarSignIds: ['forbud-omkorning', 'forbud-tung-lastbil'],
+    subcategory: 'omkorningsforbud',
+  }),
+  sign({
+    id: 'vandplats',
+    code: 'C42',
+    name: 'Vändplats',
+    category: 'forbud',
+    shortMeaning: 'Platsen får bara användas för att vända.',
+    longMeaning:
+      'Att stanna eller parkera här är förbjudet — hela ytan behövs för att någon annan ska kunna vända.',
+    altText:
+      'Gul rektangulär skylt med röd ram, texten Vändplats och under den symbolen för förbud att parkera.',
+    visualTraits: { background: 'yellow', border: 'red', text: 'Vändplats' },
+    tags: ['parkering'],
+    similarSignIds: ['forbud-parkera'],
+    subcategory: 'parkeringsforbud',
+  }),
+
+  /* ---- Omgång 2: påbud och anvisning ---- */
+  sign({
+    id: 'pabud-korbana',
+    code: 'D2',
+    name: 'Påbjuden körbana',
+    category: 'pabud',
+    shortMeaning: 'Du ska köra förbi hindret på den sida pilen visar.',
+    longMeaning:
+      'Sitter vid refuger och andra hinder mitt i vägen. Pilen är sned, inte rak — den visar vilken sida du ska passera på.',
+    altText: 'Rund blå skylt med en vit pil som pekar snett nedåt höger.',
+    visualTraits: { background: 'blue', arrowDirection: 'right' },
+    tags: ['refug', 'placering'],
+    similarSignIds: ['pabud-rakt', 'pabud-hoger'],
+    subcategory: 'pabudsmarken',
+  }),
+  sign({
+    id: 'pabud-gang-cykelbana-gemensam',
+    code: 'D6',
+    name: 'Påbjuden gång- och cykelbana',
+    category: 'pabud',
+    shortMeaning: 'Gemensam bana för gående och cyklister.',
+    longMeaning:
+      'Till skillnad från D7 är banan inte delad. Alla samsas om hela ytan, och cyklisten har ingen egen halva att räkna med.',
+    altText: 'Rund blå skylt med en gående figur ovanför en cykel.',
+    visualTraits: { background: 'blue' },
+    tags: ['cykel', 'oskyddade'],
+    similarSignIds: ['pabud-gang-cykelbana', 'pabud-cykelbana'],
+    subcategory: 'pabudsmarken',
+  }),
+  sign({
+    id: 'motortrafikled-upphor',
+    code: 'E4',
+    name: 'Motortrafikled upphör',
+    category: 'anvisning',
+    shortMeaning: 'Motortrafikledens regler slutar gälla här.',
+    longMeaning:
+      'Räkna med korsande trafik, långsamma fordon och gående igen. Bashastigheten gäller om inget annat skyltas.',
+    altText: 'Grön rektangulär skylt med en vit bil framifrån och ett rött streck snett över.',
+    visualTraits: { background: 'green', text: undefined },
+    tags: ['motortrafikled'],
+    similarSignIds: ['motortrafikled', 'motorvag-upphor'],
+    subcategory: 'motortrafikled',
+  }),
+  sign({
+    id: 'tattbebyggt-omrade-upphor',
+    code: 'E6',
+    name: 'Tättbebyggt område upphör',
+    category: 'anvisning',
+    shortMeaning: 'Du lämnar tättbebyggt område.',
+    longMeaning:
+      'Bashastigheten går från 50 till 70 km/h om inget annat skyltas. Kontrollera alltid om det står en hastighetsskylt strax efter.',
+    altText:
+      'Vit rektangulär skylt med svart ram, en svart stadssiluett och ett rött streck snett över.',
+    visualTraits: { background: 'white', border: 'black' },
+    tags: ['hastighet', 'tatort'],
+    similarSignIds: ['tattbebyggt-omrade'],
+    subcategory: 'hastighetsgranser',
+  }),
+  sign({
+    id: 'gagata-upphor',
+    code: 'E8',
+    name: 'Gågata upphör',
+    category: 'anvisning',
+    shortMeaning: 'Gågatans regler slutar gälla.',
+    longMeaning: 'Vanliga trafikregler och vanlig bashastighet gäller igen.',
+    altText: 'Blå fyrkantig skylt med gående figurer och ett rött streck snett över.',
+    visualTraits: { background: 'blue' },
+    tags: ['gagata'],
+    similarSignIds: ['gagata', 'gangfartsomrade-upphor'],
+    subcategory: 'anvisningsmarken',
+  }),
+  sign({
+    id: 'gangfartsomrade-upphor',
+    code: 'E10',
+    name: 'Gångfartsområde upphör',
+    category: 'anvisning',
+    shortMeaning: 'Gångfartsområdets regler slutar gälla.',
+    longMeaning:
+      'Du behöver inte längre hålla gångfart och lämna företräde åt alla gående — men du har utfartsregel när du lämnar området.',
+    altText:
+      'Blå fyrkantig skylt med gående figurer, en bil och ett hus, med ett rött streck snett över.',
+    visualTraits: { background: 'blue' },
+    tags: ['gangfart'],
+    similarSignIds: ['gangfartsomrade', 'gagata-upphor'],
+    subcategory: 'anvisningsmarken',
+  }),
+  sign({
+    id: 'rekommenderad-hastighet-upphor',
+    code: 'E12',
+    name: 'Rekommenderad lägre hastighet upphör',
+    category: 'anvisning',
+    shortMeaning: 'Rekommendationen om lägre hastighet slutar gälla.',
+    longMeaning:
+      'Rekommendationen var aldrig en gräns, och att den upphör betyder bara att skälet till den är passerat.',
+    altText:
+      'Blå fyrkantig skylt med texten max 30 km/tim och ett rött streck snett över.',
+    visualTraits: { background: 'blue', text: 'max 30 km/tim', numericValue: 30 },
+    tags: ['hastighet'],
+    similarSignIds: ['rekommenderad-hastighet-30'],
+    subcategory: 'hastighetsgranser',
+  }),
+  sign({
+    id: 'sammanvavning',
+    code: 'E15',
+    name: 'Sammanvävning',
+    category: 'anvisning',
+    shortMeaning: 'Två körfält vävs samman till ett.',
+    longMeaning:
+      'Ingen av de två har företräde. Det fungerar bara om båda släpper fram varannan bil — kör växelvis och håll jämn fart.',
+    altText:
+      'Vit skylt med en röd symbol där två pilar vävs samman till en enda pil uppåt.',
+    visualTraits: { background: 'white', arrowDirection: 'up' },
+    tags: ['korfalt', 'motorvag'],
+    similarSignIds: ['pabud-korbana'],
+    subcategory: 'korfaltsbyte',
+  }),
+
+  /* ---- Omgång 2: fler tilläggstavlor ---- */
+  sign({
+    id: 'tavla-strackans-langd',
+    code: 'T1',
+    name: 'Vägsträckas längd',
+    category: 'tillaggstavla',
+    plate: {
+      kind: 'extent',
+      printedText: '1,2 km',
+      combinedPhrase: 'gäller den närmaste sträckan på 1,2 km',
+    },
+    shortMeaning: 'Märket ovanför gäller den angivna sträckan.',
+    longMeaning:
+      'Skillnaden mot avståndstavlan är viktig: den här säger hur långt regeln gäller, inte hur långt bort den börjar.',
+    altText: 'Vit rektangulär tilläggstavla med svart ram och texten 1,2 km mellan två ändstreck.',
+    quizSafeAltText: 'Vit rektangulär tilläggstavla med svart ram och texten 1,2 km.',
+    visualTraits: { background: 'white', border: 'black', text: '1,2 km' },
+    tags: ['tillaggstavla'],
+    similarSignIds: ['tavla-avstand'],
+    subcategory: 'anvisningsmarken',
+  }),
+  sign({
+    id: 'tavla-avstand-stopplikt',
+    code: 'T3',
+    name: 'Avstånd till stopplikt',
+    category: 'tillaggstavla',
+    plate: {
+      kind: 'distance',
+      printedText: 'STOPP 200 m',
+      combinedPhrase: 'stopplikten kommer om 200 m',
+    },
+    shortMeaning: 'Stopplikt längre fram, på det angivna avståndet.',
+    longMeaning:
+      'Sitter under väjningspliktsmärket där stopplikten kommer så snart efteråt att en förvarning behövs.',
+    altText: 'Gul rektangulär tilläggstavla med röd ram och texten STOPP 200 m i svart.',
+    quizSafeAltText: 'Gul rektangulär tilläggstavla med röd ram och texten STOPP 200 m.',
+    visualTraits: { background: 'yellow', border: 'red', text: 'STOPP 200 m' },
+    tags: ['tillaggstavla', 'stopplikt'],
+    similarSignIds: ['tavla-avstand'],
+    subcategory: 'stopplikt',
+  }),
+  sign({
+    id: 'tavla-fri-bredd',
+    code: 'T4',
+    name: 'Fri bredd',
+    category: 'tillaggstavla',
+    plate: {
+      kind: 'condition',
+      printedText: '3,5 m',
+      combinedPhrase: 'den fria bredden är 3,5 m',
+    },
+    shortMeaning: 'Hur bred passagen faktiskt är.',
+    longMeaning: 'Måttet gäller fordonet med last, inte bara karossen.',
+    altText: 'Gul rektangulär tilläggstavla med röd ram och måttet 3,5 m mellan två pilspetsar.',
+    quizSafeAltText: 'Gul rektangulär tilläggstavla med röd ram och texten 3,5 m mellan två pilspetsar.',
+    visualTraits: { background: 'yellow', border: 'red', text: '3,5 m' },
+    tags: ['tillaggstavla', 'matt'],
+    similarSignIds: ['forbud-bredd'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'tavla-totalvikt',
+    code: 'T5',
+    name: 'Totalvikt',
+    category: 'tillaggstavla',
+    plate: {
+      kind: 'vehicle',
+      printedText: '3,5 t',
+      combinedPhrase: 'gäller fordon över 3,5 t totalvikt',
+    },
+    shortMeaning: 'Märket ovanför gäller fordon över den angivna vikten.',
+    longMeaning:
+      'Tavlan begränsar alltså vem regeln träffar. En personbil under gränsen berörs inte av märket ovanför.',
+    altText: 'Gul rektangulär tilläggstavla med röd ram och texten 3,5 t i svart.',
+    quizSafeAltText: 'Gul rektangulär tilläggstavla med röd ram och texten 3,5 t.',
+    visualTraits: { background: 'yellow', border: 'red', text: '3,5 t' },
+    tags: ['tillaggstavla', 'vikt'],
+    similarSignIds: ['forbud-bruttovikt'],
+    subcategory: 'forbudsmarken',
+  }),
+  sign({
+    id: 'tavla-rorelsehindrade',
+    code: 'T7',
+    name: 'Rörelsehindrade',
+    category: 'tillaggstavla',
+    plate: {
+      kind: 'vehicle',
+      combinedPhrase: 'gäller endast fordon med parkeringstillstånd för rörelsehindrad',
+    },
+    shortMeaning: 'Märket ovanför gäller bara den som har parkeringstillstånd.',
+    longMeaning:
+      'Tavlan kan både ge en rättighet och begränsa en — under en parkeringsskylt reserverar den platsen, under ett förbud undantar den.',
+    altText: 'Blå fyrkantig tilläggstavla med en vit rullstolssymbol.',
+    visualTraits: { background: 'blue' },
+    tags: ['tillaggstavla', 'parkering'],
+    similarSignIds: ['parkering'],
+    subcategory: 'parkeringsregler',
+  }),
+  sign({
+    id: 'tavla-flervagsvajning',
+    code: 'T13',
+    name: 'Flervägsväjning',
+    category: 'tillaggstavla',
+    plate: {
+      kind: 'information',
+      printedText: 'Flervägs-väjning',
+      combinedPhrase: 'alla tillfarter i korsningen har väjningsplikt',
+    },
+    shortMeaning: 'Alla som kommer till korsningen har väjningsplikt.',
+    longMeaning:
+      'Då gäller högerregeln mellan er. Tavlan finns för att ingen ska tro att den egna väjningsplikten betyder att någon annan har företräde.',
+    altText: 'Gul rektangulär tilläggstavla med röd ram och texten Flervägs-väjning i svart.',
+    quizSafeAltText: 'Gul rektangulär tilläggstavla med röd ram och texten Flervägs-väjning.',
+    visualTraits: { background: 'yellow', border: 'red', text: 'Flervägs-väjning' },
+    tags: ['tillaggstavla', 'korsning'],
+    similarSignIds: ['tavla-flervagsstopp', 'vajningsplikt'],
+    subcategory: 'vajningsplikt',
+  }),
+  sign({
+    id: 'tavla-vagars-fortsattning',
+    code: 'T15',
+    name: 'Vägars fortsättning i korsning',
+    category: 'tillaggstavla',
+    plate: {
+      kind: 'information',
+      combinedPhrase: 'den tjocka linjen visar hur den prioriterade vägen går genom korsningen',
+    },
+    shortMeaning: 'Visar hur huvudleden eller den prioriterade vägen går genom korsningen.',
+    longMeaning:
+      'Behövs när huvudleden svänger. Utan tavlan är det lätt att tro att den fortsätter rakt fram och att man därför har företräde.',
+    altText:
+      'Gul rektangulär tilläggstavla med röd ram och ett svart korsningsdiagram där en gren är tjockare än de andra.',
+    visualTraits: { background: 'yellow', border: 'red' },
+    tags: ['tillaggstavla', 'huvudled'],
+    similarSignIds: ['huvudled'],
+    subcategory: 'huvudled',
   }),
 ];
 
@@ -845,3 +1609,39 @@ export const SIGN_CATEGORY_LABELS: Record<SignCategory, string> = {
   anvisning: 'Anvisningsmärken',
   tillaggstavla: 'Tilläggstavlor',
 };
+
+/* ------------------------------------------------------------------ */
+/* Lookups                                                             */
+/* ------------------------------------------------------------------ */
+
+/** Every supplementary plate, in registry order. */
+export const SUPPLEMENTARY_PLATES: RoadSign[] = ROAD_SIGNS.filter((s) => s.plate !== undefined);
+
+/** Signs that are not plates — the ones a plate can sit under. */
+export const MAIN_SIGNS: RoadSign[] = ROAD_SIGNS.filter((s) => s.plate === undefined);
+
+/** All registry entries sharing one official code, e.g. every C31. */
+export function signVariants(code: string): RoadSign[] {
+  return ROAD_SIGNS.filter((s) => s.code === code);
+}
+
+/**
+ * What a sign and its plates mean together.
+ *
+ * A plate narrows the sign above it, and reading them apart is how a learner
+ * gets a combination wrong. This produces one sentence for the pair rather than
+ * two sentences side by side.
+ *
+ * Deliberately shallow. It composes the phrase each plate carries with the
+ * sign's own meaning; it does not attempt to model the legal interaction of
+ * arbitrary combinations, which would be brittle and wrong at the edges.
+ */
+export function interpretSignAssembly(mainSignId: string, plateIds: readonly string[]): string {
+  const main = getRoadSign(mainSignId);
+  if (!main) return '';
+  const phrases = plateIds
+    .map((id) => getRoadSign(id)?.plate?.combinedPhrase)
+    .filter((p): p is string => Boolean(p));
+  if (phrases.length === 0) return main.shortMeaning;
+  return `${main.shortMeaning.replace(/\.$/, '')} — ${phrases.join(', ')}.`;
+}

@@ -19,7 +19,6 @@ from __future__ import annotations
 
 import json
 import re
-from collections import defaultdict
 from pathlib import Path
 
 from PIL import Image
@@ -49,18 +48,29 @@ MAX_WIDTH = 640
 PALETTE_COLOURS = 32
 
 
-def registry_entries() -> list[tuple[str, str]]:
+def registry_entries() -> list[tuple[str, str, bool]]:
+    """Every sign in the registry as (id, code, is_variant).
+
+    Parsed block by block rather than with one regex over the whole file. An
+    earlier version matched `id` followed immediately by `code`, which quietly
+    skipped every entry that had gained a `variant` or `plate` field in between
+    — seventeen of them — and still reported success.
+    """
     source = (ROOT / 'src' / 'content' / 'road-signs.ts').read_text('utf-8')
-    return re.findall(r"id: '([a-z0-9-]+)',\s*\n\s*code: '([^']+)'", source)
+    entries = []
+    for block in source.split('\n  sign({')[1:]:
+        block = block.split('\n  }),')[0]
+        sign_id = re.search(r"id: '([a-z0-9-]+)'", block)
+        code = re.search(r"code: '([^']+)'", block)
+        if not sign_id or not code:
+            continue
+        entries.append((sign_id.group(1), code.group(1), 'variant:' in block))
+    return entries
 
 
 def main() -> int:
     crops = {e['code']: e for e in json.loads((SRC / 'manifest.json').read_text('utf-8'))}
     entries = registry_entries()
-
-    by_code: dict[str, list[str]] = defaultdict(list)
-    for sign_id, code in entries:
-        by_code[code].append(sign_id)
 
     OUT.mkdir(parents=True, exist_ok=True)
     for stale in OUT.glob('*.webp'):
@@ -70,9 +80,12 @@ def main() -> int:
     skipped = []
     total_before = total_after = 0
 
-    for sign_id, code in entries:
-        if len(by_code[code]) > 1:
-            skipped.append((sign_id, code, 'koden täcker flera varianter i verkligheten'))
+    for sign_id, code, is_variant in entries:
+        if is_variant:
+            # The registry marks these explicitly: several entries share one
+            # official code and the book prints one picture per code. Its C31
+            # shows 30, so using it for hastighet-90 would show a wrong number.
+            skipped.append((sign_id, code, 'variant av en kod som boken ritar en gång'))
             continue
         crop = crops.get(code)
         if crop is None:

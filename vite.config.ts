@@ -173,10 +173,20 @@ export default defineConfig({
           // pinning the whole folder pulled the entire sign chunk back into
           // the entry through a single import.
           if (id.includes('/src/content/road-sign-assets')) return 'signs';
-          if (id.includes('/src/content/road-signs')) return 'signs';
-          if (id.includes('/src/content/road-markings')) return 'signs';
-          if (id.includes('/src/ui/illustrations/RoadSign')) return 'signs';
-          if (id.includes('/src/ui/illustrations/RoadMarking')) return 'signs';
+          // The registries are deliberately NOT pinned to the sign chunk. The
+          // landing page reaches the sign *renderer* through the scenario
+          // stage, so that chunk is eager — and pinning 99 signs of Swedish
+          // prose into it put all of that on the startup path. Left
+          // unassigned, they ride with the lazy routes that actually read
+          // them: the catalogue, the lessons and the question surfaces.
+          if (id.includes('/src/content/road-signs')) return undefined;
+          if (id.includes('/src/content/road-markings')) return undefined;
+          // Exact filenames. A prefix match on 'RoadSign' also caught
+          // RoadSignAssembly, which imports the registry — so the whole 99-sign
+          // registry ended up in the eager chunk through a component only the
+          // lazy routes use.
+          if (id.includes('/src/ui/illustrations/RoadSign.tsx')) return 'signs';
+          if (id.includes('/src/ui/illustrations/RoadMarking.tsx')) return 'signs';
           if (id.includes('/src/ui/illustrations/signGlyphs')) return 'signs';
           if (id.includes('/src/ui/illustrations/markingGlyphs')) return 'signs';
           if (id.includes('/src/ui/illustrations/roadSignAssets')) return 'signs';

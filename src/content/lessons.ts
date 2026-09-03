@@ -895,6 +895,98 @@ export const LESSONS: Lesson[] = [
           'Huvudmärket säger att parkering är tillåten. Tavlorna under säger när, hur länge och för vem.',
       },
       {
+        kind: 'rule',
+        title: 'Katalogen är inte vägen',
+        text: 'Ett märke du känner igen på vit botten kan du ändå missa i trafiken. Där är det litet, står vid sidan, ses snett och kommer medan du tittar på något annat. Nedan står bokens bild bredvid ett fotografi av samma märke på plats.',
+      },
+      {
+        kind: 'signInContext',
+        signId: 'varning-djur',
+        imageId: 'viltvarning-med-tillaggstavla',
+        notice:
+          'Märket står långt ute på vägrenen och tavlan under det anger en sträcka. På den här sträckan är det alltså inte en punkt du ska passera utan en hel kilometer att vara vaksam på.',
+      },
+      {
+        kind: 'signInContext',
+        signId: 'varning-vagkorsning',
+        imageId: 'varning-vagkorsning-i-kurva',
+        notice:
+          'Det finns ingen korsning att se i bilden. Märket sitter före kurvan, och platsen det varnar för ligger bortom den.',
+      },
+      {
+        kind: 'signInContext',
+        signId: 'parkering',
+        imageId: 'p-skylt-avgift-boende',
+        notice:
+          'Fyra skyltar på samma stolpe. Läs dem uppifrån och ned, och läs klart innan du bestämmer dig — det är den nedersta som avgör om du får stå här.',
+      },
+      {
+        kind: 'signInContext',
+        signId: 'vajningsplikt',
+        imageId: 'korfaltspilar-cirkulation',
+        notice:
+          'Märket står på en refug mitt framför dig, tillsammans med cirkulationsmärket. I körbanan finns dessutom en pil som säger vart körfältet leder.',
+      },
+      {
+        kind: 'rule',
+        title: 'Tilläggstavlan ändrar märket ovanför',
+        text: 'Ett märke säger *vad* som gäller. Tilläggstavlan säger *när*, *var*, *hur långt* eller *för vem*. Ingen av dem betyder något ensam — det är kombinationen som är regeln, och den läses uppifrån och ned.',
+      },
+      {
+        kind: 'signAssembly',
+        mainSignId: 'varning-annan-fara',
+        plateIds: ['tavla-avstand'],
+        prompt: 'Var börjar regeln?',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Utan tavlan hade märket bara sagt att något oväntat finns längre fram. Med tavlan vet du också hur långt fram — och att du inte behöver göra något ännu.',
+      },
+      {
+        kind: 'signAssembly',
+        mainSignId: 'forbud-parkera',
+        plateIds: ['tavla-utstrackning'],
+        prompt: 'Hur långt gäller förbudet?',
+      },
+      {
+        kind: 'signAssembly',
+        mainSignId: 'parkering',
+        plateIds: ['tavla-tid', 'tavla-avgift'],
+        prompt: 'Två tavlor under samma märke',
+      },
+      {
+        kind: 'paragraph',
+        text: 'Flera tavlor läses tillsammans, uppifrån och ned. Här får du parkera — under den angivna tiden, och mot avgift. Faller en av förutsättningarna bort gäller inte tillståndet.',
+      },
+      {
+        kind: 'signAssembly',
+        mainSignId: 'vajningsplikt',
+        plateIds: ['tavla-flervagsvajning'],
+        prompt: 'Den tavla som ändrar mest',
+      },
+      {
+        kind: 'warning',
+        text: 'Flervägsväjning betyder att *alla* tillfarter har väjningsplikt. Då finns ingen som har företräde, och högerregeln avgör mellan er. Det är lätt att läsa sin egen väjningsplikt som att någon annan har rätt att köra.',
+      },
+      {
+        kind: 'list',
+        title: 'Fyra saker en tilläggstavla kan göra',
+        items: [
+          'Flytta regeln: avstånd, som "gäller om 100 m"',
+          'Sträcka ut den: utsträckning, som "gäller hela sträckan"',
+          'Rikta den: en pil, som "gäller åt det hållet"',
+          'Begränsa vem eller när: tid, fordonsvikt, rörelsehindrad',
+        ],
+      },
+      {
+        kind: 'memory',
+        text: 'Märket säger vad. Tavlan säger när, var eller för vem. Läs uppifrån och ned, och läs klart innan du bestämmer dig.',
+      },
+      {
+        kind: 'signCatalogue',
+        title: 'Slå upp vilket märke som helst',
+      },
+      {
         kind: 'memory',
         text: 'Gul triangel varnar. Röd ring förbjuder. Blå rund påbjuder. Blå fyrkant upplyser.',
       },

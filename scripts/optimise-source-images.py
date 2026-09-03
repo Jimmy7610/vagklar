@@ -54,6 +54,10 @@ DIAGRAM_QUALITY = 92
 
 # (extracted file, topic folder, output slug)
 CURATED = [
+    # --- Omgång 7: vägmärke i verkligheten ---------------------------------
+    # Ett varningsmärke för vägkorsning som står i en kurva, där korsningen
+    # ännu inte syns. Just det är poängen: märket kommer innan platsen gör det.
+    ('p180-0.jpeg', 'vajningsregler', 'varning-vagkorsning-i-kurva'),
     # --- Omgång 6: fler vägmarkeringar i verkligheten ----------------------
     # Två motiv som ingen godkänd bild visade: pilar målade i körbanan, och ett
     # övergångsställe som är bevakat av trafiksignal. Det senare är inte samma

@@ -22,6 +22,7 @@ import {
   availableSourceImageWidths,
 } from '../src/ui/media/sourceImageAssets';
 import { ROAD_SIGNS } from '../src/content/road-signs';
+import signAssets from '../src/content/road-sign-assets.json';
 import { SIGN_GLYPHS } from '../src/ui/illustrations/signGlyphs';
 import { ORIGINAL_VISUALS } from '../src/content/original-visuals';
 import { ORIGINAL_VISUAL_GLYPHS } from '../src/ui/visuals/originalVisualGlyphs';
@@ -43,6 +44,7 @@ const report = validateContent({
   lessons: LESSONS,
   roadSigns: ROAD_SIGNS,
   availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
+  licensedSignIds: new Set(signAssets.map((a) => a.id)),
   roadMarkings: ROAD_MARKINGS,
   originalVisuals: ORIGINAL_VISUALS,
   availableVisualGlyphs: new Set(Object.keys(ORIGINAL_VISUAL_GLYPHS)),

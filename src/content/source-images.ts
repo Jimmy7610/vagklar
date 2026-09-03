@@ -107,6 +107,25 @@ function img(entry: Omit<SourceImage, 'sourceId' | 'rightsHolder' | 'usedWithPer
 
 export const SOURCE_IMAGES: SourceImage[] = [
   img({
+    id: 'varning-vagkorsning-i-kurva',
+    sourcePage: 180,
+    title: 'Varning för vägkorsning, uppsatt i en kurva',
+    topic: 'vajningsregler',
+    subcategory: 'skymd-sikt',
+    chapter: 'trafikolyckor',
+    altText:
+      'Vy från förarplatsen mot en vänsterkurva. På höger sida står ett varningsmärke med ett svart kors på gul triangel. Själva korsningen syns inte i bilden.',
+    longDescription:
+      'Vägen böjer av åt vänster och försvinner bakom högt gräs och lövträd. På en stolpe till höger om vägen sitter ett varningsmärke: gul triangel med röd ram och ett svart kors. Längre bort skymtar en gatlykta och en liten blå skylt. Korsningen som märket varnar för syns inte i bilden alls — den ligger bortom kurvan.',
+    caption:
+      'Märket sitter före kurvan, korsningen ligger efter den. Det är hela skälet till att varningsmärken sätts upp i förväg: du ska hinna sänka farten innan du ser platsen.',
+    usage: 'theory-lesson',
+    asset: 'vajningsregler/varning-vagkorsning-i-kurva',
+    width: 530,
+    height: 530,
+    status: 'approved',
+  }),
+  img({
     id: 'korfaltspilar-cirkulation',
     sourcePage: 23,
     title: 'Körfältspilar före en cirkulationsplats',

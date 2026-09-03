@@ -387,3 +387,26 @@ sidandelar, och måtten. Det gör extraktionen reproducerbar och gör att ett te
 kan kontrollera att ingen beskärning används till två märken.
 
 Se [LICENSED-SIGNS.md](LICENSED-SIGNS.md).
+
+
+## Tilläggstavlor och varianter
+
+Ett vägmärke kan nu bära tre fält utöver de vanliga.
+
+`plate` gör posten till en tilläggstavla: den säger vilken dimension tavlan
+begränsar och med vilken fras den fortsätter märkets mening.
+
+`variant` skiljer poster som delar en officiell kod — C31 är varje
+hastighetsgräns, D1 varje påbjuden riktning, T6 varje tidtavla. Koden förblir
+den riktiga; varianten bär skillnaden.
+
+`visualTraits` beskriver *bilden* — bakgrundsfärg, ram, text, pilriktning,
+siffra — skilt från beskrivningen av vad märket betyder. Det finns för att ett
+test ska kunna jämföra texten mot bilden i stället för mot en annan text, vilket
+är precis vad som saknades när tolv beskrivningar visade sig vara fel om färg
+eller innehåll.
+
+`quizSafeAltText` är beskrivningen som används medan en fråga är obesvarad, för
+de poster vars vanliga `altText` skulle säga för mycket.
+
+Se [SIGN-ASSEMBLIES.md](SIGN-ASSEMBLIES.md).

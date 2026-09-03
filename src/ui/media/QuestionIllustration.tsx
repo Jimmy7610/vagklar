@@ -1,4 +1,5 @@
 import { RoadSign, hasRoadSign } from '@/ui/illustrations/RoadSign';
+import { RoadSignAssembly } from '@/ui/illustrations/RoadSignAssembly';
 import { RoadMarking, hasRoadMarking } from '@/ui/illustrations/RoadMarking';
 import { SourceImageFigure } from '@/ui/media/SourceImageFigure';
 import { OriginalVisualFigure } from '@/ui/visuals/OriginalVisualFigure';
@@ -60,6 +61,20 @@ export function QuestionIllustration({
         </div>
       )}
 
+      {question.signAssembly && (
+        <figure className={styles.plate}>
+          {/* quizSafe while the question is open: the post is described by
+              what it looks like, never by what it means, and no combined
+              interpretation is rendered. */}
+          <RoadSignAssembly
+            mainSignId={question.signAssembly.mainSignId}
+            plateIds={question.signAssembly.plateIds}
+            quizSafe={!showCaption}
+            showMeaning={showCaption}
+          />
+        </figure>
+      )}
+
       {illustration && hasRoadMarking(illustration) && (
         <figure className={styles.plate}>
           <RoadMarking name={illustration} size={132} alt={alt} />
@@ -84,6 +99,7 @@ export function hasIllustration(question: Question): boolean {
   return Boolean(
     question.sourceImageId ||
       question.originalVisualId ||
+      question.signAssembly ||
       (illustration && (hasRoadMarking(illustration) || hasRoadSign(illustration))),
   );
 }

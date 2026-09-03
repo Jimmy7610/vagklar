@@ -1,5 +1,4 @@
 import { SIGN_GLYPHS } from './signGlyphs';
-import { getRoadSign } from '@/content/road-signs';
 import { licensedSignAsset } from './roadSignAssets';
 
 /**
@@ -14,24 +13,36 @@ import { licensedSignAsset } from './roadSignAssets';
  * itself the same way whichever picture is behind it.
  */
 
-export interface RoadSignProps {
+interface RoadSignBase {
   name: string;
   size?: number;
-  /**
-   * Overrides the registry's altText.
-   *
-   * A question passes its own description here, because the registry's is
-   * written for a lesson and can name the sign — which in "what does this sign
-   * mean?" is the answer read aloud.
-   */
-  alt?: string;
-  /** Decorative use: the sign is already described by adjacent text. */
-  decorative?: boolean;
 }
 
+/**
+ * Either the sign is described, or it is explicitly decorative.
+ *
+ * Expressed as a union rather than an optional string so that forgetting the
+ * description is a compile error instead of a silently unlabelled image. A sign
+ * inside an assembly is decorative because the assembly describes the whole
+ * post; a sign on its own never is.
+ */
+export type RoadSignProps =
+  | (RoadSignBase & { decorative: true; alt?: string })
+  | (RoadSignBase & { decorative?: false;
+  /**
+   * How the sign is described to someone who cannot see it.
+   *
+   * Required, and deliberately not defaulted from the registry here. The
+   * registry is 99 signs of Swedish prose, and the landing page renders a
+   * scenario with two signs on it — importing the whole thing to look up an
+   * alt text that the caller already has cost 23 kB gzip on the startup path.
+   * Callers that do want the registry's wording use `signAltText`, which lives
+   * on the lazy side of the split.
+   */
+  alt: string });
+
 export function RoadSign({ name, size = 96, alt, decorative = false }: RoadSignProps) {
-  const registryEntry = getRoadSign(name);
-  const label = alt ?? registryEntry?.altText ?? name;
+  const label = alt ?? '';
   const licensed = licensedSignAsset(name);
 
   if (licensed) {

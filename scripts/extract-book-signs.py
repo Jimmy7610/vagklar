@@ -155,6 +155,87 @@ def codes_on_page(page, height_pt: float, scale: float):
     return found
 
 
+def caption_for(textpage, code_entry, height_pt: float, scale: float, page_w: float) -> str:
+    """The name the book prints above a sign's code.
+
+    Same positional idea as pairing a figure with its code, applied to text: the
+    name sits directly above the code and in the same column. Taking it from the
+    book rather than writing it by hand means the registry uses the official
+    wording, and it means 257 signs can be named without inventing anything.
+
+    Captions run to two or three lines for the longer names, so everything in
+    the band above the code and inside its column is collected and joined.
+    """
+    glyphs: list[tuple[float, float, float, str]] = []
+    for i in range(textpage.count_chars()):
+        try:
+            left, bottom, right, top = textpage.get_charbox(i, loose=False)
+        except Exception:
+            continue
+        ch = textpage.get_text_range(i, 1)
+        if not ch.strip():
+            continue
+        y = (height_pt - top) * scale
+        x0 = left * scale
+        x1 = right * scale
+        x = (x0 + x1) / 2
+        # Above the code, within a caption's reach, and in the same column.
+        if not (code_entry['top_px'] - page_w * 0.11 < y < code_entry['top_px'] - 1):
+            continue
+        if abs(x - code_entry['cx']) > page_w * 0.14:
+            continue
+        glyphs.append((y, x0, x1, ch))
+
+    # Group into lines by clustering on y. The characters arrive in the PDF's
+    # own drawing order, not in reading order, so two lines whose bands are
+    # merged come out interleaved letter by letter — which is exactly what
+    # happened with a fixed bucket size.
+    glyphs.sort()
+
+    def render(row: list[tuple[float, float, str]]) -> str:
+        """One line of caption, with the spaces put back.
+
+        The book sets these captions by positioning each glyph, so the text
+        stream carries no space characters at all — "Varning för tunnel" comes
+        out as "Varningförtunnel". A gap wider than a fraction of the character
+        height is a word break.
+        """
+        row.sort()
+        if not row:
+            return ''
+        # Threshold from the row's typical glyph width, not the neighbouring
+        # one: keying off a narrow letter like r or i sets the bar too high and
+        # swallows the space after it.
+        widths = sorted(x1 - x0 for x0, x1, _ in row)
+        typical = widths[len(widths) // 2] or 1
+        out = []
+        previous_right = None
+        for x0, x1, ch in row:
+            if previous_right is not None and x0 - previous_right > typical * 0.28:
+                out.append(' ')
+            out.append(ch)
+            previous_right = x1
+        return ''.join(out).strip()
+
+    parts: list[str] = []
+    row: list[tuple[float, float, str]] = []
+    last_y = None
+    line_height = page_w * 0.012
+    for y, x0, x1, ch in glyphs:
+        if last_y is not None and y - last_y > line_height:
+            parts.append(render(row))
+            row = []
+        row.append((x0, x1, ch))
+        last_y = y
+    if row:
+        parts.append(render(row))
+
+    name = ' '.join(p for p in parts if p).strip()
+    # A caption never contains a code in brackets; if one crept in, the band
+    # reached into the row above and the name is not trustworthy.
+    return '' if '(' in name else name
+
+
 def pair(boxes, codes, page_w: int):
     """Assign each printed code the figure standing above it.
 
@@ -215,10 +296,13 @@ def extract(pages: list[int]) -> list[dict]:
             words = text_mask(page, height_pt, SCALE, (h, w))
             dark_boxes = figure_boxes(image, gap=max(3, int(w * 0.004)), dark=True, exclude=words)
             matched += pair(dark_boxes, remaining, w)
+        textpage = page.get_textpage()
+        by_code = {c['code']: c for c in codes}
         for code, (x0, y0, x1, y1) in matched:
             if code in seen:
                 continue  # the first printing wins; later ones are references
             seen[code] = number
+            name = caption_for(textpage, by_code[code], height_pt, SCALE, w)
 
             # A little air so an outer border is never shaved off.
             m = int(max(x1 - x0, y1 - y0) * 0.03) + 2
@@ -230,6 +314,7 @@ def extract(pages: list[int]) -> list[dict]:
             crop.save(path)
             manifest.append({
                 'code': code,
+                'name': name,
                 'page': number,
                 'file': path.name,
                 'crop': [round(cx0 / w, 5), round(cy0 / h, 5), round(cx1 / w, 5), round(cy1 / h, 5)],

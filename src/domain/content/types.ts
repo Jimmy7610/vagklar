@@ -159,6 +159,14 @@ export interface Question {
    * in the credit line.
    */
   originalVisualId?: string;
+  /**
+   * A main sign with the supplementary plates hanging under it.
+   *
+   * Its own field rather than a sign id, because a combination is a different
+   * question from a sign: the plate narrows the rule, and what is being asked
+   * is what the two mean together.
+   */
+  signAssembly?: { mainSignId: string; plateIds: string[] };
   relatedQuestionIds?: string[];
   tags?: string[];
   /** Seconds a well-prepared learner is expected to need. */
@@ -254,6 +262,24 @@ export type LessonBlock =
       /** "Vad ska du lägga märke till?" — asked before the learner looks. */
       prompt?: string;
       /** Overrides the registry caption when the lesson needs a sharper point. */
+      caption?: string;
+    }
+  | { kind: 'signCatalogue'; title?: string }
+  | {
+      kind: 'signInContext';
+      signId: string;
+      /** A licensed photograph in which that sign is genuinely visible. */
+      imageId: string;
+      /** What to look for. Never states what the sign means. */
+      notice: string;
+    }
+  | {
+      kind: 'signAssembly';
+      mainSignId: string;
+      plateIds: string[];
+      /** Asked before the learner looks. */
+      prompt?: string;
+      /** Overrides the composed interpretation. */
       caption?: string;
     }
   | {

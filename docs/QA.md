@@ -1242,3 +1242,132 @@ Två vägmarkeringsmotiv som ingen godkänd bild visade: körfältspilar målade
 körbanan (s. 23) och ett övergångsställe bevakat av trafiksignal (s. 42). Båda
 beskrivna efter vad som faktiskt syns i bilden, inte efter vad kapitlet handlar
 om.
+
+
+## Fullt märkesbibliotek och tilläggstavlor (2026-09-03)
+
+### Registret
+
+58 → **99 märken**, varav 17 tilläggstavlor. 89 ritas med bokens egen bild, 10
+med Vägklars vektor.
+
+Namnen är bokens egna. Extraktorn läser bildtexten ovanför varje kod, vilket
+krävde två saker som inte syntes i förväg: rader måste klustras på y-led, annars
+flätas två rader ihop bokstav för bokstav i PDF:ens ritordning
+("Varningförtunnel" blev "iföl V t arnngrunne"), och mellanslagen måste räknas
+fram ur glyfernas positioner eftersom bildtexterna är satta utan
+mellanslagstecken alls.
+
+### Tilläggstavlor som komponerbara objekt
+
+En tavla är nu en post med ett `plate`-fält som säger vilken dimension den
+begränsar — avstånd, utsträckning, riktning, tid, fordon, villkor, upplysning —
+och med vilken fras den fortsätter märkets mening.
+
+`RoadSignAssembly` ritar stolpen som en stolpe och beskriver hela posten som
+**en** figur för hjälpmedel. De enskilda bilderna är dekorativa, annars läses
+samma märke upp två gånger.
+
+`interpretSignAssembly` sätter ihop meningen: *"En fara som inget annat
+varningsmärke täcker — märket gäller 100 m längre fram."* Den är avsiktligt
+grund och försöker inte modellera hur godtyckliga kombinationer samverkar
+juridiskt.
+
+12 kombinationsfrågor och en lektionssektion använder den.
+
+### Varianter — sammansättning prövad och förkastad
+
+C31 är varje hastighetsgräns, D1 varje riktning, T6 varje tidtavla, och boken
+trycker en bild per kod. Frågan var om bokens ring kunde återanvändas med en ny
+siffra.
+
+Bokens C31 har ett rent gult fält, så det går rent tekniskt. Två saker fällde
+det:
+
+1. Boken trycker bara siffrorna **0, 1, 2, 3 och 5** någonstans i hela bilagan.
+   4, 6, 7, 8 och 9 finns inte att hämta ur källan.
+2. En sida-vid-sida-jämförelse mot Arial Bold visade tydligt synlig skillnad —
+   bokens siffror är smalare, högre och har annan form.
+
+Att kalla resultatet bokens artwork vore fel. De tio behåller sin vektor.
+
+### Märket i verkligheten
+
+Fyra par av bokens märkesbild bredvid ett av bokens fotografier där samma märke
+faktiskt syns: A19 med avståndstavla på landsväg, A28 uppsatt i en kurva där
+korsningen inte syns, E19 på en stolpe med fyra skyltar, B1 på en refug före en
+cirkulationsplats.
+
+Paren väljs bara när märket verkligen går att identifiera i bilden. Ett nytt
+fotografi togs in för A28-paret (s. 180); de tre andra använder redan godkända
+bilder.
+
+### Katalog med sökning
+
+99 märken är för många för ett rutnät. Katalogen söker på kod, namn och
+betydelse och filtrerar på de sex sorterna, utan backend och utan eget index —
+99 poster går att filtrera på varje tangenttryckning. Antalet träffar annonseras
+i en live-region, eftersom en filtrering annars inte märks för den som inte ser
+rutnätet krympa.
+
+### Prestandafällor som fångades
+
+Startpaketet gick först från 168 226 B till **177 073 B**, och orsaken var mina
+egna chunk-regler.
+
+1. Registret var fastnaglat i samma namngivna chunk som renderaren. Renderaren
+   är eager — landningssidan når den via scenariovyn — så 99 märken av svensk
+   prosa hamnade på startvägen.
+2. En prefixmatchning på `RoadSign` fångade även `RoadSignAssembly`, som
+   importerar registret. Reglerna namnger nu exakta filer.
+3. `RoadSign` slutade importera registret helt. Alt-texten är nu anroparens
+   ansvar, och typen är en union: antingen `decorative`, eller så är `alt`
+   obligatoriskt. Att glömma beskrivningen är ett kompileringsfel i stället för
+   en tyst omärkt bild.
+
+Resultat: **164 675 B** — 3 551 B *under* utgångsläget, med 41 fler märken, 12
+fler frågor och en sökbar katalog.
+
+| | Före | Efter |
+| --- | ---: | ---: |
+| Startpaket (gzip) | 168 226 B | **164 675 B** |
+| Märkeschunk (gzip) | — | 11 kB (var 23 kB) |
+| Märkesbilder | 212 kB (48 st) | 397 kB (89 st) |
+| Förhandscache | 1 674 KiB | 1 921 KiB |
+
+### Egna ritningar — granskningen som förra passet lämnade ogjord
+
+Kapitlen renderades och lästes, inte antogs.
+
+| Ritning | Bokens motsvarighet | Beslut |
+| --- | --- | --- |
+| `baltets-vag` | s. 233 är ren text om bältet | **BEHÅLL** |
+| `nackskydd-position` | s. 234 är ren text om nackskydd | **BEHÅLL** |
+| `varningstriangel` | s. 179 är ren text | **BEHÅLL** |
+| `krockvald-hastighet` | ingen figur i s. 174–187 | **BEHÅLL** |
+| `tre-kollisioner` | ingen figur i s. 174–187 | **BEHÅLL** |
+| Däckritningarna | s. 204–213 saknar figurer | **BEHÅLL** |
+
+Genomgången hittade däremot två fotografier med identifierbara märken på s. 178
+och s. 180, varav det senare var oanvänt — det är nu ett av
+märke-i-verkligheten-paren.
+
+### Reflow
+
+En regression rättad: `_pairItem` i märkesjämförelsen saknade spårdefinition,
+samma implicita `auto`-spår som `.panel` hade, och la ut en 203 px spalt i ett
+156 px kort vid 200 % text.
+
+| Läge | Resultat |
+| --- | --- |
+| 320, 375, 768, 1920 px, normal text | Ingen horisontell scroll |
+| 320 px @ 200 %, 10 rutter | Ingen |
+| 375 px @ 200 % | Ingen |
+| 390 px @ 200 % | Ingen |
+
+### Svarsläckor
+
+Provet kontrollerat: en kombinationsfråga beskrevs som *"Väjningspliktsmärke:
+gul triangel med röd ram och spetsen nedåt. Under märket: Gul rektangulär
+tilläggstavla med röd ram och texten STOPP 200 m."* — utseende, inte innebörd —
+och den sammansatta meningen renderades inte alls.

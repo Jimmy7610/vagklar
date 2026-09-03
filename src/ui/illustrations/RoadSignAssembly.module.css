@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Road sign with supplementary plates
+   --------------------------------------------------------------------------
+   Drawn the way a real post is: the plate hangs directly under the sign,
+   touching it, same width. The gap between them is what tells a reader the
+   plate belongs to *that* sign rather than to the one further along the road,
+   so it stays small and consistent.
+   ========================================================================== */
+
+.assembly {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  min-width: 0;
+}
+
+.post {
+  display: grid;
+  justify-items: center;
+  /* Small enough to read as one post, not two signs that happen to be near
+     each other. */
+  gap: 4px;
+}
+
+.plate {
+  display: grid;
+  justify-items: center;
+  max-width: 100%;
+}
+
+.meaning {
+  font-size: var(--text-small);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text);
+  text-align: center;
+  max-width: 44ch;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

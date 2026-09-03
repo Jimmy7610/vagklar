@@ -1,4 +1,4 @@
-> **Bilderna kommer numera från källan.** 48 av de 58 märkena ritas med bokens
+> **Bilderna kommer numera från källan.** 89 av de 99 märkena ritas med bokens
 > egen artwork i stället för Vägklars vektorer. De tio som står kvar gör det
 > för att deras kod täcker flera varianter i verkligheten. Hur det fungerar,
 > och vad bytet avslöjade, står i [LICENSED-SIGNS.md](LICENSED-SIGNS.md).

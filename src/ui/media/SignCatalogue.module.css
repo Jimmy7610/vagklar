@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Searchable sign catalogue
+   --------------------------------------------------------------------------
+   Every track is minmax(0, 1fr) and every label wraps. At 200 % text the
+   longest sign names — "Förbud mot trafik med annat motordrivet fordon än
+   moped klass II" — are longer than a 320 px phone is wide, and a grid whose
+   tracks refuse to shrink pushes the whole page sideways.
+   ========================================================================== */
+
+.catalogue {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.controls {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.searchLabel {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+
+.search {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  font: inherit;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.search:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.filter {
+  min-height: 36px;
+  min-width: 0;
+  padding: 0 var(--space-3);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.filter:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.filterActive {
+  color: var(--color-primary-text);
+  background-color: var(--color-primary-soft);
+  border-color: var(--color-primary);
+}
+
+.count {
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 4px;
+  padding: var(--space-3);
+  text-align: center;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  min-width: 0;
+}
+
+.art {
+  display: grid;
+  place-items: center;
+  padding: var(--space-2);
+  background-color: #fff;
+  border-radius: var(--radius-sm);
+}
+
+.name {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.code {
+  font-size: var(--text-caption);
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.meaning {
+  font-size: var(--text-caption);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

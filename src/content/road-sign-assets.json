@@ -622,5 +622,538 @@
   ],
   "width": 640,
   "height": 317
+ },
+ {
+  "id": "varning-nedforslutning",
+  "code": "A3",
+  "page": 324,
+  "crop": [
+   0.65398,
+   0.22308,
+   0.79507,
+   0.31215
+  ],
+  "width": 504,
+  "height": 450
+ },
+ {
+  "id": "varning-stigning",
+  "code": "A4",
+  "page": 324,
+  "crop": [
+   0.15398,
+   0.39272,
+   0.29479,
+   0.48179
+  ],
+  "width": 503,
+  "height": 450
+ },
+ {
+  "id": "varning-avsmalnande-vag",
+  "code": "A5",
+  "page": 324,
+  "crop": [
+   0.40398,
+   0.39272,
+   0.54507,
+   0.48179
+  ],
+  "width": 504,
+  "height": 450
+ },
+ {
+  "id": "varning-ojamn-vag",
+  "code": "A8",
+  "page": 324,
+  "crop": [
+   0.40398,
+   0.56235,
+   0.54507,
+   0.65143
+  ],
+  "width": 504,
+  "height": 450
+ },
+ {
+  "id": "varning-farthinder",
+  "code": "A9",
+  "page": 324,
+  "crop": [
+   0.65398,
+   0.56235,
+   0.79507,
+   0.65143
+  ],
+  "width": 504,
+  "height": 450
+ },
+ {
+  "id": "varning-stenskott",
+  "code": "A11",
+  "page": 324,
+  "crop": [
+   0.40398,
+   0.71536,
+   0.54507,
+   0.80443
+  ],
+  "width": 504,
+  "height": 450
+ },
+ {
+  "id": "varning-stenras",
+  "code": "A12",
+  "page": 324,
+  "crop": [
+   0.65398,
+   0.71536,
+   0.79507,
+   0.80443
+  ],
+  "width": 504,
+  "height": 450
+ },
+ {
+  "id": "varning-gaende",
+  "code": "A14",
+  "page": 325,
+  "crop": [
+   0.40398,
+   0.09105,
+   0.54507,
+   0.18032
+  ],
+  "width": 504,
+  "height": 451
+ },
+ {
+  "id": "varning-ridande",
+  "code": "A18",
+  "page": 325,
+  "crop": [
+   0.65398,
+   0.26069,
+   0.79507,
+   0.34996
+  ],
+  "width": 504,
+  "height": 451
+ },
+ {
+  "id": "varning-flerfargssignal",
+  "code": "A22",
+  "page": 325,
+  "crop": [
+   0.15398,
+   0.59996,
+   0.29507,
+   0.68923
+  ],
+  "width": 504,
+  "height": 451
+ },
+ {
+  "id": "varning-sidvind",
+  "code": "A24",
+  "page": 325,
+  "crop": [
+   0.65398,
+   0.59996,
+   0.79507,
+   0.68923
+  ],
+  "width": 504,
+  "height": 451
+ },
+ {
+  "id": "varning-vajningsplikt-korsning",
+  "code": "A29",
+  "page": 326,
+  "crop": [
+   0.40398,
+   0.29909,
+   0.54507,
+   0.38836
+  ],
+  "width": 504,
+  "height": 451
+ },
+ {
+  "id": "varning-ko",
+  "code": "A34",
+  "page": 326,
+  "crop": [
+   0.15398,
+   0.7213,
+   0.29507,
+   0.81057
+  ],
+  "width": 504,
+  "height": 451
+ },
+ {
+  "id": "varning-annan-fara",
+  "code": "A40",
+  "page": 327,
+  "crop": [
+   0.15398,
+   0.26069,
+   0.29507,
+   0.34996
+  ],
+  "width": 504,
+  "height": 451
+ },
+ {
+  "id": "forbud-motordrivet",
+  "code": "C3",
+  "page": 329,
+  "crop": [
+   0.66209,
+   0.14727,
+   0.78695,
+   0.23575
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "forbud-slap",
+  "code": "C6",
+  "page": 329,
+  "crop": [
+   0.66209,
+   0.35016,
+   0.78695,
+   0.43844
+  ],
+  "width": 446,
+  "height": 446
+ },
+ {
+  "id": "forbud-tung-lastbil",
+  "code": "C7",
+  "page": 329,
+  "crop": [
+   0.16209,
+   0.55285,
+   0.28695,
+   0.64133
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "forbud-farligt-gods",
+  "code": "C9",
+  "page": 329,
+  "crop": [
+   0.66209,
+   0.55285,
+   0.78695,
+   0.64133
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "forbud-bredd",
+  "code": "C16",
+  "page": 330,
+  "crop": [
+   0.16209,
+   0.29572,
+   0.28695,
+   0.3842
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "forbud-hojd",
+  "code": "C17",
+  "page": 330,
+  "crop": [
+   0.41209,
+   0.29572,
+   0.53695,
+   0.3842
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "forbud-langd",
+  "code": "C18",
+  "page": 330,
+  "crop": [
+   0.66209,
+   0.29572,
+   0.78695,
+   0.3842
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "forbud-bruttovikt",
+  "code": "C20",
+  "page": 330,
+  "crop": [
+   0.41209,
+   0.46536,
+   0.53695,
+   0.55384
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "forbud-svang",
+  "code": "C25",
+  "page": 331,
+  "crop": [
+   0.16209,
+   0.11342,
+   0.28695,
+   0.2017
+  ],
+  "width": 446,
+  "height": 446
+ },
+ {
+  "id": "forbud-u-svang",
+  "code": "C26",
+  "page": 331,
+  "crop": [
+   0.41209,
+   0.11342,
+   0.53695,
+   0.2017
+  ],
+  "width": 446,
+  "height": 446
+ },
+ {
+  "id": "forbud-omkorning-lastbil",
+  "code": "C29",
+  "page": 331,
+  "crop": [
+   0.41209,
+   0.28306,
+   0.53695,
+   0.37134
+  ],
+  "width": 446,
+  "height": 446
+ },
+ {
+  "id": "vandplats",
+  "code": "C42",
+  "page": 332,
+  "crop": [
+   0.68141,
+   0.29949,
+   0.76736,
+   0.38797
+  ],
+  "width": 307,
+  "height": 447
+ },
+ {
+  "id": "pabud-korbana",
+  "code": "D2",
+  "page": 333,
+  "crop": [
+   0.41209,
+   0.14727,
+   0.53695,
+   0.23575
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "pabud-gang-cykelbana-gemensam",
+  "code": "D6",
+  "page": 333,
+  "crop": [
+   0.66209,
+   0.30028,
+   0.78695,
+   0.38876
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "motortrafikled-upphor",
+  "code": "E4",
+  "page": 334,
+  "crop": [
+   0.17665,
+   0.30028,
+   0.2724,
+   0.38876
+  ],
+  "width": 342,
+  "height": 447
+ },
+ {
+  "id": "tattbebyggt-omrade-upphor",
+  "code": "E6",
+  "page": 334,
+  "crop": [
+   0.63746,
+   0.32403,
+   0.81131,
+   0.38797
+  ],
+  "width": 621,
+  "height": 323
+ },
+ {
+  "id": "gagata-upphor",
+  "code": "E8",
+  "page": 334,
+  "crop": [
+   0.41209,
+   0.46991,
+   0.53695,
+   0.55839
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "gangfartsomrade-upphor",
+  "code": "E10",
+  "page": 334,
+  "crop": [
+   0.13718,
+   0.62193,
+   0.31159,
+   0.71239
+  ],
+  "width": 623,
+  "height": 457
+ },
+ {
+  "id": "rekommenderad-hastighet-upphor",
+  "code": "E12",
+  "page": 334,
+  "crop": [
+   0.66209,
+   0.62292,
+   0.78695,
+   0.7114
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "sammanvavning",
+  "code": "E15",
+  "page": 335,
+  "crop": [
+   0.69093,
+   0.1247,
+   0.75812,
+   0.19042
+  ],
+  "width": 240,
+  "height": 332
+ },
+ {
+  "id": "tavla-strackans-langd",
+  "code": "T1",
+  "page": 346,
+  "crop": [
+   0.17553,
+   0.1922,
+   0.2696,
+   0.23515
+  ],
+  "width": 336,
+  "height": 217
+ },
+ {
+  "id": "tavla-avstand-stopplikt",
+  "code": "T3",
+  "page": 346,
+  "crop": [
+   0.61814,
+   0.14549,
+   0.83091,
+   0.23753
+  ],
+  "width": 640,
+  "height": 392
+ },
+ {
+  "id": "tavla-fri-bredd",
+  "code": "T4",
+  "page": 346,
+  "crop": [
+   0.1117,
+   0.32482,
+   0.33707,
+   0.39034
+  ],
+  "width": 640,
+  "height": 263
+ },
+ {
+  "id": "tavla-totalvikt",
+  "code": "T5",
+  "page": 346,
+  "crop": [
+   0.36198,
+   0.30958,
+   0.58679,
+   0.39074
+  ],
+  "width": 640,
+  "height": 327
+ },
+ {
+  "id": "tavla-rorelsehindrade",
+  "code": "T7",
+  "page": 346,
+  "crop": [
+   0.16209,
+   0.45329,
+   0.28695,
+   0.54177
+  ],
+  "width": 446,
+  "height": 447
+ },
+ {
+  "id": "tavla-flervagsvajning",
+  "code": "T13",
+  "page": 346,
+  "crop": [
+   0.11226,
+   0.7696,
+   0.33651,
+   0.84976
+  ],
+  "width": 640,
+  "height": 324
+ },
+ {
+  "id": "tavla-vagars-fortsattning",
+  "code": "T15",
+  "page": 346,
+  "crop": [
+   0.66209,
+   0.7595,
+   0.78695,
+   0.84778
+  ],
+  "width": 446,
+  "height": 446
  }
 ]

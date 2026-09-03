@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import styles from './SignGrid.module.css';
+import { signAltText } from '@/ui/illustrations/roadSignAlt';
 import { RoadSign } from '@/ui/illustrations/RoadSign';
 import { RoadMarking } from '@/ui/illustrations/RoadMarking';
 import { getRoadSign } from '@/content/road-signs';
@@ -86,7 +87,7 @@ export function SignCompare({ title, leftId, rightId, note }: SignCompareProps) 
       <div className={styles.pair}>
         {[left, right].map((sign) => (
           <div key={sign.id} className={styles.pairItem}>
-            <RoadSign name={sign.id} size={72} />
+            <RoadSign name={sign.id} size={72} alt={signAltText(sign.id)} />
             <span className={styles.pairName}>{sign.name}</span>
             <span className={styles.pairMeaning}>{sign.shortMeaning}</span>
           </div>

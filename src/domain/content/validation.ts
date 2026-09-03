@@ -57,6 +57,8 @@ export interface ValidationInput {
   roadSigns?: readonly RoadSign[];
   /** Sign ids that actually have a drawing. */
   availableSignGlyphs?: ReadonlySet<string>;
+  /** Sign ids that ship the licensed book artwork. */
+  licensedSignIds?: ReadonlySet<string>;
   /** The road marking registry. */
   roadMarkings?: readonly RoadMarking[];
   /** Marking ids that actually have a drawing. */
@@ -453,8 +455,19 @@ export function validateContent(input: ValidationInput): ValidationReport {
     if (!input.subcategoryIds.has(roadSign.subcategory)) {
       add('error', 'sign-unknown-subcategory', where, `Okänt delområde "${roadSign.subcategory}".`);
     }
-    if (input.availableSignGlyphs && !input.availableSignGlyphs.has(roadSign.id)) {
-      add('error', 'sign-without-glyph', where, `Skylten "${roadSign.id}" saknar ritning.`);
+    // A sign has to be drawable, but there are now two ways to draw one: the
+    // book's own artwork, or Vägklar's vector. Requiring the vector would mean
+    // hand-drawing 89 signs that the licensed source already contains.
+    const drawable =
+      (input.availableSignGlyphs?.has(roadSign.id) ?? false) ||
+      (input.licensedSignIds?.has(roadSign.id) ?? false);
+    if ((input.availableSignGlyphs || input.licensedSignIds) && !drawable) {
+      add(
+        'error',
+        'sign-without-artwork',
+        where,
+        `Skylten "${roadSign.id}" har varken licensierad bild eller ritning.`,
+      );
     }
   }
 

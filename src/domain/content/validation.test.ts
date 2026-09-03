@@ -12,6 +12,7 @@ import { LESSONS } from '@/content/lessons';
 import { availableSourceImageAssets } from '@/ui/media/sourceImageAssets';
 import { ROAD_SIGNS } from '@/content/road-signs';
 import { SIGN_GLYPHS } from '@/ui/illustrations/signGlyphs';
+import roadSignAssets from '@/content/road-sign-assets.json';
 import { ROAD_MARKINGS } from '@/content/road-markings';
 import { MARKING_GLYPHS } from '@/ui/illustrations/markingGlyphs';
 import {
@@ -39,6 +40,7 @@ function baseInput(questions: readonly Question[]) {
     lessons: LESSONS,
     roadSigns: ROAD_SIGNS,
     availableSignGlyphs: new Set(Object.keys(SIGN_GLYPHS)),
+    licensedSignIds: new Set(roadSignAssets.map((a) => a.id)),
     roadMarkings: ROAD_MARKINGS,
     originalVisuals: ORIGINAL_VISUALS,
     availableVisualGlyphs: new Set(Object.keys(ORIGINAL_VISUAL_GLYPHS)),

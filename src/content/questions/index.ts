@@ -8,6 +8,7 @@ import { bildfragor2Questions } from './bildfragor2';
 import { bildfragor3Questions } from './bildfragor3';
 import { bildfragor4Questions } from './bildfragor4';
 import { egnaRitningarQuestions } from './egnaritningar';
+import { skyltkombinationerQuestions } from './skyltkombinationer';
 import { vagmarkesskyltarQuestions } from './vagmarkesskyltar';
 import { bildfragorQuestions } from './bildfragor';
 import { berakningarQuestions } from './berakningar';
@@ -76,6 +77,7 @@ export const ALL_QUESTIONS: Question[] = [
   ...bildfragor3Questions,
   ...bildfragor4Questions,
   ...egnaRitningarQuestions,
+  ...skyltkombinationerQuestions,
   ...grunderQuestions,
   ...manniskan2Questions,
   ...vagmarkeringarQuestions,

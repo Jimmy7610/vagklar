@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ROAD_SIGNS, SIGN_BY_ID, SIGNS_BY_CATEGORY, getRoadSign } from '@/content/road-signs';
 import { SIGN_GLYPHS } from '@/ui/illustrations/signGlyphs';
+import signAssets from '@/content/road-sign-assets.json';
 import { MARKING_GLYPHS } from '@/ui/illustrations/markingGlyphs';
 import { SUBCATEGORIES } from '@/content/taxonomy';
 import { ALL_QUESTIONS } from '@/content/questions';
@@ -12,6 +13,14 @@ import { SOURCES } from '@/content/sources';
 import type { RoadSign } from '@/content/road-signs';
 
 const glyphIds = new Set(Object.keys(SIGN_GLYPHS));
+/**
+ * A sign can now be drawn two ways: the licensed book artwork, or Vägklar's
+ * own vector. Most use the book's — the vectors that remain are the variant
+ * families, where one official code covers several real signs and the book
+ * prints one picture per code.
+ */
+const licensedIds = new Set(signAssets.map((a) => a.id));
+const drawableIds = new Set([...glyphIds, ...licensedIds]);
 const subcategoryIds = new Set(SUBCATEGORIES.map((s) => s.id));
 
 describe('road sign registry', () => {
@@ -21,7 +30,7 @@ describe('road sign registry', () => {
   });
 
   it('has a drawing for every registered sign', () => {
-    const missing = ROAD_SIGNS.filter((s) => !glyphIds.has(s.id)).map((s) => s.id);
+    const missing = ROAD_SIGNS.filter((s) => !drawableIds.has(s.id)).map((s) => s.id);
     expect(missing, missing.join(', ')).toHaveLength(0);
   });
 
@@ -94,7 +103,7 @@ describe('sign-backed content', () => {
   it('only renders vector art that exists', () => {
     // An illustration id may resolve against either registry — the renderer
     // picks by id, so a sign and a marking are authored identically.
-    const drawable = new Set([...glyphIds, ...Object.keys(MARKING_GLYPHS)]);
+    const drawable = new Set([...drawableIds, ...Object.keys(MARKING_GLYPHS)]);
     for (const q of ALL_QUESTIONS) {
       const illustration = q.image?.illustration;
       if (!illustration) continue;
@@ -144,6 +153,7 @@ describe('sign registry validation', () => {
     concepts: CURRICULUM_CONCEPTS,
     sources: SOURCES,
     availableSignGlyphs: glyphIds,
+    licensedSignIds: licensedIds,
   };
 
   const sample = ROAD_SIGNS[0]!;
@@ -157,7 +167,7 @@ describe('sign registry validation', () => {
   });
 
   it('catches a sign without a drawing', () => {
-    expect(mutate({ id: 'ritas-inte' })).toContain('sign-without-glyph');
+    expect(mutate({ id: 'ritas-inte' })).toContain('sign-without-artwork');
   });
 
   it('catches a sign with an unknown subcategory', () => {
