@@ -71,7 +71,7 @@ Inga.
 | `mns-040` | 103 | page-outside-chapter | Sidan ligger utanför kapitlen för "reaktion-och-sinnen" (78–89, 140–147, 154–161, 196–203). |
 | `mrk-013` | 8 | page-outside-chapter | Sidan ligger utanför kapitlen för "vagmarkeringar" (324–361). |
 
-## Bildernas sidhänvisningar — 63 st
+## Bildernas sidhänvisningar — 65 st
 
 Varje godkänd källbild anger sidan den är hämtad från. Kontrollen är enklare än
 för frågorna — en figursida bär etiketter, inte meningar — men den fångar det som
@@ -85,12 +85,13 @@ ur motorvägskapitlet. Vad varningen fångar är sidnummer som hamnat helt fel.
 
 | | Antal |
 | --- | ---: |
-| Bekräftade | 56 |
+| Bekräftade | 57 |
 | Fel | 0 |
-| Varningar | 7 |
+| Varningar | 8 |
 
 | Bild | Sida | Kod | Vad |
 | --- | ---: | --- | --- |
+| `bevakat-overgangsstalle` | 42 | page-outside-chapter | Sidan ligger utanför kapitlet "passager" (46–57). |
 | `motorvag-portal-vagvisare` | 89 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |
 | `korfaltsvagvisare-korsning` | 84 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |
 | `hastighet-100-ledsnummer` | 95 | page-outside-chapter | Sidan ligger utanför kapitlet "vagmarken" (324–361). |

@@ -45,6 +45,9 @@ npm run dev
 | `python scripts/optimise-source-images.py` | Optimerar de kurerade bilderna till WebP |
 | `python scripts/extract-source-diagrams.py` | Renderar sidor och klipper ut kuraterade ritningar |
 | `npm run report:verification` | Bygger granskningskön och det lokala granskningsverktyget |
+| `python scripts/extract-book-signs.py` | Klipper ut vägmärkena ur källans märkesbilaga |
+| `python scripts/optimise-book-signs.py` | Optimerar märkena till WebP |
+| `python scripts/audit-book-visuals.py` | Katalogiserar källans alla figurer |
 
 Ikoner och Open Graph-bilden genereras från kod:
 
@@ -147,7 +150,8 @@ bokmärka, även under en underkatalog. Se [docs/ARCHITECTURE.md](docs/ARCHITECT
 | Lektioner                      | 15                                     |
 | Scenarier                      | 14 (med varianter)                     |
 | Namngivna missuppfattningar    | 253                                    |
-| Källbilder (används med tillstånd) | 63 (52 foton, 11 ritningar)        |
+| Källbilder (används med tillstånd) | 65 (54 foton, 11 ritningar)        |
+| Licensierade vägmärken            | 48 av 58                           |
 | Vägklars egna ritningar           | 15                                 |
 | Ritade vägmärken               | 58                                     |
 | Ritade vägmarkeringar          | 15                                     |

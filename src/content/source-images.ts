@@ -107,6 +107,44 @@ function img(entry: Omit<SourceImage, 'sourceId' | 'rightsHolder' | 'usedWithPer
 
 export const SOURCE_IMAGES: SourceImage[] = [
   img({
+    id: 'korfaltspilar-cirkulation',
+    sourcePage: 23,
+    title: 'Körfältspilar före en cirkulationsplats',
+    topic: 'vagmarkeringar',
+    subcategory: 'vagmarkeringar',
+    chapter: 'vajningsregler',
+    altText:
+      'Vy från förarplatsen mot en cirkulationsplats. I körbanan är en vit pil målad som pekar framåt och snett åt höger, och vita linjer böjer in mot cirkulationen.',
+    longDescription:
+      'Vägen leder fram mot en cirkulationsplats. På en refug mitt framför står en väjningspliktstriangel med cirkulationsmärket under sig, och ovanför hänger en trafiksignal som är släckt. I själva körbanan är en stor vit pil målad som pekar framåt och böjer av åt höger — en körfältspil som talar om vart det här körfältet leder. Längs körbanan löper heldragna vita linjer som svänger in mot cirkulationen. Till vänster i bild står en bil på den anslutande vägen.',
+    caption:
+      'Pilen i körbanan säger vart körfältet leder. Den syns tidigt, men bara för dig — mötande och korsande trafik ser den inte.',
+    usage: 'theory-lesson',
+    asset: 'vagmarkeringar/korfaltspilar-cirkulation',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
+    id: 'bevakat-overgangsstalle',
+    sourcePage: 42,
+    title: 'Bevakat övergångsställe',
+    topic: 'vagmarkeringar',
+    subcategory: 'oskyddade-trafikanter',
+    chapter: 'passager',
+    altText:
+      'Korsning i stadsmiljö med grön trafiksignal. Tvärs över körbanan ligger ett övergångsställe av breda vita band.',
+    longDescription:
+      'En korsning i stadsmiljö sedd från förarplatsen. Rakt fram lyser en trafiksignal grönt, och fler signaler syns på andra sidan korsningen. Tvärs över körbanan närmast bilen ligger ett övergångsställe målat som breda vita band längs körriktningen. En mörk bil står till vänster och en vit bil rullar framför, båda på väg in i korsningen. Ingen gående syns i bilden.',
+    caption:
+      'Här är övergångsstället bevakat: signalen avgör vem som får gå och vem som får köra. Vid ett obevakat är det väjningsplikten som gör det.',
+    usage: 'theory-lesson',
+    asset: 'vagmarkeringar/bevakat-overgangsstalle',
+    width: 960,
+    height: 540,
+    status: 'approved',
+  }),
+  img({
     id: 'vajningslinje-utfart',
     sourcePage: 25,
     title: 'Väjningslinje vid en utfart',

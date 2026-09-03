@@ -1122,3 +1122,123 @@ De 31 byten är CSS för radbrytning. Granskningsverktyget ligger utanför bygge
 och kontrolleras av en byggrind som provades med planterade artefakter: både en
 kopia av verktyget i `dist/` och en fil som innehöll ordet `granskningsverktyg`
 fick bygget att falla.
+
+
+## Vägmärken från källan (2026-09-03)
+
+### Vad som gjordes
+
+Bokens märkesbilaga (s. 324–361) katalogiserades och 257 märkesbilder klipptes
+ut. 48 av dem ersätter Vägklars handritade vektorer; 10 märken behåller sin
+ritning eftersom deras kod täcker flera varianter i verkligheten.
+
+Märkena låg i PDF:en som **vektorinnehåll på sidan**, inte som inbäddade
+rasterbilder, vilket är hela förklaringen till att tidigare extraktionspass
+aldrig hittade dem.
+
+### Vad extraktionen krävde
+
+Tre saker som inte var självklara i förväg:
+
+1. **Parning på position, inte ordning.** Sidorna bär en förlagslogotyp, så att
+   räkna figurer och koder och zippa ihop dem förskjuter tyst allt efter första
+   avvikelsen. Varje kods position hämtas ur sidans text och paras med figuren
+   ovanför.
+2. **Två sorters figurer.** Färgade märken hittas på mättnad. Tilläggstavlorna
+   och fordonssymbolerna är svart streckteckning på vitt och är osynliga för det
+   testet.
+3. **Sidans text måste maskeras bort** innan streckteckningarna söks. Utan det
+   parades sju koder med *bildtexten* i stället för med tavlan: T2 blev ordet
+   "Avstånd", T11 blev "Utsträckning".
+
+### Vad bytet avslöjade
+
+Tolv fel i **beskrivningarna**, alla osynliga så länge ritningen var gjord efter
+samma text som beskrev den.
+
+Fem namngav en färg märket inte har:
+
+| Märke | Beskrevs som | Är |
+| --- | --- | --- |
+| E1, E2, E3 motorväg / motortrafikled | blå | **gröna** |
+| E5 tättbebyggt område | blå med vita hus | vit med svart siluett |
+| C28 omkörning upphör | gul med röd ram | gul **utan** röd ram |
+
+Sju beskrev fel innehåll: B2 sades läsa "STOPP" (skylten läser *STOP*), E11 "en
+vit ring runt siffran 30" (skylten läser *max 30 km/tim*), T14 vit (röd), T19
+och T16 vita (blå), T9 en gående med käpp (fem punkter), T11 en linje med
+längdmått (en dubbelriktad pil).
+
+En första automatisk färgkontroll flaggade 16 märken. Elva av dem var falska —
+regexen `gul` matchade inuti ordet *rektangulär*. Kontrollen gjordes om med
+ordgränser innan något rättades.
+
+### En verklig svarsläcka
+
+`vag-011` frågade *"Vilken form och färg har märket för väjningsplikt?"* — och
+visade märket, med alt-texten "gul triangel med röd ram och spetsen nedåt" mot
+det rätta svaret "En triangel med spetsen nedåt, gul yta och röd ram". Tre vägar
+till svaret, en av dem uppläst av en skärmläsare.
+
+Frågan visar inte längre någon bild. Ett test underkänner nu varje fråga som
+både frågar om ett märkes utseende och visar det, och ett annat mäter
+överlappet mellan `accessibilityText` och det rätta svaret.
+
+Ett test som förbjöd märkets *namn* i frågetexten togs bort igen: sex frågor gör
+det legitimt, som "Du passerar märket för tättbebyggt område … Vad gäller?", där
+svaret är 50 km/h och namnet är premissen. Regeln var fel, inte innehållet.
+
+### Filformat — mätt, inte antaget
+
+| Kodning, 48 märken | Storlek |
+| --- | ---: |
+| WebP kvalitet 92, 320 px | 350 kB |
+| PNG, 320 px | 903 kB |
+| Palett-32 lossless WebP, 320 px | 227 kB |
+| **Palett-32 lossless WebP, originalupplösning** | **212 kB** |
+
+Originalupplösning blev *mindre* än nedskalat: platt vektorgrafik har en handfull
+exakta färger, och omsampling uppfinner hundratals mellanliggande.
+
+### Förhandscache — beslutet
+
+Märkena precachas, fotografierna inte. 212 kB mot cirka 6 MB, alltså ungefär
+15 % större installation. Vad det köper: var tionde provfråga visar ett märke,
+och en märkesfråga utan sitt märke är olöslig snarare än svårare.
+
+Kontrollerat med servern stoppad: fem slumpvis valda märkesfiler svarade
+`image/webp`, medan ett fotografi som aldrig visats inte gick att hämta. Exakt
+den avsedda uppdelningen.
+
+### Prestandafälla som fångades
+
+Startpaketet sköt först upp från 164 341 B till 225 169 B. Två orsaker:
+
+1. Vite bäddar in resurser under 4 kB som base64, och 21 av de 48 märkena är
+   mindre än så. `assetsInlineLimit: 0` löste det.
+2. En första chunk-regel band hela `src/ui/illustrations/` till en lazy chunk —
+   men `ScenarioStage` ligger i samma mapp och landningssidan behöver den
+   direkt, så hela märkeschunken drogs tillbaka in i entryn genom en enda
+   import. Reglerna namnger nu modulerna i stället för mappen.
+
+Slutresultat: **168 226 B**, upp 3 885 B, vilket är manifestet och URL-kartan.
+
+### Reflow
+
+En regression hittades och rättades: `_pairItem` i märkesjämförelsen var ett
+rutnät utan spårdefinition — samma implicita `auto`-spår som `.panel` hade —
+och la ut en 203 px spalt i ett 156 px kort vid 200 % text.
+
+| Läge | Resultat |
+| --- | --- |
+| 320, 375, 768, 1920 px, normal text | Ingen horisontell scroll |
+| 320 px @ 200 % text, 10 rutter | Ingen |
+| 375 px @ 200 % text | Ingen |
+| 390 px @ 200 % text, 12 rutter | Ingen efter rättningen |
+
+### Nya fotografier
+
+Två vägmarkeringsmotiv som ingen godkänd bild visade: körfältspilar målade i
+körbanan (s. 23) och ett övergångsställe bevakat av trafiksignal (s. 42). Båda
+beskrivna efter vad som faktiskt syns i bilden, inte efter vad kapitlet handlar
+om.

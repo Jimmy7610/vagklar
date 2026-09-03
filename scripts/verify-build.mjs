@@ -161,11 +161,19 @@ if (strayWebp.length > 0) {
  */
 if (existsSync(swPath)) {
   const swSource = readFileSync(swPath, 'utf8');
-  const precachedWebp = (swSource.match(/[\w./-]+\.webp/g) ?? []).length;
-  if (precachedWebp > 0) {
+  const precachedWebp = swSource.match(/[\w./-]+\.webp/g) ?? [];
+  const photographs = precachedWebp.filter((url) => !/\/?sign-/.test(url));
+  if (photographs.length > 0) {
     failures.push(
-      `${precachedWebp} källbilder ligger i förhandscachen. De ska cachas vid körning.`,
+      `${photographs.length} källfotografier ligger i förhandscachen. De ska cachas vid körning.`,
     );
+  }
+  // And the other way round: the signs are meant to be there, so an empty
+  // precache means the glob stopped matching them and an offline exam would
+  // quietly lose its pictures.
+  const signs = precachedWebp.length - photographs.length;
+  if (signs < 40) {
+    failures.push(`Bara ${signs} vägmärken i förhandscachen — de ska precachas för prov offline.`);
   }
 }
 

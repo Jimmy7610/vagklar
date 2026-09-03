@@ -86,7 +86,7 @@ Inga dubbletter över tröskeln 0,70 bland 442 frågor.
 | --- | ---: |
 | reviewed | 442 |
 
-Godkända källbilder: **63**, varav 48 används i frågor.
+Godkända källbilder: **65**, varav 48 används i frågor.
 Namngivna missuppfattningar: **263**.
 Områden: **17**, delområden: **71**.
 

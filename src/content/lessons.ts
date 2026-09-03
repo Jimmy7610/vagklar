@@ -635,6 +635,13 @@ export const LESSONS: Lesson[] = [
       },
       {
         kind: 'sourceImage',
+        imageId: 'bevakat-overgangsstalle',
+        prompt: 'Övergångsstället med signal — vad avgör här?',
+        caption:
+          'Målningen i körbanan är densamma som vid ett obevakat övergångsställe. Skillnaden är signalen: när den är tänd är det den som bestämmer, inte väjningsplikten mot gående.',
+      },
+      {
+        kind: 'sourceImage',
         imageId: 'cykeloverfart',
         prompt: 'Vad ska du lägga märke till?',
         caption:
@@ -956,6 +963,13 @@ export const LESSONS: Lesson[] = [
         kind: 'markingGrid',
         title: 'Symboler i körbanan',
         markingIds: ['korfaltspilar', 'markering-cykel', 'markering-buss', 'markering-hastighet'],
+      },
+      {
+        kind: 'sourceImage',
+        imageId: 'korfaltspilar-cirkulation',
+        prompt: 'Så ser en körfältspil ut på riktigt.',
+        caption:
+          'Pilen är målad långt före korsningen och sedd i skarp vinkel — inte rakt uppifrån som i katalogen. Det är den vyn du ska känna igen i farten.',
       },
       {
         kind: 'warning',

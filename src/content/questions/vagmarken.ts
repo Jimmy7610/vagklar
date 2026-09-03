@@ -214,8 +214,10 @@ const seeds: AuthoredQuestion[] = [
       'Formen är unik just för att den ska kunna kännas igen även bakifrån eller när skylten är smutsig. Väjningsplikt betyder att du ska sänka farten och lämna företräde — men du behöver inte stanna om vägen är fri.',
     sources: [vmf('B1')],
     type: 'road-sign',
-    image: sign('vajningsplikt', 'Vägmärke: gul triangel med röd ram och spetsen nedåt.'),
-    accessibilityText: 'En triangel med spetsen nedåt, gul yta och bred röd ram.',
+    // Deliberately shown without the sign. The question asks what shape and
+    // colour it is, and the picture — along with the alt text describing it —
+    // was simply the answer. This is recall: either you know the triangle
+    // stands on its point or you do not.
   },
   {
     id: 'vag-012',

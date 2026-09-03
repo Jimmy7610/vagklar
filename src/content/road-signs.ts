@@ -245,7 +245,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Du måste stanna helt, även om vägen är fri.',
     longMeaning:
       'Stanna vid stopplinjen, eller där du har sikt om linjen saknas. Att rulla långsamt förbi är inte att stanna, oavsett hur fri vägen är.',
-    altText: 'Väjningspliktsmärke: röd åttakantig skylt med texten STOPP i vitt.',
+    altText: 'Väjningspliktsmärke: röd åttakantig skylt med texten STOP i vitt.',
     tags: ['stopplikt', 'korsning'],
     similarSignIds: ['vajningsplikt'],
     subcategory: 'stopplikt',
@@ -379,7 +379,8 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Omkörningsförbudet upphör.',
     longMeaning:
       'Att förbudet upphör betyder inte att omkörning är lämplig — sikt, mötande trafik och heldragen linje avgör fortfarande.',
-    altText: 'Rund skylt med gul botten och röd ram, två svarta bilar och ett svart streck tvärs över.',
+    altText:
+      'Rund skylt med gul botten utan röd ram, två grå bilar och svarta streck snett över — upphörandemärken saknar den röda ringen.',
     tags: ['omkorning'],
     similarSignIds: ['forbud-omkorning'],
     subcategory: 'omkorningsforbud',
@@ -578,7 +579,8 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Motorvägens regler börjar gälla här.',
     longMeaning:
       'Endast motordrivna fordon som får köra minst 40 km/h. Förbjudet att stanna, backa, vända eller gå på vägbanan. Bashastigheten är 110 km/h om inget annat anges.',
-    altText: 'Blå rektangulär skylt med en vit stiliserad bro över två körbanor.',
+    altText:
+      'Grön rektangulär skylt med en vit symbol: en bro över två åtskilda körbanor.',
     tags: ['motorvag'],
     similarSignIds: ['motortrafikled', 'motorvag-upphor'],
     subcategory: 'motorvag-regler',
@@ -591,7 +593,8 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Motorvägens regler slutar gälla.',
     longMeaning:
       'Efter märket kan du möta korsande trafik, gående och betydligt lägre hastigheter. Sänk farten i god tid — fartblindhet efter en lång motorvägssträcka är verklig.',
-    altText: 'Blå rektangulär skylt med motorvägssymbolen och ett rött streck tvärs över.',
+    altText:
+      'Grön rektangulär skylt med motorvägssymbolen och ett rött streck snett över.',
     tags: ['motorvag'],
     similarSignIds: ['motorvag'],
     subcategory: 'motorvag-regler',
@@ -604,7 +607,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Motortrafikledens regler börjar gälla här.',
     longMeaning:
       'Liknar motorväg men har ofta bara ett körfält i vardera riktningen och kan ha mötande trafik. Bashastigheten är inte 110 km/h — läs skyltarna.',
-    altText: 'Blå rektangulär skylt med en vit bil sedd framifrån.',
+    altText: 'Grön rektangulär skylt med en vit bil sedd framifrån.',
     tags: ['motortrafikled'],
     similarSignIds: ['motorvag'],
     subcategory: 'motortrafikled',
@@ -617,7 +620,8 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Bashastigheten 50 km/h och tätortens regler gäller.',
     longMeaning:
       'Märket kompletteras alltid med en hastighetsangivelse. Sitter ett förbudsmärke tillsammans med det gäller förbudet i hela området fram till slutmärket E6.',
-    altText: 'Blå rektangulär skylt med vita husiluetter.',
+    altText:
+      'Vit rektangulär skylt med svart ram och en svart stadssiluett av hus och ett kyrktorn.',
     tags: ['tatort', 'hastighet'],
     similarSignIds: ['gagata', 'gangfartsomrade'],
     subcategory: 'hastighetsgranser',
@@ -656,7 +660,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'En rekommendation, inte en gräns.',
     longMeaning:
       'Blå skylt betyder anvisning, inte förbud. Den skyltade hastighetsbegränsningen gäller fortfarande — men platsen är byggd eller trafikerad så att den lägre farten är lämplig.',
-    altText: 'Blå rektangulär skylt med en vit ring runt siffran 30.',
+    altText: 'Blå fyrkantig skylt med texten max 30 km/tim i vitt.',
     tags: ['hastighet'],
     similarSignIds: ['hastighet-30'],
     subcategory: 'anvisningsmarken',
@@ -736,7 +740,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Avståndet fram till det som huvudmärket gäller.',
     longMeaning:
       'Tavlan säger var regeln börjar, inte hur långt den sträcker sig. För det används T11 utsträckning.',
-    altText: 'Vit rektangulär tilläggstavla med ett avstånd i meter, till exempel 200 m.',
+    altText: 'Vit rektangulär tilläggstavla med svart ram och ett avstånd i meter, här 100 m.',
     tags: ['tillaggstavla'],
     similarSignIds: ['tavla-utstrackning'],
     subcategory: 'anvisningsmarken',
@@ -749,7 +753,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Hur lång sträcka huvudmärket gäller.',
     longMeaning:
       'Skiljer sig från T2 avstånd: utsträckningen börjar vid märket och gäller den angivna längden framåt.',
-    altText: 'Vit rektangulär tilläggstavla med en vågrät linje med ändstreck och en längd i meter.',
+    altText: 'Vit rektangulär tilläggstavla med svart ram och en dubbelriktad pil som pekar åt både vänster och höger.',
     tags: ['tillaggstavla'],
     similarSignIds: ['tavla-avstand', 'tavla-riktning'],
     subcategory: 'anvisningsmarken',
@@ -762,7 +766,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Åt vilket håll huvudmärket gäller.',
     longMeaning:
       'Vanlig under parkeringsmärken: pilen visar om platserna ligger framför eller bakom skylten.',
-    altText: 'Vit rektangulär tilläggstavla med en svart pil.',
+    altText: 'Vit rektangulär tilläggstavla med svart ram och en bred svart pil som böjer av åt höger.',
     tags: ['tillaggstavla', 'parkering'],
     similarSignIds: ['tavla-utstrackning'],
     subcategory: 'parkeringsregler',
@@ -775,7 +779,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Gäller den som har boendetillstånd i området.',
     longMeaning:
       'Tavlan inskränker huvudmärket till en viss grupp. Har du inte tillståndet gäller inte parkeringsrätten dig.',
-    altText: 'Vit rektangulär tilläggstavla med texten Boende.',
+    altText: 'Blå rektangulär tilläggstavla med texten Boende i vitt.',
     tags: ['tillaggstavla', 'parkering'],
     similarSignIds: ['tavla-avgift'],
     subcategory: 'parkeringsregler',
@@ -788,7 +792,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Parkeringen är avgiftsbelagd.',
     longMeaning:
       'Ofta kombinerad med en tidsangivelse som säger när avgiften tas ut. Utanför de tiderna kan parkeringen vara gratis men fortfarande tidsbegränsad.',
-    altText: 'Vit rektangulär tilläggstavla med texten Avgift.',
+    altText: 'Blå rektangulär tilläggstavla med texten Avgift i vitt.',
     tags: ['tillaggstavla', 'parkering'],
     similarSignIds: ['tavla-boende', 'tavla-tid'],
     subcategory: 'parkeringsregler',
@@ -801,7 +805,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Alla tillfarter till korsningen har stopplikt.',
     longMeaning:
       'Tavlan säger inte att du slipper stanna — den säger att de andra också ska stanna. Ordningen avgörs sedan av högerregeln mellan dem som stannat.',
-    altText: 'Vit rektangulär tilläggstavla med ett korsningssymbol och ordet STOPP.',
+    altText: 'Röd rektangulär tilläggstavla med texten Flervägs-stopp i vitt.',
     tags: ['tillaggstavla', 'stopplikt'],
     similarSignIds: ['stopp'],
     subcategory: 'stopplikt',
@@ -814,7 +818,7 @@ export const ROAD_SIGNS: RoadSign[] = [
     shortMeaning: 'Personer med nedsatt syn är vanliga här.',
     longMeaning:
       'Tavlan har alltid gul bottenfärg. Räkna med att den gående inte kan se din bil, och var försiktig med ljud när du väntar.',
-    altText: 'Gul rektangulär tilläggstavla med en gående figur med vit käpp.',
+    altText: 'Gul rektangulär tilläggstavla med röd ram och fem svarta punkter i rad.',
     tags: ['tillaggstavla', 'oskyddade'],
     similarSignIds: ['overgangsstalle-b3'],
     subcategory: 'nedsatt-formaga',

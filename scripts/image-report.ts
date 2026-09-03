@@ -19,6 +19,8 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ALL_QUESTIONS } from '../src/content/questions';
 import { ORIGINAL_VISUALS } from '../src/content/original-visuals';
+import { ROAD_SIGNS } from '../src/content/road-signs';
+import signAssets from '../src/content/road-sign-assets.json';
 import { LESSONS } from '../src/content/lessons';
 import { SOURCE_IMAGES } from '../src/content/source-images';
 import { SCENARIOS } from '../src/content/scenarios';
@@ -115,6 +117,36 @@ const originals = ORIGINAL_VISUALS.filter((v) => v.status === 'approved');
 const originalsPerChapter = new Map<string, number>();
 for (const v of originals) {
   originalsPerChapter.set(v.chapter, (originalsPerChapter.get(v.chapter) ?? 0) + 1);
+}
+
+/* The signs are their own category. They come from the same licensed source as
+   the photographs and diagrams, but they behave differently: tiny, flat,
+   precached rather than runtime-cached, and with a hand-drawn fallback for the
+   handful the book cannot supply. */
+const licensedSignIds = new Set(signAssets.map((a) => a.id));
+const vectorSigns = ROAD_SIGNS.filter((s) => !licensedSignIds.has(s.id));
+
+lines.push('## Vägmärken');
+lines.push('');
+lines.push('Märkena visas med bokens egen bild där en sådan finns. De som står kvar på');
+lines.push('Vägklars ritning gör det för att koden täcker flera varianter i verkligheten:');
+lines.push('C31 är varje hastighetsgräns, D1 varje påbjuden riktning, T6 varje tidtavla, och');
+lines.push('boken trycker en bild per kod. Bokens C31 visar 30 — den kan inte illustrera');
+lines.push('`hastighet-90`.');
+lines.push('');
+lines.push('| | Antal |');
+lines.push('| --- | ---: |');
+lines.push(`| Märken i registret | ${ROAD_SIGNS.length} |`);
+lines.push(`| Med licensierad bokbild | ${signAssets.length} |`);
+lines.push(`| Kvar på Vägklars ritning | ${vectorSigns.length} |`);
+lines.push('');
+if (vectorSigns.length > 0) {
+  lines.push('| Märke | Kod | Varför ritning |');
+  lines.push('| --- | --- | --- |');
+  for (const sign of vectorSigns) {
+    lines.push(`| \`${sign.id}\` | ${sign.code} | koden täcker flera varianter |`);
+  }
+  lines.push('');
 }
 
 lines.push('## Vägklars egna ritningar');
@@ -232,5 +264,5 @@ console.log(
   `docs/IMAGE-COVERAGE.md skriven — ${approved.length} godkända bilder, ` +
     `${usedIds.size} använda, ${unused.length} oanvända, ` +
     `${new Set([...imagesPerChapter.keys(), ...originalsPerChapter.keys()]).size}/${CURRICULUM_CHAPTERS.length} kapitel med bildstöd, ` +
-    `${originals.length} egna ritningar.`,
+    `${originals.length} egna ritningar, ${signAssets.length} licensierade vägmärken.`,
 );

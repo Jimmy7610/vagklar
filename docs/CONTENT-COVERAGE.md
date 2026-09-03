@@ -139,7 +139,7 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 
 | Mått | Antal |
 | --- | ---: |
-| Godkända källbilder | 63 |
+| Godkända källbilder | 65 |
 | Kapitel med visuellt stöd | 23 av 39 |
 | Bildbaserade frågor | 48 |
 | Lektioner med bild | 15 av 19 |
@@ -148,8 +148,8 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 | --- | ---: |
 | Inledning | 3 |
 | Körfält | 2 |
-| Väjningsregler | 6 |
-| Passager | 6 |
+| Väjningsregler | 7 |
+| Passager | 7 |
 | Cirkulationsplats | 2 |
 | Stanna & parkera | 3 |
 | Landsväg | 4 |

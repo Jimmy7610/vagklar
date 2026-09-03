@@ -370,3 +370,20 @@ verifieringen faller, eftersom de inte ändrar vad som påstods.
 boken syns som arbete att göra om snarare än som ett tyst antagande.
 
 Se [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFLOW.md).
+
+
+## Var ett vägmärkes bild kommer ifrån
+
+Registret i `road-signs.ts` beskriver märket — kod, namn, betydelse, alt-text,
+förväxlingar. Det säger ingenting om vilken bild som ritas.
+
+Det avgörs av `src/content/road-sign-assets.json`, som genereras av
+`scripts/optimise-book-signs.py`. Finns märket där ritas källans egen bild;
+annars ritas Vägklars vektor. `RoadSign` gör valet per märke, och det
+tillgängliga namnet kommer från registret i båda fallen.
+
+Manifestet bär proveniensen: kod, sida i källan, beskärningens koordinater som
+sidandelar, och måtten. Det gör extraktionen reproducerbar och gör att ett test
+kan kontrollera att ingen beskärning används till två märken.
+
+Se [LICENSED-SIGNS.md](LICENSED-SIGNS.md).

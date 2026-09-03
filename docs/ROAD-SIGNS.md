@@ -1,3 +1,12 @@
+> **Bilderna kommer numera från källan.** 48 av de 58 märkena ritas med bokens
+> egen artwork i stället för Vägklars vektorer. De tio som står kvar gör det
+> för att deras kod täcker flera varianter i verkligheten. Hur det fungerar,
+> och vad bytet avslöjade, står i [LICENSED-SIGNS.md](LICENSED-SIGNS.md).
+>
+> Registret nedan är oförändrat: koder, namn, betydelser, förväxlingar och
+> alt-texter är fortfarande Vägklars och är fortfarande det som beskriver ett
+> märke för den som inte ser det.
+
 # Vägmärken
 
 Vägmärken är det område där igenkänning och tillämpning måste sitta ihop. Att veta

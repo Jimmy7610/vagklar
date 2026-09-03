@@ -54,6 +54,12 @@ DIAGRAM_QUALITY = 92
 
 # (extracted file, topic folder, output slug)
 CURATED = [
+    # --- Omgång 6: fler vägmarkeringar i verkligheten ----------------------
+    # Två motiv som ingen godkänd bild visade: pilar målade i körbanan, och ett
+    # övergångsställe som är bevakat av trafiksignal. Det senare är inte samma
+    # sak som det obevakade — där avgör signalen, inte väjningsplikten.
+    ('p023-0.jpeg', 'vagmarkeringar', 'korfaltspilar-cirkulation'),
+    ('p042-0.jpeg', 'vagmarkeringar', 'bevakat-overgangsstalle'),
     # --- Omgång 5: vägmarkering i verkligheten -----------------------------
     # Delområdet vägmarkeringar hade noll fotografier: varje markering lärdes
     # ut som ren vektor, i idealform. På vägen är färgen sliten, sedd i

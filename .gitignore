@@ -25,6 +25,11 @@ references/.page-text.json
 # scripts/extract-source-diagrams.py. Inputs to the optimiser, never shipped
 # as-is — only the optimised WebP files reach the app.
 references/extracted/diagrams/
+# Sign crops rendered from the licensed source by
+# scripts/extract-book-signs.py, and the visual catalogue from
+# scripts/audit-book-visuals.py. Derived from the book, so they stay local —
+# only the optimised WebP in src/assets/road-signs/ ships.
+references/extracted/signs/
 
 # Scratch output from source-extraction tooling.
 /tmp-extract/

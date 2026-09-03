@@ -59,6 +59,25 @@ export default defineConfig({
       workbox: {
         navigateFallback: `${BASE_PATH}index.html`,
         cleanupOutdatedCaches: true,
+        /*
+         * The road signs are precached; the photographs are not.
+         *
+         * That split is measured rather than assumed. All 48 licensed sign
+         * faces together are 212 kB — they are flat artwork of six colours,
+         * palettised and losslessly encoded — against roughly 6 MB for the
+         * photographs. Precaching the signs grows the install by about 15 %.
+         *
+         * What that buys: an exam works offline. Roughly one exam question in
+         * ten shows a sign, and a sign question without its sign is not a
+         * harder question, it is an unanswerable one. That exact defect has
+         * happened here before, and it is worth 212 kB not to have it again on
+         * a train with no signal.
+         *
+         * The photographs stay on the runtime cache for the opposite reason:
+         * they are thirty times the size and a learner meets them a lesson at
+         * a time, so paying for them on first view costs nothing at install.
+         */
+        globPatterns: ['**/*.{js,css,html,svg,png,webmanifest}', 'assets/sign-*.webp'],
         runtimeCaching: [
           {
             /*
@@ -82,11 +101,12 @@ export default defineConfig({
              * WebP the app ships, and the icons are PNG and SVG. A test in
              * verify-build keeps that true.
              */
-            urlPattern: ({ url }) => url.pathname.endsWith('.webp'),
+            urlPattern: ({ url }) =>
+              url.pathname.endsWith('.webp') && !url.pathname.includes('/sign-'),
             handler: 'CacheFirst',
             options: {
               cacheName: 'vagklar-source-images',
-              expiration: { maxEntries: 160, maxAgeSeconds: 60 * 60 * 24 * 180 },
+              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 180 },
             },
           },
           {
@@ -110,6 +130,17 @@ export default defineConfig({
   build: {
     target: 'es2022',
     emptyOutDir: true,
+    /*
+     * Never inline an asset as a data URI.
+     *
+     * Vite inlines anything under 4 kB by default, and 21 of the 48 licensed
+     * road signs are smaller than that. Base64 in a JavaScript chunk is a
+     * third larger than the file, cannot be cached separately, and — because
+     * the landing page reaches the sign renderer through the scenario stage —
+     * landed in the startup payload, where it cost 62 kB gzip. As separate
+     * files they are fetched only when a sign is actually shown.
+     */
+    assetsInlineLimit: 0,
     cssCodeSplit: true,
     reportCompressedSize: false,
     rollupOptions: {
@@ -133,6 +164,22 @@ export default defineConfig({
           // until a lesson or a question actually renders one.
           if (id.includes('/src/content/original-visuals')) return undefined;
           if (id.includes('/src/ui/visuals/')) return undefined;
+          // The licensed sign artwork brings a URL map and a crop manifest with
+          // it. Neither is needed to paint the landing page, and letting Rollup
+          // hoist the illustration code into the entry cost 60 kB gzip.
+          //
+          // Named individually rather than by folder: ScenarioStage lives in
+          // the same directory and the landing page needs it at once, so
+          // pinning the whole folder pulled the entire sign chunk back into
+          // the entry through a single import.
+          if (id.includes('/src/content/road-sign-assets')) return 'signs';
+          if (id.includes('/src/content/road-signs')) return 'signs';
+          if (id.includes('/src/content/road-markings')) return 'signs';
+          if (id.includes('/src/ui/illustrations/RoadSign')) return 'signs';
+          if (id.includes('/src/ui/illustrations/RoadMarking')) return 'signs';
+          if (id.includes('/src/ui/illustrations/signGlyphs')) return 'signs';
+          if (id.includes('/src/ui/illustrations/markingGlyphs')) return 'signs';
+          if (id.includes('/src/ui/illustrations/roadSignAssets')) return 'signs';
           // The question bodies are the single heaviest thing in the app and
           // nothing on the landing page needs them. Leaving them out of the
           // eager 'content' chunk lets them follow the dynamic import in

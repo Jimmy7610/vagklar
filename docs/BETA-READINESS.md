@@ -33,8 +33,17 @@ hitta det som saknas, inte för att se färdig ut.
 
 ## Källbilder
 
-- [x] **63 godkända källbilder** — 52 fotografier och 11 ritningar ur källan —
+- [x] **65 godkända källbilder** — 54 fotografier och 11 ritningar ur källan —
       plus **15 egna ritningar**, och samtliga används av en lektion eller fråga
+- [x] **48 av 58 vägmärken ritas med källans egen bild.** De tio som står kvar
+      på vektor gör det för att koden täcker flera varianter i verkligheten —
+      bokens C31 visar 30 och kan inte illustrera `hastighet-90`
+- [x] Bytet avslöjade tolv fel i märkesbeskrivningarna, bland annat att
+      motorvägsmärkena beskrevs som blå när de är gröna. Alla rättade
+- [x] En verklig svarsläcka rättad: `vag-011` frågade vilken form och färg
+      väjningspliktsmärket har och visade märket. Testad mot återfall
+- [x] Märkena precachas (212 kB) så att provet fungerar offline; fotografierna
+      gör det inte. Kontrollerat med servern stoppad
       (`npm run report:images` → [IMAGE-COVERAGE.md](IMAGE-COVERAGE.md))
 - [x] 25 av 39 kapitel har bildstöd; rapporten redovisar foto, bokritning och
       egen ritning i skilda kolumner, så det syns vilket slag ett kapitel fått

@@ -40,7 +40,11 @@ Tillståndet omfattar både texten och bilderna i källan.
 
 **Bilderna** används däremot direkt, i ett kurerat urval:
 
-- 62 bilder ur källan visas i lektioner och frågor: 51 fotografier och 11 ritningar.
+- 65 bilder ur källan visas i lektioner och frågor: 54 fotografier och 11 ritningar.
+- 48 av de 58 vägmärkena ritas med källans egen märkesbild, hämtad ur
+  märkesbilagan s. 324–361. Se [LICENSED-SIGNS.md](LICENSED-SIGNS.md).
+- Själva vägmärkessystemet är Vägmärkesförordningen (2007:90) och tillhör
+  varken Vägklar eller källan. Vägklar gör inga anspråk på det.
 - Ritningarna krediteras som `Illustration:`, fotografierna som `Foto:`. Att kalla
   en ritning för ett fotografi vore fel både mot läsaren och mot rättighetshavaren.
 - Varje bild visas med kreditering: utgivare, sidnummer, rättighetshavare och

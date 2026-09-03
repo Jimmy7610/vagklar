@@ -9,8 +9,8 @@ Ett foto som ingen lektion tolkar är dekoration oavsett hur rätt det är.
 
 | | Antal |
 | --- | ---: |
-| Godkända källbilder | 63 |
-| Använda av lektion eller fråga | 63 |
+| Godkända källbilder | 65 |
+| Använda av lektion eller fråga | 65 |
 | Oanvända | 0 |
 | Lektioner med källbild | 15 av 19 |
 | Frågor med källbild | 48 av 442 |
@@ -22,9 +22,36 @@ Ett foto som ingen lektion tolkar är dekoration oavsett hur rätt det är.
 
 | Användning | Antal |
 | --- | ---: |
-| `theory-lesson` | 23 |
+| `theory-lesson` | 25 |
 | `question-image` | 40 |
 | `supporting-reference` | 0 |
+
+## Vägmärken
+
+Märkena visas med bokens egen bild där en sådan finns. De som står kvar på
+Vägklars ritning gör det för att koden täcker flera varianter i verkligheten:
+C31 är varje hastighetsgräns, D1 varje påbjuden riktning, T6 varje tidtavla, och
+boken trycker en bild per kod. Bokens C31 visar 30 — den kan inte illustrera
+`hastighet-90`.
+
+| | Antal |
+| --- | ---: |
+| Märken i registret | 58 |
+| Med licensierad bokbild | 48 |
+| Kvar på Vägklars ritning | 10 |
+
+| Märke | Kod | Varför ritning |
+| --- | --- | --- |
+| `hastighet-30` | C31 | koden täcker flera varianter |
+| `hastighet-50` | C31 | koden täcker flera varianter |
+| `hastighet-70` | C31 | koden täcker flera varianter |
+| `hastighet-90` | C31 | koden täcker flera varianter |
+| `hastighet-110` | C31 | koden täcker flera varianter |
+| `pabud-rakt` | D1 | koden täcker flera varianter |
+| `pabud-hoger` | D1 | koden täcker flera varianter |
+| `tavla-tid` | T6 | koden täcker flera varianter |
+| `tavla-tid-lordag` | T6 | koden täcker flera varianter |
+| `tavla-tid-helgdag` | T6 | koden täcker flera varianter |
 
 ## Vägklars egna ritningar
 
@@ -68,8 +95,8 @@ förra, och kolumnerna hålls isär så att den skillnaden syns.
 | --- | --- | ---: | ---: | ---: |
 | Inledning | 6–13 | 3 | 0 | 0 |
 | Körfält | 14–21 | 2 | 0 | 0 |
-| Väjningsregler | 22–45 | 6 | 0 | 0 |
-| Passager | 46–57 | 6 | 0 | 0 |
+| Väjningsregler | 22–45 | 7 | 0 | 0 |
+| Passager | 46–57 | 7 | 0 | 0 |
 | Cirkulationsplats | 58–67 | 2 | 0 | 0 |
 | Stanna & parkera | 68–77 | 3 | 0 | 0 |
 | Landsväg | 78–89 | 4 | 0 | 0 |
@@ -118,6 +145,8 @@ av ett fotografi; ett om sikt, väglag eller samspel blir det nästan alltid.
 
 | Bild | Slag | Delområde | Sida | Lektioner | Frågor |
 | --- | --- | --- | ---: | --- | --- |
+| `korfaltspilar-cirkulation` | foto | Vägmarkeringar | 23 | les-vagmarkeringar | — |
+| `bevakat-overgangsstalle` | foto | Gående och cyklister | 42 | les-passager | — |
 | `vajningslinje-utfart` | foto | Vägmarkeringar | 25 | les-vagmarkeringar | — |
 | `deformationszoner` | ritning | Krocksäkerhet | 232 | les-krockskydd | — |
 | `lastbredd-tillaten` | ritning | Lastning och lastsäkring | 244 | les-last-och-slap | — |
