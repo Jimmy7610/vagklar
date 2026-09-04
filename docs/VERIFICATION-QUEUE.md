@@ -20,9 +20,9 @@ Så här går verifieringen till: [VERIFICATION-WORKFLOW.md](VERIFICATION-WORKFL
 
 | Prioritet | Antal | Vad som står på spel |
 | --- | ---: | --- |
-| P1 | 139 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
-| P2 | 65 | Undantag, villkorade regler och beräkningar. |
-| P3 | 257 | Förklarande kunskap utan rättsligt tal. |
+| P1 | 144 | Rättsliga tal, gränsvärden, intervall och volatila regelområden. |
+| P2 | 62 | Undantag, villkorade regler och beräkningar. |
+| P3 | 255 | Förklarande kunskap utan rättsligt tal. |
 | **Totalt** | **461** | |
 
 ## P1 efter typ
@@ -33,17 +33,17 @@ vad slags kontroll den kräver.
 | Typ | Antal | Betyder |
 | --- | ---: | --- |
 | `P1-NUMERIC` | 94 | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
-| `P1-VOLATILE` | 64 | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| `P1-VOLATILE` | 70 | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | `P1-ADMIN` | 34 | Administrativ regel — besiktning, registrering, försäkring, körkort. |
-| `P1-LAW` | 74 | Bygger på en författningstext som går att slå upp ordagrant. |
-| `P1-SAFETY` | 32 | Fel här kan leda till skada, inte bara till ett felaktigt svar. |
-| `P1-EXCEPTION` | 31 | Ett rättsligt tal som dessutom har undantag; både talet och undantaget måste stämma. |
+| `P1-LAW` | 81 | Bygger på en författningstext som går att slå upp ordagrant. |
+| `P1-SAFETY` | 37 | Fel här kan leda till skada, inte bara till ett felaktigt svar. |
+| `P1-EXCEPTION` | 35 | Ett rättsligt tal som dessutom har undantag; både talet och undantaget måste stämma. |
 
 ## Var arbetet ligger
 
 | Kapitel | P1 |
 | --- | ---: |
-| Alkohol | 14 |
+| Alkohol | 19 |
 | Stanna & parkera | 13 |
 | Indelning av fordon | 12 |
 | Inledning | 11 |
@@ -58,11 +58,11 @@ vad slags kontroll den kräver.
 
 | Grupp som kräver extra omsorg | Antal |
 | --- | ---: |
-| Bär tre eller fler P1-typer | 58 |
-| Rättsligt tal med undantag | 31 |
+| Bär tre eller fler P1-typer | 64 |
+| Rättsligt tal med undantag | 35 |
 | Bildburna P1 (foto eller ritning) | 13 |
 | Beräkningar i P1 | 11 |
-| Utan hänvisning till författning | 65 |
+| Utan hänvisning till författning | 63 |
 
 ## Verifieringar som gått ur takt
 
@@ -77,7 +77,7 @@ rör tal som står i författning och går att slå upp direkt.
 
 | Omgång | Antal |
 | --- | ---: |
-| 01 — Alkohol, droger och läkemedel | 14 |
+| 01 — Alkohol, droger och läkemedel | 19 |
 | 02 — Hastigheter | 8 |
 | 03 — Däck, väglag och vinter | 8 |
 | 04 — Last, släp och vikter | 10 |
@@ -92,7 +92,7 @@ rör tal som står i författning och går att slå upp direkt.
 | 13 — Fordon, miljö och administration | 25 |
 | 14 — Risk, trötthet och olyckor | 19 |
 
-### Omgång 01 — Alkohol, droger och läkemedel · 14 frågor
+### Omgång 01 — Alkohol, droger och läkemedel · 19 frågor
 
 #### `alk-001` · Promillegräns
 
@@ -100,17 +100,17 @@ Vid vilken alkoholhalt i blodet döms man för rattfylleri i Sverige?
 
 **Rätt svar:** 0,2 promille eller mer.
 
-**Förklaring:** Gränsen för rattfylleri går vid 0,2 promille.
+**Förklaring:** Gränsen för rattfylleri går vid 0,2 promille i blodet, eller 0,10 milligram per liter i utandningsluften.
 
 | | |
 | --- | --- |
 | Typ | P1-NUMERIC, P1-VOLATILE, P1-LAW, P1-SAFETY |
 | Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
 | Kapitel · delområde | Alkohol · Gränsvärden och straff |
-| Källa och exakt hänvisning | Lag (1951:649) om straff för vissa trafikbrott |
+| Källa och exakt hänvisning | Lag (1951:649) om straff för vissa trafikbrott 4 § · Polismyndigheten · Körkortslagen (1998:488) 5 kap. 3 och 9 §§ |
 | Status | `reviewed` |
 | Missuppfattning | — |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `ac460d72` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `16e32fa7` |
 
 #### `alk-002` · Grovt rattfylleri
 
@@ -118,17 +118,17 @@ Vad gäller normalt vid 1,0 promille eller mer?
 
 **Rätt svar:** Det räknas som grovt rattfylleri, med fängelse i straffskalan.
 
-**Förklaring:** Från 1,0 promille är brottet grovt. Fängelse ingår i straffskalan.
+**Förklaring:** Från 1,0 promille — eller 0,50 milligram per liter i utandningsluften — är brottet normalt grovt. Fängelse ingår i straffskalan.
 
 | | |
 | --- | --- |
 | Typ | P1-NUMERIC, P1-VOLATILE, P1-LAW, P1-SAFETY |
 | Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
 | Kapitel · delområde | Alkohol · Gränsvärden och straff |
-| Källa och exakt hänvisning | Lag (1951:649) om straff för vissa trafikbrott |
+| Källa och exakt hänvisning | Lag (1951:649) om straff för vissa trafikbrott 4 a § · Polismyndigheten · Körkortslagen (1998:488) 5 kap. 3 § |
 | Status | `reviewed` |
 | Missuppfattning | — |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `70d7d75d` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `0e8ec82d` |
 
 #### `alk-003` · Alkoholens nedbrytning
 
@@ -143,10 +143,10 @@ Vad påskyndar kroppens nedbrytning av alkohol?
 | Typ | P1-VOLATILE, P1-SAFETY |
 | Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | Kapitel · delområde | Alkohol · Effekter på körförmågan |
-| Källa och exakt hänvisning | Medicinsk grundkunskap om alkohol |
+| Källa och exakt hänvisning | 1177 Vårdguiden |
 | Status | `reviewed` |
 | Missuppfattning | Alkohol antas försvinna snabbare |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `5cad8935` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `bf13f11c` |
 
 #### `alk-004` · Dagen efter
 
@@ -158,13 +158,13 @@ Du drack mycket alkohol på kvällen och sov åtta timmar. Vad gäller på morgo
 
 | | |
 | --- | --- |
-| Typ | P1-VOLATILE, P1-SAFETY, P1-EXCEPTION |
+| Typ | P1-VOLATILE, P1-LAW, P1-SAFETY, P1-EXCEPTION |
 | Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | Kapitel · delområde | Alkohol · Effekter på körförmågan |
-| Källa och exakt hänvisning | Medicinsk grundkunskap om alkohol |
+| Källa och exakt hänvisning | 1177 Vårdguiden · Lag (1951:649) om straff för vissa trafikbrott 4 § |
 | Status | `reviewed` |
 | Missuppfattning | Alkohol antas försvinna snabbare |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `af6e207d` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `40a14a07` |
 
 #### `alk-005` · Alkoholens effekt på körförmågan
 
@@ -179,10 +179,46 @@ Vad påverkas först och tydligast av alkohol vid bilkörning?
 | Typ | P1-VOLATILE, P1-SAFETY |
 | Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | Kapitel · delområde | Alkohol · Effekter på körförmågan |
-| Källa och exakt hänvisning | Medicinsk grundkunskap om alkohol |
+| Källa och exakt hänvisning | 1177 Vårdguiden |
 | Status | `reviewed` |
 | Missuppfattning | — |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `229d4b05` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `bef78461` |
+
+#### `alk-006` · Läkemedel och körning
+
+Du har fått ett läkemedel utskrivet som kan göra dig dåsig. Vad gäller?
+
+**Rätt svar:** Du ansvarar själv för att inte köra om läkemedlet påverkar din körförmåga.
+
+**Förklaring:** Receptet fritar dig inte. Påverkar medicinen körförmågan får du inte köra.
+
+| | |
+| --- | --- |
+| Typ | P1-VOLATILE, P1-LAW, P1-SAFETY |
+| Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| Kapitel · delområde | Alkohol · Droger och läkemedel |
+| Källa och exakt hänvisning | Lag (1951:649) om straff för vissa trafikbrott 4 § · Läkemedelsverket |
+| Status | `reviewed` |
+| Missuppfattning | — |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `bfef2f4b` |
+
+#### `alk-007` · Nolltolerans mot narkotika
+
+Vad gäller för narkotika i blodet vid bilkörning?
+
+**Rätt svar:** Nolltolerans — varje spårbar mängd är drograttfylleri.
+
+**Förklaring:** För narkotika finns ingen tillåten nivå. Nolltolerans gäller — med ett undantag för läkemedel du använder enligt ordination.
+
+| | |
+| --- | --- |
+| Typ | P1-VOLATILE, P1-LAW, P1-SAFETY, P1-EXCEPTION |
+| Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| Kapitel · delområde | Alkohol · Droger och läkemedel |
+| Källa och exakt hänvisning | Lag (1951:649) om straff för vissa trafikbrott 4 § · Polismyndigheten |
+| Status | `reviewed` |
+| Missuppfattning | — |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `c82b7760` |
 
 #### `alk-008` · Ansvar för annan förare
 
@@ -194,13 +230,13 @@ Din kompis har druckit och tänker köra hem. Vad gäller för dig?
 
 | | |
 | --- | --- |
-| Typ | P1-VOLATILE, P1-SAFETY, P1-EXCEPTION |
+| Typ | P1-VOLATILE, P1-LAW, P1-SAFETY, P1-EXCEPTION |
 | Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | Kapitel · delområde | Alkohol · Gränsvärden och straff |
-| Källa och exakt hänvisning | Brottsbalken 23 kap. om medverkan |
+| Källa och exakt hänvisning | Brottsbalk (1962:700) 23 kap. 4 § · Lag (1951:649) om straff för vissa trafikbrott 4 § |
 | Status | `reviewed` |
 | Missuppfattning | — |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `01b9ec85` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `3e3052d7` |
 
 #### `grd-006` · Grovt rattfylleri
 
@@ -233,10 +269,10 @@ Vad händer redan vid 0,1–0,4 promille?
 | Typ | P1-NUMERIC, P1-VOLATILE, P1-SAFETY |
 | Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
 | Kapitel · delområde | Alkohol · Effekter på körförmågan |
-| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Promille s. 140 |
+| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Promille s. 140 · 1177 Vårdguiden |
 | Status | `reviewed` |
 | Missuppfattning | Tidig alkoholpåverkan underskattas |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `06005d21` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `d866959a` |
 
 #### `mns-015` · Individuell variation i promillehalt
 
@@ -251,10 +287,10 @@ Två personer dricker exakt lika mycket alkohol. Varför kan de ändå få olika
 | Typ | P1-VOLATILE, P1-SAFETY |
 | Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | Kapitel · delområde | Alkohol · Effekter på körförmågan |
-| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 |
+| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 · 1177 Vårdguiden |
 | Status | `reviewed` |
 | Missuppfattning | Promillehalten antas följa mängden |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `8d014c5f` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `a28eb1c4` |
 
 #### `mns-016` · Dagen efter
 
@@ -269,18 +305,18 @@ Du har druckit mycket kvällen innan men är säker på att alkoholen hunnit gå
 | Typ | P1-NUMERIC, P1-VOLATILE, P1-SAFETY |
 | Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
 | Kapitel · delområde | Alkohol · Effekter på körförmågan |
-| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 |
+| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 · 1177 Vårdguiden |
 | Status | `reviewed` |
 | Missuppfattning | Noll promille tas för återställd |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `966b55a2` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `6a64ab9d` |
 
 #### `mns-017` · Rattfylleri under gränsvärdet
 
 Kan det räknas som rattfylleri om alkoholhalten ligger under 0,2 promille?
 
-**Rätt svar:** Ja, om körningen varit vårdslös på grund av påverkan.
+**Rätt svar:** Ja, om du är så påverkad att du inte kan köra på ett betryggande sätt.
 
-**Förklaring:** Gränsvärdet är en undre gräns för när halten ensam räcker. Vårdslös körning på grund av påverkan kan bedömas som rattfylleri även därunder.
+**Förklaring:** Gränsvärdet säger när halten ensam räcker för fällande dom. Lagen har också en andra väg in: den som är så påverkad att fordonet inte kan föras på ett betryggande sätt döms för rattfylleri oavsett halt.
 
 | | |
 | --- | --- |
@@ -290,7 +326,7 @@ Kan det räknas som rattfylleri om alkoholhalten ligger under 0,2 promille?
 | Källa och exakt hänvisning | Lag (1951:649) om straff för vissa trafikbrott 4 § · Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 |
 | Status | `reviewed` |
 | Missuppfattning | Gränsen för grovt rattfylleri |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `b335ddde` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `65cdd4ca` |
 
 #### `mns-018` · Medhjälp till rattfylleri
 
@@ -302,13 +338,13 @@ Du lånar ut bilen till en vän som du vet har druckit. Vad kan det innebära?
 
 | | |
 | --- | --- |
-| Typ | P1-VOLATILE, P1-ADMIN, P1-SAFETY, P1-EXCEPTION |
+| Typ | P1-VOLATILE, P1-ADMIN, P1-LAW, P1-SAFETY, P1-EXCEPTION |
 | Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | Kapitel · delområde | Alkohol · Gränsvärden och straff |
-| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 |
+| Källa och exakt hänvisning | Brottsbalk (1962:700) 23 kap. 4 § · Lag (1951:649) om straff för vissa trafikbrott 4 § · Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 |
 | Status | `reviewed` |
 | Missuppfattning | Ansvaret antas ligga bara på föraren |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `f683797c` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `1f2c80e8` |
 
 #### `mns-019` · Var rattfyllerilagen gäller
 
@@ -320,13 +356,67 @@ Var gäller rattfyllerilagstiftningen?
 
 | | |
 | --- | --- |
-| Typ | P1-VOLATILE, P1-SAFETY |
+| Typ | P1-VOLATILE, P1-LAW, P1-SAFETY, P1-EXCEPTION |
 | Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
 | Kapitel · delområde | Alkohol · Gränsvärden och straff |
-| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 |
+| Källa och exakt hänvisning | Lag (1951:649) om straff för vissa trafikbrott 4 § · Teoribok — Körkortsboken 2026 för B-körkort Alkoholupplysning s. 141 |
 | Status | `reviewed` |
 | Missuppfattning | Rattfyllerilagens räckvidd begränsas |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `6d9a249d` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `c1769bfc` |
+
+#### `mns-020` · Ansvar för läkemedelspåverkan
+
+Du har fått en medicin utskriven av läkare och känner dig dåsig av den. Vad gäller?
+
+**Rätt svar:** Du får inte köra om du uppträder trafikfarligt — receptet ändrar inte det.
+
+**Förklaring:** Ansvaret att bedöma om ett läkemedel gör dig trafikfarlig är ditt. Bipacksedel, apotek och läkare är hjälpmedel — inte en ansvarsfriskrivning.
+
+| | |
+| --- | --- |
+| Typ | P1-VOLATILE, P1-SAFETY |
+| Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| Kapitel · delområde | Alkohol · Droger och läkemedel |
+| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Läkemedel & mediciner i trafiken s. 141 |
+| Status | `reviewed` |
+| Missuppfattning | Receptet antas fria från ansvar |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `4fd190f0` |
+
+#### `mns-021` · Nolltolerans mot narkotika
+
+Vilken gräns gäller för narkotika i trafiken?
+
+**Rätt svar:** Nolltolerans — inte det minsta spår får finnas.
+
+**Förklaring:** Nolltolerans gäller. Undantaget är narkotikaklassade läkemedel som läkare skrivit ut — och bara om du inte blir trafikfarlig.
+
+| | |
+| --- | --- |
+| Typ | P1-VOLATILE, P1-SAFETY, P1-EXCEPTION |
+| Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| Kapitel · delområde | Alkohol · Droger och läkemedel |
+| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Droger & narkotika i trafiken s. 142 |
+| Status | `reviewed` |
+| Missuppfattning | Gränsen för narkotika i trafiken |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `049c10ce` |
+
+#### `mns-022` · Vakenhetshöjande droger
+
+Varför är vakenhetshöjande droger som amfetamin särskilt farliga i trafiken?
+
+**Rätt svar:** Tröttheten förträngs i stället för att försvinna, så föraren kan somna utan förvarning.
+
+**Förklaring:** Vakenhetshöjande medel ger hyperaktivitet och kraftig överskattning av den egna förmågan. Tröttheten finns kvar under ytan och kommer tillbaka plötsligt.
+
+| | |
+| --- | --- |
+| Typ | P1-VOLATILE, P1-SAFETY, P1-EXCEPTION |
+| Varför i kön | Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan. |
+| Kapitel · delområde | Alkohol · Droger och läkemedel |
+| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Droger & narkotika i trafiken s. 142 |
+| Status | `reviewed` |
+| Missuppfattning | Vakenhetshöjande droger antas motverka trötthet |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `e10a43a7` |
 
 #### `mns-023` · Alkohol kombinerat med läkemedel
 
@@ -338,13 +428,13 @@ Du har tagit en receptfri medicin som varnar för trötthet, och druckit ett gla
 
 | | |
 | --- | --- |
-| Typ | P1-NUMERIC, P1-SAFETY |
+| Typ | P1-NUMERIC, P1-VOLATILE, P1-LAW, P1-SAFETY |
 | Varför i kön | Innehåller ett tal som är rätt eller fel — gräns, mått, intervall. |
 | Kapitel · delområde | Alkohol · Droger och läkemedel |
-| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Läkemedel & mediciner i trafiken s. 141 · Läkemedelsverket |
+| Källa och exakt hänvisning | Teoribok — Körkortsboken 2026 för B-körkort Läkemedel & mediciner i trafiken s. 141 · Läkemedelsverket · Lag (1951:649) om straff för vissa trafikbrott 4 § |
 | Status | `reviewed` |
 | Missuppfattning | Kombinationseffekter underskattas |
-| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `8f09d74f` |
+| Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `d36bfae3` |
 
 ### Omgång 02 — Hastigheter · 8 frågor
 
@@ -2622,7 +2712,7 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | Missuppfattning | Blicktid räknas inte om till sträcka |
 | Att fylla i vid signering | verifiedBy · verifiedAt · verificationSourceIds · verifiedFingerprint `b90a3b33` |
 
-## P2 — 65 frågor
+## P2 — 62 frågor
 
 | Fråga | Delområde | Regel |
 | --- | --- | --- |
@@ -2652,7 +2742,6 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `pas-015` | Cykelpassage och cykelöverfart | Att korsa en cykelbana |
 | `omk-002` | Omkörningsregler | Omkörning till höger |
 | `omk-004` | Förbud mot omkörning | Omkörning före korsning |
-| `alk-007` | Droger och läkemedel | Nolltolerans mot narkotika |
 | `man-006` | Attityd och grupptryck | Grupptryck |
 | `krf-002` | Placering i körfält | Placering i körfältet |
 | `krf-005` | Körfält och sväng | Sväng på enkelriktad väg |
@@ -2684,15 +2773,13 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `grd-008` | Vägens användning | Fri väg för utryckningsfordon |
 | `grd-011` | Gående och cyklister | Väjningsplikt vid obevakat övergångsställe |
 | `mns-008` | Attityd och grupptryck | Positivt grupptryck |
-| `mns-021` | Droger och läkemedel | Nolltolerans mot narkotika |
-| `mns-022` | Droger och läkemedel | Vakenhetshöjande droger |
 | `mns-029` | Barn och oskyddade | Barns riskbedömning |
 | `mrk-008` | Vägmarkeringar | Väjningslinje (M14) |
 | `mrk-011` | Körfält och sväng | Körfältspilar (M19) |
 | `mrk-012` | Körfältsbyte | Bussymbol i körfältet (M28) |
 | `mrk-015` | Vägmarkeringar | Tillfälliga markeringar vid vägarbete |
 
-## P3 — 257 frågor
+## P3 — 255 frågor
 
 | Fråga | Delområde | Regel |
 | --- | --- | --- |
@@ -2790,7 +2877,6 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `ris-005` | Djur på vägen | Viltolycka |
 | `ris-007` | Skymd sikt | Parkerade bilar som risk |
 | `ris-010` | Riskbedömning | Flyktväg |
-| `alk-006` | Droger och läkemedel | Läkemedel och körning |
 | `tro-003` | Trötthet | Trötthetens riskperioder |
 | `tro-004` | Stress och känslor | Stress i trafiken |
 | `tro-006` | Trötthet | Trötthet jämfört med alkohol |
@@ -2925,7 +3011,6 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `mns-011` | Stress och känslor | Följder av hög stress |
 | `mns-012` | Stress och känslor | Att minska stress |
 | `mns-013` | Stress och känslor | Känslor och körning |
-| `mns-020` | Droger och läkemedel | Ansvar för läkemedelspåverkan |
 | `mns-024` | Trötthet | Sömnbrist jämfört med alkohol |
 | `mns-025` | Trötthet | Monotoni som trötthetsorsak |
 | `mns-026` | Trötthet | Trötthetssignaler |
@@ -2950,6 +3035,6 @@ Du tittar ner på navigationen i två sekunder i 90 km/h. Ungefär hur långt k�
 | `mrk-013` | Vägmarkeringar | Markering kontra vägmärke |
 | `mrk-014` | Vägmarkeringar | Ledlinje (M4) |
 | `mrk-016` | Cykelpassage och cykelöverfart | Skilja övergångsställe från cykelpassage i verkligheten |
-| `mrk-017` | Vägmarkeringar | Vad en målad hastighetssiffra gör |
+| `mrk-017` | Vägmarkeringar | Hastighet (M29) |
 | `sym-003` | Anvisningsmärken | Att läsa en tabellvägvisare |
 | `sym-004` | Anvisningsmärken | Vad ett lokaliseringsmärke inte gör |

@@ -1,4 +1,4 @@
-import { buildQuestions, general, no, ok, tbl, teori, trf, tsv, tvk } from './authoring';
+import { buildQuestions, bbk, general, lmv, no, ok, tbl, teori, trf, tsv, tvk, v1177 } from './authoring';
 import type { AuthoredQuestion } from './authoring';
 
 /**
@@ -301,7 +301,7 @@ const seeds: AuthoredQuestion[] = [
       'Den farligaste effekten kommer först: omdömet försämras innan man känner sig berusad, och den egna förmågan överskattas.',
     deep:
       'Vid 0,4–1,0 promille försämras dessutom syn, tal och koordination. Vid 1,0–2,0 blir det svårt att kontrollera kroppen. Men det är den tidiga, omärkliga fasen som gör att någon sätter sig bakom ratten alls.',
-    sources: [teori('Promille', 140)],
+    sources: [teori('Promille', 140), v1177()],
     tags: ['alkohol'],
   },
   {
@@ -322,7 +322,7 @@ const seeds: AuthoredQuestion[] = [
       'Samma mängd ger inte samma promillehalt. Även samma person kan få olika halt vid olika tillfällen, till exempel beroende på matintag.',
     deep:
       'Det gör att egna tumregler av typen "ett glas i timmen" inte går att lita på. Nedbrytningen går dessutom inte att påskynda — bara att vänta ut.',
-    sources: [teori('Alkoholupplysning', 141)],
+    sources: [teori('Alkoholupplysning', 141), v1177()],
     tags: ['alkohol'],
   },
   {
@@ -343,7 +343,7 @@ const seeds: AuthoredQuestion[] = [
       'Noll promille betyder inte återställd. Trötthet och sämre koncentration finns ofta kvar dagen efter.',
     deep:
       'Kombinationen är dessutom vanlig: dålig sömn plus resterande utmattning ger en reaktionsförmåga som liknar den hos en trött förare, utan att något visar sig i ett utandningsprov.',
-    sources: [teori('Alkoholupplysning', 141)],
+    sources: [teori('Alkoholupplysning', 141), v1177()],
     tags: ['alkohol', 'trotthet'],
     related: ['mns-015'],
   },
@@ -356,13 +356,15 @@ const seeds: AuthoredQuestion[] = [
     prompt:
       'Kan det räknas som rattfylleri om alkoholhalten ligger under 0,2 promille?',
     answers: [
-      ok('Ja, om körningen varit vårdslös på grund av påverkan.'),
+      ok('Ja, om du är så påverkad att du inte kan köra på ett betryggande sätt.'),
       no('Nej, gränsvärdet är absolut.', 'rattfylleri-grans'),
       no('Nej, men det kan ge böter för ovarsam körning.', 'rattfylleri-grans'),
       no('Ja, men bara för yrkesförare.', 'rattfylleri-grans'),
     ],
     short:
-      'Gränsvärdet är en undre gräns för när halten ensam räcker. Vårdslös körning på grund av påverkan kan bedömas som rattfylleri även därunder.',
+      'Gränsvärdet säger när halten ensam räcker för fällande dom. Lagen har också en andra väg in: den som är så påverkad att fordonet inte kan föras på ett betryggande sätt döms för rattfylleri oavsett halt.',
+    deep:
+      'Det är två skilda saker som ofta blandas ihop. Rattfylleri handlar om påverkan — antingen mätt som halt, eller bedömd som oförmåga att köra betryggande. Vårdslöshet i trafik är ett eget brott i samma lag och handlar om hur du körde, med eller utan alkohol inblandad. Samma körning kan träffas av båda.',
     sources: [
       tbl('4 §'),
       teori('Alkoholupplysning', 141),
@@ -385,7 +387,9 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Att låna ut bilen till någon du vet är påverkad, eller att bjuda någon som ska köra, kan vara straffbar medhjälp.',
-    sources: [teori('Alkoholupplysning', 141)],
+    deep:
+      'Medverkansansvaret står i brottsbalken och gäller den som främjar gärningen med råd eller dåd. Att lämna över nycklarna till någon du vet har druckit är att möjliggöra körningen.',
+    sources: [bbk('23 kap. 4 §'), tbl('4 §'), teori('Alkoholupplysning', 141)],
     tags: ['alkohol'],
   },
   {
@@ -403,7 +407,9 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Lagen gäller överallt och för alla motordrivna fordon, inte bara bilar och inte bara på allmän väg.',
-    sources: [teori('Alkoholupplysning', 141)],
+    deep:
+      'Paragrafen träffar den som för ett motordrivet fordon eller en spårvagn. Den säger ingenting om var — till skillnad från stora delar av trafikförordningen, som gäller på väg. Därför omfattas också en parkeringsplats, en gårdsplan och ett inhägnat område.',
+    sources: [tbl('4 §'), teori('Alkoholupplysning', 141)],
     tags: ['alkohol'],
   },
 
@@ -485,7 +491,9 @@ const seeds: AuthoredQuestion[] = [
     ],
     short:
       'Kombinationen är svår att förutse och ofta kraftigare än väntat. Varningstexten på förpackningen gäller även vid små mängder alkohol.',
-    sources: [teori('Läkemedel & mediciner i trafiken', 141), general('Läkemedelsverket')],
+    deep:
+      'Varningstriangeln på förpackningen är satt för läkemedlet ensamt. Tillsammans med alkohol kan effekten bli kraftigare än vad någon av dem ger var för sig, och hur mycket kraftigare går inte att räkna ut i förväg.',
+    sources: [teori('Läkemedel & mediciner i trafiken', 141), lmv(), tbl('4 §')],
     tags: ['lakemedel', 'alkohol'],
     related: ['mns-020'],
   },

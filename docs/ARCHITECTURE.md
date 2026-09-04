@@ -117,6 +117,22 @@ först i produktion.
 - Misslyckade skrivningar bryter aldrig sessionen; minnet är sanningen medan appen körs
 - Saknad eller blockerad service worker gör appen sämre, aldrig trasig
 
+## Diagnostik utan telemetri
+
+`domain/diagnostics/` sätter ihop en kort text som en testare kan klistra in i
+en felrapport: appversion, webbläsare, fönsterstorlek, installerad app eller
+flik, uppkopplad eller inte, service worker-läge, lagringsschema och hur mycket
+som ligger sparat.
+
+Modulen ligger i `domain/` av samma skäl som allt annat där: den är en ren
+funktion från indata till en sträng, utan React och utan lagring, och därför
+går utfallet att testa. `diagnostics.test.ts` kontrollerar den producerade
+texten mot vad den inte får innehålla — frågetext, svar, filsökvägar, eller en
+identifierare som binder ihop två rapporter.
+
+Ingenting skickas. Appen har ingen server, och det här passet gav den ingen.
+Texten visas för testaren, som väljer att kopiera den.
+
 ## Källmaterial lämnar aldrig maskinen
 
 Kursplanen är härledd ur ett licensierat källdokument som ligger lokalt i

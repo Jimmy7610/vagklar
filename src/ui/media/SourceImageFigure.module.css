@@ -122,15 +122,18 @@
 
 /* ---- Expand --------------------------------------------------------------
    Small in the corner, out of the way of the picture, but a full 44 px target
-   and keyboard reachable like any other control. */
+   and keyboard reachable like any other control.
+
+   The comment said 44 while the rule said 34, which is the kind of thing that
+   survives because everybody reads the sentence and nobody reads the number. */
 .expand {
   position: absolute;
   right: var(--space-2);
   bottom: var(--space-2);
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
   border-radius: var(--radius-sm);

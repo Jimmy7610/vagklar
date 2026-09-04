@@ -300,3 +300,50 @@ signeringsfält per fråga.
 
 Kvar står det som bara en människa kan göra: expertgranskningen och en riktig
 skärmläsarsession.
+
+
+## Inträdeskrav för extern beta
+
+Uppdaterat 2026-09-04. Kryssen nedan är mätta i det här passet, inte uppskattade.
+
+### Klart
+
+- [x] **Noll fel i innehållsvalideringen** — `npm run report:content`, 461 frågor
+- [x] **Noll felande tester** — 645 tester i 36 filer
+- [x] **Noll fel i sidhänvisningsgranskningen** — `npm run audit:pages`
+- [x] **Inga kända blockerare i provet** — start, återupptagning, inlämning och
+      resultat körda i produktionsbygget
+- [x] **Ingen känd dataförlust** — export, import och återställning testade;
+      utvecklingen ligger lokalt och överlever omladdning
+- [x] **Offline verifierat i webbläsare** — förhandscache 162 poster med 105
+      märkesbilder och noll fotografier, körtidscache fylls först när ett
+      fotografi faktiskt visats
+- [x] **Svarsläckor grindade** — `quizSafeText.test.ts` letar ordagranna fraser
+      ur det rätta svaret i det som läses upp innan man svarat
+- [x] **320 px och 200 % text rent** — ingen horisontell scroll på något av de
+      granskade flödena
+- [x] **Träffytor** — noll kontroller under 44 × 44 på Hem, Träna, Prov,
+      Utveckling, Misstag och Teori, vid 320, 375, 390 och 412 px
+- [x] **P1-flödet igång** — omgång 01 förberedd med granskningsblad,
+      myndighetskontroll och två rättade fel
+- [x] **Overifierat innehåll redovisat** — i appen, i README och i beta-guiden
+
+### Inte klart, och det stoppar inte betan
+
+- [ ] **Ingen fråga är expertverifierad.** 461 har status `reviewed`, 0 har
+      `verified`. Omgång 01 väntar på en människa.
+- [ ] **Ingen skärmläsare har körts.** Protokollen finns
+      ([NVDA](NVDA-TESTING.md), [VoiceOver](VOICEOVER-TESTING.md)); ingen har
+      kört dem.
+- [ ] **Ingen riktig telefon har installerat appen.** Protokollet finns
+      ([REAL-DEVICE-PWA-QA.md](REAL-DEVICE-PWA-QA.md)).
+
+### Vad som stoppar allmän lansering
+
+De tre olösta punkterna ovan, i den ordningen. En extern beta är rätt sätt att
+ta reda på saker; en allmän lansering är ett påstående om att man redan vet dem.
+
+- Expertverifieringen måste ha kommit i gång på riktigt — inte nödvändigtvis
+  hela kön, men P1 ska inte stå på noll.
+- Skärmläsartestet måste vara kört på riktig hårdvara.
+- Installation och offline måste vara prövat på både Android och iOS.

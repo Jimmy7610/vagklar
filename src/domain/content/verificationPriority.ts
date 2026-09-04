@@ -41,6 +41,14 @@ export const LEGAL_NUMBER =
 const VOLATILE_SUBCATEGORIES = new Set([
   'alkohol-gransvarden',
   'alkohol-effekter',
+  // Added after batch 01. The narcotics rule is an absolute set by statute —
+  // nolltolerans, with a carve-out for prescribed use — and the substance
+  // schedules it points at are amended on their own schedule. But it contains
+  // no digit, so LEGAL_NUMBER never fired and five questions about the one
+  // subject in the bank with a zero-tolerance criminal rule sat in P3, below
+  // questions about tyre tread. A legal absolute is not less checkable for
+  // being spelled out in words.
+  'droger-lakemedel',
   'dack-och-bromsar',
   'kontroll-besiktning',
   'registrering',
@@ -90,8 +98,15 @@ export const TAG_MEANING: Record<P1Tag, string> = {
   'P1-VOLATILE': 'Regelområdet ändras på egen hand; svaret kan bli fel utan att någon rör frågan.',
 };
 
-/** Subcategories where a wrong answer is a safety matter, not only an error. */
-const SAFETY_SUBCATEGORIES = new Set([
+/**
+ * Subcategories where a wrong answer is a safety matter, not only an error.
+ *
+ * Exported so a test can assert that every one of them actually reaches P1 on
+ * its own. Being listed here only describes *how* to check a question, never
+ * whether to — and `droger-lakemedel` sat here for months while nothing
+ * promoted it into the queue at all.
+ */
+export const SAFETY_SUBCATEGORY_IDS = [
   'alkohol-gransvarden',
   'alkohol-effekter',
   'droger-lakemedel',
@@ -106,7 +121,9 @@ const SAFETY_SUBCATEGORIES = new Set([
   'vattenplaning',
   'halka',
   'trotthet',
-]);
+] as const;
+
+const SAFETY_SUBCATEGORIES = new Set<string>(SAFETY_SUBCATEGORY_IDS);
 
 /**
  * Subcategories that are paperwork rather than driving.

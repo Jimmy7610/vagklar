@@ -378,8 +378,49 @@ export function validateContent(input: ValidationInput): ValidationReport {
       );
     }
 
-    if (q.status === 'rejected' && !q.reviewNotes) {
-      add('warning', 'rejected-without-reason', q.id, 'Avvisad fråga utan motivering i reviewNotes.');
+    // A review decision that is not an approval still needs an owner.
+    //
+    // The sign-off path has been strict for a while: a verified question must
+    // name its verifier, its date, its sources and the wording that was
+    // checked. The other two decisions had no such requirement, so a rejection
+    // could sit in the bank as an unattributed sentence and a "needs change"
+    // note could sit there forever with nobody to ask about it.
+    if (q.status === 'rejected') {
+      if (!q.reviewNotes || q.reviewNotes.trim().length === 0) {
+        add('error', 'rejected-without-reason', q.id, 'Avvisad fråga utan motivering i reviewNotes.');
+      }
+      if (!q.reviewedBy || q.reviewedBy.trim().length === 0) {
+        add(
+          'error',
+          'rejected-without-reviewer',
+          q.id,
+          'Avvisad fråga utan namngiven granskare i reviewedBy.',
+        );
+      }
+      if (!q.lastReviewedAt) {
+        add('error', 'rejected-without-date', q.id, 'Avvisad fråga utan datum i lastReviewedAt.');
+      }
+    }
+
+    // "Needs change": still reviewed, but somebody has written down what is
+    // wrong with it. The note carries the same requirement.
+    if (q.status !== 'rejected' && q.reviewNotes && q.reviewNotes.trim().length > 0) {
+      if (!q.reviewedBy || q.reviewedBy.trim().length === 0) {
+        add(
+          'error',
+          'review-note-without-reviewer',
+          q.id,
+          'reviewNotes utan namngiven granskare i reviewedBy — en anteckning utan avsändare går inte att följa upp.',
+        );
+      }
+      if (!q.lastReviewedAt) {
+        add(
+          'error',
+          'review-note-without-date',
+          q.id,
+          'reviewNotes utan datum i lastReviewedAt.',
+        );
+      }
     }
 
     /* ---- Source images -------------------------------------------------- */

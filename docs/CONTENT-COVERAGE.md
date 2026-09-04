@@ -29,8 +29,8 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Begrepp med för få (1–2 frågor) | 0 |
 | Begrepp helt utan frågor | 0 |
 | Begrepp utan plats i taxonomin | 0 |
-| Frågor i banken | 458 |
-| Frågor kopplade till ett begrepp | 458 |
+| Frågor i banken | 461 |
+| Frågor kopplade till ett begrepp | 461 |
 | Frågor utan koppling | 0 |
 | Lektioner | 19 |
 | Scenarier | 14 |
@@ -40,11 +40,11 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 
 | Område | Kapitel | Begrepp | Täckta | Andel täckta | Frågor |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Trafikregler | 12 | 79 | 79 | 100 % | 232 |
+| Trafikregler | 12 | 79 | 79 | 100 % | 233 |
 | Människan | 7 | 38 | 38 | 100 % | 86 |
 | Fordon | 15 | 48 | 48 | 100 % | 123 |
 | Miljö | 3 | 5 | 5 | 100 % | 28 |
-| Vägmärken | 1 | 8 | 8 | 100 % | 71 |
+| Vägmärken | 1 | 8 | 8 | 100 % | 73 |
 | Rättsfall | 1 | 1 | 1 | 100 % | 3 |
 
 ## Per kapitel
@@ -54,7 +54,7 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Inledning | Trafikregler | 6–13 | 9 | 9 | 33 | Stark |
 | Körfält | Trafikregler | 14–21 | 7 | 7 | 22 | Stark |
 | Väjningsregler | Trafikregler | 22–45 | 13 | 13 | 31 | Stark |
-| Passager | Trafikregler | 46–57 | 6 | 6 | 25 | Stark |
+| Passager | Trafikregler | 46–57 | 6 | 6 | 26 | Stark |
 | Cirkulationsplats | Trafikregler | 58–67 | 5 | 5 | 16 | Stark |
 | Stanna & parkera | Trafikregler | 68–77 | 6 | 6 | 17 | Stark |
 | Landsväg | Trafikregler | 78–89 | 7 | 7 | 7 | Stark |
@@ -88,7 +88,7 @@ inte att någon har granskat dem, och inte att de är verifierade mot gällande 
 | Miljö | Miljö | 304–311 | 3 | 3 | 6 | Stark |
 | Sparsam körning | Miljö | 312–317 | 1 | 1 | 12 | Stark |
 | Drivmedel | Miljö | 318–323 | 1 | 1 | 10 | Stark |
-| Vägmärken | Vägmärken | 324–361 | 8 | 8 | 71 | Stark |
+| Vägmärken | Vägmärken | 324–361 | 8 | 8 | 73 | Stark |
 | Rättsfall | Rättsfall | 362–367 | 1 | 1 | 3 | Stark |
 
 ## Luckor
@@ -139,25 +139,25 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 
 | Mått | Antal |
 | --- | ---: |
-| Godkända källbilder | 66 |
+| Godkända källbilder | 76 |
 | Kapitel med visuellt stöd | 23 av 39 |
-| Bildbaserade frågor | 48 |
+| Bildbaserade frågor | 51 |
 | Lektioner med bild | 15 av 19 |
 
 | Kapitel | Bilder |
 | --- | ---: |
 | Inledning | 3 |
-| Körfält | 2 |
-| Väjningsregler | 7 |
-| Passager | 7 |
+| Körfält | 3 |
+| Väjningsregler | 9 |
+| Passager | 8 |
 | Cirkulationsplats | 2 |
-| Stanna & parkera | 3 |
+| Stanna & parkera | 5 |
 | Landsväg | 4 |
 | Motorväg & motortrafikled | 3 |
-| Omkörningar | 3 |
+| Omkörningar | 4 |
 | Järnvägskorsningar | 2 |
 | Speciella gator | 1 |
-| Vinter | 2 |
+| Vinter | 3 |
 | Synen | 1 |
 | Barn | 1 |
 | Trafikolyckor | 2 |
@@ -168,7 +168,7 @@ skillnad för förståelsen. Tabellen visar var det visuella stödet finns i dag
 | Längd & bredd | 4 |
 | Last | 3 |
 | Belysning | 5 |
-| Vägmärken | 6 |
+| Vägmärken | 8 |
 
 Kapitel utan visuellt stöd: **16**. De viktigaste att komplettera
 härnäst listas i [SOURCE-IMAGES.md](SOURCE-IMAGES.md).

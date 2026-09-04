@@ -46,8 +46,26 @@ en varning: verifieringsuppgifter på något som inte har status `verified`
 (`signoff-without-verified-status`) är en halvfärdig granskning som annars
 skulle bli liggande.
 
-`reviewNotes` är granskarens anteckning — obligatorisk i praktiken för
-`rejected`, där varningen `rejected-without-reason` annars slår till.
+## Tre beslut, inte ett
+
+En granskare kan komma fram till tre saker, och alla tre kräver en avsändare
+och ett datum. Godkännandet har krävt det länge; de andra två gjorde det inte,
+och en avvisning kunde ligga i banken som en oadresserad mening.
+
+| Beslut | Status | Fält som krävs | Felkod om något saknas |
+| --- | --- | --- | --- |
+| **GODKÄNN** | `verified` | `verifiedBy`, `verifiedAt`, `verificationSourceIds`, `verifiedFingerprint` | `verified-without-verifier`, `verified-without-signoff-date`, `verified-without-sources`, `verified-without-fingerprint` |
+| **AVVISA** | `rejected` | `reviewNotes`, `reviewedBy`, `lastReviewedAt` | `rejected-without-reason`, `rejected-without-reviewer`, `rejected-without-date` |
+| **BEHÖVER ÄNDRAS** | oförändrad (`reviewed`) | `reviewNotes`, `reviewedBy`, `lastReviewedAt` | `review-note-without-reviewer`, `review-note-without-date` |
+
+`reviewedBy` hålls medvetet isär från `verifiedBy`. Det senare är ett påstående
+om att någon kontrollerat innehållet mot namngivna källor och står för det. Att
+avvisa en fråga, eller att be om en ändring, är en annan och svagare handling,
+och att blanda ihop dem skulle låta en avvisning läsas som en verifiering av
+varje kod som bara letar efter ett namn.
+
+Ingenting i det här förvaret får fylla i något av namnen. Det är hela poängen
+med fälten.
 
 ## Kön
 

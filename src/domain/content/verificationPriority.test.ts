@@ -3,7 +3,13 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ALL_QUESTIONS } from '@/content/questions';
 import { SUBCATEGORIES } from '@/content/taxonomy';
-import { BATCHES, batchOfSubcategory, priorityOf, tagsOf } from './verificationPriority';
+import {
+  BATCHES,
+  SAFETY_SUBCATEGORY_IDS,
+  batchOfSubcategory,
+  priorityOf,
+  tagsOf,
+} from './verificationPriority';
 import type { Question } from './types';
 
 /**
@@ -58,6 +64,30 @@ describe('verification priority', () => {
     );
     expect(withStatute.length).toBeGreaterThan(50);
     expect(withStatute.some((q) => priorityOf(q).priority !== 'P1')).toBe(true);
+  });
+
+  it('puts the zero-tolerance drug rule in P1', () => {
+    // It did not, and the reason is worth keeping: P1 membership needs a legal
+    // number, a volatile subject or an administrative rule, and "nolltolerans"
+    // is a legal absolute written entirely in words. The number test never
+    // fired, the subcategory was not listed as volatile, and five questions
+    // about the only zero-tolerance criminal rule in the bank sat in P3.
+    const drugs = ALL_QUESTIONS.filter((q) => q.subcategory === 'droger-lakemedel');
+    expect(drugs.length).toBeGreaterThan(0);
+    for (const q of drugs) {
+      expect(priorityOf(q).priority, q.id).toBe('P1');
+    }
+  });
+
+  it('names only subcategories that exist in the safety list', () => {
+    // Not that every safety subcategory reaches P1 — promoting on safety alone
+    // was measured and rejected, because it put 376 of 442 questions in the
+    // queue. What this catches is the failure that actually happened twice: an
+    // id in a Set that matches nothing, which does not throw and does not warn.
+    // It simply never fires, and the rule silently does not exist.
+    const known = new Set(SUBCATEGORIES.map((s) => s.id));
+    const unknown = SAFETY_SUBCATEGORY_IDS.filter((id) => !known.has(id));
+    expect(unknown, unknown.join(', ')).toEqual([]);
   });
 
   it('only tags questions that are actually in P1', () => {

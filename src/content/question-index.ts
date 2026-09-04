@@ -480,7 +480,7 @@ const ROWS: ReadonlyArray<readonly [string, string, string, number, string, stri
   ['mrk-014', 'vagmarken', 'vagmarkeringar', 2, 'reviewed', "Ledlinje (M4)"],
   ['mrk-015', 'vagmarken', 'vagmarkeringar', 2, 'reviewed', "Tillfälliga markeringar vid vägarbete"],
   ['mrk-016', 'trafikregler', 'cykelpassage-overfart', 3, 'reviewed', "Skilja övergångsställe från cykelpassage i verkligheten"],
-  ['mrk-017', 'vagmarken', 'vagmarkeringar', 2, 'reviewed', "Vad en målad hastighetssiffra gör"],
+  ['mrk-017', 'vagmarken', 'vagmarkeringar', 2, 'reviewed', "Hastighet (M29)"],
   ['sym-001', 'parkering', 'parkeringsforbud', 2, 'reviewed', "Fordonssymbol som avgränsar ett förbud"],
   ['sym-002', 'last', 'slapvagn', 3, 'reviewed', "Symboltavla med släpkärra"],
   ['sym-003', 'vagmarken', 'anvisningsmarken', 2, 'reviewed', "Att läsa en tabellvägvisare"],

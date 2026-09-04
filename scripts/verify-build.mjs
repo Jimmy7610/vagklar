@@ -52,6 +52,11 @@ const DEV_ONLY_ARTEFACTS = [
   'granskningsanteckningar',
   '.page-text.json',
   'VERIFICATION-QUEUE',
+  // The review worksheets carry a reviewer's own notes and decision boxes.
+  // They are for a person with the repository open, never for the shipped app.
+  'BATCH-01-ALKOHOL',
+  'BATCH-01-CROSS-CHECK',
+  'Granskningsblad',
 ];
 
 /** Files the build must produce for GitHub Pages to work. */

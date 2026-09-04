@@ -41,6 +41,10 @@ Tillståndet omfattar både texten och bilderna i källan.
 **Bilderna** används däremot direkt, i ett kurerat urval:
 
 - 65 bilder ur källan visas i lektioner och frågor: 54 fotografier och 11 ritningar.
+- Fyra myndighets- och författningskällor tillkom när omgång 01 kontrollerades:
+  brottsbalken, Polismyndigheten, 1177 Vårdguiden och Läkemedelsverket. Alla
+  fyra är offentlig information eller offentlig rätt och används som
+  hänvisning, aldrig som återgivet innehåll.
 - 105 av de 115 vägmärkena ritas med källans egen märkesbild, hämtad ur
   märkesbilagan s. 324–361. Även märkenas namn är bokens egna, lästa ur
   bildtexterna. Se [LICENSED-SIGNS.md](LICENSED-SIGNS.md).

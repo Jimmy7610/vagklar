@@ -143,8 +143,27 @@ export interface Question {
    * answer against the book that is now cited.
    */
   verifiedAgainstEditions?: Record<string, string>;
-  /** Reviewer's note: why it was rejected, or what still needs checking. */
+  /**
+   * Reviewer's note: why it was rejected, or what still needs checking.
+   *
+   * This is the record of the two decisions that are not an approval. A
+   * reviewer who reads a question and wants it changed leaves the status at
+   * `reviewed` and writes here; one who rejects it sets `rejected` and writes
+   * here. Either way the note needs an owner and a date — an unsigned "needs
+   * work" is a message from nobody, and six months later nobody knows whether
+   * it was acted on.
+   */
   reviewNotes?: string;
+  /**
+   * Who made a review decision short of approval, and when.
+   *
+   * Kept apart from `verifiedBy` on purpose: that field is a claim that
+   * somebody checked the content against named sources and stands behind it.
+   * Rejecting a question, or asking for a change, is a different and weaker
+   * act, and blurring the two would let a rejection read as a verification in
+   * any code that only looks for a name.
+   */
+  reviewedBy?: string | null;
   image?: QuestionImage;
   /**
    * Id in the source-image registry (src/content/source-images.ts). Used when

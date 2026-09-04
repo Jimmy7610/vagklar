@@ -208,7 +208,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 var(--space-3);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
@@ -324,15 +324,25 @@
   color: var(--color-text-secondary);
 }
 
+/*
+ * The cell is the minimum, and auto-fill decides how many fit.
+ *
+ * At 34 px the grid packed eight columns into a 375 px sheet and the cells came
+ * out 38 — under a thumb, and the numbers sit next to each other with 6 px
+ * between them. Raising the minimum to 44 does not make the sheet wider; it
+ * makes auto-fill drop to six columns at 375 px and five at 320, and the cells
+ * land around 50. Seventy questions then take twelve rows instead of nine,
+ * inside a sheet that already scrolls.
+ */
 .navigatorGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
   gap: 6px;
 }
 
 .navCell {
   aspect-ratio: 1;
-  min-height: 34px;
+  min-height: 44px;
   border-radius: var(--radius-xs);
   border: 1px solid var(--color-border);
   background-color: var(--color-surface);

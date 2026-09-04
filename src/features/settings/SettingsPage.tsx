@@ -13,7 +13,8 @@ import { useLearner, useLearnerActions, useLearnerState } from '@/app/state/useL
 import { useUi } from '@/app/state/UiProvider';
 import { backupFilename, createBackup, parseBackup, serialiseBackup } from '@/storage/backup';
 import type { ImportSummary } from '@/storage/backup';
-import { APP_VERSION } from '@/domain/constants';
+import { APP_VERSION, SCHEMA_VERSION } from '@/domain/constants';
+import { collectDiagnostics, formatDiagnostics } from '@/domain/diagnostics/diagnostics';
 
 const THEME_OPTIONS = [
   { value: 'light' as const, label: 'Ljust', icon: 'sun' as const },
@@ -47,10 +48,44 @@ const CONFIDENCE_OPTIONS = [
  */
 export default function SettingsPage() {
   const learner = useLearner();
+  const [showDiagnostics, setShowDiagnostics] = useState(false);
+  const [copiedDiagnostics, setCopiedDiagnostics] = useState(false);
   const { mode } = useLearnerState();
   const actions = useLearnerActions();
   const { toast } = useUi();
   const fileInput = useRef<HTMLInputElement>(null);
+
+  const diagnosticsText = () =>
+    formatDiagnostics(
+      collectDiagnostics({
+        answers: learner.answers.length,
+        exams: learner.exams.length,
+        sessions: learner.sessions.length,
+        masteryAreas: Object.keys(learner.mastery).length,
+        route: window.location.hash || '#/',
+        storageVersion: SCHEMA_VERSION,
+      }),
+    );
+
+  /**
+   * Copy, with a fallback.
+   *
+   * `navigator.clipboard` needs a secure context and a permission that Safari
+   * does not always grant from a click handler. When it refuses, the text is
+   * shown instead — the tester can still select it, which is what they would
+   * have done anyway.
+   */
+  const copyDiagnostics = async () => {
+    const text = diagnosticsText();
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedDiagnostics(true);
+      window.setTimeout(() => setCopiedDiagnostics(false), 2500);
+    } catch {
+      setShowDiagnostics(true);
+      toast('Kunde inte kopiera automatiskt — texten visas nedanför.');
+    }
+  };
 
   const [resetOpen, setResetOpen] = useState(false);
   const [resetConfirmText, setResetConfirmText] = useState('');
@@ -284,6 +319,61 @@ export default function SettingsPage() {
             <span>{learner.exams.length} prov</span>
             <span>{learner.sessions.length} pass</span>
           </div>
+        </div>
+      </section>
+
+      {/* ---- Diagnostics ------------------------------------------------
+          For a beta report. Nothing is sent anywhere — the text is shown
+          first and copied by the tester, who can read exactly what they are
+          about to paste. */}
+      <section aria-labelledby="diagnostics-heading">
+        <SectionHeading title="Teknisk information" id="diagnostics-heading" level={3} />
+        <div className={page.panel} style={{ display: 'grid', gap: 'var(--space-4)' }}>
+          <p style={{ fontSize: 'var(--text-small)', color: 'var(--color-text-secondary)' }}>
+            Rapporterar du ett fel hjälper det att bifoga det här. Det innehåller
+            appversion, webbläsare, fönsterstorlek och hur mycket som finns sparat —
+            aldrig dina svar, och ingenting skickas någonstans automatiskt.
+          </p>
+
+          <div className={page.actions}>
+            <Button
+              icon={copiedDiagnostics ? 'check' : 'share'}
+              variant="secondary"
+              onClick={() => void copyDiagnostics()}
+            >
+              {copiedDiagnostics ? 'Kopierad' : 'Kopiera teknisk information'}
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => setShowDiagnostics((open) => !open)}
+              aria-expanded={showDiagnostics}
+            >
+              {showDiagnostics ? 'Dölj' : 'Visa vad som kopieras'}
+            </Button>
+          </div>
+
+          {showDiagnostics && (
+            <pre
+              style={{
+                margin: 0,
+                padding: 'var(--space-3)',
+                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-surface-sunken)',
+                fontSize: 'var(--text-caption)',
+                lineHeight: 'var(--leading-relaxed)',
+                whiteSpace: 'pre-wrap',
+                overflowWrap: 'anywhere',
+              }}
+            >
+              {diagnosticsText()}
+            </pre>
+          )}
+
+          {/* Announced, because a copy that happened silently is a copy the
+              learner tries again. */}
+          <p aria-live="polite" className="visually-hidden">
+            {copiedDiagnostics ? 'Teknisk information kopierad.' : ''}
+          </p>
         </div>
       </section>
 

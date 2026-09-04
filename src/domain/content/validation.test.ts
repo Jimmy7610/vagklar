@@ -491,3 +491,103 @@ describe('verification goes stale', () => {
     expect(ALL_QUESTIONS.filter((q) => q.status === 'verified')).toHaveLength(0);
   });
 });
+
+/**
+ * The three decisions a reviewer can make.
+ *
+ * Approval already had teeth: a verified question must name who signed it,
+ * when, against which sources, and the exact wording they read. The other two
+ * decisions had none. A rejection could sit in the bank as an unattributed
+ * sentence, and a "needs change" note could sit there indefinitely with nobody
+ * to ask about it — which is how a review queue quietly turns into a list of
+ * complaints from nobody.
+ *
+ * So all three now carry an owner and a date. The difference between them is
+ * what changes: approval sets `verified` and a fingerprint, rejection sets
+ * `rejected`, and needs-change leaves the status alone and only writes a note.
+ */
+describe('reviewer decisions', () => {
+  const codesFor = (q: Question) => validateContent(baseInput([q])).issues.map((i) => i.code);
+  const base = ALL_QUESTIONS.find((q) => q.sourceReferences.length > 0)!;
+
+  describe('REJECT', () => {
+    const rejected: Question = {
+      ...base,
+      status: 'rejected',
+      reviewNotes: 'Gränsvärdet stämmer inte med 4 § efter ändringen.',
+      reviewedBy: 'ANONYM_TESTGRANSKARE',
+      lastReviewedAt: '2026-09-04',
+    };
+
+    it('accepts a rejection with reason, reviewer and date', () => {
+      const codes = codesFor(rejected);
+      expect(codes).not.toContain('rejected-without-reason');
+      expect(codes).not.toContain('rejected-without-reviewer');
+      expect(codes).not.toContain('rejected-without-date');
+    });
+
+    it('refuses a rejection with no reason', () => {
+      const { reviewNotes: _drop, ...rest } = rejected;
+      expect(codesFor(rest as Question)).toContain('rejected-without-reason');
+    });
+
+    it('refuses a rejection nobody signed', () => {
+      const { reviewedBy: _drop, ...rest } = rejected;
+      expect(codesFor(rest as Question)).toContain('rejected-without-reviewer');
+    });
+
+    it('refuses a rejection with no date', () => {
+      expect(codesFor({ ...rejected, lastReviewedAt: null })).toContain('rejected-without-date');
+    });
+  });
+
+  describe('NEEDS CHANGE', () => {
+    const flagged: Question = {
+      ...base,
+      status: 'reviewed',
+      reviewNotes: 'Formuleringen "alltid" behöver mjukas upp.',
+      reviewedBy: 'ANONYM_TESTGRANSKARE',
+      lastReviewedAt: '2026-09-04',
+    };
+
+    it('keeps the question reviewed rather than promoting or rejecting it', () => {
+      expect(flagged.status).toBe('reviewed');
+      const codes = codesFor(flagged);
+      expect(codes).not.toContain('review-note-without-reviewer');
+      expect(codes).not.toContain('review-note-without-date');
+    });
+
+    it('refuses a note from nobody', () => {
+      const { reviewedBy: _drop, ...rest } = flagged;
+      expect(codesFor(rest as Question)).toContain('review-note-without-reviewer');
+    });
+
+    it('refuses a note with no date', () => {
+      expect(codesFor({ ...flagged, lastReviewedAt: null })).toContain('review-note-without-date');
+    });
+
+    it('leaves a question with no note alone', () => {
+      // 461 questions are reviewed and carry no note. Requiring a reviewer on
+      // all of them would make the rule unusable, so it fires on the note.
+      const codes = codesFor(base);
+      expect(codes).not.toContain('review-note-without-reviewer');
+      expect(codes).not.toContain('review-note-without-date');
+    });
+  });
+
+  describe('APPROVE', () => {
+    it('cannot be reached by adding a name alone', () => {
+      // Every one of these is required. A partial sign-off is not a weaker
+      // approval — it is an approval that cannot be audited.
+      const half: Question = {
+        ...base,
+        status: 'verified',
+        verifiedBy: 'ANONYM_TESTGRANSKARE',
+      };
+      const codes = codesFor(half);
+      expect(codes).toContain('verified-without-signoff-date');
+      expect(codes).toContain('verified-without-sources');
+      expect(codes).toContain('verified-without-fingerprint');
+    });
+  });
+});

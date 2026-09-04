@@ -37,6 +37,7 @@ npm run dev
 | `npm run generate:index` | Genererar om `src/content/question-index.ts` efter bankändringar |
 | `npm run report:verification` | Bygger verifieringskön och det lokala granskningsverktyget |
 | `npm run report:signs` | Skriver docs/SIGN-LIBRARY.md — serier, bildkällor, varianter, trafikfoton |
+| `npm run worksheet -- 01` | Skriver ett granskningsblad för en P1-omgång till docs/review/ |
 | `npm run report:images` | Skriver `docs/IMAGE-COVERAGE.md` — var källbilderna sitter och var de saknas |
 | `python scripts/review-source-images.py` | Kontaktkarta över bildkandidaterna, att välja ur |
 | `npm run report:visuals` | Ritar alla märken och markeringar förstorade för visuell granskning |
@@ -174,6 +175,26 @@ människa. Kön över vad som bör kontrolleras först finns i
 
 Sidhänvisningarna är maskinellt granskade mot den faktiska texten på de citerade
 sidorna — se [docs/SOURCE-PAGE-AUDIT.md](docs/SOURCE-PAGE-AUDIT.md).
+
+Den första granskningsomgången — alkohol, droger och läkemedel, 19 frågor — är
+förberedd för en människa: varje påstående är kontrollerat mot trafikbrottslagen,
+körkortslagen, brottsbalken, Polismyndigheten, Trafikverket och 1177, och
+underlaget ligger i [docs/review/](docs/review/). Kontrollen hittade två fel som
+är rättade. **Den gjorde ingen fråga verifierad** — att en författningstext
+stämmer med ett svar är ett argument för att godkänna det, inte ett godkännande.
+
+### Vad som ännu inte är gjort
+
+Tre saker, och de står här för att de annars låter gjorda:
+
+- **Ingen fråga är expertverifierad.** 461 `reviewed`, 0 `verified`.
+- **Ingen skärmläsare har körts på appen.** Strukturen är byggd för det och
+  kontrolleras automatiskt, men protokollen i
+  [docs/NVDA-TESTING.md](docs/NVDA-TESTING.md) och
+  [docs/VOICEOVER-TESTING.md](docs/VOICEOVER-TESTING.md) är oanvända.
+- **Ingen har installerat appen på en riktig telefon.** Bygget kontrolleras,
+  men installationsdialogen, hemskärmsikonen och ett riktigt flygplansläge är
+  oprövade — se [docs/REAL-DEVICE-PWA-QA.md](docs/REAL-DEVICE-PWA-QA.md).
 
 ### Kursplan och täckning
 

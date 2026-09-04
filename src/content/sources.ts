@@ -89,7 +89,7 @@ export const SOURCES: SourceEntry[] = [
     kind: 'regulation',
     title: 'Körkortslagen (1998:488)',
     publisher: 'Sveriges riksdag',
-    url: 'https://www.riksdagen.se',
+    url: 'https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/korkortslag-1998488_sfs-1998-488/',
     permission: 'public-legal',
     attribution: 'Körkortslagen (1998:488)',
   },
@@ -98,7 +98,7 @@ export const SOURCES: SourceEntry[] = [
     kind: 'regulation',
     title: 'Lag (1951:649) om straff för vissa trafikbrott',
     publisher: 'Sveriges riksdag',
-    url: 'https://www.riksdagen.se',
+    url: 'https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1951649-om-straff-for-vissa-trafikbrott_sfs-1951-649/',
     permission: 'public-legal',
     attribution: 'Lag (1951:649) om straff för vissa trafikbrott',
   },
@@ -126,6 +126,55 @@ export const SOURCES: SourceEntry[] = [
     usageNote:
       'Road authority and examiner. Cited for road-safety guidance and the theory ' +
       'test format. Vägklar is not affiliated with Trafikverket.',
+  },
+  {
+    id: 'brottsbalken',
+    kind: 'regulation',
+    title: 'Brottsbalk (1962:700)',
+    publisher: 'Sveriges riksdag',
+    url: 'https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/brottsbalk-1962700_sfs-1962-700/',
+    permission: 'public-legal',
+    attribution: 'Brottsbalk (1962:700)',
+    usageNote:
+      'Cited for 23 kap. om medverkan — the chapter that makes handing the keys to '
+      + 'an intoxicated driver punishable. Rattfylleri itself lives in trafikbrottslagen.',
+  },
+  {
+    id: 'polisen',
+    kind: 'authority',
+    title: 'Polismyndigheten',
+    publisher: 'Polismyndigheten',
+    url: 'https://polisen.se/lagar-och-regler/trafik-och-fordon/ratt--och-sjofylleri/',
+    permission: 'public-legal',
+    attribution: 'Polismyndigheten',
+    usageNote:
+      'Enforcing authority. Cited for the breath-alcohol limits as they are actually '
+      + 'measured at the roadside, and for how a sobriety check is carried out.',
+  },
+  {
+    id: 'vardguiden-1177',
+    kind: 'authority',
+    title: '1177 Vårdguiden',
+    publisher: 'Sveriges regioner i samverkan',
+    url: 'https://www.1177.se/liv--halsa/tobak-och-alkohol/alkohol/sa-paverkas-kroppen-av-alkohol/',
+    permission: 'public-legal',
+    attribution: '1177 Vårdguiden',
+    usageNote:
+      'The regions\' joint health information service. Cited for how the body handles '
+      + 'alcohol — a medical question, not a legal one, and one the traffic authorities '
+      + 'do not answer. Statements sourced here are guidance, never statute.',
+  },
+  {
+    id: 'lakemedelsverket',
+    kind: 'authority',
+    title: 'Läkemedelsverket',
+    publisher: 'Läkemedelsverket',
+    url: 'https://www.lakemedelsverket.se',
+    permission: 'public-legal',
+    attribution: 'Läkemedelsverket',
+    usageNote:
+      'Medicines agency. Cited for the warning triangle on packaging and for how '
+      + 'medicines interact with alcohol.',
   },
   {
     id: 'vagklar-original',

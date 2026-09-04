@@ -101,6 +101,42 @@ export function tsv(reference: string): SourceReference {
   return { name: 'Transportstyrelsen', reference, verifiedAt: null, sourceId: 'transportstyrelsen' };
 }
 
+/** Körkortslagen (1998:488) — licence withdrawal, warnings and probation. */
+export function kkl(reference?: string): SourceReference {
+  return {
+    name: 'Körkortslagen (1998:488)',
+    reference,
+    verifiedAt: null,
+    sourceId: 'korkortslagen',
+  };
+}
+
+/** Brottsbalken — cited for 23 kap. om medverkan, not for traffic offences. */
+export function bbk(reference?: string): SourceReference {
+  return { name: 'Brottsbalk (1962:700)', reference, verifiedAt: null, sourceId: 'brottsbalken' };
+}
+
+/** Polismyndigheten — enforcement practice and the limits as measured. */
+export function pol(reference?: string): SourceReference {
+  return { name: 'Polismyndigheten', reference, verifiedAt: null, sourceId: 'polisen' };
+}
+
+/**
+ * 1177 Vårdguiden — how the body handles alcohol and medicines.
+ *
+ * Deliberately separate from the statute helpers. What 1177 supports is medical
+ * guidance, and a reader of the sources list should be able to see at a glance
+ * that a claim rests on health information rather than on law.
+ */
+export function v1177(reference?: string): SourceReference {
+  return { name: '1177 Vårdguiden', reference, verifiedAt: null, sourceId: 'vardguiden-1177' };
+}
+
+/** Läkemedelsverket — packaging warnings and interactions. */
+export function lmv(reference?: string): SourceReference {
+  return { name: 'Läkemedelsverket', reference, verifiedAt: null, sourceId: 'lakemedelsverket' };
+}
+
 export interface AuthoredQuestion {
   id: string;
   category: CategoryId;

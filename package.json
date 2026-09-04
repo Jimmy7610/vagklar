@@ -21,7 +21,8 @@
     "report:verification": "vite-node scripts/verification-report.ts",
     "report:visuals": "vite-node scripts/visual-qa-sheet.ts",
     "report:images": "vite-node scripts/image-report.ts",
-    "report:signs": "vite-node scripts/sign-report.ts"
+    "report:signs": "vite-node scripts/sign-report.ts",
+    "worksheet": "vite-node scripts/batch-worksheet.ts"
   },
   "dependencies": {
     "react": "^19.2.0",

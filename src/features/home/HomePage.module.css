@@ -77,8 +77,19 @@
 .readinessMeta {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-2);
   justify-content: inherit;
+}
+
+/* "Hur räknas det?" stands on its own rather than inside a sentence, so the
+   exemption for inline links does not cover it. The padding grows the target
+   without moving the text, which sits under the readiness figure. */
+.readinessMeta a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-block: -12px;
 }
 
 .readinessNote {

@@ -335,7 +335,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Det känns fel att köra över en heldragen vit linje, och det är just den känslan omledningen kräver att du går emot. Ordningen är densamma som för märken: det tillfälliga slår det permanenta, eftersom det tillfälliga är det som känner till hålet i vägen.',
     memory: 'Gult ovanpå vitt: glöm det vita.',
-    sources: [vmf('3 kap.'), trf('1 kap. 4 §'), teori('Vägmarkeringar', 5)],
+    sources: [vmf('3 kap.'), trf('2 kap. 3 §'), teori('Vägarbeten', 82)],
     tags: ['vagmarkering', 'vagarbete', 'bild'],
     related: ['mrk-005'],
   },
@@ -360,7 +360,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Att de två markeringarna ligger några meter isär i samma korsning är hela svårigheten. Vid banden har den gående företräde när hen gått ut. Vid rutorna finns ingen sådan regel — men det finns människor på cykel som rör sig fortare än en gående och kommer in i bilden senare. Skillnaden i regel är alltså inte en skillnad i hur mycket du behöver titta.',
     memory: 'Band: gående har företräde. Rutor: sänk farten, men ingen väjningsplikt.',
-    sources: [trf('3 kap. 61 §'), vmf('3 kap. M16'), teori('Cykelpassage och cykelöverfart', 45)],
+    sources: [trf('3 kap. 61 §'), vmf('3 kap. M16'), teori('Cykelpassage', 51)],
     tags: ['vagmarkering', 'cykel', 'bild'],
     related: ['mrk-010'],
   },
@@ -369,7 +369,7 @@ const seeds: AuthoredQuestion[] = [
     category: 'vagmarken',
     subcategory: 'vagmarkeringar',
     difficulty: 2,
-    ruleTested: 'Vad en målad hastighetssiffra gör',
+    ruleTested: 'Hastighet (M29)',
     prompt: 'Siffran 30 är målad i körbanan framför dig. Vad betyder det för hastighetsgränsen?',
     sourceImageId: 'malad-skola-30',
     type: 'image-scenario',
@@ -384,7 +384,7 @@ const seeds: AuthoredQuestion[] = [
     deep:
       'Markeringen målas där någon har bedömt att gränsen behöver upprepas — utanför en skola, före en passage, i en långsträckt kurva. Att den finns är alltså i sig en upplysning: någon har räknat med att förare glömmer bort sig just här. Ordet som är målat bredvid siffran säger varför.',
     memory: 'Målad siffra: en påminnelse, inte en ny gräns.',
-    sources: [vmf('3 kap. M29'), teori('Vägmarkeringar', 167)],
+    sources: [vmf('3 kap. M29'), teori('Symboler i körbanan', 352)],
     tags: ['vagmarkering', 'hastighet', 'bild'],
     related: ['mrk-013'],
   },

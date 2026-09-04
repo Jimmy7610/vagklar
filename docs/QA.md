@@ -1637,3 +1637,157 @@ ingen av dem liknar något annat i registret tillräckligt för att påståendet
 skulle vara sant.
 
 Ingen fråga har markerats som verifierad. Alla 461 har status `reviewed`.
+
+
+## P1-omgång 01 och förberedelse för test på riktig enhet (2026-09-04)
+
+Två saker i det här passet: den första granskningsomgången arbetad ordentligt,
+och det som krävs för att en extern beta ska säga något — testprotokoll,
+träffytor och en diagnostikutskrift.
+
+**Ingen fråga blev verifierad.** 461 har status `reviewed`, 0 har `verified`,
+och det ändras inte förrän en människa signerar. Att kontrollera ett svar mot
+en författningstext är underlag, inte godkännande.
+
+### Vad kontrollen hittade
+
+Omgång 01 är alkohol, droger och läkemedel. Varje påstående slogs upp mot
+trafikbrottslagen 4 § och 4 a §, körkortslagen 5 kap., brottsbalken 23 kap.,
+Polismyndigheten, Trafikverket och 1177. Underlaget står i
+[docs/review/BATCH-01-CROSS-CHECK.md](review/BATCH-01-CROSS-CHECK.md).
+
+**`mns-017` blandade ihop två brott.** Det rätta svaret löd "Ja, om körningen
+varit vårdslös på grund av påverkan". Vårdslöshet i trafik är ett eget brott i
+1 § och handlar om hur någon körde. Vad 4 § faktiskt säger är att den som är
+*så påverkad att fordonet inte kan föras på ett betryggande sätt* döms för
+rattfylleri — en bedömning av påverkan, inte av körsättet. En förare kan vara
+rattfull utan att ha kört vårdslöst.
+
+**`alk-001` påstod ett "alltid" som lagen inte ställer upp.** Fördjupningen sa
+att körkortet "återkallas i praktiken alltid". Körkortslagen 5 kap. 9 § tillåter
+varning i stället för återkallelse under 0,5 promille om särskilda skäl finns —
+och det undantaget träffar precis den grupp frågan handlar om, den som ligger
+strax över gränsen.
+
+Sju frågor fick källor som går att öppna. Tre av dem hänvisade till "Medicinsk
+grundkunskap om alkohol", vilket namnger ingenting; fyra rättsliga påståenden
+hade bara teoriboken som stöd, vilket inte duger för ett gränsvärde. Alla har nu
+en författning eller en myndighet med länk.
+
+### Ett hål i själva kön
+
+`droger-lakemedel` var listat som säkerhetskritiskt men saknades bland de
+delområden som *befordrar* en fråga till P1. Befordran kräver ett rättsligt tal,
+ett föränderligt delområde eller en administrativ regel — och "nolltolerans" är
+en rättslig absolut som är skriven helt i ord. Talregeln träffade aldrig, och
+fem frågor om bankens enda nolltoleransbrott låg i P3, under frågor om
+mönsterdjup.
+
+Det är samma sorts fel som filen redan varnar för i en kommentar: ett id i en
+mängd som inte matchar något kastar inget fel, det slutar bara gälla. P1 gick
+från 139 till 144, och omgång 01 från 14 till 19 frågor.
+
+### Sidhänvisningar: tre fel till noll
+
+De tre frågor som lades till i förra passet hänvisade till den sida fotografiet
+kom från. Alla tre sidorna är kapitelavdelare som inte bär någon regel.
+`npm run audit:pages` gick från 3 fel till 0.
+
+### Träffytor
+
+Mätt i webbläsaren vid 320, 375, 390 och 412 px, före och efter.
+
+| Kontroll | Före | Efter |
+| --- | --- | --- |
+| Provets frågeöversikt, 70 celler | 38 × 38 | 45 × 45 vid 375 px, 44 × 44 vid 320 |
+| Segmenterad väljare (tema, textstorlek, passlängd, flikar) | 36 | 44 |
+| Ark- och dialogstängning | 36 × 36 | 44 × 44 |
+| "Markera" i provet | 98 × 36 | 98 × 44 |
+| "Lämna in" i provhuvudet | 94 × 36 | 44 hög |
+| Förstora-knapp på ett fotografi | 34 × 34 | 44 × 44 |
+| "Hur räknas det?", "Se utveckling" | 20–23 hög | 44 hög |
+
+Frågeöversikten är den intressanta. Rutnätet är `repeat(auto-fill, minmax(…))`,
+så att höja minimum gör inte arket bredare — det får auto-fill att lägga färre
+kolumner. Åtta kolumner vid 375 px blev sex, och fem vid 320 px. Sjuttio frågor
+tar tolv rader i stället för nio, i ett ark som redan rullar. Inget spiller över
+vid 320 px, inte heller vid 200 % text.
+
+Kommentaren över förstora-knappen lovade "a full 44 px target" medan regeln sa
+34. Den sortens motsägelse överlever för att alla läser meningen och ingen läser
+siffran; numret är nu det som testet påstår.
+
+Kvar under 44: två dolda kryssrutor vars synliga etikett är 337 × 81, en dold
+filväljare som drivs av en synlig knapp, och sidomenyns logotyp — som ligger i
+en behållare utan storlek på telefon och bara finns på skrivbordet.
+
+### Diagnostikutskrift
+
+`Inställningar → Teknisk information` kopierar en kort text: appversion,
+webbläsare, fönster, installerad eller flik, uppkopplad eller inte,
+service worker-läge, lagringsschema och hur mycket som finns sparat.
+
+Ingenting skickas någonstans. Texten visas innan den kopieras, och
+`diagnostics.test.ts` kontrollerar utfallet mot en lista: ingen frågetext, inget
+svar, ingen filsökväg, ingen identifierare som binder två rapporter till samma
+person. En kommentar som lovar det vore värd noll.
+
+De tre uppgifter som annars kostar en extra runda i varje felrapport —
+webbläsare, installerad eller flik, online eller offline — står alla i texten.
+
+### Offline, mätt igen på produktionsbygget
+
+| | |
+| --- | --- |
+| Förhandscache | 162 poster |
+| Märkesbilder i förhandscachen | 105 |
+| Fotografier i förhandscachen | 0 |
+| Körtidscache efter att ha öppnat en lektion | 7 fotografier |
+
+Precis som avsett: märkena följer med installationen, fotografierna hämtas när
+de visas. Att appen *startar* offline på en telefon är fortfarande oprövat.
+
+### Reflow och 200 % text
+
+| Läge | Resultat |
+| --- | --- |
+| 320, 375, 390, 412 px | Ingen horisontell scroll |
+| 320, 375, 390 px @ 200 % text | Ingen |
+| Provets frågeöversikt @ 200 %, 320 px | 5 kolumner, 44 px celler, ingen scroll |
+| Ljust och mörkt läge | Inga skillnader i layout |
+
+### Tangentbord
+
+Tabbordningen på Hem: hoppa-till-innehållet, sidhuvud, sidinnehåll, bottenmeny.
+Följer den visuella ordningen utan hopp.
+
+### Vad som *inte* gjordes
+
+- **NVDA kördes inte.** Protokollet i [NVDA-TESTING.md](NVDA-TESTING.md) är
+  skrivet mot markupen som den faktiskt ser ut, kontrollerad i webbläsaren, men
+  ingen har lyssnat på appen.
+- **VoiceOver kördes inte.** Samma sak,
+  [VOICEOVER-TESTING.md](VOICEOVER-TESTING.md).
+- **Ingen telefon installerade appen.** [REAL-DEVICE-PWA-QA.md](REAL-DEVICE-PWA-QA.md)
+  finns; ingen rad är avbockad.
+- **Ingen fråga verifierades.**
+
+En sak som protokollet ska lyssna särskilt efter: verdikt och förklaring efter
+ett svar ligger i samma live-region och läses som "Inte riktigtOmkörning sker
+till vänster." Visuellt finns en radbrytning; i den tillgängliga strängen finns
+ingen. Om det låter hopklistrat i NVDA är det värt att dela regionen — men det
+avgörs av att lyssna, inte av att gissa.
+
+### Siffror
+
+| | Före | Efter |
+| --- | --- | --- |
+| Frågor | 461 | 461 |
+| Verifierade | 0 | 0 |
+| P1 i kön | 139 | 144 |
+| Omgång 01 | 14 frågor | 19 frågor |
+| Fel i sidhänvisningsgranskningen | 3 | 0 |
+| Tester | 614 | 645 |
+| Kontroller under 44 px (Hem, Träna, Prov, Utveckling) | 13 | 0 |
+| Startpaket (gzip) | 166 061 B | 166 714 B |
+| Förhandscache | 2 060 KiB | 2 068 KiB |

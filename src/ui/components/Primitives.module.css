@@ -176,7 +176,18 @@
   margin: 0;
 }
 
+/*
+ * A standalone action beside a section heading — "Se utveckling",
+ * "Kunskapskarta". Not a link inside a sentence, so the target-size exemption
+ * for inline links does not apply, and it was 23 px tall. The padding is what
+ * grows; the text stays where it was, pulled back level with the heading by
+ * the negative margin.
+ */
 .sectionAction {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-block: -10px;
   font-size: var(--text-small);
   font-weight: var(--weight-medium);
   color: var(--color-primary);
@@ -273,7 +284,10 @@
 
 .segment {
   flex: 1 1 auto;
-  min-height: 36px;
+  /* The commonest touch control in the app — practice length, theme, text
+     size, the progress tabs — and it sat at 36. Width is never the problem
+     here, since the segments share a row and stretch. */
+  min-height: 44px;
   padding: 0 var(--space-4);
   border-radius: calc(var(--radius-md) - 3px);
   font-size: var(--text-small);

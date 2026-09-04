@@ -231,7 +231,9 @@ export default function ExamRunnerPage() {
           </span>
         )}
 
-        <Button variant="ghost" size="sm" onClick={() => setConfirmSubmit(true)}>
+        {/* Default size, not sm: this is the control that ends the exam, and
+            it sits in the header where a thumb reaches for it. */}
+        <Button variant="ghost" onClick={() => setConfirmSubmit(true)}>
           Lämna in
         </Button>
       </div>
